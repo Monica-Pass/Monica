@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">Supprimer le dossier « %1$s » et son contenu ? Veuillez confirmer avant de continuer.</string>
+    <string name="external_folder_delete_keep_items">Supprimer le dossier « %1$s » ? Les éléments qu\'il contient seront conservés sans ce dossier.</string>
+</resources>

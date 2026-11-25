@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_send_auth_title">Erişim kontrolü</string>
+    <string name="bw_send_auth_none">Doğrulama yok</string>
+    <string name="bw_send_auth_password">Şifre</string>
+    <string name="bw_send_auth_email">E-posta doğrulaması</string>
+    <string name="bw_send_auth_email_label">E-posta adresi %1$d</string>
+    <string name="bw_send_auth_add_email">E-posta adresi ekle</string>
+    <string name="bw_send_auth_remove_email">E-posta adresini kaldır</string>
+    <string name="bw_send_auth_recipients_notice">Alıcı adresleri doğrulama için sunucuya gönderilir.</string>
+    <string name="bw_send_auth_premium">E-posta doğrulaması bu hesap için Premium gerektirir.</string>
+    <string name="bw_send_auth_unsupported">Bu sunucu e-posta doğrulamasını kabul etmedi. Sunucunuzun bunu destekleyip desteklemediğini kontrol edin ve tekrar deneyin.</string>
+    <string name="bw_send_auth_invalid">Erişim yöntemini ve e-posta adreslerini kontrol edin.</string>
+    <string name="bw_send_auth_unchanged">Mevcut doğrulamayı koru</string>
+    <string name="bw_send_auth_password_set">Şifre ayarlandı</string>
+    <string name="bw_send_drafts">Taslak gönder</string>
+    <string name="bw_send_draft_save">Taslağı kaydet</string>
+    <string name="bw_send_draft_saved">Taslak bu cihaza kaydedildi.</string>
+    <string name="bw_send_draft_local">Yalnızca bu cihaza kaydedildi. Manuel olarak göndermeye devam edin.</string>
+    <string name="bw_send_draft_resume">Devam Et</string>
+    <string name="bw_send_draft_discard">Taslağı sil</string>
+    <string name="bw_send_draft_discard_confirm">Bu yerel taslak ve kayıtlı dosyası silinsin mi? Yayınlanan Gönderiler saklanır.</string>
+    <string name="bw_send_draft_failed">Bu taslak kaydedilemedi veya okunamadı. Mevcut kopya saklanır.</string>
+    <string name="bw_send_draft_unavailable">Bazı taslaklar açılamadı. Bu cihazda tutulurlar.</string>
+    <string name="bw_send_draft_reconcile">Önceki gönderimi kontrol et</string>
+    <string name="bw_send_draft_uncertain">Önceki gönderim sunucuya ulaşmış olabilir. Tekrar göndermeden önce kontrol edin.</string>
+    <string name="bw_send_draft_not_found">Önceki gönderim onaylanamadı. Bu taslağı atmadan önce Gönderimlerinizi kontrol edin.</string>
+    <string name="bw_send_cache_unavailable">Önbelleğe alınan bazı Gönderimler açılamadı. Mevcut veriler tutulur.</string>
+    <string name="bw_send_draft_empty">Kaydedilmiş taslak yok</string>
+    <string name="bw_send_draft_missing_file">Kaydedilen dosya eksik. Tekrar seçin.</string>
+    <string name="bw_send_logout_drafts">Yerel Gönderme taslakları ve kayıtlı dosyaları da silinecek. Bu taslaklar tekrar oturum açılarak geri yüklenemez.</string>
+</resources>

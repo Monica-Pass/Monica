@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Özel QR şablonu</string>
+    <string name="qr_template_literal">Düz metin</string>
+    <string name="qr_template_mode">Alan şablonu</string>
+    <string name="qr_template_insert">Alan ekle</string>
+    <string name="qr_template_wifi">Wi-Fi ön ayarı</string>
+    <string name="qr_template_generate">QR kodunu oluştur</string>
+    <string name="qr_template_hint">Oluşturulduğunda geçerli alanları okur. Çözümlenmiş parola kopyasını değil şablonu kaydeder. Wi-Fi şablonları eklenen değerlerden otomatik olarak çıkar.</string>
+    <string name="qr_template_error">Giriş okunamıyor, şablon kaydedilemiyor veya kod oluşturulamıyor. Veritabanının kilidinin açık olduğundan ve içeriğin sınırlar dahilinde olduğundan emin olun ve ardından yeniden deneyin.</string>
+    <string name="qr_template_field_error">\"%1$s\" alanı eksik, okunamıyor veya belirsiz. Oluşturmadan önce kullanılabilir bir alan seçin.</string>
+</resources>

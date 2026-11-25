@@ -1,0 +1,645 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=systemOffExplainsWhyPreviewHasNoVibration
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=systemOffExplainsWhyPreviewHasNoVibration
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=zeroDisablesAndSliderCanReenableWithSingleSelectedPreview
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=zeroDisablesAndSliderCanReenableWithSingleSelectedPreview
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertFalse(Assert.java:65)
+
+	at org.junit.Assert.assertFalse(Assert.java:75)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest$preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults$1.invokeSuspend(HapticStrengthInstrumentedTest.kt:136)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest.preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults(HapticStrengthInstrumentedTest.kt:126)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults(takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest):
+
+java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertFalse(Assert.java:65)
+
+	at org.junit.Assert.assertFalse(Assert.java:75)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest$preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults$1.invokeSuspend(HapticStrengthInstrumentedTest.kt:136)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest.preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults(HapticStrengthInstrumentedTest.kt:126)
+
+
+
+INSTRUMENTATION_STATUS: test=preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=hostDisabledFeedbackIsEnabledForRequestAndRestored
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=hostDisabledFeedbackIsEnabledForRequestAndRestored
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=narrowDarkLargeTextKeepsSliderAndTestReachable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=narrowDarkLargeTextKeepsSliderAndTestReachable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=existingClickableRowAndActiveChildDoNotBubbleOrDoubleVibrate
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=existingClickableRowAndActiveChildDoNotBubbleOrDoubleVibrate
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=customizationFeedbackPreferenceAcknowledgesEnableAndSilencesDisable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=customizationFeedbackPreferenceAcknowledgesEnableAndSilencesDisable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=sharedSettingsRowsAndStandaloneSettingHaveSingleFeedback
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sharedSettingsRowsAndStandaloneSettingHaveSingleFeedback
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=touchAndAccessibilityToggleOnceWhileExternalUpdatesStaySilent
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=touchAndAccessibilityToggleOnceWhileExternalUpdatesStaySilent
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=preferenceChangesApplyLiveAndDeclinedHostRequestIsNotRepeated
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=preferenceChangesApplyLiveAndDeclinedHostRequestIsNotRepeated
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rowAndPassiveThumbShareOneInteraction
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rowAndPassiveThumbShareOneInteraction
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=extensionFeedbackPreferenceCanReenableFeedback
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=extensionFeedbackPreferenceCanReenableFeedback
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=disabledAndCancelledPressDoNotChangeOrVibrate
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=disabledAndCancelledPressDoNotChangeOrVibrate
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=wheelFramesFollowDragAndReducedMotionKeepsFixedThumb
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=wheelFramesFollowDragAndReducedMotionKeepsFixedThumb
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=externalUpdatesAndDisabledOrMutedControlsRemainSilent
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=externalUpdatesAndDisabledOrMutedControlsRemainSilent
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=accessibilityAndRtlRetainRangeDirectionAndTouchTarget
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=accessibilityAndRtlRetainRangeDirectionAndTouchTarget
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=dragTicksInBothDirectionsAndCommitsOnlyOnRelease
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=dragTicksInBothDirectionsAndCommitsOnlyOnRelease
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=dpiSheetRetainsDraftUntilReleaseAndResetStillWorks
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=18
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=dpiSheetRetainsDraftUntilReleaseAndResetStillWorks
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 11.247
+
+There was 1 failure:
+
+1) preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults(takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest)
+
+java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertFalse(Assert.java:65)
+
+	at org.junit.Assert.assertFalse(Assert.java:75)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest$preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults$1.invokeSuspend(HapticStrengthInstrumentedTest.kt:136)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest.preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults(HapticStrengthInstrumentedTest.kt:126)
+
+
+
+FAILURES!!!
+
+Tests run: 18,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">削除が不完全です</string>
+    <string name="batch_delete_interrupted_count">%2$d 項目中 %1$d を処理した後に中断されました。再試行する前に、残りの項目を確認してください。</string>
+</resources>

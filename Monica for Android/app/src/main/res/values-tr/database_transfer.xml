@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="transfer_zip_title">ZIP yedekleme</string>
+    <string name="transfer_zip_description">Yalnızca seçilen veritabanını yedekleyin.</string>
+    <string name="transfer_contents">Ekle</string>
+    <string name="transfer_images_attachments">Resimler ve ekler</string>
+    <string name="transfer_encrypt_backup">Yedeklemeyi şifrele</string>
+    <string name="transfer_encryption_hint">Geçiş anahtarları ve ekler şifrelenmiş bir yedekleme gerektirir.</string>
+    <string name="transfer_choose_location">Nereye kaydedileceğini seçin</string>
+    <string name="transfer_background_continue">Arka planda devam et</string>
+    <string name="transfer_background_hint">Bu sayfadan ayrılabilirsiniz. İlerleme durumu bir bildirimde görünecektir.</string>
+    <string name="transfer_reading">Dosya okunuyor…</string>
+    <string name="transfer_decrypting">Yedeklemenin şifresi çözülüyor…</string>
+    <string name="transfer_preparing">Öğeler hazırlanıyor…</string>
+    <string name="transfer_writing">Veritabanına yazılıyor…</string>
+    <string name="transfer_attachments">Ekler kopyalanıyor…</string>
+    <string name="transfer_packing">Arşiv oluşturuluyor…</string>
+    <string name="transfer_encrypting">Dosya şifreleniyor…</string>
+    <string name="transfer_saving">Dosya kaydediliyor…</string>
+    <string name="transfer_items_progress">%1$d / %2$d</string>
+    <string name="transfer_export_complete">%1$d öğeleri dışa aktarıldı.</string>
+    <string name="transfer_export_done">Dışa aktarma tamamlandı</string>
+    <string name="transfer_channel">İthalat ve ihracat</string>
+    <string name="transfer_open_result">Sonucu görmek için Monica\'yu açın.</string>
+    <string name="transfer_background_start_failed">Dışa aktarma başlatılamadı. Monica açıkken tekrar deneyin.</string>
+    <string name="transfer_cancelled">Dışa aktarma iptal edildi.</string>
+    <string name="transfer_attachment_encryption">Yedeklemeyi ekleri içerecek şekilde şifreleyin.</string>
+    <string name="transfer_password_mismatch">Şifreler eşleşmiyor.</string>
+    <string name="transfer_kdbx_password_description">Dışa aktarılan KDBX veritabanını korumak için bir parola ayarlayın.</string>
+    <string name="transfer_unsupported_token">Bu simge biçimi dönüştürülemez. Bir ZIP yedeği kullanın.</string>
+    <string name="steam_mafile_export_title">Steam maDosyası</string>
+    <string name="steam_mafile_export_desc">Seçilen Steam hesaplarını bu veritabanından dışa aktarın.</string>
+    <string name="transfer_kdbx_description">KeePass formatında şifreler, kimlik doğrulayıcılar, Şifreler ve ekler.</string>
+    <string name="transfer_unsupported_records">Bu veritabanı desteklenmeyen öğe türleri içeriyor. Bunun yerine yerel bir veritabanı kopyasını kaydedin.</string>
+    <string name="transfer_zip_password_title">ZIP yedeklemesinin kilidini açın</string>
+    <string name="transfer_zip_password_description">Bu ZIP yedeğini oluşturmak için kullanılan şifreyi girin.</string>
+    <string name="transfer_attachment_export_failed">\"%2$s\" eki \"%1$s\"dan dışa aktarılamadı. %3$s</string>
+    <string name="transfer_attachment_key_unavailable">Ek anahtarının şifresi çözülemedi. Monica\'nın kilidini açın ve öğedeki eki açmayı deneyin. Hala başarısız olursa orijinal cihazdan veya okunabilir bir yedekten yeniden içe aktarın.</string>
+    <string name="transfer_attachment_content_unreadable">Ek bütünlük kontrolünde başarısız olduğundan dışa aktarma durduruldu. Orijinal dosyayı kontrol edin veya eki okunabilir bir yedekten geri yükleyin.</string>
+    <string name="transfer_incomplete_export_file">Tamamlanmamış dışa aktarma dosyası otomatik olarak kaldırılamadı. Bu boş veya eksik dosyayı manuel olarak silin; kullanılabilir bir yedekleme değildir.</string>
+</resources>

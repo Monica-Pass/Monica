@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_stack_loop_title">Döngü kartı yığınları</string>
+    <string name="wallet_stack_loop_desc">Kart destesini her iki yönde kaydırın. Son kart ilkine bağlanır.</string>
+    <string name="page_adjustment_preview_games">Oyunlar</string>
+    <string name="page_adjustment_preview_folder">Klasör 1</string>
+    <string name="page_adjustment_preview_subfolder">Alt Klasör</string>
+</resources>

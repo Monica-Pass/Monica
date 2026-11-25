@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_overview_picker_search_cards">Kartları, bankaları veya son rakamları arayın</string>
+    <string name="vault_overview_picker_search_items">Başlıkları veya hesapları arayın</string>
+    <string name="vault_overview_picker_selected">%1$d seçildi</string>
+    <string name="vault_overview_picker_results">Sonuçlar: %1$d</string>
+    <string name="vault_overview_picker_no_account">Hesap belirtilmedi</string>
+    <string name="vault_overview_picker_empty_hint">Başka bir anahtar kelimeyi veya veritabanını deneyin.</string>
+    <string name="vault_overview_picker_limit">%1$d\'ya kadar sabitlenmiş girişler</string>
+</resources>

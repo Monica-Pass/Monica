@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Usuwanie niekompletne</string>
+    <string name="batch_delete_interrupted_count">Przerwane po przetworzeniu %1$d z elementów %2$d. Przed ponowną próbą sprawdź pozostałe elementy.</string>
+</resources>

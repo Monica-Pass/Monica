@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Карты &amp; кошелек</string>
+    <string name="customization_group_fields_icons">Поля &amp; значки</string>
+    <string name="customization_group_library">Списки библиотеки &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Никаких действий не требуется.</string>
+    <string name="permission_action_request">Запросить разрешение</string>
+    <string name="permission_help_actions">Используйте «Запросить разрешение», чтобы запросить доступ у Android, или «Открыть настройки», чтобы управлять службами и предоставленными разрешениями. \n\nЭлементы с пометкой «Действие не требуется» или «Недоступно» не имеют кнопки действия. Включайте только то, что вам нужно. \n\nСтатусы обновляются при выходе из системных настроек. Вы также можете нажать «Обновить статус», чтобы проверить еще раз.</string>
+    <string name="permission_refresh_status">Обновить статус</string>
+    <string name="permission_summary_granted">Разрешения %1$d предоставлены</string>
+    <string name="permission_summary_hint">Включите только те разрешения, которые необходимы для используемых вами функций. Некоторые из них предоставляются автоматически Android.</string>
+    <string name="permission_summary_title">Разрешения на ваших условиях</string>
+</resources>

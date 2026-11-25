@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -877,9 +881,9 @@ fun BlacklistManagementDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clip(RoundedCornerShape(12.dp))
-                                    .clickable {
-                                        onPackageToggle(app.packageName, !isInBlacklist)
-                                    },
+                                    .clickable(onClick = switchClick(isInBlacklist) { next ->
+                                        onPackageToggle(app.packageName, next)
+                                    }),
                                 color = if (isInBlacklist)
                                     MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
                                 else

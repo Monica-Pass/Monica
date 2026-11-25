@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Protection de récupération</string>
+    <string name="recovery_protection_summary">Vérifier la récupération avec le mot de passe maître original</string>
+    <string name="recovery_protection_verified">Vérifiée dans cette session à %1$s</string>
+    <string name="recovery_protection_not_ready">La protection de récupération ne peut pas être confirmée. Données conservées. Réessayez ou créez une sauvegarde chiffrée.</string>
+    <string name="recovery_protection_needs_password">Saisissez le mot de passe maître pour préparer et vérifier la récupération</string>
+    <string name="recovery_protection_explanation">Vérifiez que le mot de passe maître original ouvre les données de récupération indépendantes. Le coffre et les clés de l’appareil ne sont pas remplacés. Une ancienne installation saine peut préparer ces données.</string>
+    <string name="recovery_protection_limits">Conservez une sauvegarde chiffrée indépendante. La vérification concerne les données et la session actuelles ; elle ne garantit ni leur intégrité future ni la récupération des identifiants liés au matériel. Vérifiez à nouveau après verrouillage ou modification.</string>
+    <string name="recovery_protection_verify">Vérifier la récupération</string>
+    <string name="recovery_protection_checking">Vérification de la récupération…</string>
+    <string name="recovery_material_available">Données de récupération trouvées. Le mot de passe maître original doit encore être vérifié.</string>
+    <string name="recovery_material_missing">Aucune donnée de récupération indépendante. Rétablissez l’environnement de clés original ou vérifiez une sauvegarde chiffrée dans une autre installation.</string>
+    <string name="recovery_material_reenroll">Une modification des identifiants nécessite une nouvelle préparation. Rétablissez l’accès normal puis vérifiez avec le mot de passe maître actuel.</string>
+    <string name="recovery_material_revoked">Ces données de récupération ont été explicitement révoquées. Conservez les fichiers originaux.</string>
+    <string name="recovery_material_unsupported">Format de récupération non pris en charge. Conservez les fichiers et utilisez une version compatible de Monica.</string>
+    <string name="recovery_material_invalid">Données de récupération incomplètes ou invalides. Conservez les originaux ; ne les remplacez pas par des fichiers vides ou ceux d’un autre coffre.</string>
+    <string name="recovery_material_unreadable">Lecture des données de récupération impossible. Conservez les fichiers, déverrouillez l’appareil et réessayez.</string>
+    <string name="recovery_material_unchecked">Données de récupération non vérifiées. Réessayez après déverrouillage et fin de l’opération actuelle.</string>
+    <string name="secure_startup_key_missing">Le service de clés actuel ne trouve pas la clé originale. Cela ne prouve pas sa suppression définitive.</string>
+    <string name="secure_startup_wait">Le système n’est pas prêt ou une opération sécurisée est en cours. Déverrouillez l’appareil et réessayez plus tard.</string>
+    <string name="secure_startup_inconsistent">Les paramètres chiffrés et l’état de récupération ne correspondent pas. Conservez les fichiers ; ne supprimez pas les marqueurs pour contourner le contrôle.</string>
+    <string name="secure_startup_environment_omk">Si cela suit une modification d’OMK ou d’un module de clés, rétablissez l’environnement utilisé à la création du coffre. Retirer Monica d’un périmètre récemment ajouté peut aider, mais pas pour tous les coffres. Conservez configuration et clés ; ne réinstallez pas les modules et ne réinitialisez pas leur graine pour faire des essais.</string>
+</resources>

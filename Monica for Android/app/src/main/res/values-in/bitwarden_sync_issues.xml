@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Item yang tidak dapat disinkronkan</string>
+    <string name="bitwarden_sync_issues_button">Lihat masalah sinkronisasi (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Upaya terbaru untuk akun ini. Judul ditampilkan bila tersedia; gunakan ID item untuk mencari item yang judulnya tidak dapat dibaca. Detail akan dihapus saat akun ini dikunci.</string>
+    <string name="bitwarden_sync_issues_empty">Tidak ada item yang gagal dalam upaya ini.</string>
+    <string name="bitwarden_sync_issues_running">Sinkronisasi masih berjalan.</string>
+    <string name="bitwarden_sync_issues_no_title">Judul tidak tersedia</string>
+    <string name="bitwarden_sync_issues_id">ID Barang: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Cari judul atau ID item</string>
+    <string name="bitwarden_sync_issues_no_matches">Tidak ada item yang cocok</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Barang brankas</string>
+    <string name="bitwarden_sync_issue_kind_folder">Folder</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Lampiran</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Kunci sandi</string>
+    <string name="bitwarden_sync_issue_phase_download">Unduh</string>
+    <string name="bitwarden_sync_issue_phase_create">Unggah item baru</string>
+    <string name="bitwarden_sync_issue_phase_update">Unggah perubahan</string>
+    <string name="bitwarden_sync_issue_phase_delete">Hapus</string>
+    <string name="bitwarden_sync_issue_phase_restore">Pulihkan</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Buka kunci atau masuk lagi, lalu coba lagi.</string>
+    <string name="bitwarden_sync_issue_reason_network">Tidak dapat menjangkau server. Periksa koneksi dan coba lagi.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Item ini berubah. Tinjau konflik sebelum mencoba lagi.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Item ini menggunakan format yang tidak didukung atau tidak lengkap.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">Item ini tidak dapat didekripsi atau diverifikasi.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">Operasi tidak dapat diselesaikan. Perubahan lokal dipertahankan.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">Lampiran tidak dapat ditransfer atau diverifikasi.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Unggah item induk dan periksa ketersediaan lampiran sebelum mencoba lagi.</string>
+</resources>

@@ -75,7 +75,7 @@ fun MasterPasswordTextField(
         },
         trailingIcon = if (showVisibilityToggle) {
             {
-                IconButton(onClick = { onVisibilityChange(!visible) }) {
+                IconButton(enabled = enabled, onClick = { onVisibilityChange(!visible) }) {
                     Icon(
                         imageVector = if (visible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                         contentDescription = if (visible) {

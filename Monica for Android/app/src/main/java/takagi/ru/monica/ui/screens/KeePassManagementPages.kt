@@ -101,7 +101,8 @@ internal fun KeePassSourceManagementPage(
     onOpenDatabase: (LocalKeePassDatabase) -> Unit,
     onResolveConflict: (LocalKeePassDatabase) -> Unit,
     gridState: LazyGridState = rememberLazyGridState(),
-    sourceActionsEnabled: Boolean = true
+    sourceActionsEnabled: Boolean = true,
+    onReorder: suspend (List<Long>) -> Unit = {},
 ) {
     val reserveConflictActionSlot = remember(databases) {
         databases.any { it.isRemoteSource() && it.lastSyncStatus == KeePassSyncStatus.CONFLICT }
@@ -121,23 +122,16 @@ internal fun KeePassSourceManagementPage(
                     color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             }
         } else {
-            MonicaTileGrid(
-                state = gridState,
-                columns = GridCells.Adaptive(156.dp * LocalDensity.current.fontScale.coerceAtLeast(1f)),
-                contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 12.dp),
-                modifier = Modifier.weight(1f).fillMaxWidth().testTag("keepass_database_grid")
-            ) {
-                item(key = "count", span = { GridItemSpan(maxLineSpan) }) {
-                    Text(stringResource(R.string.mdbx_ui_database_count, databases.size),
-                        modifier = Modifier.padding(start = 4.dp, top = 4.dp, bottom = 8.dp),
-                        style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                items(databases, key = { it.id }, contentType = { "database" }) { database ->
-                    KeePassDatabaseTile(database,
-                        verificationStates[database.id] ?: LocalKeePassViewModel.VerificationState.Unknown,
-                        onClick = { onOpenDatabase(database) }, onResolveConflict = { onResolveConflict(database) },
-                        reserveConflictActionSlot = reserveConflictActionSlot, metrics = tileMetrics)
-                }
+            DatabaseManagementReorderableGrid(
+                databases, LocalKeePassDatabase::id, gridState, "keepass_database_grid", onReorder,
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+            ) { database, modifier, dragging ->
+                KeePassDatabaseTile(database,
+                    verificationStates[database.id] ?: LocalKeePassViewModel.VerificationState.Unknown,
+                    onClick = { if (!dragging) onOpenDatabase(database) },
+                    onResolveConflict = { if (!dragging) onResolveConflict(database) },
+                    reserveConflictActionSlot = reserveConflictActionSlot, metrics = tileMetrics,
+                    modifier = modifier)
             }
         }
         DatabaseManagementCreateOpenActions(onCreateClick, onOpenClick,
@@ -170,13 +164,14 @@ private fun KeePassDatabaseTile(
     onResolveConflict: () -> Unit,
     reserveConflictActionSlot: Boolean,
     metrics: DatabaseManagementTileMetrics,
+    modifier: Modifier = Modifier,
 ) {
     val remote = database.isRemoteSource()
     val conflict = remote && database.lastSyncStatus == KeePassSyncStatus.CONFLICT
     val failed = verificationState is LocalKeePassViewModel.VerificationState.Failed
     val warning = failed || (remote && database.lastSyncStatus in setOf(KeePassSyncStatus.CONFLICT, KeePassSyncStatus.FAILED, KeePassSyncStatus.REMOTE_CHANGED))
     DatabaseManagementCard(onClick = onClick,
-        modifier = Modifier.fillMaxWidth().testTag("keepass_database_${database.id}"),
+        modifier = modifier.fillMaxWidth().testTag("keepass_database_${database.id}"),
         colors = CardDefaults.cardColors(containerColor = if (database.isDefault)
             MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow)) {
         val status = if (remote) remoteSyncStatusLabel(database.lastSyncStatus) else keePassVerificationLabel(verificationState)

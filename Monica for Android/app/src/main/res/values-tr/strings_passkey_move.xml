@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="passkey_move_result_title">Taşıma sonucu</string>
+    <string name="passkey_move_result_summary">Tamamlandı %1$d; dikkat edilmesi gerekiyor %2$d</string>
+    <string name="passkey_move_success_count">%1$d öğeleri taşındı</string>
+    <string name="passkey_move_unnamed_account">Adsız hesap</string>
+    <string name="passkey_move_bound_reason">Bu şifre bir şifre girişine bağlıdır ve ayrı olarak taşınamaz. Bağlantılı parola girişini taşıyın veya önce parolanın bağlantısını kaldırın.</string>
+    <string name="passkey_move_reference_reason">Bu öğe yalnızca bir referanstır ve ayrı olarak taşınabilecek özel bir anahtara sahip değildir. Gerçek geçiş anahtarını barındıran orijinal uygulamayı veya kasayı kullanın.</string>
+    <string name="passkey_move_bitwarden_reason">Depolama modu veya özel anahtar, Bitwarden geçiş gereksinimlerini karşılamıyor. Monica\'nın kilidini açın ve yeniden deneyin veya başka bir kasa seçin. Cihaza bağlı anahtarlar dışarı aktarılamaz; bunları orijinal cihazda tutun veya hizmete yeni bir şifre kaydedin.</string>
+    <string name="passkey_move_conflict_reason">Hedef KeePass veritabanı zaten aynı geçiş anahtarı kimlik bilgisini içeriyor. Hiçbir şeyin üzerine yazılmadı. Mevcut girişi kontrol edin veya başka bir veritabanı seçin.</string>
+    <string name="passkey_move_update_reason">Taşıma işlemi tamamlanmadı ve kesin nedeni belirlenemedi. Kaynak ve hedef kasaların kilidinin açık, yazılabilir ve yeterli boş alana sahip olduğundan emin olun. Yeniden denemeden önce her iki kasayı da inceleyin; kaynağı silmeyin.</string>
+    <string name="passkey_move_cleanup_reason">Hedef kaydedildi ancak kaynak temizleme tamamlanmadı. Kopyalar her iki kasada da kalabilir. Devam etmeden önce hedefi ve kaynak kasası veya senkronizasyon durumunu kontrol edin; Hareketi körü körüne tekrarlamayın.</string>
+</resources>

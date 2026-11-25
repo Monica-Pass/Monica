@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">Supprimer tous les champs prédéfinis ? Les entrées enregistrées existantes conserveront leurs champs.</string>
+    <string name="customization_drag_handle">Réorganiser %1$s</string>
+    <string name="customization_filters_navigation">Filtres et navigation</string>
+    <string name="customization_live_preview">Aperçu en direct</string>
+</resources>

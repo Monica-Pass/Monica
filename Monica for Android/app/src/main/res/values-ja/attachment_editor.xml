@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">添付ファイルはまだありません</string>
+    <string name="attachment_editor_hint">ファイル、画像、またはドキュメントを選択してください</string>
+    <string name="attachment_editor_working">作業中…</string>
+</resources>

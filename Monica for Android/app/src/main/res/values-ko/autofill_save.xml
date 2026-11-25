@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">새 항목으로 저장</string>
+    <string name="autofill_save_local_source">로컬</string>
+    <string name="autofill_save_review_description">저장하기 전에 검토할 항목을 선택하세요. 기존 폴더, 메모 및 기타 계정은 유지됩니다.</string>
+    <string name="autofill_save_review_title">기존 비밀번호를 업데이트하시겠습니까?</string>
+</resources>

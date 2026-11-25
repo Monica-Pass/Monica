@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">コピーをキャンセル</string>
+    <string name="passkey_cancel_move">移動をキャンセル</string>
+    <string name="passkey_copy_blocked_title">一部の Passkeys はコピーできません</string>
+    <string name="passkey_copy_result_summary">%1$d をコピーしました。スキップまたは失敗: %2$d</string>
+    <string name="passkey_copy_result_title">結果のコピー</string>
+    <string name="passkey_copy_success_count">コピーしました %1$d Passkeys</string>
+    <string name="passkey_move_blocked_title">一部の Passkeys は移動できません</string>
+    <string name="passkey_transfer_key_unavailable">秘密キーはこのデバイスでは使用できません。</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys は処理できません。 %2$d は続行できます。まだ何も変わっていません。</string>
+    <string name="passkey_transfer_restricted">この Passkey はこの宛先に転送できません。</string>
+    <string name="passkey_transfer_same_database_copy">このデータベースには一意の資格情報 ID が必要です。この Passkey をコピーするには、別のデータベースを選択してください。</string>
+    <string name="passkey_transfer_skip">%1$d をスキップして続行します</string>
+</resources>

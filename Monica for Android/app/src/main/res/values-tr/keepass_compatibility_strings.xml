@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_otp_secret_invalid">Geçerli bir Base32 OTP sırrı girin.</string>
+    <string name="keepass_entry_properties">Giriş özellikleri</string>
+    <string name="keepass_entry_tags_hint">Etiketleri yeni bir satır, virgül veya noktalı virgülle ayırın</string>
+    <string name="keepass_entry_expires">Sona Erme Tarihi</string>
+    <string name="keepass_entry_never_expires">Süresi asla dolmaz</string>
+    <string name="keepass_entry_expires_at">Sona erme tarihi: %1$s</string>
+    <string name="keepass_entry_expired_at">Süresi Doldu: %1$s</string>
+    <string name="keepass_hotp_saving">Sayaç kaydediliyor…</string>
+    <string name="keepass_hotp_counter_exhausted">Sayaç maksimum değerine ulaştı.</string>
+</resources>

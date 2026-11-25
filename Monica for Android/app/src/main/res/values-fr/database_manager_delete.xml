@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Les dossiers et leur contenu sont inclus. Les mots de passe locaux et les éléments sécurisés vont dans la corbeille. Les dossiers et passkeys sont définitivement supprimés.</string>
+    <string name="manager_delete_native_hint">Les éléments sélectionnés et le contenu des dossiers seront définitivement supprimés de cette base de données. Cela ne peut pas être annulé.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d sélectionné</string>
+    <string name="manager_delete_title">Supprimer les éléments sélectionnés ?</string>
+</resources>

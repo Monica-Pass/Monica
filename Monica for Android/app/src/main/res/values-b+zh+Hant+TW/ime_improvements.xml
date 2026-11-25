@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_scramble_pin_title">隨機排列數字鍵</string>
+    <string name="ime_scramble_pin_description">每次開啟數字鍵盤時打亂，輸入時保持不變。</string>
+    <string name="ime_hide_pin_preview_title">隱藏數字按鍵預覽</string>
+    <string name="ime_hide_pin_preview_description">不顯示數字彈泡和按鍵反白。</string>
+    <string name="ime_hide_keyboard">收起鍵盤</string>
+    <string name="ime_switch_keyboard">切換輸入法</string>
+    <string name="ime_fill_current_otp">填入目前驗證碼</string>
+    <string name="ime_otp_unavailable">暫時無法取得目前驗證碼。</string>
+</resources>

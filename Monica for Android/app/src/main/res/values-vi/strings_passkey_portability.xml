@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Sử dụng trên nhiều thiết bị</string>
+    <string name="passkey_portability_algorithm_hint">Đích phải hỗ trợ cùng một thuật toán khóa. Chuyển Bitwarden hiện tại chỉ hỗ trợ ES256.</string>
+    <string name="passkey_portability_backup_hint">Thông tin xác thực này được đánh dấu là không đủ điều kiện sao lưu. Chỉ nơi nào bảo tồn được tài sản đó mới có thể sử dụng nó; chuyển đổi sang Bitwarden hoặc trao đổi thông tin xác thực bị chặn.</string>
+    <string name="passkey_portability_checking">Đang kiểm tra…</string>
+    <string name="passkey_portability_counter_hint">Thông tin xác thực này có lịch sử truy cập chữ ký khác 0. Monica sử dụng bộ đếm 0; việc sử dụng trên nhiều thiết bị có thể bị từ chối bởi một trang web kiểm tra bộ đếm trước đó.</string>
+    <string name="passkey_portability_exportable">Khóa có thể được xuất</string>
+    <string name="passkey_portability_exportable_hint">Khóa có thể được xuất ở định dạng mã hóa được hỗ trợ. Đích đến phải bảo toàn các thuộc tính ID, khóa và đăng ký của nó; Khả năng tương thích của trang web vẫn phụ thuộc vào khách hàng đích.</string>
+    <string name="passkey_portability_invalid">Siêu dữ liệu xung đột</string>
+    <string name="passkey_portability_invalid_hint">Xung đột thuộc tính sao lưu. Việc ký kết không được âm thầm thay đổi tài sản đã đăng ký; giữ thông tin xác thực nguồn để phục hồi.</string>
+    <string name="passkey_portability_key_unavailable">Không có khóa</string>
+    <string name="passkey_portability_local_hint">Khóa riêng được liên kết với thiết bị này và không thể xuất được. Chỉ sao chép cơ sở dữ liệu sẽ không cho phép đăng nhập trên thiết bị khác.</string>
+    <string name="passkey_portability_local_only">Chi luu cuc bo</string>
+    <string name="passkey_portability_missing_hint">Không tìm thấy khóa riêng có thể sử dụng được trên thiết bị này. Bản ghi này không thể đăng nhập ở đây hoặc trên thiết bị khác.</string>
+    <string name="passkey_portability_restricted">Chuyển khoản bị hạn chế</string>
+    <string name="passkey_portability_unknown">Chưa được xác minh</string>
+    <string name="passkey_portability_unknown_hint">Không thể kiểm tra khả năng chính. Mở khóa cơ sở dữ liệu nguồn và thử lại.</string>
+</resources>

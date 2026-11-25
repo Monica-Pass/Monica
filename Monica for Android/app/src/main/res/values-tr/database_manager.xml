@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_open_database">Veritabanı ayarlarını aç</string>
+    <string name="manager_dual">Tek / çift bölmeyi değiştir</string>
+    <string name="manager_databases">Veritabanları</string>
+    <string name="manager_choose_destination">Hedefi seçin</string>
+    <string name="manager_selection_destination">%1$d seçildi → %2$s</string>
+    <string name="manager_items_selected">%1$d öğeleri · %2$d seçildi</string>
+    <string name="manager_confirm_transfer">%1$d seçilen öğeler %2$s\'dan %3$s / %4$s\'ya aktarılsın mı? Kaynak, hedef doğrulanana kadar korunur.</string>
+    <string name="manager_result">Transfer sonucu</string>
+    <string name="manager_result_count">Tamamlandı: %1$d · Dikkat gerektiriyor: %2$d</string>
+    <string name="manager_technical_details">Teknik ayrıntılar</string>
+    <string name="manager_select">Öğe seç</string>
+    <string name="manager_failure_format">Hedef tüm orijinal bilgileri koruyamaz. Kaynağı saklayın ve aynı formatta bir veritabanı seçin. Etkilenen alanların ayrıntılarına bakın.</string>
+    <string name="manager_failure_changed">Veriler değişti veya doğrulama başarısız oldu. Kaynak muhafaza edildi. Yeniden denemeden önce her iki bölmeyi de yenileyin ve hedefi gözden geçirin.</string>
+    <string name="manager_failure_locked">Veritabanının kilidinin açılması gerekiyor veya orijinal dosyası kullanılamıyor. Veritabanı ayarlarında açın, ardından bu bölmeyi yenileyin.</string>
+    <string name="manager_failure_general">Bu işlem tamamlanamadı. Yeniden denemeden önce her iki bölmeyi ve ayrıntıları kontrol edin: hedefte kısmi bir kopya bulunabilir.</string>
+    <string name="manager_left_pane">Sol bölme</string>
+    <string name="manager_right_pane">Sağ bölme</string>
+    <string name="manager_copy_left">← Kopyala</string>
+    <string name="manager_copy_right">Kopyala →</string>
+    <string name="manager_move_left">← Taşı</string>
+    <string name="manager_move_right">Taşı →</string>
+    <string name="manager_focused_selection">Aktif: %1$s · %2$d seçildi</string>
+    <string name="manager_focused_location">Aktif: %1$s · %2$s</string>
+    <string name="manager_history_back">Geri</string>
+    <string name="manager_history_forward">İleri</string>
+    <string name="manager_new_folder_short">Yeni klasör</string>
+    <string name="manager_switch_pane">Anahtar bölmesi</string>
+    <string name="manager_parent">Yukarı</string>
+    <string name="manager_open_item">Aç</string>
+    <string name="manager_clear_selection">Seçimi temizle</string>
+</resources>

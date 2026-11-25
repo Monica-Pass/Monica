@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import android.net.Uri
@@ -846,7 +850,7 @@ private fun CreateWebDavDatabaseDialog(
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = MaterialTheme.colorScheme.surfaceContainer,
-                    onClick = { setUseKeyFile(!useKeyFile) }
+                    onClick = switchClick(useKeyFile, onCheckedChange = ::setUseKeyFile)
                 ) {
                     Row(
                         modifier = Modifier

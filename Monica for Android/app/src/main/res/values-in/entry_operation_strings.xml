@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_message_bitwarden_unavailable">Bitwarden tidak tersedia</string>
+    <string name="entry_message_unsupported_type">Operasi ini tidak mendukung jenis item ini</string>
+    <string name="entry_message_ownership_conflict">Selesaikan pengikatan penyimpanan yang konflik sebelum memindahkan item ini ke Monica</string>
+    <string name="entry_message_local_copy_failed">Tidak dapat membuat salinan lokal di Monica</string>
+    <string name="entry_message_attachments_incomplete">Tidak semua lampiran disalin</string>
+    <string name="entry_message_bitwarden_sync_id_missing">Item Bitwarden tidak memiliki ID sinkronisasi</string>
+    <string name="entry_message_keepass_source_delete_failed">Tidak dapat menghapus item KeePass asli</string>
+    <string name="entry_message_source_delete_failed">Tidak dapat menghapus item aslinya</string>
+    <string name="entry_message_storage_save_failed">Tidak dapat menyimpan ke lokasi yang dipilih</string>
+    <string name="entry_message_from_password">Dari kata sandi: %1$s</string>
+    <string name="entry_message_passkey_android_required">Dukungan Kunci Sandi penuh memerlukan Android 14 atau lebih baru. Perangkat ini: %1$s</string>
+    <string name="entry_message_passkey_save_failed">Tidak dapat menyimpan Kunci Sandi: %1$s</string>
+    <string name="entry_message_passkey_missing">Kunci sandi tidak ditemukan</string>
+    <string name="entry_message_passkey_update_failed">Tidak dapat memperbarui Kunci Sandi: %1$s</string>
+    <string name="entry_message_passkey_ownership_failed">Tidak dapat memperbarui pengikatan Kunci Sandi MDBX: %1$s</string>
+    <string name="entry_message_passkey_binding_failed">Tidak dapat memperbarui pengikatan: %1$s</string>
+    <string name="entry_message_passkey_usage_failed">Tidak dapat memperbarui riwayat penggunaan: %1$s</string>
+    <string name="entry_message_passkey_delete_failed">Tidak dapat menghapus Kunci Sandi: %1$s</string>
+    <string name="entry_message_category_path_invalid">Jalur folder tidak valid</string>
+    <string name="entry_message_category_move_into_self">Folder tidak dapat dipindahkan ke folder itu sendiri atau ke salah satu subfoldernya</string>
+    <string name="entry_message_category_missing">Folder tidak ditemukan</string>
+    <string name="entry_message_category_exists">Folder dengan nama ini sudah ada di tujuan</string>
+    <string name="entry_message_category_move_conflict">Pemindahan akan menimbulkan konflik dengan folder yang ada</string>
+    <string name="entry_message_category_name_required">Masukkan nama folder</string>
+    <string name="entry_message_category_name_separator">Nama folder tidak boleh berisi /</string>
+    <string name="entry_message_category_rename_conflict">Mengganti nama akan menimbulkan konflik dengan folder yang ada</string>
+    <string name="entry_message_saved">Tersimpan</string>
+</resources>

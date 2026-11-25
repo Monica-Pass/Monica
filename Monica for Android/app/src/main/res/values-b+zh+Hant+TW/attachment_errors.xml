@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_error_bitwarden_locked">Bitwarden 密碼庫未解鎖或會話已失效，請解鎖或重新登入後重試。</string>
+    <string name="attachment_error_remote_data">伺服器返回的附件資料不完整，請同步密碼庫後重試。</string>
+    <string name="attachment_error_unsupported_encryption">此附件使用目前不支援的加密格式（類型 %1$d），請使用官方用戶端匯出後重新上傳。</string>
+    <string name="attachment_error_unknown">附件操作失敗，請重試。</string>
+    <string name="attachment_error_decryption_failed">附件解密或完整性校驗失敗，請先同步密碼庫再重試。</string>
+    <string name="password_batch_attachment_failure">有 %1$d 個項目的附件未能完成轉移。%2$s</string>
+</resources>

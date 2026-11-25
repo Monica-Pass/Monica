@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Copiar tarjeta</string>
+    <string name="embedded_copy_document">Copiar documento</string>
+    <string name="embedded_copy_failed">La copia del contenido está incompleta</string>
+    <string name="embedded_copy_failed_message">%1$s no se pudo copiar por completo. Se conservan su fuente y su borrador. Verifique que la base de datos de origen esté desbloqueada y que los archivos adjuntos estén disponibles, luego vuelva a intentarlo.</string>
+    <string name="embedded_copy_independent">Copia independiente · Archivos adjuntos %1$d</string>
+    <string name="embedded_copy_note">Copiar nota</string>
+    <string name="embedded_copy_working">Copiando contenido completo…</string>
+    <string name="password_content_document">Documento de identidad</string>
+    <string name="password_content_document_description">Campos de identidad, carátula, fotografías y archivos adjuntos</string>
+</resources>

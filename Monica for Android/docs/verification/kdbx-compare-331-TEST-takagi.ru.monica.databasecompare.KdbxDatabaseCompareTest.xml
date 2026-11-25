@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-23T13:37:16.916Z" hostname="JOYIN" time="1.523">
+  <properties/>
+  <testcase name="sameTimestampDifferentHistoryValuesAreBothRetained" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.47"/>
+  <testcase name="cancelDuringResultBuildKeepsBothSourcesAndNoOutput" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.058"/>
+  <testcase name="excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.058"/>
+  <testcase name="unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.058"/>
+  <testcase name="sourceConsistentLiveAndTombstoneCoexistenceIsPreserved" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.051"/>
+  <testcase name="safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.068"/>
+  <testcase name="deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.069"/>
+  <testcase name="customFieldNamesRemainDistinctFromGeneratedLabels" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.021"/>
+  <testcase name="malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.011"/>
+  <testcase name="explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.06"/>
+  <testcase name="independentlyKeyedInputsCreateResultUsingOnlyNewPassword" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.033"/>
+  <testcase name="missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.021"/>
+  <testcase name="staleSourceAndClosedSessionNeverPublish" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.024"/>
+  <testcase name="nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.366"/>
+  <testcase name="mixedChangesCannotCreateReferenceCycle" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.025"/>
+  <testcase name="encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.03"/>
+  <testcase name="matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.08"/>
+  <testcase name="groupMoveCycleCannotPublish" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

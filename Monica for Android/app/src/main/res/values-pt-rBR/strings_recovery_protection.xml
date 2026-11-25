@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Proteção de recuperação</string>
+    <string name="recovery_protection_summary">Verificar a recuperação com a senha mestra original</string>
+    <string name="recovery_protection_verified">Verificada nesta sessão: %1$s</string>
+    <string name="recovery_protection_not_ready">Não foi possível verificar a proteção. Os dados foram preservados. Tente novamente ou crie um backup criptografado.</string>
+    <string name="recovery_protection_needs_password">Digite a senha mestra para preparar e verificar a recuperação</string>
+    <string name="recovery_protection_explanation">Verifica se a senha mestra original abre o material de recuperação independente. Não substitui o cofre nem as chaves do dispositivo. Uma instalação antiga íntegra pode preparar esse material.</string>
+    <string name="recovery_protection_limits">Mantenha um backup criptografado independente. A verificação vale para o material e a sessão atuais; não garante integridade futura nem recuperação de credenciais vinculadas ao hardware. Verifique novamente após bloquear ou alterar o material.</string>
+    <string name="recovery_protection_verify">Verificar recuperação</string>
+    <string name="recovery_protection_checking">Verificando recuperação…</string>
+    <string name="recovery_material_available">Material de recuperação encontrado. Ainda é preciso verificar a senha mestra original.</string>
+    <string name="recovery_material_missing">Nenhum material independente foi encontrado. Restaure o ambiente de chaves original ou verifique um backup criptografado em outra instalação.</string>
+    <string name="recovery_material_reenroll">Após alterar as credenciais, prepare a recuperação novamente. Restaure o acesso normal e verifique com a senha mestra atual.</string>
+    <string name="recovery_material_revoked">Esse material foi explicitamente revogado. Mantenha os arquivos originais.</string>
+    <string name="recovery_material_unsupported">Formato de recuperação não compatível. Mantenha os arquivos e use uma versão compatível do Monica.</string>
+    <string name="recovery_material_invalid">Material incompleto ou inválido. Mantenha os originais; não os substitua por arquivos vazios ou material de outro cofre.</string>
+    <string name="recovery_material_unreadable">Não foi possível ler o material. Mantenha os arquivos, desbloqueie o dispositivo e tente novamente.</string>
+    <string name="recovery_material_unchecked">Material ainda não verificado. Tente após desbloquear e concluir a operação atual.</string>
+    <string name="secure_startup_key_missing">O serviço de chaves atual não encontra a chave original. Isso não prova que ela foi excluída permanentemente.</string>
+    <string name="secure_startup_wait">O sistema não está pronto ou há uma operação segura em andamento. Desbloqueie o dispositivo e tente mais tarde.</string>
+    <string name="secure_startup_inconsistent">As configurações criptografadas e o estado de recuperação não correspondem. Mantenha os originais; não remova os marcadores para ignorar a verificação.</string>
+    <string name="secure_startup_environment_omk">Se começou após mudar o OMK ou outro módulo de chaves, restaure o ambiente usado na criação do cofre. Remover o Monica de um escopo adicionado recentemente pode ajudar, mas não serve para todos os cofres. Mantenha configurações e chaves; não reinstale módulos nem redefina a semente para testar.</string>
+</resources>

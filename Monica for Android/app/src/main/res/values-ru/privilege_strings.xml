@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">Для установки менеджера паролей по умолчанию требуется Android 14 или новее.</string>
+    <string name="privilege_method">Метод авторизации</string>
+    <string name="privilege_recovery_title">Расширенное восстановление · Необязательно.</string>
+    <string name="privilege_root_confirm_body">Для этого требуется уже рутированное устройство и одобрение в его менеджере Root. Monica использует Root только для системных настроек, необходимых для расширенного восстановления доступности и менеджера паролей по умолчанию. Он не разблокирует ваше хранилище и не считывает данные других приложений. \n\nРасширенное восстановление только переподключает уже включенную службу специальных возможностей Monica. После включения он может продолжиться после перезапуска приложения или устройства и может ненадолго прервать заполнение. \n\nОтключите Root здесь, чтобы прекратить использование в будущем. Чтобы отозвать системную авторизацию, удалите Monica из вашего менеджера Root. Root никогда не запрашивается в качестве запасного варианта для Shizuku.</string>
+    <string name="privilege_root_confirm_title">Разрешить Monica использовать Root?</string>
+    <string name="privilege_root_denied">Root доступ запрещен. Разрешите Monica в вашем менеджере Root и повторите попытку.</string>
+    <string name="privilege_root_disable">Отключите Root в Monica.</string>
+    <string name="privilege_root_grant">Авторизовать Root</string>
+    <string name="privilege_root_hint">Используйте доступ Root этого устройства напрямую.</string>
+    <string name="privilege_root_not_authorized">Root не авторизован. Нажмите «Авторизовать Root», чтобы продолжить.</string>
+    <string name="privilege_root_ready">Root включен для системных настроек</string>
+    <string name="privilege_root_requesting">Ожидание авторизации Root…</string>
+    <string name="privilege_root_timeout">Root истекло время авторизации или команды. Проверьте свой менеджер Root и повторите попытку.</string>
+    <string name="privilege_root_unavailable">Не найдена полезная команда su. Это устройство необходимо сначала рутировать.</string>
+    <string name="privilege_shizuku_hint">Авторизуйтесь через работающую службу Shizuku.</string>
+</resources>

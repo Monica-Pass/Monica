@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_record_count">catatan %1$d</string>
+    <string name="export_source_count_locked">Buka kunci untuk menghitung</string>
+    <string name="export_source_count_loading">Menghitung…</string>
+    <string name="export_source_count_unavailable">Tidak tersedia</string>
+</resources>

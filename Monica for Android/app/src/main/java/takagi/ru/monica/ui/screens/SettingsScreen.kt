@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.background
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -1060,12 +1064,14 @@ fun SettingsSection(
     content: @Composable () -> Unit
 ) {
     Column {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp)
-        )
+        if (title.isNotBlank()) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp)
+            )
+        }
         CompositionLocalProvider(LocalSettingsSectionContent provides true) {
             Column(
                 modifier = Modifier
@@ -1357,7 +1363,7 @@ fun AppearanceSelectionSheet(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onOledPureBlackChanged(!oledPureBlackEnabled) }
+                        .clickable(onClick = switchClick(oledPureBlackEnabled, onCheckedChange = onOledPureBlackChanged))
                         .padding(horizontal = 16.dp, vertical = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

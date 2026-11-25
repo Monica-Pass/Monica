@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Sao chép thẻ</string>
+    <string name="embedded_copy_document">Sao chép tài liệu</string>
+    <string name="embedded_copy_failed">Bản sao nội dung chưa đầy đủ</string>
+    <string name="embedded_copy_failed_message">%1$s không thể sao chép hoàn toàn. Nguồn và bản nháp của bạn được giữ lại. Hãy kiểm tra xem cơ sở dữ liệu nguồn đã được mở khóa và có sẵn tệp đính kèm chưa, sau đó thử lại.</string>
+    <string name="embedded_copy_independent">Bản sao độc lập · Tệp đính kèm %1$d</string>
+    <string name="embedded_copy_note">Sao chép ghi chú</string>
+    <string name="embedded_copy_working">Đang sao chép toàn bộ nội dung…</string>
+    <string name="password_content_document">Giấy tờ tùy thân</string>
+    <string name="password_content_document_description">Trường nhận dạng, mặt thẻ, ảnh và tệp đính kèm</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Diese Elemente konnten nicht gesichert werden. Lokale Daten und bestehende Remote-Backups bleiben unverändert.</string>
+    <string name="passkey_backup_problem_title">Backup erfordert Aufmerksamkeit</string>
+    <string name="passkey_device_bound_solution">Registrieren Sie einen neuen, exportierbaren passkey im Dienst und überprüfen Sie, ob er funktioniert, bevor Sie den alten Schlüssel zurückziehen. Sie können diesen Punkt auch vorerst überspringen.</string>
+    <string name="passkey_partial_replace_blocked">Bei dieser Sicherung werden einige Passkeys weggelassen. Verwenden Sie die Zusammenführungswiederherstellung. Das Ersetzen lokaler Daten ist blockiert.</string>
+    <string name="passkey_partial_requires_encryption">Teilsicherungen, die Passkeys überspringen, müssen weiterhin verschlüsselt werden.</string>
+    <string name="passkey_partial_restore_warning">Bei dieser Teilsicherung werden die übersprungenen Werte Passkeys weggelassen. Die Wiederherstellung führt Zusammenführungen mit vorhandenen lokalen Datensätzen durch.</string>
+    <string name="passkey_partial_saved">Teilsicherung gespeichert</string>
+    <string name="passkey_partial_saved_detail">Die folgenden Passkeys sind nicht enthalten. Ihre lokalen Datensätze und vorhandenen Remote-Backups bleiben erhalten. Der Zeitpunkt der letzten Vollsicherung bleibt unverändert.</string>
+    <string name="passkey_problem_close">Schließen</string>
+    <string name="passkey_retry_full_backup">Vollsicherung erneut versuchen</string>
+    <string name="passkey_skip_and_backup">%1$d überspringen und sichern</string>
+    <string name="passkey_skip_explanation">Das Überspringen betrifft nur diese Sicherung und löscht keine lokalen Elemente. Es wird ein separates Teil-Backup gespeichert; Vorhandene Remote-Backups bleiben erhalten. Es ersetzt kein vollständiges Backup.</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Çapraz cihaz kullanımı</string>
+    <string name="passkey_portability_checking">Kontrol ediliyor…</string>
+    <string name="passkey_portability_exportable">Anahtar dışa aktarılabilir</string>
+    <string name="passkey_portability_local_only">Yalnızca yerel</string>
+    <string name="passkey_portability_key_unavailable">Anahtar kullanılamıyor</string>
+    <string name="passkey_portability_invalid">Çakışan meta veriler</string>
+    <string name="passkey_portability_unknown">Doğrulanmadı</string>
+    <string name="passkey_portability_restricted">Aktarım sınırlı</string>
+    <string name="passkey_portability_exportable_hint">Anahtar desteklenen bir şifrelenmiş biçimde dışa aktarılabilir. Hedefin kimliğini, anahtarını ve kayıt özelliklerini koruması gerekir; web sitesi uyumluluğu hala hedef istemciye bağlıdır.</string>
+    <string name="passkey_portability_local_hint">Özel anahtar bu cihaza bağlı ve dışa aktarılamaz. Veritabanının tek başına kopyalanması başka bir cihazda oturum açmayı etkinleştirmez.</string>
+    <string name="passkey_portability_missing_hint">Bu cihazda kullanılabilir özel anahtar bulunamadı. Bu kayıt tek başına burada veya başka bir cihazda oturum açamaz.</string>
+    <string name="passkey_portability_backup_hint">Bu kimlik bilgisi yedeklemeye uygun değil olarak işaretlendi. Yalnızca bu özelliği koruyan bir hedef onu kullanabilir; Bitwarden\'ya dönüştürme veya kimlik bilgisi alışverişi engellendi.</string>
+    <string name="passkey_portability_counter_hint">Bu kimlik bilgisinin sıfırdan farklı bir imza sayacı geçmişi var. Monica sıfır sayaç kullanır; cihazlar arası kullanım, önceki sayaçları kontrol eden bir web sitesi tarafından reddedilebilir.</string>
+    <string name="passkey_portability_algorithm_hint">Hedef aynı anahtar algoritmasını desteklemelidir. Mevcut Bitwarden aktarımı yalnızca ES256\'yu destekler.</string>
+    <string name="passkey_portability_invalid_hint">Yedekleme özellikleri çakışıyor. İmzalama, kayıtlı mülkleri sessizce değiştirmemelidir; kurtarma için kaynak kimlik bilgilerini saklayın.</string>
+    <string name="passkey_portability_unknown_hint">Anahtar özelliği kontrol edilemedi. Kaynak veritabanının kilidini açın ve tekrar deneyin.</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="app.keemobile.kotpass.database.BoundedDecodeTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-23T12:35:25.225Z" hostname="JOYIN" time="0.359">
+  <properties/>
+  <testcase name="limitAppliesToV4InnerBinaryBeforeXmlParserRuns" classname="app.keemobile.kotpass.database.BoundedDecodeTest" time="0.254"/>
+  <testcase name="exactExpandedLimitAllowsEofAndOneByteLessRejects" classname="app.keemobile.kotpass.database.BoundedDecodeTest" time="0.04"/>
+  <testcase name="optInLimitRejectsExpandedXmlButDefaultStillOpensBothVersions" classname="app.keemobile.kotpass.database.BoundedDecodeTest" time="0.059"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

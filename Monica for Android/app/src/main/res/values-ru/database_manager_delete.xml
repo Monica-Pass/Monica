@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Папки и их содержимое включены. Локальные пароли и защищенные элементы отправляются в корзину. Папки и passkeys удаляются безвозвратно.</string>
+    <string name="manager_delete_native_hint">Выбранные элементы и содержимое папки будут навсегда удалены из этой базы данных. Это невозможно отменить.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d выбрано</string>
+    <string name="manager_delete_title">Удалить выбранные элементы?</string>
+</resources>

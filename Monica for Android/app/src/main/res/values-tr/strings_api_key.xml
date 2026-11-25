@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_title">API Anahtarı</string>
+    <string name="api_key_add">API Anahtarını Ekle</string>
+    <string name="api_key_edit">API Anahtarını Düzenle</string>
+    <string name="api_key_provider">Sağlayıcı adı *</string>
+    <string name="api_key_provider_hint">ör. Claude, özel bir yapay zeka sağlayıcısı</string>
+    <string name="api_key_website">Resmi web sitesi (isteğe bağlı)</string>
+    <string name="api_key_website_label">Resmi web sitesi</string>
+    <string name="api_key_secret_required">API Anahtarı *</string>
+    <string name="api_key_url">API isteği URL (isteğe bağlı)</string>
+    <string name="api_key_url_label">API isteği URL</string>
+    <string name="api_key_required">Gerekli</string>
+    <string name="api_key_invalid_url">Ana makine içeren ve yerleşik kimlik bilgileri olmayan bir http:// veya https:// URL girin.</string>
+    <string name="api_key_show">Anahtarı göster</string>
+    <string name="api_key_hide">Anahtarı gizle</string>
+    <string name="api_key_open_website">Web sitesini aç</string>
+    <string name="api_key_load_error">Bu API Anahtarı okunamadı. Veritabanını yeniden açın ve tekrar deneyin.</string>
+    <string name="api_key_save_error">Seçilen tüm konumlara kaydedilemedi. Kullanılabilirliklerini kontrol edin ve tekrar deneyin.</string>
+    <string name="api_key_locked">Kasanız kilitli. Devam etmek için kilidini açın.</string>
+</resources>

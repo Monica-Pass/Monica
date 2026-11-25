@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_title">Hapus item yang dipilih?</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d dipilih</string>
+    <string name="manager_delete_local_hint">Folder dan isinya disertakan. Kata sandi lokal dan item aman dibuang ke Sampah. Folder dan kunci sandi dihapus secara permanen.</string>
+    <string name="manager_delete_native_hint">Item dan isi folder yang dipilih akan dihapus secara permanen dari database ini. Hal ini tidak dapat dibatalkan.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">現在のコードをコピーします</string>
+    <string name="auth_detail_copy_next">次へコピー</string>
+    <string name="auth_detail_qr_current">QR コードを生成します (現在のコード)</string>
+    <string name="auth_detail_qr_migrate">QR コードを生成 (移行)</string>
+</resources>

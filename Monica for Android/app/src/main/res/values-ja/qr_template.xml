@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">カスタム QR テンプレート</string>
+    <string name="qr_template_error">エントリの読み取り、テンプレートの保存、またはコードの生成ができません。データベースのロックが解除されており、コンテンツが制限内にあることを確認してから、再試行してください。</string>
+    <string name="qr_template_field_error">フィールド「%1$s」が欠落しているか、判読できないか、曖昧です。生成する前に利用可能なフィールドを選択してください。</string>
+    <string name="qr_template_generate">QR コードを生成します</string>
+    <string name="qr_template_hint">生成時に現在のフィールドを読み取ります。解決されたパスワードのコピーではなく、テンプレートを保存します。 Wi-Fi テンプレートは、挿入された値を自動的にエスケープします。</string>
+    <string name="qr_template_insert">挿入フィールド</string>
+    <string name="qr_template_literal">プレーンテキスト</string>
+    <string name="qr_template_mode">フィールド テンプレート</string>
+    <string name="qr_template_wifi">Wi-Fi プリセット</string>
+</resources>

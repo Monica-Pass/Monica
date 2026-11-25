@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">저장 시 업로드; 포그라운드에서 잠금 해제된 동안 업데이트 확인</string>
+    <string name="mdbx_auto_sync_manual_hint">끄기 · 필요할 때 수동으로 동기화</string>
+    <string name="mdbx_auto_sync_title">자동 동기화</string>
+</resources>

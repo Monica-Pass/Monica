@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">復旧保護</string>
+    <string name="recovery_protection_summary">元のマスターパスワードで復旧能力を検証</string>
+    <string name="recovery_protection_verified">このセッションで検証済み：%1$s</string>
+    <string name="recovery_protection_not_ready">復旧保護を確認できませんでした。既存データは保持されています。再試行するか暗号化バックアップを作成してください。</string>
+    <string name="recovery_protection_needs_password">マスターパスワードを入力して復旧保護を準備・検証</string>
+    <string name="recovery_protection_explanation">元のマスターパスワードで独立した復旧情報を開けるか検証します。保管庫や端末の鍵は置き換えません。正常な旧インストールでは復旧情報を準備する場合があります。</string>
+    <string name="recovery_protection_limits">独立した暗号化バックアップを保管してください。検証は現在の情報とセッションにのみ有効で、将来の破損やハードウェアに紐づく認証情報の復旧は保証しません。ロックや情報変更後は再検証が必要です。</string>
+    <string name="recovery_protection_verify">復旧保護を検証</string>
+    <string name="recovery_protection_checking">復旧保護を検証中…</string>
+    <string name="recovery_material_available">復旧情報があります。復旧には元のマスターパスワードによる検証が必要です。</string>
+    <string name="recovery_material_missing">独立した復旧情報がありません。元の鍵環境を戻すか、別のインストールで暗号化バックアップを検証してください。</string>
+    <string name="recovery_material_reenroll">認証情報の変更後は復旧保護の再準備が必要です。通常のアクセスを戻してから現在のマスターパスワードで検証してください。</string>
+    <string name="recovery_material_revoked">この復旧情報は明示的に失効されており使用できません。元のファイルを保持してください。</string>
+    <string name="recovery_material_unsupported">この復旧形式は未対応です。ファイルを保持し、対応する Monica を使用してください。</string>
+    <string name="recovery_material_invalid">復旧情報が不完全または無効です。元のファイルを保持し、空ファイルや別の保管庫の情報に置き換えないでください。</string>
+    <string name="recovery_material_unreadable">復旧情報を読み取れません。ファイルを保持し、端末のロック解除後に再試行してください。</string>
+    <string name="recovery_material_unchecked">復旧情報は未確認です。端末を解除し、現在の操作が終了してから再試行してください。</string>
+    <string name="secure_startup_key_missing">現在のシステム鍵サービスで元の鍵が見つかりません。このエラーだけでは永久削除を断定できません。</string>
+    <string name="secure_startup_wait">システムの準備または安全な操作が完了していません。端末を解除し、後で再試行してください。</string>
+    <string name="secure_startup_inconsistent">暗号化設定と復旧状態が一致しません。元のファイルを保持し、復旧マーカーを削除して検査を回避しないでください。</string>
+    <string name="secure_startup_environment_omk">OMK などの鍵モジュール変更後に発生した場合、保管庫作成時の鍵環境を戻してください。新たに追加した Monica の対象指定を外すと改善する場合がありますが、すべての保管庫には適しません。設定と鍵を保管し、モジュールの再インストールやシードのリセットで試行しないでください。</string>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_message_credentials_required">請輸入帳號和密碼</string>
+    <string name="steam_message_rsa_failed">無法獲取 Steam RSA 金鑰</string>
+    <string name="steam_message_rsa_incomplete">Steam 返回的 RSA 資料不完整</string>
+    <string name="steam_message_password_encrypt">無法加密 Steam 密碼</string>
+    <string name="steam_message_login_request">無法傳送 Steam 登入請求</string>
+    <string name="steam_message_login_failed">Steam 登入失敗</string>
+    <string name="steam_message_login_rejected">Steam 拒絕登入（EResult=%1$s，interval=%2$s）</string>
+    <string name="steam_message_login_incomplete">Steam 登入回應不完整，可能需要額外驗證。</string>
+    <string name="steam_message_session_invalid">登入會話無效</string>
+    <string name="steam_message_code_required">請輸入驗證碼</string>
+    <string name="steam_message_session_expired">登入會話已過期，請重新開始。</string>
+    <string name="steam_message_verification_failed">Steam 驗證失敗</string>
+    <string name="steam_message_qr_create">無法建立 Steam QR 碼登入會話</string>
+    <string name="steam_message_qr_failed">Steam QR 碼登入失敗</string>
+    <string name="steam_message_code_submit">無法提交 Steam 驗證碼</string>
+    <string name="steam_message_session_needs_code">此登入會話需要輸入驗證碼</string>
+    <string name="steam_message_qr_expired">QR 碼登入會話已過期，請重新開始。</string>
+    <string name="steam_message_not_qr">此會話不是QR 碼登入</string>
+    <string name="steam_message_poll_failed">無法檢查 Steam 登入狀態</string>
+    <string name="steam_message_steamid_missing">Steam 已登入，但未獲得 SteamID，無法繼續。</string>
+    <string name="steam_message_token_missing">Steam 已登入，但未獲得 access token，無法繼續匯入。</string>
+    <string name="steam_message_login_timeout">等待 Steam 登入超時，請稍後重試。</string>
+    <string name="steam_message_qr_parameters">QR 碼登入會話參數無效，請重新開始。</string>
+    <string name="steam_message_replacement_code">此帳號已綁定驗證器，請輸入驗證碼以替換。</string>
+    <string name="steam_message_steamid_invalid">SteamID 無效，無法設定 Steam Guard。</string>
+    <string name="steam_message_account_restricted">Steam 帳號受限，無法新增 Steam Guard</string>
+    <string name="steam_message_rate_limited">Steam 請求過於頻繁，請稍後重試。</string>
+    <string name="steam_message_add_failed">無法新增 Steam Guard</string>
+    <string name="steam_message_phone_required">新增 Steam Guard 前，請先為此 Steam 帳號綁定手機號</string>
+    <string name="steam_message_response_missing">Steam 返回的驗證器資料不完整：缺少 %1$s</string>
+    <string name="steam_message_activation_expired">Steam Guard 激活已過期，請重新登入。</string>
+    <string name="steam_message_activation_data">Steam Guard 資料不完整，無法產生激活驗證碼。</string>
+    <string name="steam_message_activation_failed">Steam Guard 激活失敗</string>
+    <string name="steam_message_activation_code_invalid">Steam 激活碼無效或已過期</string>
+    <string name="steam_message_activation_status">Steam Guard 激活失敗（status=%1$d）</string>
+    <string name="steam_message_sequential_codes">Steam Guard 激活失敗：無法產生 Steam 要求的連續驗證碼</string>
+    <string name="steam_message_replace_start">無法發起驗證器替換</string>
+    <string name="steam_message_replace_sms">請輸入簡訊驗證碼以替換目前驗證器</string>
+    <string name="steam_message_replace_denied">Steam 已登入，但拒絕轉移驗證器（EResult=2）。帳號可能沒有可用手機號，或目前不允許轉移。請匯入 maFile，或在 Steam 綁定手機號後重試。</string>
+    <string name="steam_message_replace_forbidden">Steam 已登入，但拒絕存取驗證器轉移介面（EResult=15）。請匯入 maFile，或稍後重新登入再試。</string>
+    <string name="steam_message_replace_limited">Steam 已登入，但驗證器轉移暫時受限（EResult=84），請稍後重試。</string>
+    <string name="steam_message_replace_result">Steam 已登入，但驗證器轉移失敗（EResult=%1$d）</string>
+    <string name="steam_message_replace_session">替換會話無效，請重新登入後匯入。</string>
+    <string name="steam_message_replace_failed">驗證器替換失敗</string>
+    <string name="steam_message_session_state">登入會話狀態異常，請重新開始。</string>
+    <string name="steam_message_oauth_missing">Steam 已登入，但未返回 OAuth token，無法繼續匯入。</string>
+    <string name="steam_message_captcha_unsupported">Steam 要求圖形驗證，目前版本暫不支援。請先在 Steam 用戶端登入一次，再重試。</string>
+    <string name="steam_message_enter_token_code">請輸入 Steam Guard 驗證碼</string>
+    <string name="steam_message_enter_email_code">請輸入電子郵件驗證碼</string>
+    <string name="steam_message_invalid_parameters">Steam 拒絕請求：參數無效</string>
+    <string name="steam_message_access_denied">Steam 拒絕存取</string>
+    <string name="steam_message_already_bound">此帳號已綁定 Steam 驗證器，請使用替換流程。</string>
+    <string name="steam_message_operation_disallowed">Steam 目前狀態不允許此操作</string>
+    <string name="steam_message_confirmation_required">Steam 需要額外確認</string>
+    <string name="steam_message_code_invalid">Steam 驗證碼無效或已過期</string>
+    <string name="steam_message_request_status">Steam 請求失敗（status=%1$d）</string>
+    <string name="steam_message_bad_credentials">Steam 帳號或密碼錯誤</string>
+    <string name="steam_message_duplicate_request">Steam 返回重複請求（EResult=29），帳號可能已綁定驗證器。</string>
+    <string name="steam_message_session_conflict">Steam 登入會話衝突，請稍後重試。</string>
+    <string name="steam_message_extra_verification">Steam 登入需要額外驗證（EResult=63）</string>
+    <string name="steam_message_login_result">Steam 登入失敗（EResult=%1$d）</string>
+    <string name="steam_message_token_code_invalid">Steam Guard 驗證碼無效或已過期</string>
+    <string name="steam_message_sms_email_code_invalid">簡訊或電子郵件驗證碼無效或已過期</string>
+</resources>

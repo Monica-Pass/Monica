@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">“%1$s” klasörü ve içeriği silinsin mi? Devam etmeden önce lütfen onaylayın.</string>
+    <string name="external_folder_delete_keep_items">“%1$s” klasörü silinsin mi? İçindeki öğeler bu klasör olmadan saklanacaktır.</string>
+</resources>

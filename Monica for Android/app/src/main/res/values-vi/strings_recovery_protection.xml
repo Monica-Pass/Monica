@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Bảo vệ khôi phục</string>
+    <string name="recovery_protection_summary">Kiểm tra khôi phục bằng mật khẩu chính ban đầu</string>
+    <string name="recovery_protection_verified">Đã kiểm tra trong phiên này: %1$s</string>
+    <string name="recovery_protection_not_ready">Không thể xác minh bảo vệ khôi phục. Dữ liệu được giữ lại. Thử lại hoặc tạo bản sao lưu mã hóa.</string>
+    <string name="recovery_protection_needs_password">Nhập mật khẩu chính để chuẩn bị và kiểm tra khôi phục</string>
+    <string name="recovery_protection_explanation">Kiểm tra mật khẩu chính ban đầu có mở được dữ liệu khôi phục độc lập hay không. Không thay kho dữ liệu hoặc khóa thiết bị. Bản cài cũ còn tốt có thể chuẩn bị dữ liệu khôi phục.</string>
+    <string name="recovery_protection_limits">Giữ bản sao lưu mã hóa độc lập. Kiểm tra chỉ áp dụng cho dữ liệu và phiên hiện tại; không bảo đảm tính toàn vẹn về sau hay khôi phục thông tin gắn với phần cứng. Kiểm tra lại sau khi khóa hoặc thay đổi dữ liệu.</string>
+    <string name="recovery_protection_verify">Kiểm tra khôi phục</string>
+    <string name="recovery_protection_checking">Đang kiểm tra khôi phục…</string>
+    <string name="recovery_material_available">Đã tìm thấy dữ liệu khôi phục. Vẫn cần xác minh bằng mật khẩu chính ban đầu.</string>
+    <string name="recovery_material_missing">Không có dữ liệu khôi phục độc lập. Khôi phục môi trường khóa cũ hoặc kiểm tra bản sao lưu mã hóa ở bản cài khác.</string>
+    <string name="recovery_material_reenroll">Sau khi đổi thông tin xác thực cần chuẩn bị lại. Khôi phục truy cập bình thường rồi kiểm tra bằng mật khẩu chính hiện tại.</string>
+    <string name="recovery_material_revoked">Dữ liệu khôi phục này đã bị thu hồi rõ ràng. Giữ các tệp gốc.</string>
+    <string name="recovery_material_unsupported">Phiên bản này không hỗ trợ định dạng khôi phục. Giữ tệp và dùng Monica tương thích.</string>
+    <string name="recovery_material_invalid">Dữ liệu khôi phục thiếu hoặc không hợp lệ. Giữ bản gốc; không thay bằng tệp trống hay dữ liệu của kho khác.</string>
+    <string name="recovery_material_unreadable">Không đọc được dữ liệu khôi phục. Giữ tệp, mở khóa thiết bị rồi thử lại.</string>
+    <string name="recovery_material_unchecked">Chưa kiểm tra dữ liệu khôi phục. Thử lại sau khi mở khóa và thao tác hiện tại kết thúc.</string>
+    <string name="secure_startup_key_missing">Dịch vụ khóa hiện tại không tìm thấy khóa gốc. Điều này không chứng minh khóa đã bị xóa vĩnh viễn.</string>
+    <string name="secure_startup_wait">Hệ thống chưa sẵn sàng hoặc thao tác bảo mật chưa xong. Mở khóa thiết bị và thử lại sau.</string>
+    <string name="secure_startup_inconsistent">Cài đặt mã hóa và trạng thái khôi phục không khớp. Giữ tệp gốc; không xóa dấu khôi phục để bỏ qua kiểm tra.</string>
+    <string name="secure_startup_environment_omk">Nếu xảy ra sau khi đổi OMK hoặc mô-đun khóa, hãy khôi phục môi trường lúc tạo kho. Bỏ Monica khỏi phạm vi vừa thêm có thể giúp, nhưng không đúng với mọi kho. Giữ cấu hình và khóa; không thử bằng cách cài lại mô-đun hoặc đặt lại seed.</string>
+</resources>

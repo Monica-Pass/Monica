@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_conflict_choice_effect">將使用所選版本解決衝突欄位，包括有衝突的刪除操作。結果會在下次同步時分享至其他裝置。請確認選擇後再繼續。</string>
+    <string name="mdbx_conflict_confirm_choice">確認選擇</string>
+    <string name="mdbx_conflict_values_unavailable">此處無法預覽歷史值。請先在來源裝置上查看項目，再作選擇。</string>
+    <string name="mdbx_conflict_show_values">顯示版本比較</string>
+    <string name="mdbx_conflict_version_help">本機：衝突發生時此裝置上的內容。\n傳入：收到的版本，不一定是最新版本。</string>
+    <string name="mdbx_copy_parameters">複製參數</string>
+    <string name="mdbx_snapshot_retention_help">自動快照可能會被清理。手動快照會一直保留，直到您自行刪除。</string>
+</resources>

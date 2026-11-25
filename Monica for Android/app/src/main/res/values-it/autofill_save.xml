@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Salva come nuova voce</string>
+    <string name="autofill_save_local_source">"Locale"</string>
+    <string name="autofill_save_review_description">Selezionare una voce per rivederla prima di salvare. Le cartelle, le note e gli altri account esistenti vengono conservati.</string>
+    <string name="autofill_save_review_title">Aggiornare una password esistente?</string>
+</resources>

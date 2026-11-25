@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">儲存資料</string>
+    <string name="kp_file_merge">合併資料</string>
+    <string name="kp_file_reload">重新載入資料</string>
+    <string name="kp_file_ready">已儲存 · KDBX</string>
+    <string name="kp_file_busy">正在處理資料庫…</string>
+    <string name="kp_file_saved">資料已儲存</string>
+    <string name="kp_file_external_reloaded">已載入外部變更</string>
+    <string name="kp_file_reloaded">資料已重新載入</string>
+    <string name="kp_file_merged">資料已合併</string>
+    <string name="kp_file_merged_conflicts">已合併；修改時間相同的不同版本保留在項目歷史中</string>
+    <string name="kp_file_reload_failed">無法重新載入，目前顯示上次讀取的內容</string>
+    <string name="kp_file_failed">操作未完成</string>
+    <string name="kp_file_failure_help">請檢查檔案存取權限、來源密碼及外部變更後重試。</string>
+    <string name="kp_file_merge_summary">比對相同項目，合併更新、歷史和刪除記錄。</string>
+    <string name="kp_file_select_source">選擇 KDBX 檔案</string>
+    <string name="kp_file_source_selected">已選擇來源檔案 · 點選更換</string>
+    <string name="kp_file_source_password">來源資料庫密碼</string>
+    <string name="kp_file_select_key">金鑰檔案（選填）</string>
+    <string name="kp_file_key_selected">已選擇金鑰檔案 · 點選更換</string>
+    <string name="kp_file_merge_notice">合併前建立復原副本。較新的項目生效；修改時間相同時保留目前版本，另一版本存入歷史。</string>
+    <string name="kp_file_merge_confirm">合併並儲存</string>
+</resources>

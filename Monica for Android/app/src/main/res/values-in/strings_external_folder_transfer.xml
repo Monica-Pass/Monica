@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Folder Bitwarden tetap berada dalam akun yang sama. Menyalin folder dengan lampiran, kunci sandi, atau entri organisasi belum didukung.</string>
+    <string name="external_folder_choose_destination">Pilih database dan folder tujuan</string>
+    <string name="external_folder_root">Akar basis data</string>
+    <string name="external_folder_copy_hint">Salin folder dan isinya; simpan yang asli.</string>
+    <string name="external_folder_move_hint">Pindahkan folder dan isinya. Dokumen asli hanya akan dihapus setelah tujuannya disimpan.</string>
+</resources>

@@ -74,6 +74,7 @@ internal fun DatabaseManagerScreen(initialDatabaseKey: String?, mdbxViewModel: M
     var nameRequest by remember { mutableStateOf<ManagerNameRequest?>(null) }
     var report by remember { mutableStateOf<DatabaseManagerReport?>(null) }
     var detail by remember { mutableStateOf<Pair<DatabaseManagerLocation, MdbxStructureNode>?>(null) }
+    var comparisonDatabaseId by remember { mutableStateOf<Long?>(null) }
     var transferRequest by remember { mutableStateOf<ManagerTransferRequest?>(null) }
     var actionRequest by remember { mutableStateOf<ManagerActionRequest?>(null) }
     var deleteRequest by remember { mutableStateOf<ManagerActionRequest?>(null) }
@@ -170,7 +171,13 @@ internal fun DatabaseManagerScreen(initialDatabaseKey: String?, mdbxViewModel: M
         }
         return
     }
-    BackHandler { if (detail != null) detail = null else back() }
+    BackHandler(enabled = comparisonDatabaseId == null) { if (detail != null) detail = null else back() }
+    comparisonDatabaseId?.let { databaseId ->
+        // Keep this route while the system document picker is open. The comparison screen
+        // independently clears plaintext and validates the session before accepting a result.
+        DatabaseCompareScreen(databaseId) { comparisonDatabaseId = null }
+        return
+    }
     detail?.let { (location, row) ->
         when (location.database.kind) {
             ImportDestinationKind.KEEPASS -> {
@@ -226,6 +233,12 @@ internal fun DatabaseManagerScreen(initialDatabaseKey: String?, mdbxViewModel: M
                     modifier = Modifier.weight(1f),
                     onCreateFolder = { pane.location?.let { nameRequest = ManagerNameRequest(it) } },
                     onManageDatabase = { pane.location?.database?.let(onManageDatabase) },
+                    onCompareDatabase = {
+                        if (!busy && foreground && SessionManager.isUnlocked.value) {
+                            pane.location?.database?.takeIf { it.kind == ImportDestinationKind.KEEPASS }
+                                ?.let { comparisonDatabaseId = it.databaseId }
+                        }
+                    },
                     onActions = { ids -> active = index; actionRequest = requestFor(pane, index, ids) })
             }
         }
@@ -322,6 +335,7 @@ internal fun DatabaseManagerPaneContent(pane: DatabaseManagerPane, stores: List<
     compact: Boolean, active: Boolean, enabled: Boolean, onActivate: () -> Unit,
     onOpen: (MdbxStructureNode) -> Unit, modifier: Modifier = Modifier,
     onCreateFolder: () -> Unit = {}, onManageDatabase: () -> Unit = {},
+    onCompareDatabase: () -> Unit = {},
     onActions: (Set<String>) -> Unit = {}) {
     val index = pane.snapshot?.index
     val folderId = pane.folderId?.takeIf { it in index?.folders.orEmpty() }
@@ -352,6 +366,11 @@ internal fun DatabaseManagerPaneContent(pane: DatabaseManagerPane, stores: List<
                         DropdownMenuItem(text = { Text(stringResource(R.string.manager_databases)) }, onClick = { menu = false; pane.navigate(null) })
                         DropdownMenuItem(text = { Text(stringResource(R.string.search)) }, onClick = { menu = false; pane.search = !pane.search })
                         if (pane.location != null) DropdownMenuItem(text = { Text(stringResource(R.string.keepass_native_create_group)) }, onClick = { menu = false; onCreateFolder() })
+                        if (pane.location?.database?.kind == ImportDestinationKind.KEEPASS) {
+                            DropdownMenuItem(text = { Text(stringResource(R.string.db_compare_title)) },
+                                enabled = enabled, modifier = Modifier.testTag("manager-compare-$paneId"),
+                                onClick = { menu = false; onCompareDatabase() })
+                        }
                     }
                 }
             }

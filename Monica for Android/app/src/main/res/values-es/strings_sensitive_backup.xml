@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">No se pudo completar la copia de seguridad porque no se pudieron leer los datos confidenciales de «%1$s». Se conservaron los datos originales.</string>
+</resources>

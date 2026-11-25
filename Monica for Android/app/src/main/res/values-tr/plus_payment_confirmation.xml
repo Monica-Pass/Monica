@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">Ödemeyi iyi niyetle yaptım. Monica Plus\'ın kilidini açmayı onaylayın.</string>
+    <string name="payment_unlock_confirm_button">Kilit açmayı onayla</string>
+</resources>

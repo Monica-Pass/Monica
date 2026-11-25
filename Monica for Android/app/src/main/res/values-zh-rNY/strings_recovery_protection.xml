@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">恢复保护</string>
+    <string name="recovery_protection_summary">使用原主密码验证恢复能力</string>
+    <string name="recovery_protection_verified">本次会话已验证：%1$s</string>
+    <string name="recovery_protection_not_ready">未能验证恢复保护，原数据已保留。请重试或创建加密备份。</string>
+    <string name="recovery_protection_needs_password">输入主密码，准备并验证恢复保护</string>
+    <string name="recovery_protection_explanation">验证能否使用原主密码打开独立恢复材料。此操作不会替换密码库或设备密钥；健康的旧安装可能在验证时补齐恢复材料。</string>
+    <string name="recovery_protection_limits">请保留独立加密备份。验证仅适用于当前材料和会话，不保证文件今后不损坏，也不保证硬件绑定凭据可恢复。锁定或材料变化后需重新验证。</string>
+    <string name="recovery_protection_verify">验证恢复保护</string>
+    <string name="recovery_protection_checking">正在验证恢复保护…</string>
+    <string name="recovery_material_available">已找到恢复材料，仍需使用原主密码验证后才能恢复。</string>
+    <string name="recovery_material_missing">未找到独立恢复材料。请恢复原密钥环境，或在另一安装中验证加密备份。</string>
+    <string name="recovery_material_reenroll">凭据更改后需要重新准备恢复保护。请先恢复正常访问，再使用当前主密码验证。</string>
+    <string name="recovery_material_revoked">此恢复材料已被明确撤销，不能用于恢复。请保留原文件。</string>
+    <string name="recovery_material_unsupported">当前版本不支持此恢复格式。请保留文件，使用兼容的 Monica 版本。</string>
+    <string name="recovery_material_invalid">恢复材料不完整或无效。请保留原文件，不要换成空文件或其他库的材料。</string>
+    <string name="recovery_material_unreadable">无法读取恢复材料。请保留文件，解锁设备后重试。</string>
+    <string name="recovery_material_unchecked">尚未检查恢复材料。请在设备解锁且当前操作结束后重试。</string>
+    <string name="secure_startup_key_missing">当前系统密钥服务找不到原密钥。仅凭此错误不能断定密钥已永久删除。</string>
+    <string name="secure_startup_wait">系统尚未就绪，或安全操作尚未完成。请解锁设备，稍后重试。</string>
+    <string name="secure_startup_inconsistent">加密设置与恢复状态不一致。请保留原文件，不要删除恢复标记以绕过检查。</string>
+    <string name="secure_startup_environment_omk">如果问题出现在更改 OMK 等密钥模块之后，请恢复创建此库时的密钥环境。若刚把 Monica 加入作用范围，取消该项可能有帮助，但不适用于所有库。请保留模块配置和密钥，不要通过重装模块或重置种子试错。</string>
+</resources>

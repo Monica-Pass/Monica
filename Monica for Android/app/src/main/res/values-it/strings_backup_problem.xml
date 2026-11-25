@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Non è stato possibile eseguire il backup di questi elementi. I dati locali e i backup remoti esistenti rimangono invariati.</string>
+    <string name="passkey_backup_problem_title">Il backup richiede attenzione</string>
+    <string name="passkey_device_bound_solution">Registra un nuovo passkey esportabile sul servizio e verifica che funzioni prima di ritirare la vecchia chiave. Puoi anche saltare questo elemento per ora.</string>
+    <string name="passkey_partial_replace_blocked">Questo backup omette alcuni Passkeys. Utilizzare il ripristino tramite unione; la sostituzione dei dati locali è bloccata.</string>
+    <string name="passkey_partial_requires_encryption">I backup parziali che saltano Passkeys devono comunque essere crittografati.</string>
+    <string name="passkey_partial_restore_warning">Questo backup parziale omette Passkeys saltato. Il ripristino si unisce ai record locali esistenti.</string>
+    <string name="passkey_partial_saved">Backup parziale salvato</string>
+    <string name="passkey_partial_saved_detail">Gli Passkeys di seguito non sono inclusi. I loro record locali e i backup remoti esistenti vengono conservati. L\'ora dell\'ultimo backup completo rimane invariata.</string>
+    <string name="passkey_problem_close">"Chiudi"</string>
+    <string name="passkey_retry_full_backup">Riprovare il backup completo</string>
+    <string name="passkey_skip_and_backup">Salta %1$d e torna indietro</string>
+    <string name="passkey_skip_explanation">Il salto influisce solo su questo backup e non elimina gli elementi locali. Verrà salvato un backup parziale separato; i backup remoti esistenti vengono conservati. Non sostituisce un backup completo.</string>
+</resources>

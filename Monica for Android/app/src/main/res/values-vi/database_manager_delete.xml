@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Bao gồm các thư mục và nội dung của chúng. Mật khẩu cục bộ và các mục bảo mật sẽ được chuyển vào Thùng rác. Các thư mục và passkeys sẽ bị xóa vĩnh viễn.</string>
+    <string name="manager_delete_native_hint">Các mục và nội dung thư mục đã chọn sẽ bị xóa vĩnh viễn khỏi cơ sở dữ liệu này. Điều này không thể hoàn tác được.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d đã chọn</string>
+    <string name="manager_delete_title">Xóa các mục đã chọn?</string>
+</resources>

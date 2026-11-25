@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gpg_title">GPG 金鑰</string>
+    <string name="gpg_entry_title">標題</string>
+    <string name="gpg_name">姓名</string>
+    <string name="gpg_email">電子郵件（選填）</string>
+    <string name="gpg_error">處理金鑰失敗，請重試。</string>
+    <string name="gpg_storage">儲存位置（%1$d）</string>
+    <string name="gpg_generate">產生金鑰</string>
+    <string name="gpg_import">匯入金鑰</string>
+    <string name="gpg_save">儲存至密碼庫</string>
+    <string name="gpg_no_expiry">永不過期</string>
+    <string name="gpg_days">%1$d 天</string>
+    <string name="gpg_passphrase">私鑰密碼（選填）</string>
+    <string name="gpg_copy_fingerprint">複製指紋</string>
+    <string name="gpg_copy_public">複製公鑰</string>
+    <string name="gpg_copy_private">複製私鑰</string>
+    <string name="gpg_export_public">匯出公鑰</string>
+    <string name="gpg_export_private">匯出私鑰</string>
+    <string name="gpg_show_private">顯示私鑰</string>
+    <string name="gpg_hide_private">隱藏私鑰</string>
+    <string name="gpg_add_title">新增 GPG 金鑰</string>
+    <string name="gpg_edit_title">編輯 GPG 金鑰</string>
+    <string name="gpg_empty">產生或匯入金鑰</string>
+    <string name="gpg_ready">已新增金鑰</string>
+    <string name="gpg_options">產生選項</string>
+    <string name="gpg_expiry">有效期限</string>
+    <string name="gpg_actions">GPG 金鑰操作</string>
+    <string name="gpg_export_pair">匯出金鑰組</string>
+    <string name="gpg_create_entry">新增 GPG 金鑰項目</string>
+    <string name="gpg_name_invalid">請輸入 1–128 個字元的姓名，不含角括號或換行。</string>
+    <string name="gpg_email_invalid">請輸入有效的電子郵件地址，或留空。</string>
+    <string name="gpg_generate_error">產生金鑰失敗，請重試。</string>
+    <string name="gpg_import_error">匯入失敗，請選擇一個有效的 OpenPGP 金鑰檔案（不超過 1 MB）。</string>
+    <string name="gpg_load_error">讀取金鑰失敗，請檢查密碼庫後重新開啟項目。</string>
+    <string name="gpg_save_error">儲存金鑰失敗，請確認所選密碼庫可寫入。</string>
+    <string name="gpg_export_error">匯出金鑰失敗，請選擇可寫入的位置後重試。</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="recovery_protection_title">Kurtarma koruması</string>
+    <string name="recovery_protection_summary">Orijinal ana şifrenizi kullanarak kurtarmayı doğrulayın</string>
+    <string name="recovery_protection_verified">%1$s adresindeki bu oturumda doğrulandı</string>
+    <string name="recovery_protection_not_ready">Kurtarma koruması doğrulanamadı. Mevcut veriler tutuldu. Yeniden deneyin veya şifrelenmiş bir yedekleme yapın.</string>
+    <string name="recovery_protection_needs_password">Kurtarma işlemini hazırlamak ve doğrulamak için ana şifrenizi girin</string>
+    <string name="recovery_protection_explanation">Özgün ana şifrenizin bağımsız kurtarma verilerini açabildiğini doğrulayın. Bu işlem kasanızın veya cihaz anahtarlarınızın yerini almaz. Sorunsuz çalışan eski bir kurulum, doğrulama sırasında kurtarma verilerini hazırlayabilir.</string>
+    <string name="recovery_protection_limits">Bağımsız bir şifreli yedek saklayın. Doğrulama yalnızca mevcut kurtarma verileri ve oturum için geçerlidir; gelecekte dosyaların bütünlüğünü veya donanıma bağlı kimlik bilgilerinin kurtarılmasını garanti etmez. Kilitleme veya kurtarma verilerinin değiştirilmesi, yeniden doğrulama gerektirir.</string>
+    <string name="recovery_protection_verify">Kurtarma korumasını doğrulayın</string>
+    <string name="recovery_protection_checking">Kurtarma koruması doğrulanıyor…</string>
+    <string name="recovery_material_available">Geri kazanım malzemesi bulundu. Kurtarma işlemi yine de orijinal ana parolayla doğrulamayı gerektirir.</string>
+    <string name="recovery_material_missing">Hiçbir bağımsız geri kazanım malzemesi bulunamadı. Orijinal anahtar ortamını geri yükleyin veya başka bir kurulumda şifrelenmiş bir yedeklemeyi doğrulayın.</string>
+    <string name="recovery_material_reenroll">Kimlik bilgisi değişikliğinden sonra kurtarmanın yeniden hazırlanması gerekir. Normal erişimi geri yükleyin, ardından mevcut ana şifrenizle doğrulayın.</string>
+    <string name="recovery_material_revoked">Bu kurtarma materyali açıkça iptal edilmiştir ve kullanılamaz. Orijinal dosyaları saklayın.</string>
+    <string name="recovery_material_unsupported">Bu kurtarma formatı bu sürüm tarafından desteklenmiyor. Dosyaları saklayın ve uyumlu bir Monica sürümünü kullanın.</string>
+    <string name="recovery_material_invalid">Kurtarma verileri eksik veya geçersiz. Özgün dosyaları saklayın; bunları boş bir dosyayla veya başka bir kasanın kurtarma verileriyle değiştirmeyin.</string>
+    <string name="recovery_material_unreadable">Kurtarma materyali okunamadı. Dosyaları saklayın, cihazın kilidini açın ve yeniden deneyin.</string>
+    <string name="recovery_material_unchecked">Geri kazanım malzemesi kontrol edilmedi. Cihazın kilidi açıldıktan ve mevcut işlem tamamlandıktan sonra yeniden deneyin.</string>
+    <string name="secure_startup_key_missing">Geçerli sistem anahtarı hizmeti orijinal anahtarı bulamıyor. Bu tek başına anahtarın kalıcı olarak silindiğini kanıtlamaz.</string>
+    <string name="secure_startup_wait">Sistem hazır değil veya güvenli bir işlem tamamlanmadı. Cihazın kilidini açın ve daha sonra tekrar deneyin.</string>
+    <string name="secure_startup_inconsistent">Şifrelenmiş ayarlar ve kurtarma durumu eşleşmiyor. Orijinal dosyaları saklayın; Bu kontrolü atlamak için kurtarma işaretleyicilerini kaldırmayın.</string>
+    <string name="secure_startup_environment_omk">Bu sorun OMK veya başka bir anahtar modülü değiştirildikten sonra başladıysa, kasayı oluştururken kullanılan anahtar ortamını geri yükleyin. Monica uygulamasını yeni eklenen kapsamdan çıkarmak yardımcı olabilir; bu işlem her kasa için uygun değildir. Modül yapılandırmasını ve anahtarları koruyun. Denemek amacıyla modülleri yeniden yüklemeyin veya seed değerlerini sıfırlamayın.</string>
+</resources>

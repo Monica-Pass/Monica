@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Thanh toán bù trừ thẻ ngân hàng…</string>
+    <string name="clear_data_completed">Xóa hoàn tất</string>
+    <string name="clear_data_completed_hint">Dữ liệu được chọn đã bị xóa.</string>
+    <string name="clear_data_count">Đã xóa các mục %1$d / %2$d</string>
+    <string name="clear_data_documents">Đang xóa tài liệu…</string>
+    <string name="clear_data_failed">Không thể xóa tất cả dữ liệu đã chọn</string>
+    <string name="clear_data_failed_hint">Quá trình xóa đã dừng. Các mục đã bị xóa sẽ không được khôi phục. Hãy kiểm tra kết nối cơ sở dữ liệu của bạn và thử lại.</string>
+    <string name="clear_data_generator_history">Đang xóa lịch sử tạo mật khẩu…</string>
+    <string name="clear_data_notes">Đang xóa ghi chú…</string>
+    <string name="clear_data_passwords">Đang xóa mật khẩu…</string>
+    <string name="clear_data_preparing">Đang đếm các mục đã chọn…</string>
+    <string name="clear_data_totp">Đang xóa trình xác thực…</string>
+    <string name="clear_data_verifying">Đang xác minh…</string>
+    <string name="clear_data_wait">Vui lòng đợi thao tác này kết thúc.</string>
+</resources>

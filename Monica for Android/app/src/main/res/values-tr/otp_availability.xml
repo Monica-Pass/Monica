@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="totp_temporarily_unavailable">Bu kimlik doğrulama anahtarı geçici olarak okunamıyor. Monica\'nın kilidini açın ve tekrar deneyin. Orijinal veriler saklandı.</string>
+</resources>

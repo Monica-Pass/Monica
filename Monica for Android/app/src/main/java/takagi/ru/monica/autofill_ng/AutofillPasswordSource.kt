@@ -200,7 +200,7 @@ class AutofillPasswordSource(
 
     suspend fun resolve(entry: PasswordEntry): PasswordEntry? = mutex.withLock { resolveLocked(entry) }
 
-    /** Editor result IDs are Room IDs. Resolve MDBX by its proven logical identity, never its title. */
+    /** Editor result IDs are Room IDs. Match a native UUID or a verified legacy logical identity. */
     suspend fun getSavedRoomEntry(id: Long): PasswordEntry? = mutex.withLock {
         if (!authorized()) return@withLock null
         if (!loaded) loadLocked()
@@ -213,7 +213,7 @@ class AutofillPasswordSource(
                 return@withContext null
             val logicalId = mdbxPasswordObjectId(owner)
             val candidate = mdbxRows[databaseId]?.credentials?.values
-                ?.singleOrNull { it.logicalEntryId == logicalId } ?: return@withContext null
+                ?.singleOrNull { it.objectId == logicalId || it.logicalEntryId == logicalId } ?: return@withContext null
             val resolved = resolveLocked(candidate.entry) ?: return@withContext null
             resolved.takeIf { database.passwordEntryDao().getPasswordEntryById(id) == owner && authorized() }
         }

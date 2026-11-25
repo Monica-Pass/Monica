@@ -90,6 +90,11 @@ internal fun KeePassNativeDatabaseToolsScreen(
     onBack: () -> Unit,
     onDatabaseChanged: () -> Unit
 ) {
+    var showComparison by remember { mutableStateOf(false) }
+    if (showComparison) {
+        DatabaseCompareScreen(initialDatabaseId = database.id, onBack = { showComparison = false })
+        return
+    }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val conflictResolutionVersion by viewModel.conflictResolution.resolutionVersion.collectAsStateWithLifecycle()
@@ -278,6 +283,17 @@ internal fun KeePassNativeDatabaseToolsScreen(
                     busy = busyAction == "merge",
                     enabled = busyAction == null && browser != null && !viewModel.isKeePassDatabaseReadOnly(database.id),
                     onClick = { mergeSourceLauncher.launch(arrayOf(KEEPASS_KDBX_MIME_TYPE, "application/octet-stream", "*/*")) }
+                )
+            }
+            item {
+                DatabaseToolCard(
+                    index = 0, count = 1,
+                    icon = Icons.Default.Merge,
+                    title = stringResource(R.string.db_compare_title),
+                    summary = stringResource(R.string.db_compare_intro),
+                    busy = false,
+                    enabled = busyAction == null,
+                    onClick = { showComparison = true }
                 )
             }
             if (database.isRemoteSource()) {

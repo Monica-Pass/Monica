@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_review_title">更新已有密碼？</string>
+    <string name="autofill_save_review_description">選擇項目後可在編輯頁檢查並儲存。現有資料夾、備註和其他帳號保持原樣。</string>
+    <string name="autofill_save_as_new">另存為新項目</string>
+    <string name="autofill_save_local_source">本機</string>
+</resources>

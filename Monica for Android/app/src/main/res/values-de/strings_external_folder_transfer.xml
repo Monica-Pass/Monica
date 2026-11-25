@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden-Ordner bleiben im selben Konto. Das Kopieren von Ordnern mit Anhängen, passkeys oder Organisationseinträgen wird noch nicht unterstützt.</string>
+    <string name="external_folder_choose_destination">Wählen Sie eine Zieldatenbank und einen Zielordner</string>
+    <string name="external_folder_copy_hint">Kopieren Sie den Ordner und seinen Inhalt; Behalten Sie das Original.</string>
+    <string name="external_folder_move_hint">Verschieben Sie den Ordner und seinen Inhalt. Das Original wird erst entfernt, nachdem das Ziel gespeichert wurde.</string>
+    <string name="external_folder_root">Datenbankstammverzeichnis</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android は現在、このインストールの暗号化設定を検証できません。通常の起動を停止しました。 Monica は設定をクリアしていないか、キーを交換していません。</string>
+    <string name="secure_startup_diagnostic">診断情報をコピーします</string>
+    <string name="secure_startup_environment">アプリデータの復元、ROM のフラッシュ、またはシステムの変更後にこの問題が発生した場合は、元のシステムと主要な環境を復元できるかどうかを確認してください。このエラーだけでは原因を特定できません。</string>
+    <string name="secure_startup_no_reset">アプリデータを消去したり、Monica をアンインストールしたりしないでください。元のファイルは保存しておいてください。 Monica でエクスポートされたバックアップがある場合は、別のインストールでそれを確認してください。永久に失われたシステム キーは、再試行しても再作成できません。</string>
+    <string name="secure_startup_preserved">既存のデータは保存されます</string>
+    <string name="secure_startup_restart">電話を再起動し、システム画面ロック資格情報を使用してロックを解除してから、再試行してください。</string>
+    <string name="secure_startup_retry">再試行</string>
+    <string name="secure_startup_title">安全なストレージが利用できません</string>
+</resources>

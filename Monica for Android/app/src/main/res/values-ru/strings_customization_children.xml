@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">Удалить все предустановленные поля? Существующие сохраненные записи сохранят свои поля.</string>
+    <string name="customization_drag_handle">Изменение порядка %1$s</string>
+    <string name="customization_filters_navigation">Фильтры и навигация</string>
+    <string name="customization_live_preview">Предпросмотр</string>
+</resources>

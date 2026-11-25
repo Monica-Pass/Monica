@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_chinese_expand">展開中文選項</string>
+    <string name="language_chinese_collapse">收起中文選項</string>
+</resources>

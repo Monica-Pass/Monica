@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_unknown_read_only">Bu öğe türü henüz düzenlemeyi desteklemiyor. Hala tüm verilerini görüntüleyebilirsiniz.</string>
+    <string name="mdbx_unknown_unavailable">Bu öğe okunamıyor. Veritabanının kilidini açın ve ayrıntıları yeniden açın.</string>
+    <string name="mdbx_unknown_show">Değeri göster</string>
+    <string name="mdbx_unknown_hide">Değeri gizle</string>
+</resources>

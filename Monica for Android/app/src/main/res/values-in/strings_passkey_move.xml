@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_result_title">Pindahkan hasil</string>
+    <string name="passkey_move_result_summary">Selesai %1$d; perlu perhatian %2$d</string>
+    <string name="passkey_move_success_count">Memindahkan item %1$d</string>
+    <string name="passkey_move_unnamed_account">Akun tanpa nama</string>
+    <string name="passkey_move_bound_reason">Kunci sandi ini terkait dengan entri kata sandi dan tidak dapat dipindahkan secara terpisah. Pindahkan entri kata sandi yang tertaut, atau putuskan tautan kunci sandi terlebih dahulu.</string>
+    <string name="passkey_move_reference_reason">Item ini hanya sebagai referensi dan tidak memiliki kunci pribadi yang dapat dipindahkan secara terpisah. Gunakan aplikasi atau brankas asli yang menyimpan kunci sandi sebenarnya.</string>
+    <string name="passkey_move_bitwarden_reason">Mode penyimpanan atau kunci pribadi tidak memenuhi persyaratan migrasi Bitwarden. Buka kunci Monica dan coba lagi, atau pilih brankas lain. Kunci yang terikat perangkat tidak dapat diekspor; simpan di perangkat asli atau daftarkan kunci sandi baru ke layanan.</string>
+    <string name="passkey_move_conflict_reason">Basis data target KeePass sudah berisi kredensial kunci sandi yang sama. Tidak ada yang ditimpa. Periksa entri yang ada atau pilih database lain.</string>
+    <string name="passkey_move_update_reason">Perpindahan tersebut tidak selesai, dan penyebab pastinya tidak dapat ditentukan. Periksa apakah brankas sumber dan tujuan tidak terkunci dan dapat ditulisi, dengan ruang kosong yang cukup. Periksa kedua brankas sebelum mencoba lagi; jangan hapus sumbernya.</string>
+    <string name="passkey_move_cleanup_reason">Tujuan telah disimpan, namun pembersihan sumber belum selesai. Salinannya mungkin tetap ada di kedua brankas. Periksa tujuan dan brankas sumber atau status sinkronisasi sebelum melanjutkan; jangan mengulangi gerakan tersebut secara membabi buta.</string>
+</resources>

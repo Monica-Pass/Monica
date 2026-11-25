@@ -12,4 +12,5 @@
     <string name="bitwarden_error_cleartext">La dirección del servidor usa HTTP, que no está permitido por la política de seguridad actual. Usa una dirección HTTPS y comprueba la configuración HTTPS del proxy inverso.</string>
     <string name="bitwarden_error_network_io">Un error de red interrumpió la comunicación con el servidor. Comprueba la red, la VPN y el proxy e inténtalo de nuevo.</string>
     <string name="bitwarden_sync_incomplete_items">No se pudieron sincronizar algunos elementos (%1$d). Se sincronizaron los elementos legibles y se conservaron los datos locales existentes.</string>
+    <string name="bitwarden_organization_sync_incomplete">Algunos elementos del equipo no se pudieron descifrar (%1$d). Se sincronizaron elementos legibles; Se conservaron los artículos afectados existentes. Verifique la membresía de la organización e inicie sesión nuevamente.</string>
 </resources>

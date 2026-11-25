@@ -1,0 +1,615 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=explicitSelectionAndSystemTaiwanTagsUseTheTaiwanPack
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=explicitSelectionAndSystemTaiwanTagsUseTheTaiwanPack
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=hongKongMacauAndGenericHantKeepTheirExistingRegionalChoice
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=hongKongMacauAndGenericHantKeepTheirExistingRegionalChoice
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=savedTaiwanAndExistingHongKongSettingsSurviveFreshCacheReads
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=savedTaiwanAndExistingHongKongSettingsSurviveFreshCacheReads
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=everyTaiwanPackagedValueMatchesItsSourceAndFormatsSuccessfully
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everyTaiwanPackagedValueMatchesItsSourceAndFormatsSuccessfully
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=retainedMessagesRefreshAcrossTaiwanHongKongAndEnglish
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=retainedMessagesRefreshAcrossTaiwanHongKongAndEnglish
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=recoveryWarningsKeepTheirScopeAndDataRetentionConditions
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=recoveryWarningsKeepTheirScopeAndDataRetentionConditions
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=taiwanPluralsAndTechnicalTokensSurviveCompilation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=taiwanPluralsAndTechnicalTokensSurviveCompilation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=classicalAndTraditionalChineseRetainTranslationsAndDefaultFallback
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=classicalAndTraditionalChineseRetainTranslationsAndDefaultFallback
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=portugueseGenericPortugalAngolaAndBrazilKeepTheRegionalFallbacks
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=portugueseGenericPortugalAngolaAndBrazilKeepTheRegionalFallbacks
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=unsupportedLanguagesUseTheDefaultEnglishAppResources
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=unsupportedLanguagesUseTheDefaultEnglishAppResources
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=legacyChineseRegionResourcesRemainDistinctWithoutRestoringRetiredSettings
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=legacyChineseRegionResourcesRemainDistinctWithoutRestoringRetiredSettings
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=everySelectableLanguageStillResolvesItsOwnCompiledTranslation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everySelectableLanguageStillResolvesItsOwnCompiledTranslation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.LanguageSelectionDialogTest:
+
+INSTRUMENTATION_STATUS: test=closeKeepsTheCurrentLanguage
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=closeKeepsTheCurrentLanguage
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=everyLanguageRemainsReachableWithLargeText
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everyLanguageRemainsReachableWithLargeText
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=chineseGroupContainsOnlySupportedLanguages
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=chineseGroupContainsOnlySupportedLanguages
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=taiwanCanBeSelectedSeparatelyFromHongKong
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:117)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+
+	at takagi.ru.monica.ui.screens.LanguageSelectionDialogTest.taiwanCanBeSelectedSeparatelyFromHongKong(LanguageSelectionDialogTest.kt:149)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in taiwanCanBeSelectedSeparatelyFromHongKong(takagi.ru.monica.ui.screens.LanguageSelectionDialogTest):
+
+java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:117)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+
+	at takagi.ru.monica.ui.screens.LanguageSelectionDialogTest.taiwanCanBeSelectedSeparatelyFromHongKong(LanguageSelectionDialogTest.kt:149)
+
+
+
+INSTRUMENTATION_STATUS: test=taiwanCanBeSelectedSeparatelyFromHongKong
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=taiwanLargeTextDialogKeepsTheSelectedRegionAndAllowsReturningToHongKong
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=taiwanLargeTextDialogKeepsTheSelectedRegionAndAllowsReturningToHongKong
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=italianOptionUsesChineseNicknameAndCanBeSelected
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.LanguageSelectionDialogTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=italianOptionUsesChineseNicknameAndCanBeSelected
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=19
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 27.17
+
+There was 1 failure:
+
+1) taiwanCanBeSelectedSeparatelyFromHongKong(takagi.ru.monica.ui.screens.LanguageSelectionDialogTest)
+
+java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:117)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test(SemanticsNodeInteraction.kt:64)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNodes$ui_test$default(SemanticsNodeInteraction.kt:59)
+
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:29)
+
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+
+	at takagi.ru.monica.ui.screens.LanguageSelectionDialogTest.taiwanCanBeSelectedSeparatelyFromHongKong(LanguageSelectionDialogTest.kt:149)
+
+
+
+FAILURES!!!
+
+Tests run: 19,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

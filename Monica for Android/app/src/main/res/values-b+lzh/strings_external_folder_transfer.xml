@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden 卷夹须留于同一名籍。含附件、通行之钥或组织项目之卷夹，尚不可复制。</string>
+    <string name="external_folder_choose_destination">择目标库与卷夹</string>
+    <string name="external_folder_copy_hint">摹卷夹及其内容，保留原件。</string>
+    <string name="external_folder_move_hint">迁卷夹及其内容。目标保存成功后，乃移除原件。</string>
+    <string name="external_folder_root">库之根目录</string>
+</resources>

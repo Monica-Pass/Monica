@@ -1,0 +1,307 @@
+{
+  "date": "2026-11-25",
+  "scope": "UI-only; extra KeePass creation features excluded",
+  "files": [
+    {
+      "file": "app/src/androidTest/java/takagi/ru/monica/repository/MdbxVaultStoreInstrumentedCompatibilityTest.kt",
+      "mainSha256": "2439b19235ffb7c51e8d268a122ec73181ae13785a25b76838f6495875361764",
+      "fdroidSha256": "2439b19235ffb7c51e8d268a122ec73181ae13785a25b76838f6495875361764",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/androidTest/java/takagi/ru/monica/ui/screens/DatabaseFormPagesTest.kt",
+      "mainSha256": "cae11f573790de89e22889f5c6dc3edf9731d2036bcb9607004d6069a21c968f",
+      "fdroidSha256": "cae11f573790de89e22889f5c6dc3edf9731d2036bcb9607004d6069a21c968f",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/androidTest/java/takagi/ru/monica/ui/screens/KeePassManagementUiTest.kt",
+      "mainSha256": "d8821e16f814cb7cda4193f11066381a06191d8c500f94b923a469a2144449b9",
+      "fdroidSha256": "72cdfc3996683aeeb2a4451017fb00eb4f2b2387fba6c34b42a2435705d65b8c",
+      "equalNormalized": false
+    },
+    {
+      "file": "app/src/androidTest/java/takagi/ru/monica/ui/screens/ManagedPasswordLoginUiTest.kt",
+      "mainSha256": "2f7fa40a0c976113f041ece73139c2c6b7f9b89534b03f8ea61fe2a08d5386ce",
+      "fdroidSha256": "2f7fa40a0c976113f041ece73139c2c6b7f9b89534b03f8ea61fe2a08d5386ce",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/androidTest/java/takagi/ru/monica/ui/screens/ToolchainDatabaseLifecycleUiTest.kt",
+      "mainSha256": "1f8c8b15cda6d32c151fb9e4298c66b2372a980c5c5e50e2f7671361e965448a",
+      "fdroidSha256": "1f8c8b15cda6d32c151fb9e4298c66b2372a980c5c5e50e2f7671361e965448a",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/data/DatabaseDisplayOrder.kt",
+      "mainSha256": "5e90501a5a3bff4e311dffd61e998a1fc3115c300e039597813936e569f114e6",
+      "fdroidSha256": "5e90501a5a3bff4e311dffd61e998a1fc3115c300e039597813936e569f114e6",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/data/LocalKeePassDatabase.kt",
+      "mainSha256": "81f983c9e2c46c7d03bd63497f8e0ebabb67b36e94c0b711278a1643b459f2a1",
+      "fdroidSha256": "81f983c9e2c46c7d03bd63497f8e0ebabb67b36e94c0b711278a1643b459f2a1",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/data/LocalMdbxDatabase.kt",
+      "mainSha256": "51e2d7d60e45db98de987e7ea69e3da4f3d76247ce34fed6cf8cc0b0ffdb1d1e",
+      "fdroidSha256": "51e2d7d60e45db98de987e7ea69e3da4f3d76247ce34fed6cf8cc0b0ffdb1d1e",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/components/AuthComponents.kt",
+      "mainSha256": "4e5eef958576c36375c4f70dedd2effab5ec486047e4bbdd0edfbdec6245f9b0",
+      "fdroidSha256": "4e5eef958576c36375c4f70dedd2effab5ec486047e4bbdd0edfbdec6245f9b0",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/components/MasterPasswordTextField.kt",
+      "mainSha256": "fde25fd9bca0433342326aae7f31a0594736813f13fe5cb33a5666fd37697aff",
+      "fdroidSha256": "fde25fd9bca0433342326aae7f31a0594736813f13fe5cb33a5666fd37697aff",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/DatabaseManagementReorderableGrid.kt",
+      "mainSha256": "bc4fb865f65cc0cdac5686e56b2f69ebbc0799dd45d0e63349cbce24a46ad385",
+      "fdroidSha256": "bc4fb865f65cc0cdac5686e56b2f69ebbc0799dd45d0e63349cbce24a46ad385",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/KeePassDatabaseFormScreens.kt",
+      "mainSha256": "22e80932a524e9acef4d8e36fe5bf5231c6f490d60e36e8e300be9c60cec69bb",
+      "fdroidSha256": "22e80932a524e9acef4d8e36fe5bf5231c6f490d60e36e8e300be9c60cec69bb",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/KeePassFormPage.kt",
+      "mainSha256": "30dbe55069529e1c1971923d904f6531c4b1f3c187fa1120aa4b40cd45f06e2b",
+      "fdroidSha256": "30dbe55069529e1c1971923d904f6531c4b1f3c187fa1120aa4b40cd45f06e2b",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/KeePassManagementPages.kt",
+      "mainSha256": "61ad1cd2b251902e85032801a856428b9cfd485b377a75cf3d7df3488b383663",
+      "fdroidSha256": "92c5c09396a960a19b2416d933621c73b6f3767496ac31cb2017de53ba56db4b",
+      "equalNormalized": false
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassScreen.kt",
+      "mainSha256": "aea77685696d9b1951fd1cffef12804c1517d8d6172aa265d3ed394e9712a594",
+      "fdroidSha256": "f890e83ff66cdb4ba0ab0b5247f17d3053f5a4b31479c7c8094793a518cabd99",
+      "equalNormalized": false
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt",
+      "mainSha256": "bb9f6ed9d6b7848f69a83320e19f96cc12df452961f7ca9d975145fa2cc93964",
+      "fdroidSha256": "d7c27274c904b259e81be2310c4aba05545dff1b1591df7ee89eaa33d02fd403",
+      "equalNormalized": false
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/viewmodel/LocalKeePassViewModel.kt",
+      "mainSha256": "db54a0219ade250ff4221c54407bd4623a4503bfc2ccbc4afbc364b77a33d7fd",
+      "fdroidSha256": "db54a0219ade250ff4221c54407bd4623a4503bfc2ccbc4afbc364b77a33d7fd",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/main/java/takagi/ru/monica/viewmodel/MdbxViewModel.kt",
+      "mainSha256": "a84b1f6713247964df560f540feadb80bd9a20ad12dc99acf7ab4cd36772c55c",
+      "fdroidSha256": "a84b1f6713247964df560f540feadb80bd9a20ad12dc99acf7ab4cd36772c55c",
+      "equalNormalized": true
+    },
+    {
+      "file": "app/src/test/java/takagi/ru/monica/data/DatabaseDisplayOrderTest.kt",
+      "mainSha256": "819770008c04407f5ed31cfd0eeb7180308ddca932cfbb631505c46806cabae8",
+      "fdroidSha256": "819770008c04407f5ed31cfd0eeb7180308ddca932cfbb631505c46806cabae8",
+      "equalNormalized": true
+    }
+  ],
+  "buildScope": [
+    {
+      "edition": "main",
+      "build": "main-ui-only01",
+      "productionFileCount": 4370,
+      "productionSourceMatchesFinal": true,
+      "fullSourceUnchanged": true
+    },
+    {
+      "edition": "main",
+      "build": "main-ui-only-release01",
+      "productionFileCount": 4370,
+      "productionSourceMatchesFinal": true,
+      "fullSourceUnchanged": false
+    },
+    {
+      "edition": "fd",
+      "build": "fd-ui-only01",
+      "productionFileCount": 4375,
+      "productionSourceMatchesFinal": true,
+      "fullSourceUnchanged": true
+    },
+    {
+      "edition": "fd",
+      "build": "fd-ui-only-release01",
+      "productionFileCount": 4375,
+      "productionSourceMatchesFinal": true,
+      "fullSourceUnchanged": false
+    }
+  ],
+  "nativeCreationHelpersMatchBaseline": true,
+  "editions": {
+    "main": {
+      "device": {
+        "completedMethodPasses": 30,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.ui.screens.DatabaseFormPagesTest,takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest,takagi.ru.monica.ui.screens.KeePassManagementUiTest,takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest",
+        "tests": 30,
+        "failures": 0,
+        "success": true,
+        "seconds": 67.82972139999765
+      },
+      "jvmTests": 3,
+      "releaseBackup": {
+        "edition": "main",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "19666",
+          "20481",
+          "22206"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/bioattach-main-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "upgrade": {
+        "edition": "main",
+        "build": "main-ui-only-release01",
+        "before": {
+          "sha256": "c5be7b3407b59cb834e7bff4740b0a8182be5b790d305ef324a01b182c7b79a7",
+          "uid": "package:takagi.ru.monica.adaptivereleasemain20261119 uid:1110084"
+        },
+        "after": {
+          "sha256": "8d0f2f413f8cc52713f709c94f4e37b91c52d698e347e225baf59086cb2261ed",
+          "uid": "package:takagi.ru.monica.adaptivereleasemain20261119 uid:1110084"
+        },
+        "signature": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "badging": "package: name='takagi.ru.monica.adaptivereleasemain20261119' versionCode='12' versionName='1.0.331-26112512-96' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'\nsdkVersion:'26'\ntargetSdkVersion:'34'\nuses-permission: name='android.permission.USE_BIOMETRIC'\nuses-permission: name='android.permission.USE_FINGERPRINT'\nuses-permission: name='android.permission.HIDE_OVERLAY_WINDOWS'\nuses-permission: name='android.permission.CAMERA'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.NFC'\nuses-permission: name='android.permission.ACCESS_NETWORK_STATE'\nuses-permission: name='android.permission.ACCESS_WIFI_STATE'\nuses-permission: name='android.permission.CHANGE_WIFI_STATE'\nuses-permission: name='android.permission.NEARBY_WIFI_DEVICES'\nuses-permission: name='android.permission.CHANGE_WIFI_MULTICAST_STATE'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\nuses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-permission: name='android.permission.SYSTEM_ALERT_WINDOW'\nuses-permission: name='android.permission.VIBRATE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE'\nuses-permission: name='android.permission.CHANGE_NETWORK_STATE'\nuses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'\nuses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_SPECIAL_USE'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.POST_PROMOTED_NOTIFICATIONS'\nuses-permission: name='android.permission.ACCESS_FINE_LOCATION'\nuses-permission: name='android.permission.ACCESS_COARSE_LOCATION'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='takagi.ru.monica.adaptivereleasemain20261119.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'\nuses-permission: name='moe.shizuku.manager.permission.API_V23'\napplication-label:'Monica'\napplication-label-de:'Monica'\napplication-label-en-AU:'Monica'\napplication-label-en-CA:'Monica'\napplication-label-en-GB:'Monica'\napplication-label-en-IN:'Monica'\napplication-label-en-XC:'Monica'\napplication-label-es:'Monica'\napplication-label-es-419:'Monica'\napplication-label-es-US:'Monica'\napplication-label-fr:'Monica'\napplication-label-fr-CA:'Monica'\napplication-label-it:'Monica'\napplication-label-ja:'Monica'\napplication-label-ko:'Monica'\napplication-label-lzh:'Monica'\napplication-label-pl:'Monica'\napplication-label-pt:'Monica'\napplication-label-pt-BR:'Monica'\napplication-label-pt-PT:'Monica'\napplication-label-ru:'Monica'\napplication-label-vi:'Monica'\napplication-label-zh:'Monica'\napplication-label-zh-CN:'Monica'\napplication-label-zh-HK:'Monica'\napplication-label-zh-Hant:'Monica'\napplication-label-zh-NY:'Monica'\napplication-label-zh-TW:'Monica'\napplication-label-zh-XB:'Monica'\napplication-icon-120:'res/vF.xml'\napplication-icon-160:'res/vF.xml'\napplication-icon-240:'res/vF.xml'\napplication-icon-320:'res/vF.xml'\napplication-icon-480:'res/vF.xml'\napplication-icon-640:'res/vF.xml'\napplication-icon-65534:'res/vF.xml'\napplication-icon-65535:'res/vF.xml'\napplication: label='Monica' icon='res/vF.xml'\nuses-library-not-required:'androidx.window.extensions'\nuses-library-not-required:'androidx.window.sidecar'\nuses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-implied-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='28' reason='requested WRITE_EXTERNAL_STORAGE'\nfeature-group: label=''\n  uses-feature-not-required: name='android.hardware.camera'\n  uses-feature-not-required: name='android.hardware.camera.autofocus'\n  uses-feature-not-required: name='android.hardware.camera.flash'\n  uses-feature-not-required: name='android.hardware.camera.front'\n  uses-feature-not-required: name='android.hardware.nfc'\n  uses-feature-not-required: name='android.hardware.screen.landscape'\n  uses-feature-not-required: name='android.hardware.usb.host'\n  uses-feature-not-required: name='android.hardware.wifi'\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\n  uses-feature: name='android.hardware.location'\n  uses-implied-feature: name='android.hardware.location' reason='requested android.permission.ACCESS_COARSE_LOCATION permission, and requested android.permission.ACCESS_FINE_LOCATION permission'\nprovides-component:'ime'\nprovides-component:'accessibility'\nother-activities\nother-receivers\nother-services\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--' 'de' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-419' 'es-US' 'fr' 'fr-CA' 'it' 'ja' 'ko' 'lzh' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ru' 'vi' 'zh' 'zh-CN' 'zh-HK' 'zh-Hant' 'zh-NY' 'zh-TW' 'zh-XB'\ndensities: '120' '160' '240' '320' '480' '640' '65534' '65535'\nnative-code: 'x86_64'",
+        "noUninstallOrDataClear": true,
+        "install": "Performing Streamed Install\nSuccess: streamed 39162929 bytes\nSuccess"
+      },
+      "apks": [
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\main-ui-only04\\app.apk",
+          "sha256": "d2d7d52ecb41bc8f15c4600c90c01f3da6a4c3b87372a6b18f989cf895b7a861"
+        },
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\main-ui-only04\\test.apk",
+          "sha256": "8f42ee1c85b7b1b3f3e829ec9b77bdd968e9d5083031acc827307b12a8820ad4"
+        },
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\main-ui-only-release01\\app.apk",
+          "sha256": "8d0f2f413f8cc52713f709c94f4e37b91c52d698e347e225baf59086cb2261ed"
+        }
+      ]
+    },
+    "fd": {
+      "device": {
+        "completedMethodPasses": 30,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.ui.screens.DatabaseFormPagesTest,takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest,takagi.ru.monica.ui.screens.KeePassManagementUiTest,takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest",
+        "tests": 30,
+        "failures": 0,
+        "success": true,
+        "seconds": 65.45685310000408
+      },
+      "jvmTests": 3,
+      "releaseBackup": {
+        "edition": "fd",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "26694",
+          "27745",
+          "29383"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/bioattach-fd-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "upgrade": {
+        "edition": "fd",
+        "build": "fd-ui-only-release01",
+        "before": {
+          "sha256": "761d8df7c36aa44ec97dc38a301a713bd941f3b94b05aaa8677d37349479289b",
+          "uid": "package:takagi.ru.monica.adaptivereleasefd20261119 uid:1110085"
+        },
+        "after": {
+          "sha256": "8e3b981c33ed8811b47ad373eca61b4f5798fafdea42b0ab9f0b29caa760e1ce",
+          "uid": "package:takagi.ru.monica.adaptivereleasefd20261119 uid:1110085"
+        },
+        "signature": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "badging": "package: name='takagi.ru.monica.adaptivereleasefd20261119' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'\nsdkVersion:'26'\ntargetSdkVersion:'34'\nuses-permission: name='android.permission.USE_BIOMETRIC'\nuses-permission: name='android.permission.USE_FINGERPRINT'\nuses-permission: name='android.permission.CAMERA'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.NFC'\nuses-permission: name='android.permission.ACCESS_NETWORK_STATE'\nuses-permission: name='android.permission.ACCESS_WIFI_STATE'\nuses-permission: name='android.permission.CHANGE_WIFI_STATE'\nuses-permission: name='android.permission.NEARBY_WIFI_DEVICES'\nuses-permission: name='android.permission.ACCESS_FINE_LOCATION'\nuses-permission: name='android.permission.CHANGE_WIFI_MULTICAST_STATE'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\nuses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-permission: name='android.permission.SYSTEM_ALERT_WINDOW'\nuses-permission: name='android.permission.VIBRATE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE'\nuses-permission: name='android.permission.CHANGE_NETWORK_STATE'\nuses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'\nuses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_SPECIAL_USE'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.POST_PROMOTED_NOTIFICATIONS'\nuses-permission: name='android.permission.ACCESS_COARSE_LOCATION'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='takagi.ru.monica.adaptivereleasefd20261119.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'\nuses-permission: name='moe.shizuku.manager.permission.API_V23'\napplication-label:'Monica'\napplication-label-de:'Monica'\napplication-label-en-AU:'Monica'\napplication-label-en-CA:'Monica'\napplication-label-en-GB:'Monica'\napplication-label-en-IN:'Monica'\napplication-label-en-XC:'Monica'\napplication-label-es:'Monica'\napplication-label-es-419:'Monica'\napplication-label-es-US:'Monica'\napplication-label-fr:'Monica'\napplication-label-fr-CA:'Monica'\napplication-label-it:'Monica'\napplication-label-ja:'Monica'\napplication-label-ko:'Monica'\napplication-label-lzh:'Monica'\napplication-label-pl:'Monica'\napplication-label-pt:'Monica'\napplication-label-pt-BR:'Monica'\napplication-label-pt-PT:'Monica'\napplication-label-ru:'Monica'\napplication-label-vi:'Monica'\napplication-label-zh:'Monica'\napplication-label-zh-CN:'Monica'\napplication-label-zh-HK:'Monica'\napplication-label-zh-Hant:'Monica'\napplication-label-zh-NY:'Monica'\napplication-label-zh-TW:'Monica'\napplication-label-zh-XB:'Monica'\napplication-icon-160:'res/vF.xml'\napplication-icon-240:'res/vF.xml'\napplication-icon-320:'res/vF.xml'\napplication-icon-480:'res/vF.xml'\napplication-icon-640:'res/vF.xml'\napplication-icon-65534:'res/vF.xml'\napplication-icon-65535:'res/vF.xml'\napplication: label='Monica' icon='res/vF.xml'\nuses-library-not-required:'androidx.window.extensions'\nuses-library-not-required:'androidx.window.sidecar'\nuses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-implied-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='28' reason='requested WRITE_EXTERNAL_STORAGE'\nfeature-group: label=''\n  uses-feature-not-required: name='android.hardware.camera'\n  uses-feature-not-required: name='android.hardware.camera.autofocus'\n  uses-feature-not-required: name='android.hardware.camera.flash'\n  uses-feature-not-required: name='android.hardware.camera.front'\n  uses-feature-not-required: name='android.hardware.nfc'\n  uses-feature-not-required: name='android.hardware.screen.landscape'\n  uses-feature-not-required: name='android.hardware.usb.host'\n  uses-feature-not-required: name='android.hardware.wifi'\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\n  uses-feature: name='android.hardware.location'\n  uses-implied-feature: name='android.hardware.location' reason='requested android.permission.ACCESS_COARSE_LOCATION permission, and requested android.permission.ACCESS_FINE_LOCATION permission'\nprovides-component:'ime'\nprovides-component:'accessibility'\nother-activities\nother-receivers\nother-services\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--' 'de' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-419' 'es-US' 'fr' 'fr-CA' 'it' 'ja' 'ko' 'lzh' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ru' 'vi' 'zh' 'zh-CN' 'zh-HK' 'zh-Hant' 'zh-NY' 'zh-TW' 'zh-XB'\ndensities: '160' '240' '320' '480' '640' '65534' '65535'\nnative-code: 'x86_64'",
+        "noUninstallOrDataClear": true,
+        "install": "Performing Streamed Install\nSuccess: streamed 36713921 bytes\nSuccess"
+      },
+      "apks": [
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\fd-ui-only03\\app.apk",
+          "sha256": "fd3c0f9fce48ba654441f40f1c8ce8b8af6e6446c065a5b77bf824a89678e8de"
+        },
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\fd-ui-only03\\test.apk",
+          "sha256": "b8b267050372bcc0c338fbf2062d2da34fa17b5ca036a0315546063a40b8f5da"
+        },
+        {
+          "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261123-keepass-form-pages\\raw\\fd-ui-only-release01\\app.apk",
+          "sha256": "8e3b981c33ed8811b47ad373eca61b4f5798fafdea42b0ab9f0b29caa760e1ce"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Synthetic API35/x86_64 MuMu only",
+    "R8 uses isolated task package ids and the same debug signing as its installed synthetic baseline",
+    "No physical device/OEM/real cloud/user vault validation",
+    "No commit, push, tag, publication or APK delivery"
+  ],
+  "cleanup": {
+    "restoredUser": 0,
+    "removedOwnedUsers": [
+      10,
+      11
+    ],
+    "stoppedSelfStartedMuMu": 2,
+    "stoppedOwnAdbPort": 15069,
+    "originalInstancesAndDisksPreserved": true,
+    "publicAvdUsed": false,
+    "restoredAdbdUid": 2000
+  },
+  "metadata": {
+    "fdroidCheckPassed": true,
+    "fdroidRegressionScripts": 6,
+    "fdroidRegressionFailures": 0,
+    "trackedDiffWhitespacePassed": true
+  }
+}

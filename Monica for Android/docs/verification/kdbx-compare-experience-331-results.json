@@ -1,0 +1,509 @@
+{
+  "version": "1.0.331 unreleased",
+  "environment": "MuMu existing instance2 Android15 API35 x86_64; synthetic user; isolated packages and test signing",
+  "reference": {
+    "repository": "https://github.com/T8RIN/ImageToolbox",
+    "revision": "ab763ce76effd13ae3b8c7cfea37835eb9e0f8b9",
+    "approach": "Reference only; existing Monica Compose and Material3 components"
+  },
+  "sharedPaths": {
+    "app/src/main/res/values/strings_database_compare.xml": "342e25afb4195e659f9c4d1790e733a775334e47af11b02913da67cc18e2d745",
+    "app/src/main/res/values-b+lzh/strings_database_compare.xml": "7687a3c771a49609f062a344fee5797dc6a3b5fabf77becd3db67fde75e59216",
+    "app/src/main/res/values-b+zh+Hant/strings_database_compare.xml": "93f5b298120c2400b86bc26d5f886bb1eefb0428095c44242f4ef5f3365d9280",
+    "app/src/main/res/values-b+zh+Hant+TW/strings_database_compare.xml": "ddf9e72f269ca801bfad2585d46ab620d21c337579222aaa70699b9768c1e5c2",
+    "app/src/main/res/values-de/strings_database_compare.xml": "d8126939d896bdf50cc3f5d7ba8d1c792fded86dd31d0b1ed6d7abfa93b262a4",
+    "app/src/main/res/values-es/strings_database_compare.xml": "1822d21cbd6de9318303887a5145f25d7e0bad4d161bed3881495a801f9d14c8",
+    "app/src/main/res/values-fr/strings_database_compare.xml": "309bb5db5f5f23a5d3396a18451ff426d492e0683ce2b6f5c9e1441390c67a59",
+    "app/src/main/res/values-in/strings_database_compare.xml": "c75d97d24e8728a4be509baa9553cd6c9a5a826fa3b25c810332bff9d9fb906d",
+    "app/src/main/res/values-it/strings_database_compare.xml": "8e0a813323469387a228c96027d109c758ffe8c96cbee0ef05955dafc947e693",
+    "app/src/main/res/values-ja/strings_database_compare.xml": "00acbd0825525441b784bdeea84fb56b419a0f75cfd1e28d7968308613a9f22c",
+    "app/src/main/res/values-ko/strings_database_compare.xml": "41010a1deef3fd14627dcefadb1cef53d85b02f76ddabd8f1e5408fbed04d6dc",
+    "app/src/main/res/values-pl/strings_database_compare.xml": "c038267a48f3d42630670a7665e35f26586353920bb918b18c3f205d763b4d2a",
+    "app/src/main/res/values-pt/strings_database_compare.xml": "00d57e22483c58c30ef9ebe2cfd140ff527892c9f6f29e2457ba5e2be87e1b9a",
+    "app/src/main/res/values-pt-rBR/strings_database_compare.xml": "4708cf73263323ed9be124527e051ab7950e4f6af02bab8783d5862812d10795",
+    "app/src/main/res/values-ru/strings_database_compare.xml": "7a6153c110d0f9f93f3cec4d42eb1f4dab81900a707906a5e00647f37fafab2d",
+    "app/src/main/res/values-tr/strings_database_compare.xml": "c3c0f14bf7d70e14a46a4232435cd33f6d49e830826833ce39c45bea11ec7ae9",
+    "app/src/main/res/values-vi/strings_database_compare.xml": "6fd927264f6eb738e306218164dd3bc47aa3bc12a9790ca0c6eec735208391d6",
+    "app/src/main/res/values-zh/strings_database_compare.xml": "079c54cb6c56de6a6945878302069d9426e4b7d907a39b42683daeef6090e9f4",
+    "app/src/main/res/values-zh-rCN/strings_database_compare.xml": "079c54cb6c56de6a6945878302069d9426e4b7d907a39b42683daeef6090e9f4",
+    "app/src/main/res/values-zh-rNY/strings_database_compare.xml": "079c54cb6c56de6a6945878302069d9426e4b7d907a39b42683daeef6090e9f4",
+    "app/src/main/res/values-zh-rXB/strings_database_compare.xml": "079c54cb6c56de6a6945878302069d9426e4b7d907a39b42683daeef6090e9f4",
+    "app/src/main/java/takagi/ru/monica/databasecompare/DatabaseCompareSources.kt": "f5d7b37d75ae9f9f4fe49830e0cd99bd17e76412820db34a73037ecc502b4a54",
+    "app/src/main/java/takagi/ru/monica/databasecompare/DatabaseComparison.kt": "1ff7467f202380dd58dae17fe2250b2272b1cd50a2e1d076493026c5b133a2b1",
+    "app/src/main/java/takagi/ru/monica/databasecompare/KdbxDatabaseCompare.kt": "cfe4e0a3f49b2284d9cfe67fc49e8145fddb55c7c69c065874596c3a2f854d45",
+    "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "12b6049fbf57b2940e1ad3528a4607bc70f37dfb8cba33e028db79639cd31c0b",
+    "app/src/main/java/takagi/ru/monica/ui/screens/DatabaseCompareScreen.kt": "9fabf7fb9b3d4290dac3a70614edd93fc682ff264961d24006fe83018e34ac12",
+    "app/src/main/java/takagi/ru/monica/ui/screens/DatabaseCompareSourceCard.kt": "0d5e62c82bd9d35cdf2aaaad6da82d4dd01cdc70b1f84b9470e15f112748546a",
+    "app/src/androidTest/java/takagi/ru/monica/databasecompare/DatabaseCompareSourceMotionTest.kt": "a7439a6b67165af879e2fe739266589286f52b2b601024649299aabaa03f7222",
+    "app/src/androidTest/java/takagi/ru/monica/databasecompare/DatabaseCompareUiTest.kt": "59a84b9703cba084d16c3db63adee5e4f9d5832244f7fa2ef412ea686ceefa6e"
+  },
+  "newResourceKeys": 4,
+  "resourceConfigurations": 21,
+  "newResourceValuesPerEdition": 84,
+  "editions": {
+    "main": {
+      "jvmMethods": 64,
+      "jvm": [
+        {
+          "class": "takagi.ru.monica.databasecompare.DatabaseCompareCopyTest",
+          "tests": 5
+        },
+        {
+          "class": "takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest",
+          "tests": 24
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+          "tests": 17
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassNativeMutationTest",
+          "tests": 10
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassXmlContentParserTest",
+          "tests": 3
+        },
+        {
+          "class": "takagi.ru.monica.localization.LocaleResourceCoverageTest",
+          "tests": 5
+        }
+      ],
+      "deviceMethods": 76,
+      "passedMethods": [
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#cancelledSourceReadCannotPublishAndClearsPrivateCapture",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#completeEncryptedExportReopensAndPreservesBothInputs",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#independentDestinationWriterSurvivesFailedReadback",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#lockDuringReadbackClearsOnlyOwnEncryptedOutput",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#lockingAfterReviewRevokesGenerationEvenAfterUnlock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#nonemptyDestinationIsNeverTruncated",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#wrongPasswordAndStaleSourceNeverPublishResults",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest#darkLargeTextCardShrinksSmoothlyAndCanReverse",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest#lightCardShrinksSmoothlyAndImmediatelyRemovesPassword",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#cancelledCapturePreservesInputAndRemovesOwnedOutput",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#changedDocumentTreeAliasHasSameIdentity",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#snapshotsAreIndependentAndRecheckOriginalBytes",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#sourceAndKeyFileCredentialsRemainIndependent",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#backFromOutputClearsPasswordsAndBackFromReviewClearsSession",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#backgroundClearsReviewAndLateInputPickerCannotCrossLock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#cancellingBusyReadRejectsLateComparisonAndPreservesSource",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#cancellingDestinationPickerDiscardsEncryptedResult",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#globalRelockCannotReuseOldNativeAuthenticationAfterUnlock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#cancelDuringResultBuildKeepsBothSourcesAndNoOutput",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#customFieldNamesRemainDistinctFromGeneratedLabels",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#emptyAutoTypeAssociationSequenceSurvivesEncryptedMerge",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#groupMoveCycleCannotPublish",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#independentlyKeyedInputsCreateResultUsingOnlyNewPassword",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#invalidBooleanContentCannotSilentlyChangeNativePolicy",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#kdbx3FractionalMetadataAndMultipleHistoryTimesSurvive",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#kdbx3SubsecondHistoryVersionsAndCurrentChangesRemainDistinct",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#malformedPolicyAndIncompleteAssociationsBlockEncryptedOutput",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#mixedChangesCannotCreateReferenceCycle",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#sameTimestampDifferentHistoryValuesAreBothRetained",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#sourceConsistentLiveAndTombstoneCoexistenceIsPreserved",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#staleSourceAndClosedSessionNeverPublish",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#validBooleanCaseAndInheritedGroupPolicyRoundTrip",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#eachClientsAddedEntrySurvivesCurrentFileMerge",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#lockedCurrentFileMergeDoesNotWrite",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#readOnlyCurrentFileMergeDoesNotWrite",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#sourceChangedDuringMergeIsNotOverwritten",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#customFieldOnlyEntriesRemainReachableIncludingEmptyFields",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#databaseCardCountsNativeEntriesRegardlessOfProjectionType",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingAndAddingOtpPreservesPasskeyAndRecoveryNotes",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#ordinaryTrashNamedGroupsAreNotRecycleBins",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#passwordCreationAndModificationDatesSurviveKdbx3And4Projection",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#staleAndReadOnlyEditsPreserveTheCommittedDatabase",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#unknownAndIncompleteMonicaMetadataCannotHideAnEntry"
+      ],
+      "batches": {
+        "main-ui02": {
+          "completedPasses": 17,
+          "completedFailures": 0,
+          "runnerSeconds": 41.832
+        },
+        "main-core01": {
+          "completedPasses": 50,
+          "completedFailures": 2,
+          "runnerSeconds": 6.316
+        },
+        "main-keepass02": {
+          "completedPasses": 9,
+          "completedFailures": 0,
+          "runnerSeconds": 30.264
+        }
+      },
+      "builds": {
+        "main-full01": {
+          "seconds": 455.17188189999433,
+          "sourceUnchangedDuringBuild": true,
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "ba6f008275e50e311a46c79bc9b1371b8bbb58a98e32b9f28f2ed49bf8449512"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "ea9948481e7c62d2754a51ef2e64bdd24ee7fb9267a0faf1595477fde007f8cf"
+            }
+          ]
+        },
+        "main-release01": {
+          "seconds": 445.9098299000034,
+          "sourceUnchangedDuringBuild": true,
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "0cd09ecb1df32cbe192ed1d194c7a98a472202a5a27a38a5491675b6f9aa3b00"
+            }
+          ]
+        },
+        "main-tests02": {
+          "seconds": 82.29917620000197,
+          "sourceUnchangedDuringBuild": true,
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "ba6f008275e50e311a46c79bc9b1371b8bbb58a98e32b9f28f2ed49bf8449512"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "32e23bd7cf4f5999b355d63632c385dbf5fefd0eb36d6fb1f9b0d6d398f4d57d"
+            }
+          ]
+        }
+      },
+      "upgrade": {
+        "before": {
+          "sha256": "c5be7b3407b59cb834e7bff4740b0a8182be5b790d305ef324a01b182c7b79a7",
+          "uid": "package:takagi.ru.monica.adaptivereleasemain20261119 uid:1010085"
+        },
+        "after": {
+          "sha256": "0cd09ecb1df32cbe192ed1d194c7a98a472202a5a27a38a5491675b6f9aa3b00",
+          "uid": "package:takagi.ru.monica.adaptivereleasemain20261119 uid:1010085"
+        },
+        "signature": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "noUninstallOrDataClear": true
+      },
+      "backupAndColdStart": {
+        "edition": "main",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "8999",
+          "9827",
+          "11535"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/bioattach-main-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "independentKdbxOutput": {
+        "edition": "main",
+        "outputSHA256": "d9150b08a8bea322f68f94f3ed360a785ee496b63fa05e5e1313f12c511d05a2",
+        "format": "3.1",
+        "pykeepassReopened": true,
+        "keepassxcReopened": true,
+        "autoTypeAssociationsPerEntry": 4,
+        "historyVersions": 3,
+        "nanosecondHistoryTimes": [
+          "2026-11-23T10:00:00.100000001Z",
+          "2026-11-23T10:00:00.100000002Z",
+          "2026-11-23T10:00:01.100000001Z"
+        ],
+        "currentNanosecondsPreserved": true,
+        "attachmentBytesPreserved": true,
+        "protectedFieldPreserved": true,
+        "uuidPreserved": true,
+        "existingDeletionRecordsPreserved": true,
+        "allInputBytesUnchanged": true,
+        "actualDocumentsUi": true
+      }
+    },
+    "fd": {
+      "jvmMethods": 64,
+      "jvm": [
+        {
+          "class": "takagi.ru.monica.databasecompare.DatabaseCompareCopyTest",
+          "tests": 5
+        },
+        {
+          "class": "takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest",
+          "tests": 24
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+          "tests": 17
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassNativeMutationTest",
+          "tests": 10
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassXmlContentParserTest",
+          "tests": 3
+        },
+        {
+          "class": "takagi.ru.monica.localization.LocaleResourceCoverageTest",
+          "tests": 5
+        }
+      ],
+      "deviceMethods": 76,
+      "passedMethods": [
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#cancelledSourceReadCannotPublishAndClearsPrivateCapture",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#completeEncryptedExportReopensAndPreservesBothInputs",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#independentDestinationWriterSurvivesFailedReadback",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#lockDuringReadbackClearsOnlyOwnEncryptedOutput",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#lockingAfterReviewRevokesGenerationEvenAfterUnlock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#nonemptyDestinationIsNeverTruncated",
+        "takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest#wrongPasswordAndStaleSourceNeverPublishResults",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest#darkLargeTextCardShrinksSmoothlyAndCanReverse",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest#lightCardShrinksSmoothlyAndImmediatelyRemovesPassword",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#cancelledCapturePreservesInputAndRemovesOwnedOutput",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#changedDocumentTreeAliasHasSameIdentity",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#snapshotsAreIndependentAndRecheckOriginalBytes",
+        "takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest#sourceAndKeyFileCredentialsRemainIndependent",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#backFromOutputClearsPasswordsAndBackFromReviewClearsSession",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#backgroundClearsReviewAndLateInputPickerCannotCrossLock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#cancellingBusyReadRejectsLateComparisonAndPreservesSource",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#cancellingDestinationPickerDiscardsEncryptedResult",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#globalRelockCannotReuseOldNativeAuthenticationAfterUnlock",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns",
+        "takagi.ru.monica.databasecompare.DatabaseCompareUiTest#realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#cancelDuringResultBuildKeepsBothSourcesAndNoOutput",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#customFieldNamesRemainDistinctFromGeneratedLabels",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#emptyAutoTypeAssociationSequenceSurvivesEncryptedMerge",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#groupMoveCycleCannotPublish",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#independentlyKeyedInputsCreateResultUsingOnlyNewPassword",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#invalidBooleanContentCannotSilentlyChangeNativePolicy",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#kdbx3FractionalMetadataAndMultipleHistoryTimesSurvive",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#kdbx3SubsecondHistoryVersionsAndCurrentChangesRemainDistinct",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#malformedPolicyAndIncompleteAssociationsBlockEncryptedOutput",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#mixedChangesCannotCreateReferenceCycle",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#sameTimestampDifferentHistoryValuesAreBothRetained",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#sourceConsistentLiveAndTombstoneCoexistenceIsPreserved",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#staleSourceAndClosedSessionNeverPublish",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives",
+        "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest#validBooleanCaseAndInheritedGroupPolicyRoundTrip",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#eachClientsAddedEntrySurvivesCurrentFileMerge",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#lockedCurrentFileMergeDoesNotWrite",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#readOnlyCurrentFileMergeDoesNotWrite",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#sourceChangedDuringMergeIsNotOverwritten",
+        "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex",
+        "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#customFieldOnlyEntriesRemainReachableIncludingEmptyFields",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#databaseCardCountsNativeEntriesRegardlessOfProjectionType",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingAndAddingOtpPreservesPasskeyAndRecoveryNotes",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#ordinaryTrashNamedGroupsAreNotRecycleBins",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#passwordCreationAndModificationDatesSurviveKdbx3And4Projection",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#staleAndReadOnlyEditsPreserveTheCommittedDatabase",
+        "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest#unknownAndIncompleteMonicaMetadataCannotHideAnEntry"
+      ],
+      "batches": {
+        "fd-all01": {
+          "completedPasses": 76,
+          "completedFailures": 0,
+          "runnerSeconds": 79.759
+        }
+      },
+      "builds": {
+        "fd-full01": {
+          "seconds": 418.876722800007,
+          "sourceUnchangedDuringBuild": true,
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "43e0fc4f6c9aed99c8f5a2e95ef3461a2d5c136eeebbe5e24249967b9f631e18"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "17e693d119996a3f798124b47b61d3d60919c5ecee1c38151d7a2fb5160aa432"
+            }
+          ]
+        },
+        "fd-release01": {
+          "seconds": 385.76473980001174,
+          "sourceUnchangedDuringBuild": true,
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "74a52a789d80f812a68fd9216e1b9d8374db0784b17382d317a1803ccf27ecda"
+            }
+          ]
+        }
+      },
+      "upgrade": {
+        "before": {
+          "sha256": "761d8df7c36aa44ec97dc38a301a713bd941f3b94b05aaa8677d37349479289b",
+          "uid": "package:takagi.ru.monica.adaptivereleasefd20261119 uid:1010089"
+        },
+        "after": {
+          "sha256": "74a52a789d80f812a68fd9216e1b9d8374db0784b17382d317a1803ccf27ecda",
+          "uid": "package:takagi.ru.monica.adaptivereleasefd20261119 uid:1010089"
+        },
+        "signature": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "noUninstallOrDataClear": true
+      },
+      "backupAndColdStart": {
+        "edition": "fd",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "15486",
+          "16321",
+          "17993"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/bioattach-fd-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "independentKdbxOutput": {
+        "edition": "fd",
+        "outputSHA256": "76e69a45fbe40441586862f2f98fdaab7e63f54b7165dd52a73b7412695dcc77",
+        "format": "3.1",
+        "pykeepassReopened": true,
+        "keepassxcReopened": true,
+        "autoTypeAssociationsPerEntry": 4,
+        "historyVersions": 3,
+        "nanosecondHistoryTimes": [
+          "2026-11-23T10:00:00.100000001Z",
+          "2026-11-23T10:00:00.100000002Z",
+          "2026-11-23T10:00:01.100000001Z"
+        ],
+        "currentNanosecondsPreserved": true,
+        "attachmentBytesPreserved": true,
+        "protectedFieldPreserved": true,
+        "uuidPreserved": true,
+        "existingDeletionRecordsPreserved": true,
+        "allInputBytesUnchanged": true,
+        "actualDocumentsUi": true
+      }
+    }
+  },
+  "retainedFailures": {
+    "main-ui01": {
+      "completedMethodPasses": 5,
+      "completedMethodFailures": 12,
+      "edition": "main",
+      "selector": "takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest,takagi.ru.monica.databasecompare.DatabaseCompareUiTest",
+      "tests": 17,
+      "failures": 12,
+      "success": false,
+      "seconds": 31.579725599993253
+    },
+    "main-core01": {
+      "completedMethodPasses": 50,
+      "completedMethodFailures": 2,
+      "edition": "main",
+      "selector": "takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest,takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest,takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest,takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest,takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest,takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest",
+      "tests": 52,
+      "failures": 2,
+      "success": false,
+      "seconds": 9.38621620000049
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 10,
+    "removedOwnPackages": [
+      "takagi.ru.monica.compareuxmain33120261125.localedebug",
+      "takagi.ru.monica.compareuxmain33120261125.localedebug.test",
+      "takagi.ru.monica.adaptivereleasemain20261119",
+      "takagi.ru.monica.compareuxfd33120261125.localedebug",
+      "takagi.ru.monica.compareuxfd33120261125.localedebug.test",
+      "takagi.ru.monica.adaptivereleasefd20261119"
+    ],
+    "ownerPackageListUnchanged": true,
+    "rotationRestored": true,
+    "stoppedOwnMuMuIndex": 2,
+    "stoppedOwnAdbPort": 15077,
+    "otherInstanceUnchanged": true,
+    "configurationAndDataDisksRetained": true,
+    "remainingUsers": "Users:\n\tUserInfo{0:擁有者:4c13} running"
+  },
+  "limitations": [
+    "No real user vaults, physical/OEM/ARM64/cloud-provider/power-loss validation",
+    "R8 uses isolated package and test signing, not the published signing identity",
+    "Authentication reuse requires a currently retained valid native session",
+    "Instrumentation controls picker delivery; actual DocumentsUI is separately exercised by Release tests"
+  ]
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_live_preview">即時預覽</string>
+    <string name="customization_filters_navigation">篩選與導覽</string>
+    <string name="customization_drag_handle">拖曳排序：%1$s</string>
+    <string name="customization_clear_presets_message">清空所有預設欄位？已儲存項目中的欄位會保留。</string>
+</resources>

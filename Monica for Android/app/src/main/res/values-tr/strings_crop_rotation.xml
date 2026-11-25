@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_face_rotate_left">90° sola döndür</string>
+    <string name="card_face_rotate_right">Sağa 90° döndür</string>
+    <string name="card_face_crop_rotation_hint">Kontrolleri kullanarak konumlandırmak için sürükleyin, yakınlaştırmak için sıkıştırın veya döndürün ve çevirin.</string>
+    <string name="card_face_flip_horizontal">Yatay çevir</string>
+    <string name="card_face_flip_vertical">Dikey olarak çevir</string>
+</resources>

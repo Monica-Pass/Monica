@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Téléchargement lors de la sauvegarde ; vérifier les mises à jour lorsque vous êtes déverrouillé au premier plan</string>
+    <string name="mdbx_auto_sync_manual_hint">Désactivé · Synchroniser manuellement si nécessaire</string>
+    <string name="mdbx_auto_sync_title">Synchronisation automatique</string>
+</resources>

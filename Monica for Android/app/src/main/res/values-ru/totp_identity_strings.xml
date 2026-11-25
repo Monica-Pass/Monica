@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Не удалось однозначно идентифицировать исходную запись аутентификатора KeePass. Обновите базу данных и повторите попытку.</string>
+</resources>

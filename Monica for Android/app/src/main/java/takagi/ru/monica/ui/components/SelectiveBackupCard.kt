@@ -1,7 +1,10 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material3.*
@@ -35,7 +38,7 @@ private fun ContentTypeSwitch(
     val shape = settingsSectionItemShape(index, groupCount)
     Surface(
         modifier = modifier.fillMaxWidth().clip(shape)
-            .toggleable(value = checked, enabled = enabled, role = Role.Switch,
+            .hapticSwitchToggleable(value = checked, enabled = enabled, role = Role.Switch,
                 interactionSource = null, indication = ripple(color = MaterialTheme.colorScheme.primary),
                 onValueChange = onCheckedChange),
         shape = shape, color = MaterialTheme.colorScheme.surfaceContainerLow,

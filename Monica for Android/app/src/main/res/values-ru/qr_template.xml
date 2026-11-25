@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Пользовательский шаблон QR</string>
+    <string name="qr_template_error">Невозможно прочитать запись, сохранить шаблон или сгенерировать код. Убедитесь, что база данных разблокирована и содержимое находится в допустимых пределах, затем повторите попытку.</string>
+    <string name="qr_template_field_error">Поле «%1$s» отсутствует, нечитаемо или неоднозначно. Перед созданием выберите доступное поле.</string>
+    <string name="qr_template_generate">Сгенерировать код QR</string>
+    <string name="qr_template_hint">Считывает текущие поля при их создании. Сохраняет шаблон, а не разрешенную копию пароля. Шаблоны Wi-Fi автоматически экранируют вставленные значения.</string>
+    <string name="qr_template_insert">Вставить поле</string>
+    <string name="qr_template_literal">Обычный текст</string>
+    <string name="qr_template_mode">Шаблон поля</string>
+    <string name="qr_template_wifi">Предустановка Wi-Fi</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_error_read_only">資料庫已設為只讀，請先在資料庫設定中關閉只讀模式。</string>
+    <string name="keepass_error_write_permission">缺少 KDBX 寫入權限，請在資料庫設定中重新授權後再儲存或刪除。</string>
+    <string name="keepass_error_memory">KDF 參數超出裝置記憶體能力，請降低記憶體佔用或並行度。</string>
+    <string name="keepass_error_credentials">資料庫密碼或金鑰檔案不正確</string>
+    <string name="keepass_error_legacy">暫不支援舊版 .kdb（KeePass 1.x）資料庫。請先在 KeePassDX 或 KeePassXC 中另存為 .kdbx，再匯入。</string>
+    <string name="keepass_error_format">資料庫格式不受支援，或檔案已損壞</string>
+    <string name="keepass_error_io">無法讀取或寫入 KeePass 檔案</string>
+    <string name="keepass_error_operation">KeePass 操作失敗</string>
+    <string name="onedrive_error_redirect">舊版 Monica Steam 佔用了 OneDrive 登入回調，請更新 Monica Steam 後重試。資料庫檔案未損壞。</string>
+    <string name="onedrive_error_power">OneDrive 暫時無法刷新登入狀態。請關閉電池優化，或點亮螢幕後重新開啟 Monica 再試。</string>
+    <string name="onedrive_error_operation">OneDrive 操作失敗</string>
+    <string name="keepass_error_not_remote">此資料庫沒有遠端來源</string>
+    <string name="keepass_error_remote_source_missing">遠端來源不存在</string>
+    <string name="keepass_error_working_copy_missing">本機工作副本不存在</string>
+    <string name="keepass_sync_pulled">已下載遠端最新版本</string>
+    <string name="keepass_sync_both_changed">遠端檔案和本機工作副本均有更改，請先解決衝突再同步。</string>
+    <string name="keepass_sync_up_to_date">遠端資料庫已是最新狀態</string>
+    <string name="keepass_sync_remote_changed">遠端檔案已更改，請重新同步後再繼續。</string>
+    <string name="keepass_sync_complete">遠端同步完成</string>
+    <string name="keepass_error_group_name_required">請輸入分組名稱</string>
+    <string name="keepass_error_group_path">分組路徑無效</string>
+    <string name="keepass_error_group_missing">分組不存在：%1$s</string>
+    <string name="keepass_error_group_child">不能將分組移入自身或其子分組</string>
+    <string name="keepass_error_group_uuid">目標資料庫已有 UUID 相同的其他分組：%1$s</string>
+    <string name="keepass_error_select_folder">請至少選擇一個資料夾</string>
+    <string name="keepass_group_unnamed">未命名分組</string>
+    <string name="keepass_error_parent_group">父分組不存在：%1$s</string>
+    <string name="keepass_error_group_exists">此處已有同名分組</string>
+    <string name="keepass_error_no_credentials">沒有可用的資料庫憑證</string>
+    <string name="keepass_error_source_type">不支援的遠端來源類型：%1$s</string>
+    <string name="keepass_error_upload_verification">遠端校驗失敗：上傳後內容不一致（%1$d/%2$d 字節）</string>
+    <string name="storage_error_invalid_path">檔案路徑無效</string>
+    <string name="storage_error_create_directory">無法建立資料庫目錄</string>
+    <string name="storage_error_read_database">無法讀取資料庫檔案</string>
+    <string name="storage_error_open_database">無法開啟資料庫檔案</string>
+    <string name="storage_error_recovery_copy">無法建立 KeePass 還原副本</string>
+    <string name="storage_error_verify_database">無法校驗資料庫檔案</string>
+    <string name="storage_error_write_verification">外部 KeePass 檔案寫入後校驗失敗</string>
+    <string name="storage_error_rollback_verification">外部 KeePass 檔案回滾後校驗失敗</string>
+    <string name="storage_error_write_database">無法寫入資料庫檔案</string>
+    <string name="keepass_error_conflict_cache_missing">缺少解決衝突所需的快取副本</string>
+    <string name="onedrive_error_session_expired">OneDrive 帳號已失效，請重新登入。</string>
+</resources>

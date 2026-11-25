@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Kirim ulang email verifikasi</string>
+    <string name="bitwarden_new_device_resend_sent">Email verifikasi diminta. Periksa kotak masuk Anda.</string>
+    <string name="bitwarden_new_device_resend_failed">Tidak dapat meminta email verifikasi. Coba lagi.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Server ini tidak mendukung pengiriman ulang email verifikasi perangkat baru.</string>
+    <string name="bitwarden_new_device_resend_wait">Coba lagi dalam %1$d detik.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Terlalu banyak permintaan. Tunggu sebelum mencoba lagi.</string>
+    <string name="bitwarden_account_fingerprint">Frasa sidik jari akun</string>
+    <string name="bitwarden_account_fingerprint_hint">Bandingkan frasa ini melalui saluran tepercaya lainnya untuk membantu memverifikasi identitas akun Anda.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Sinkronkan akun ini untuk memuat kunci identitasnya, lalu coba lagi.</string>
+    <string name="bitwarden_account_fingerprint_copy">Salin frasa</string>
+</resources>

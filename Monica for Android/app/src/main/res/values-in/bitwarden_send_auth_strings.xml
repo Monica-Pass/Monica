@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_send_auth_title">Kontrol akses</string>
+    <string name="bw_send_auth_none">Tidak ada verifikasi</string>
+    <string name="bw_send_auth_password">Kata sandi</string>
+    <string name="bw_send_auth_email">Verifikasi email</string>
+    <string name="bw_send_auth_email_label">Alamat email %1$d</string>
+    <string name="bw_send_auth_add_email">Tambahkan alamat email</string>
+    <string name="bw_send_auth_remove_email">Hapus alamat email</string>
+    <string name="bw_send_auth_recipients_notice">Alamat penerima dikirim ke server untuk verifikasi.</string>
+    <string name="bw_send_auth_premium">Verifikasi email memerlukan Premium untuk akun ini.</string>
+    <string name="bw_send_auth_unsupported">Server ini tidak menerima verifikasi email. Periksa apakah server Anda mendukungnya dan coba lagi.</string>
+    <string name="bw_send_auth_invalid">Periksa metode akses dan alamat email.</string>
+    <string name="bw_send_auth_unchanged">Pertahankan verifikasi saat ini</string>
+    <string name="bw_send_auth_password_set">Kumpulan kata sandi</string>
+    <string name="bw_send_drafts">Kirim draf</string>
+    <string name="bw_send_draft_save">Simpan draf</string>
+    <string name="bw_send_draft_saved">Draf disimpan di perangkat ini.</string>
+    <string name="bw_send_draft_local">Hanya disimpan di perangkat ini. Lanjutkan untuk mengirimkannya secara manual.</string>
+    <string name="bw_send_draft_resume">Lanjutkan</string>
+    <string name="bw_send_draft_discard">Buang draf</string>
+    <string name="bw_send_draft_discard_confirm">Buang draf lokal ini dan file simpanannya? Pengiriman yang Diterbitkan disimpan.</string>
+    <string name="bw_send_draft_failed">Tidak dapat menyimpan atau membaca draf ini. Salinan yang ada disimpan.</string>
+    <string name="bw_send_draft_unavailable">Beberapa draf tidak dapat dibuka. Mereka disimpan di perangkat ini.</string>
+    <string name="bw_send_draft_reconcile">Periksa kiriman sebelumnya</string>
+    <string name="bw_send_draft_uncertain">Pengiriman sebelumnya mungkin sudah sampai ke server. Periksa sebelum mengirimkannya lagi.</string>
+    <string name="bw_send_draft_not_found">Pengiriman sebelumnya tidak dapat dikonfirmasi. Periksa Kiriman Anda sebelum membuang draf ini.</string>
+    <string name="bw_send_cache_unavailable">Beberapa Kiriman yang di-cache tidak dapat dibuka. Data yang ada disimpan.</string>
+    <string name="bw_send_draft_empty">Tidak ada draf yang disimpan</string>
+    <string name="bw_send_draft_missing_file">File yang disimpan tidak ada. Pilih lagi.</string>
+    <string name="bw_send_logout_drafts">Lokal Kirim draf dan file simpanannya juga akan dihapus. Draf ini tidak dapat dipulihkan dengan masuk lagi.</string>
+</resources>

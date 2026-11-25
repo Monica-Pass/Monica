@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gpg_title">Kunci GPG</string>
+    <string name="gpg_entry_title">Judul</string>
+    <string name="gpg_name">Nama</string>
+    <string name="gpg_email">Email (opsional)</string>
+    <string name="gpg_error">Tidak dapat memproses kunci. Periksa identitas, file kunci, dan akses penyimpanan, lalu coba lagi.</string>
+    <string name="gpg_storage">Lokasi penyimpanan (%1$d)</string>
+    <string name="gpg_generate">Hasilkan kunci</string>
+    <string name="gpg_import">Impor kunci</string>
+    <string name="gpg_save">Simpan ke brankas</string>
+    <string name="gpg_no_expiry">Tidak pernah kadaluwarsa</string>
+    <string name="gpg_days">%1$d hari</string>
+    <string name="gpg_passphrase">Frasa sandi (opsional)</string>
+    <string name="gpg_copy_fingerprint">Salin sidik jari</string>
+    <string name="gpg_copy_public">Salin kunci publik</string>
+    <string name="gpg_copy_private">Salin kunci pribadi</string>
+    <string name="gpg_export_public">Ekspor kunci publik</string>
+    <string name="gpg_export_private">Ekspor kunci pribadi</string>
+    <string name="gpg_show_private">Tampilkan kunci pribadi</string>
+    <string name="gpg_hide_private">Sembunyikan kunci pribadi</string>
+    <string name="gpg_add_title">Kunci GPG baru</string>
+    <string name="gpg_edit_title">Edit kunci GPG</string>
+    <string name="gpg_empty">Menghasilkan atau mengimpor kunci</string>
+    <string name="gpg_ready">Kunci ditambahkan</string>
+    <string name="gpg_options">Opsi pembuatan</string>
+    <string name="gpg_expiry">Kedaluwarsa</string>
+    <string name="gpg_actions">Tindakan utama GPG</string>
+    <string name="gpg_export_pair">Ekspor pasangan kunci</string>
+    <string name="gpg_create_entry">Buat entri GPG baru</string>
+    <string name="gpg_name_invalid">Masukkan nama (1–128 karakter, tanpa tanda kurung siku atau jeda baris).</string>
+    <string name="gpg_email_invalid">Masukkan alamat email yang valid, atau biarkan kolom ini kosong.</string>
+    <string name="gpg_generate_error">Tidak dapat membuat kunci. Silakan coba lagi.</string>
+    <string name="gpg_import_error">Tidak dapat mengimpor kunci. Pilih satu file kunci OpenPGP yang valid (hingga 1 MB).</string>
+    <string name="gpg_load_error">Tidak dapat membaca kunci ini. Buka kembali entri setelah memeriksa brankas.</string>
+    <string name="gpg_save_error">Tidak dapat menyimpan kunci. Periksa apakah brankas yang dipilih dapat ditulisi.</string>
+    <string name="gpg_export_error">Tidak dapat mengekspor kunci. Pilih lokasi yang dapat ditulisi dan coba lagi.</string>
+</resources>

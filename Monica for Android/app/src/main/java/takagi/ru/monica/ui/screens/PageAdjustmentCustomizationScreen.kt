@@ -749,6 +749,8 @@ fun AuthenticatorCardAdjustmentScreen(
         Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             CustomizationToggle(Setting.HAPTIC_FEEDBACK, Setting.HAPTIC_FEEDBACK.summary(),
                 settings.hapticFeedbackEnabled, viewModel::updateHapticFeedbackEnabled, 0, if (settings.isPlusActivated) 3 else 1, Icons.Default.Vibration)
+            takagi.ru.monica.ui.components.HapticStrengthControl(settings.hapticFeedbackEnabled,
+                settings.hapticFeedbackStrength, viewModel::updateHapticFeedbackStrength)
             if (settings.isPlusActivated) {
                 CustomizationToggle(Setting.VALIDATOR_VIBRATION, Setting.VALIDATOR_VIBRATION.summary(),
                     settings.validatorVibrationEnabled, viewModel::updateValidatorVibrationEnabled, 1, 3, Icons.Default.Vibration,

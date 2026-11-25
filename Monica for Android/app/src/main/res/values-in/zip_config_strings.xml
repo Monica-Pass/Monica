@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Termasuk pengaturan aplikasi, akun umum, aturan pengisian otomatis, pertanyaan keamanan, dan konfigurasi WebDAV/Bitwarden. Enkripsi diperlukan.</string>
+    <string name="zip_config_encryption_required">Enkripsi cadangan ZIP untuk menyertakan konfigurasi Monica.</string>
+    <string name="zip_config_backup_failed">Tidak dapat mencadangkan semua konfigurasi Monica yang dipilih. Tidak ada cadangan yang diekspor.</string>
+    <string name="zip_restore_config">Pulihkan konfigurasi Monica</string>
+    <string name="zip_restore_config_hint">Jika ada di cadangan, pulihkan juga konfigurasinya. Biarkan tidak dicentang untuk mempertahankan pengaturan lokal. Koneksi WebDAV yang ada dipertahankan; Vault Bitwarden memerlukan verifikasi lagi.</string>
+</resources>

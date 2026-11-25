@@ -1,10 +1,13 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -40,7 +43,7 @@ internal fun SettingsPanelRow(icon: ImageVector, setting: Setting, subtitle: Str
     checked: Boolean? = null, onCheckedChange: ((Boolean) -> Unit)? = null,
     modifier: Modifier = Modifier, trailing: (@Composable () -> Unit)? = null,
 ) = SettingsContentRow(icon, setting.title(), subtitle, onClick, enabled, checked, onCheckedChange,
-    modifier.settingsSearchAnchor(setting.title()), trailing)
+    modifier.settingsSearchAnchor(setting.title()), trailing, feedbackOnEnable = setting == Setting.HAPTIC_FEEDBACK)
 
 /** Status, user data and values inside an already indexed setting. Never indexed. */
 @Composable
@@ -49,9 +52,10 @@ internal fun SettingsContentRow(icon: ImageVector, title: String, subtitle: Stri
     checked: Boolean? = null, onCheckedChange: ((Boolean) -> Unit)? = null,
     modifier: Modifier = Modifier,
     trailing: (@Composable () -> Unit)? = null,
+    feedbackOnEnable: Boolean = false,
 ) {
     val interaction = if (checked != null && onCheckedChange != null)
-        Modifier.toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
+        Modifier.hapticSwitchToggleable(checked, enabled = enabled, role = Role.Switch, feedbackOnEnable = feedbackOnEnable, onValueChange = onCheckedChange)
     else if (onClick != null) Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)
     else Modifier
     Row(modifier.settingsPanelSurface().then(interaction)

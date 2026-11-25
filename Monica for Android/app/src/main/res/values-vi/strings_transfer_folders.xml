@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">Hủy bản sao</string>
+    <string name="passkey_cancel_move">Hủy di chuyển</string>
+    <string name="passkey_copy_blocked_title">Một số Passkeys không thể sao chép được</string>
+    <string name="passkey_copy_result_summary">Đã sao chép %1$d; bị bỏ qua hoặc thất bại: %2$d</string>
+    <string name="passkey_copy_result_title">Sao chép kết quả</string>
+    <string name="passkey_copy_success_count">Đã sao chép %1$d Passkeys</string>
+    <string name="passkey_move_blocked_title">Một số Passkeys không thể di chuyển được</string>
+    <string name="passkey_transfer_key_unavailable">Khóa riêng không khả dụng trên thiết bị này.</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys không thể xử lý được; %2$d có thể tiếp tục. Chưa có gì được thay đổi.</string>
+    <string name="passkey_transfer_restricted">Passkey này không thể được chuyển đến đích này.</string>
+    <string name="passkey_transfer_same_database_copy">Cơ sở dữ liệu này yêu cầu ID thông tin xác thực duy nhất. Chọn cơ sở dữ liệu khác để sao chép Passkey này.</string>
+    <string name="passkey_transfer_skip">Bỏ qua %1$d và tiếp tục</string>
+</resources>

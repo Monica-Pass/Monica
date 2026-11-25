@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Buat akun</string>
+    <string name="bitwarden_account_request_hint">Minta petunjuk kata sandi</string>
+    <string name="bitwarden_account_password_hint">Petunjuk kata sandi utama (opsional)</string>
+    <string name="bitwarden_account_send_verification">Kirim email verifikasi</string>
+    <string name="bitwarden_account_verification_pending">Buka email verifikasi, lalu paste link atau tokennya di sini.</string>
+    <string name="bitwarden_account_verification_input">Tautan atau token verifikasi email</string>
+    <string name="bitwarden_account_verification_invalid">Tautan atau token verifikasi tidak valid untuk akun ini.</string>
+    <string name="bitwarden_account_password_requirements">Gunakan kata sandi utama yang kuat dengan setidaknya 12 karakter.</string>
+    <string name="bitwarden_account_password_mismatch">Kata sandi utama tidak cocok.</string>
+    <string name="bitwarden_account_registration_success">Akun dibuat. Masuk dengan kata sandi utama baru Anda.</string>
+    <string name="bitwarden_account_hint_sent">Jika akun ini ada, email petunjuk kata sandinya telah diminta.</string>
+    <string name="bitwarden_account_security">Keamanan akun</string>
+    <string name="bitwarden_account_devices">Perangkat akun</string>
+    <string name="bitwarden_account_device_trusted">Perangkat tepercaya</string>
+    <string name="bitwarden_account_device_untrusted">Perangkat tidak dipercaya</string>
+    <string name="bitwarden_account_last_activity">Aktivitas terakhir</string>
+    <string name="bitwarden_account_web_settings">Kelola akun di brankas web</string>
+    <string name="bitwarden_account_no_devices">Tidak ada perangkat yang ditemukan.</string>
+    <string name="bitwarden_account_request_failed">Permintaan akun gagal (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Pengoperasian akun tidak dapat diselesaikan.</string>
+    <string name="bitwarden_account_invalid_email">Masukkan alamat email yang valid.</string>
+</resources>

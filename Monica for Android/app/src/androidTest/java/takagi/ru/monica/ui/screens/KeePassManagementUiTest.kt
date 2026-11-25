@@ -82,6 +82,7 @@ class KeePassManagementUiTest {
             assertTrue("Standalone UI fixture requires prepared secure storage",
                 takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context) is
                     takagi.ru.monica.security.SecureStartupResult.Ready)
+            takagi.ru.monica.security.SessionManager.markUnlocked()
         }
     }
 
@@ -132,6 +133,7 @@ class KeePassManagementUiTest {
         onOpenDatabase = { events += "database:${it.id}" }, onResolveConflict = { events += "conflict:${it.id}" })
 
     @Test fun longListKeepsActionsReachableAndAlignedAtTwelveDp() {
+        frameWidth.value = 412.dp
         show { Source() }
         val frame = compose.onNodeWithTag("keepass_test_frame").fetchSemanticsNode().boundsInRoot
         val first = compose.onNodeWithTag("keepass_database_1").fetchSemanticsNode().boundsInRoot
@@ -222,13 +224,23 @@ class KeePassManagementUiTest {
             val stored = fixture.createDatabase(seedBrowser = true)
             runBlocking { databases.forEach { fixture.dao.insertDatabase(stored.copy(id = it.id, name = it.name,
                 sortOrder = it.sortOrder, isDefault = it.isDefault)) } }
-            show(shell = false) { LocalKeePassScreen(fixture.model, {}, {}) }
+            var requestedDestination by mutableStateOf<String?>(null)
+            show(shell = false) {
+                // Standalone test host handles the same scalar request consumed by MainActivity.
+                LaunchedEffect(Unit) {
+                    DatabaseManagerNavigation.requests.collect { destination ->
+                        requestedDestination = destination
+                        if (destination == "KEEPASS:36") fixture.model.openNativeManager(36L)
+                    }
+                }
+                LocalKeePassScreen(fixture.model, {}, {})
+            }
             compose.onNodeWithText(label(R.string.mdbx_ui_local_databases)).performClick()
             compose.waitUntil(10_000) { compose.onAllNodesWithTag("keepass_database_grid").fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithTag("keepass_database_grid").performScrollToIndex(36)
             compose.onNodeWithTag("keepass_database_36").performClick()
             compose.onNodeWithTag("keepass_browse_database").performClick()
-            compose.waitUntil(10_000) { fixture.model.activeNativeManagerDatabaseId.value == 36L }
+            compose.waitUntil(10_000) { requestedDestination == "KEEPASS:36" && fixture.model.activeNativeManagerDatabaseId.value == 36L }
             compose.waitUntil(10_000) { compose.onAllNodesWithText("示例登录").fetchSemanticsNodes().isNotEmpty() }
             capture("native-browser", system = true)
             compose.onNodeWithText("个人").performClick()
@@ -291,7 +303,7 @@ class KeePassManagementUiTest {
         }
         var created: String? = null
         show(shell = false) {
-            CreateKeePassDatabaseBottomSheet({}, {}) { name, password, location, _, _, options, _ ->
+            CreateKeePassDatabaseScreen({}, { _, done -> done(true) }) { name, password, location, _, _, options, _ ->
                 created = "$name:$password:$location:${options.kdfAlgorithm}"
             }
         }

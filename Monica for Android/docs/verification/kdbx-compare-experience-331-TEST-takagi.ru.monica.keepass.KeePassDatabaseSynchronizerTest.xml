@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuite name="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-25T07:27:11.446Z" time="0.029">
+  <testcase name="unrelatedDatabasesImportNewUuidsButRepeatedMergeIsIdempotent" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.013" />
+  <testcase name="sourceDeletionDoesNotResurrectAnOldEntry" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.0" />
+  <testcase name="reencodedHistoryKeepsDistinctRealVersionsWithoutGrowingOnMerge" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.002" />
+  <testcase name="accessAndUsageOnlyDifferencesDoNotInventHistoryOrConflict" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="equalTimeDivergencePreservesTargetAndSourceInHistory" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.002" />
+  <testcase name="iconCollisionRetainsBothOriginalImagesAndReferences" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="untimedPluginConflictIsNotSilentlyLost" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="equalRawAttachmentHashWithDifferentRepresentationIsRejected" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.0" />
+  <testcase name="twoRecycleBinsRemainRecycledAfterMerge" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="moveAfterDeletionSurvivesEvenWhenContentComesFromOtherSide" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="modificationAfterDeletionSurvives" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.0" />
+  <testcase name="groupMoveAndEntryEditAreMergedIndependently" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="attachmentsRemainAvailableForHistoricalVersions" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.0" />
+  <testcase name="winningGroupMovePersistsAcrossLaterMergeWithOlderLocation" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.002" />
+  <testcase name="deletedGroupRetainsANewerDescendant" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="sameUuidUsesNewerContentAndPreservesHistoryWithoutDuplicates" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.001" />
+  <testcase name="ambiguousUuidFailsBeforeAnyWrite" classname="takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest" time="0.0" />
+  </testsuite>

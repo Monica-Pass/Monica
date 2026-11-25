@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Biniş kodunu göster</string>
+    <string name="boarding_code_add">Biniş kartını düzenleyin ve tarayın</string>
+    <string name="boarding_code_missing">Bu geçiş için kayıtlı biniş kodu yok</string>
+    <string name="boarding_code_saved">Orijinal biniş kodu kaydedildi</string>
+    <string name="wallet_code_hint">QR kodu veya barkod · Göstermek için dokunun</string>
+    <string name="boarding_code_original_hint">Bu, taranan orijinaldir. Geçiş ayrıntılarının düzenlenmesi bu kodu değiştirmez.</string>
+    <string name="boarding_code_expand">Kodu büyüt</string>
+    <string name="boarding_code_collapse">Geçiş ayrıntılarını göster</string>
+    <string name="boarding_code_unavailable">Bu kod burada görüntülenemez. Yatay taramayı deneyin veya orijinal biniş kartını tekrar tarayın.</string>
+    <string name="boarding_code_rescan">Tekrar tarayın</string>
+    <string name="boarding_code_remove">Kaydedilen kodu kaldır</string>
+    <string name="wallet_pass_scan_boarding_pass">Biniş kartını tara</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Biniş kartındaki barkodu çerçeveyle hizalayın</string>
+    <string name="wallet_pass_boarding_pass_invalid">IATA biniş kartı barkodu değil</string>
+    <string name="wallet_pass_boarding_pass_filled">Biniş kartı ayrıntıları doldurulmuş; kodu saklamak için kaydet</string>
+    <string name="boarding_code_draft_hint">Kod değişikliklerini korumak için geçişi kaydedin</string>
+    <string name="wallet_pass_show_code">Üyelik kodunu görüntüle</string>
+</resources>

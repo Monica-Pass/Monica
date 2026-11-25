@@ -1,0 +1,27 @@
+ImageToolbox — slider adaptation
+Repository: https://github.com/T8RIN/ImageToolbox
+Revision: ab763ce76effd13ae3b8c7cfea37835eb9e0f8b9
+License: Apache License 2.0 (see ImageToolbox-Apache-2.0.txt)
+
+Copyright (c) 2026 T8RIN (Malik Mukhametzyanov) — FancySlider.kt
+Copyright (c) 2024 T8RIN (Malik Mukhametzyanov) — MaterialStarShape.kt
+
+Source paths:
+core/ui/src/main/kotlin/com/t8rin/imagetoolbox/core/ui/widget/sliders/FancySlider.kt
+core/resources/src/main/java/com/t8rin/imagetoolbox/core/resources/shapes/MaterialStarShape.kt
+
+Monica modifications, 2026-11-25:
+MonicaSlider.kt adapts FancySlider's filled rounded track, tick rendering and
+rotating thumb, using the existing Material3 input engine and 48dp touch target.
+Rotation follows physical travel and reverses for RTL. Existing value ranges,
+commit callbacks, keyboard and accessibility actions remain with Material3.
+SliderWheelShape.kt retains the upstream shape path; package/symbol renamed.
+Haptics run only on user value changes, are throttled, and honor Monica and
+system settings. Reduced motion disables wheel rotation. EnhancedSlider and
+EnhancedHapticFeedback were references only; their state-observer vibration
+and global-setting override are not copied.
+
+The upstream checkout has no top-level NOTICE file. Original copyright/license
+headers are retained for the adapted source and copied shape. This notice and
+the complete Apache-2.0 license are distributed in the app assets. The combined
+Monica application continues under GPL-3.0; these parts retain Apache-2.0 notices.

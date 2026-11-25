@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Güncellemeleri otomatik olarak kontrol et</string>
+    <string name="update_auto_check_summary">Kilit açıldıktan sonra günde en fazla bir kez kontrol edin. Bunu istediğiniz zaman kapatabilirsiniz.</string>
+    <string name="update_now">Şimdi güncelle</string>
+    <string name="update_skip_version">Bu sürümü atla</string>
+    <string name="update_view_details">Ayrıntıları görüntüle</string>
+    <string name="update_later">Daha sonra</string>
+    <string name="update_whats_new">Yenilikler</string>
+    <string name="update_open_fdroid">F-Droid\'yu açın</string>
+    <string name="update_fdroid_source">Güncellemeler resmi F-Droid deposu aracılığıyla kontrol edilir ve yüklenir.</string>
+    <string name="update_notes_unavailable">Sürüm notları mevcut değil. Daha fazla bilgi için ayrıntıları görüntüleyin.</string>
+    <string name="update_notes_truncated">Bu notlar uzun. Sürüm notlarının tamamını okumak için ayrıntıları görüntüleyin.</string>
+</resources>

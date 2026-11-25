@@ -1,0 +1,639 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareUiTest:
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.DatabaseManagerPaneTest:
+
+INSTRUMENTATION_STATUS: test=landscapeDarkLargeTextKeepsBothPathsIndependent
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=landscapeDarkLargeTextKeepsBothPathsIndependent
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=paneRestorationRetainsItsOwnFolderSearchAndSelection
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=paneRestorationRetainsItsOwnFolderSearchAndSelection
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=actualScreenCopiesSelectionRightAndMovesOneItemLeftIntoFocusedFolders
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=actualScreenCopiesSelectionRightAndMovesOneItemLeftIntoFocusedFolders
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=swipeEntersSelectionTapTogglesOnlyOneAndAnotherSwipeSelectsRange
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=swipeEntersSelectionTapTogglesOnlyOneAndAnotherSwipeSelectsRange
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=longPressUsesTheTouchedPanesSingleOrMultipleItemsAndNeverOpensThem
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=longPressUsesTheTouchedPanesSingleOrMultipleItemsAndNeverOpensThem
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=longTitlesWrapWithinPaneAndKeepMenuVisibleWithoutHorizontalScrolling
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=longTitlesWrapWithinPaneAndKeepMenuVisibleWithoutHorizontalScrolling
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=dualPanesNavigateAndScrollIndependently
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerPaneTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=dualPanesNavigateAndScrollIndependently
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerDeletionUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.DatabaseManagerDeletionUiTest:
+
+INSTRUMENTATION_STATUS: test=confirmationKeepsRightPaneSourceAndVisibleErrorAndBlocksBusyClicks
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerDeletionUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=confirmationKeepsRightPaneSourceAndVisibleErrorAndBlocksBusyClicks
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerDeletionUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=actualLocalScreenRequiresConfirmationAndDeletesOnlySelectedItems
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerDeletionUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=actualLocalScreenRequiresConfirmationAndDeletesOnlySelectedItems
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest:
+
+INSTRUMENTATION_STATUS: test=refreshAfterImplicitFolderMaterializationPreservesLocationAndOldHistory
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=refreshAfterImplicitFolderMaterializationPreservesLocationAndOldHistory
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=actualLocalScreenNavigatesParentsChildrenAndHistory
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=22
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=actualLocalScreenNavigatesParentsChildrenAndHistory
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 45.729
+
+
+
+OK (22 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

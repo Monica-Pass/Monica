@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_title">Pengelola kata sandi bawaan</string>
+    <string name="default_manager_entry_hint">Atur Monica menggunakan Shizuku atau Root ketika HyperOS menyembunyikan pengaturan pengelola kata sandi pihak ketiga</string>
+    <string name="default_manager_description">Tetapkan pengelola default untuk pengguna Android saat ini. Membutuhkan Android 14 atau lebih baru dan otorisasi Shizuku atau Root. Verifikasi pengaturan yang berhasil tidak menjamin setiap aliran kunci sandi HyperOS.</string>
+    <string name="default_manager_denied">Izin ditolak. Izinkan Monica di Shizuku dan coba lagi</string>
+    <string name="default_manager_read_failed">Tidak dapat membaca pengaturan sistem. Segarkan dan coba lagi</string>
+    <string name="default_manager_unset">Belum disetel</string>
+    <string name="default_manager_unknown">Belum dibaca</string>
+    <string name="default_manager_restore">Kembalikan pengaturan sebelumnya</string>
+    <string name="default_manager_apply">Setel ke Monica</string>
+    <string name="default_manager_restore_confirm">Memulihkan konfigurasi sistem yang disimpan sebelum peralihan terakhir.</string>
+    <string name="default_manager_confirm">Ubah pengelola kata sandi default untuk pengguna ini. Konfigurasi saat ini pertama-tama akan disimpan secara lokal untuk restorasi.</string>
+    <string name="default_manager_credential">Penyedia kredensial utama</string>
+    <string name="default_manager_autofill">Layanan IsiOtomatis</string>
+    <string name="default_manager_replace_warning">Penyedia kredensial lainnya akan dinonaktifkan. Data mereka tidak akan dihapus.</string>
+    <string name="default_manager_restored">Pengaturan sistem sebelumnya dipulihkan dan diverifikasi</string>
+    <string name="default_manager_applied">Monica dipilih dan pengaturan sistem diverifikasi</string>
+    <string name="default_manager_write_failed">Tidak dapat menyelesaikan atau memverifikasi perubahan. Segarkan untuk memeriksa status; konfigurasi yang disimpan tersedia untuk restorasi.</string>
+    <string name="default_manager_ready">Terhubung dan diotorisasi</string>
+    <string name="default_manager_permission">Diperlukan otorisasi</string>
+    <string name="default_manager_stopped">Instal dan mulai Shizuku</string>
+    <string name="default_manager_unsupported">Membutuhkan Android 14+ dan Shizuku 13+</string>
+    <string name="default_manager_grant">Otorisasi Shizuku</string>
+    <string name="default_manager_open_shizuku">Buka Shizuku</string>
+    <string name="default_manager_include_autofill">Juga atur isi otomatis</string>
+    <string name="default_manager_include_autofill_hint">Alihkan layanan isi otomatis ke Monica</string>
+    <string name="default_manager_keep_others">Pertahankan penyedia kredensial lainnya</string>
+    <string name="default_manager_keep_others_hint">Tetap aktifkan penyedia dan jadikan Monica sebagai penyedia utama</string>
+    <string name="default_manager_refresh">Segarkan status</string>
+    <string name="default_manager_source">Berdasarkan cr-zhichen/password-manager-switch · MIT</string>
+</resources>

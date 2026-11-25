@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Format cadangan terenkripsi</string>
+    <string name="backup_kdf_compatible">V1 yang kompatibel · 100.000 putaran</string>
+    <string name="backup_kdf_enhanced">Peningkatan V2 · 600.000 putaran</string>
+    <string name="backup_kdf_scope">Hanya cadangan terenkripsi ZIP yang baru dibuat yang menggunakan pilihan ini. Cadangan yang ada tidak berubah.</string>
+    <string name="backup_kdf_compatibility_warning">V2 memerlukan pembaca yang kompatibel. Ekstensi atau klien desktop yang lebih lama mungkin tidak dapat memulihkannya. Simpan cadangan sebelumnya.</string>
+</resources>

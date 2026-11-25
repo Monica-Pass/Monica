@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Les dossiers Bitwarden restent dans le même compte. La copie de dossiers avec des pièces jointes, passkeys ou des entrées d\'organisation n\'est pas encore prise en charge.</string>
+    <string name="external_folder_choose_destination">Choisissez une base de données et un dossier de destination</string>
+    <string name="external_folder_copy_hint">Copiez le dossier et son contenu ; garder l\'original.</string>
+    <string name="external_folder_move_hint">Déplacez le dossier et son contenu. L\'original n\'est supprimé qu\'une fois la destination enregistrée.</string>
+    <string name="external_folder_root">Racine de la base</string>
+</resources>

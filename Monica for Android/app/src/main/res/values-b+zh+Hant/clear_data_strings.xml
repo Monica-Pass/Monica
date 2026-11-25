@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">正在清空銀行卡…</string>
+    <string name="clear_data_completed">清空完成</string>
+    <string name="clear_data_completed_hint">所選資料已清空。</string>
+    <string name="clear_data_count">已清空 %1$d / %2$d 條</string>
+    <string name="clear_data_documents">正在清空證件…</string>
+    <string name="clear_data_failed">未能全部清空</string>
+    <string name="clear_data_failed_hint">清空已停止，已清空的資料不會恢復。請檢查資料庫連接後重試。</string>
+    <string name="clear_data_generator_history">正在清空密碼生成歷史…</string>
+    <string name="clear_data_notes">正在清空筆記…</string>
+    <string name="clear_data_passwords">正在清空密碼…</string>
+    <string name="clear_data_preparing">正在統計所選資料…</string>
+    <string name="clear_data_totp">正在清空驗證器…</string>
+    <string name="clear_data_verifying">正在驗證…</string>
+    <string name="clear_data_wait">請等待操作完成。</string>
+</resources>

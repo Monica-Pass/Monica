@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_remove_title">刪除%1$s？</string>
+    <string name="entry_content_remove_message">將從目前草稿移除此內容，儲存項目後生效。</string>
+    <string name="entry_content_drag">按住拖動排序</string>
+</resources>

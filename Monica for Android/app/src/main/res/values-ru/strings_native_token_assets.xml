@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">Не удалось прочитать или сохранить все файлы. Исходный контент сохранен. Проверьте доступ к файлу и его размер, затем повторите попытку.</string>
+    <string name="native_token_assets_limit">До 64 MiB новых или перемещенных файлов на одно сохранение и 128 вложений на каждый токен.</string>
+    <string name="native_token_backup_limit">Собственные файлы токенов API в одной резервной копии ZIP должны иметь общий размер 64 MiB или меньше. Используйте собственную резервную копию базы данных для больших хранилищ.</string>
+    <string name="native_token_backup_needs_files">Эта база данных содержит токены API с файлами. Включите изображения и вложения для экспорта полной резервной копии.</string>
+    <string name="native_token_kdbx_files_unsupported">Для токенов API с файлами требуется зашифрованная Monica ZIP или собственная резервная копия базы данных. Экспорт KDBX поддерживает токены API без файлов.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">載入中…</string>
+    <string name="kp_list_preview">暫顯上一清單：%1$s</string>
+    <string name="kp_list_locked">已鎖定</string>
+    <string name="kp_list_failed">載入失敗</string>
+    <string name="kp_list_unlock">解鎖</string>
+    <string name="kp_list_unlock_help">驗證 Monica 主密碼後，使用已儲存的憑證開啟此資料庫。</string>
+    <string name="kp_list_auth_failed">驗證失敗或逾時，請重試。</string>
+    <string name="kp_list_loading_databases">載入中… · %1$d 個資料庫</string>
+</resources>

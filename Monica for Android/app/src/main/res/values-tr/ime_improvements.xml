@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_scramble_pin_title">Sayı tuşlarını karıştır</string>
+    <string name="ime_scramble_pin_description">Sayısal tuş takımı açıldığında karıştır. Siz yazarken tuşlar yerinde kalır.</string>
+    <string name="ime_hide_pin_preview_title">Sayı tuşu önizlemelerini gizle</string>
+    <string name="ime_hide_pin_preview_description">Sayı açılır pencerelerini ve basılan tuş vurgularını gizleyin.</string>
+    <string name="ime_hide_keyboard">Klavyeyi gizle</string>
+    <string name="ime_switch_keyboard">Giriş yöntemini değiştir</string>
+    <string name="ime_fill_current_otp">Geçerli kodu doldur</string>
+    <string name="ime_otp_unavailable">Mevcut doğrulama kodu mevcut değil.</string>
+</resources>

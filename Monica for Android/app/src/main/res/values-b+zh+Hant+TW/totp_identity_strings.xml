@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">無法唯一確認原來的 KeePass 驗證器項目，請重新整理資料庫後重試。</string>
+</resources>

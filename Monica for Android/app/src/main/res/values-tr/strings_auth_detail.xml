@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">Geçerli kodu kopyala</string>
+    <string name="auth_detail_copy_next">Sonrakini Kopyala</string>
+    <string name="auth_detail_qr_migrate">QR kodunu oluştur (geçiş)</string>
+    <string name="auth_detail_qr_current">QR kodunu oluştur (geçerli kod)</string>
+</resources>

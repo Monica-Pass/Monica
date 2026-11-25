@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Carica al salvataggio; controlla gli aggiornamenti mentre sei sbloccato in primo piano</string>
+    <string name="mdbx_auto_sync_manual_hint">Spento · Sincronizza manualmente quando necessario</string>
+    <string name="mdbx_auto_sync_title">Sincronizzazione automatica</string>
+</resources>

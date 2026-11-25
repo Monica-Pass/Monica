@@ -1,12 +1,15 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -73,7 +76,7 @@ internal fun CustomizationToggle(setting: Setting, subtitle: String = setting.su
     val title = setting.title()
     val shape = settingsSectionItemShape(index, count)
     Surface(Modifier.fillMaxWidth().settingsSearchAnchor(title).clip(shape)
-        .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
+        .hapticSwitchToggleable(value = checked, enabled = enabled, role = Role.Switch, feedbackOnEnable = setting == Setting.HAPTIC_FEEDBACK, onValueChange = onCheckedChange),
         shape = shape, color = MaterialTheme.colorScheme.surfaceContainer) {
         BoxWithConstraints(Modifier.padding(16.dp)) {
             val stack = maxWidth < 280.dp || LocalDensity.current.fontScale > 1.3f

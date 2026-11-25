@@ -1,7 +1,10 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
 import takagi.ru.monica.workers.MdbxAutoSyncPreferences
 import takagi.ru.monica.workers.MdbxAutoSyncWorker
@@ -442,6 +445,7 @@ fun MdbxManagerScreen(
                         databases = sourceDatabases,
                         conflictCounts = conflictCounts,
                         diagnostics = vaultDiagnostics,
+                        onReorder = viewModel::reorderDatabaseDisplay,
                         gridState = when (current.source) {
                             MdbxManagerSource.LOCAL -> localGridState
                             MdbxManagerSource.WEBDAV -> webDavGridState
@@ -1223,7 +1227,8 @@ internal fun MdbxSourceManagementPage(
     onCreateClick: () -> Unit,
     onOpenClick: () -> Unit,
     onOpenDatabase: (LocalMdbxDatabase) -> Unit,
-    gridState: LazyGridState = rememberLazyGridState()
+    gridState: LazyGridState = rememberLazyGridState(),
+    onReorder: suspend (List<Long>) -> Unit = {},
 ) {
     val minimumTileWidth = 156.dp * LocalDensity.current.fontScale.coerceAtLeast(1f)
     val tileMetrics = rememberDatabaseManagementTileMetrics()
@@ -1231,28 +1236,19 @@ internal fun MdbxSourceManagementPage(
         if (databases.isEmpty()) {
             MdbxSourceEmptyState(source, Modifier.weight(1f))
         } else {
-            MonicaTileGrid(
-                state = gridState,
-                columns = GridCells.Adaptive(minimumTileWidth),
-                contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 12.dp),
-                modifier = Modifier.weight(1f).fillMaxWidth().testTag("mdbx_database_grid")
-            ) {
-                item(key = "database-count", span = { GridItemSpan(maxLineSpan) }) {
-                    Text(stringResource(R.string.mdbx_ui_database_count, databases.size),
-                        modifier = Modifier.padding(start = 4.dp, top = 4.dp, bottom = 8.dp),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                gridItems(items = databases, key = { it.id }, contentType = { "database" }) { db ->
-                    MdbxVaultTile(
-                        database = db,
-                        isDefault = db.isDefault && db.isUsable,
-                        conflictCount = conflictCounts[db.id] ?: 0,
-                        diagnostics = diagnostics[db.id],
-                        metrics = tileMetrics,
-                        onOpen = { onOpenDatabase(db) }
-                    )
-                }
+            DatabaseManagementReorderableGrid(
+                databases, LocalMdbxDatabase::id, gridState, "mdbx_database_grid", onReorder,
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+            ) { db, modifier, dragging ->
+                MdbxVaultTile(
+                    database = db,
+                    isDefault = db.isDefault && db.isUsable,
+                    conflictCount = conflictCounts[db.id] ?: 0,
+                    diagnostics = diagnostics[db.id],
+                    metrics = tileMetrics,
+                    onOpen = { if (!dragging) onOpenDatabase(db) },
+                    modifier = modifier,
+                )
             }
         }
         MdbxCreateOpenActions(onCreateClick = onCreateClick, onOpenClick = onOpenClick)
@@ -1536,7 +1532,7 @@ private fun MdbxSyncOverview(
         if (database.isRemoteSource()) {
             MdbxCard(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().toggleable(
+                    modifier = Modifier.fillMaxWidth().hapticSwitchToggleable(
                         value = automatic, role = Role.Switch,
                         onValueChange = { enabled ->
                             preferences.setEnabled(database.id, enabled)
@@ -2457,7 +2453,8 @@ private fun MdbxVaultTile(
     conflictCount: Int,
     diagnostics: MdbxVaultDiagnostics?,
     metrics: DatabaseManagementTileMetrics,
-    onOpen: () -> Unit
+    onOpen: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val strings = rememberScreenStrings()
     val status = diagnostics?.lastSyncStatus ?: database.lastSyncStatus
@@ -2474,7 +2471,7 @@ private fun MdbxVaultTile(
     }
     MdbxCard(
         onClick = onOpen,
-        modifier = Modifier.fillMaxWidth().testTag("mdbx_database_${database.id}"),
+        modifier = modifier.fillMaxWidth().testTag("mdbx_database_${database.id}"),
         colors = CardDefaults.cardColors(containerColor = if (isDefault)
             MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow)
     ) {

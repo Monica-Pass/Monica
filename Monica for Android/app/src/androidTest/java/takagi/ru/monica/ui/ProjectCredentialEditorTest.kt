@@ -49,6 +49,75 @@ class ProjectCredentialEditorTest {
     private var detail by mutableStateOf(false)
     private var previousContent = false
 
+    @Test fun legacyThreeAccountsShowSeparatelyAndSaveWithoutLosingRows() {
+        checkLegacyIndependentAccounts(1f)
+    }
+
+    @Test fun legacyThreeAccountsRemainEditableAtLargeFont() {
+        checkLegacyIndependentAccounts(1.5f)
+    }
+
+    private fun checkLegacyIndependentAccounts(fontScale: Float) {
+        val users = listOf("alice-example", "bob-example", "carol-example")
+        val project = java.util.UUID.randomUUID().toString()
+        val ids = runBlocking { users.mapIndexed { index, user ->
+            val id = db.passwordEntryDao().insertPasswordEntry(PasswordEntry(title = "Legacy three accounts",
+                website = "https://accounts.example.invalid", username = user,
+                password = security.encryptData("synthetic-$index"), passwordGroupId = project))
+            db.customFieldDao().insert(CustomField(entryId = id, title = "unknown-synthetic-field", value = "value-$index", isProtected = true))
+            id
+        } }
+        val original = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id }
+        savedId = ids.first(); editId = ids.first(); detail = true
+        compose.setContent {
+            CompositionLocalProvider(LocalUiSecurityManager provides security,
+                LocalDensity provides Density(LocalDensity.current.density, fontScale)) {
+                MaterialTheme { key(detail, editorEpoch) {
+                    if (detail) PasswordDetailScreen(model, passwordId = ids.first(), biometricEnabled = false,
+                        onNavigateBack = {}, onEditPassword = {})
+                    else AddEditPasswordScreen(model, passwordId = editId, initialStorageExplicit = true,
+                        onSaveCompleted = { savedId = it }, onNavigateBack = {})
+                } }
+            }
+        }
+        compose.waitUntil(20000) { compose.onAllNodesWithText(users.first()).fetchSemanticsNodes().isNotEmpty() }
+        for (user in users) {
+            compose.onNode(hasScrollToNodeAction()).performScrollToNode(hasText(user))
+            compose.onNodeWithText(user).assertIsDisplayed()
+        }
+        for (id in ids) {
+            compose.onNode(hasScrollToNodeAction()).performScrollToNode(hasTestTag("detail_password_$id"))
+            compose.onNodeWithTag("detail_password_$id").assertIsDisplayed()
+        }
+        assertEquals("Opening detail must not migrate data", original,
+            runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id })
+        File(context.filesDir, "legacy-account-detail-$fontScale.png").outputStream().use {
+            compose.onRoot().captureToImage().asAndroidBitmap().compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+        }
+        compose.runOnIdle { detail = false; savedId = null }
+        val restored = ProjectCredentialGroup.restoreForEditing(original, emptyMap())
+        scroll(hasTestTag("credential_username_${restored[1].id}")).assertTextContains("bob-example")
+            .performTextReplacement("bob-edited")
+        scroll(hasTestTag("credential_username_${restored[2].id}")).assertTextContains("carol-example")
+        save()
+        fun verify() {
+            val after = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id }
+            assertEquals(ids, after.map { it.id })
+            assertEquals(listOf("alice-example", "bob-edited", "carol-example"), after.map { it.username })
+            assertEquals(listOf("synthetic-0", "synthetic-1", "synthetic-2"), after.map { security.decryptData(it.password) })
+            val fields = runBlocking { model.getCustomFieldsByEntryIds(ids) }
+            ids.forEachIndexed { index, id ->
+                assertEquals("value-$index", fields.getValue(id).single { it.title == "unknown-synthetic-field" }.value)
+                assertTrue(fields.getValue(id).single { it.title == "unknown-synthetic-field" }.isProtected)
+                assertNotNull(ProjectCredentialGroup.read(fields.getValue(id).map(CustomFieldDraft::fromCustomField)))
+            }
+        }
+        verify()
+        compose.runOnIdle { editId = ids.last(); editorEpoch++; savedId = null }
+        scroll(hasTestTag("credential_username_${restored[1].id}")).assertTextContains("bob-edited")
+        save(); verify()
+    }
+
     @Before fun setup() {
         runBlocking {
             assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is

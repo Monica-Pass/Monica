@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_count_loading">Đếm…</string>
+    <string name="export_source_count_locked">Mở khóa để đếm</string>
+    <string name="export_source_count_unavailable">Không khả dụng</string>
+    <string name="export_source_record_count">Bản ghi %1$d</string>
+</resources>

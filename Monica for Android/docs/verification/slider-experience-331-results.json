@@ -1,0 +1,238 @@
+{
+  "date": "2026-11-25",
+  "version": "1.0.331 (unreleased)",
+  "device": "MuMu instance 0, Android 35, x86_64; isolated synthetic user",
+  "upstreamRevision": "ab763ce76effd13ae3b8c7cfea37835eb9e0f8b9",
+  "editions": {
+    "main": {
+      "buildSeconds": 153.9118482000049,
+      "buildExit": 0,
+      "jvmPassed": 3,
+      "instrumentedPassed": 21,
+      "runnerSeconds": [
+        5.004,
+        13.037
+      ],
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 5,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 5,
+          "failures": 0,
+          "success": true,
+          "seconds": 7.733528899989324
+        },
+        {
+          "completedMethodPasses": 16,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest",
+          "tests": 16,
+          "failures": 0,
+          "success": true,
+          "seconds": 15.576308600007906
+        }
+      ],
+      "frozenInputsMatched": 6439,
+      "sourcePathsChanged": 15,
+      "sliderCallSites": 11,
+      "callSitesOnlyImportChanged": true,
+      "sourceHashes": {
+        "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "fc2f2e0189b05caed20446976fa2c740ff21ecc36b95b82ba9046bf35bc2d935",
+        "app/src/main/java/takagi/ru/monica/ui/components/CredentialGeneratorSheet.kt": "21dd6035756879d130b50372a3612e106bf8b51b78ae5f6c5633bc7e547a8f2f",
+        "app/src/main/java/takagi/ru/monica/ui/components/ImageImportConfirmDialog.kt": "10368874b194cd5c2a36727b8ab5a536ecf11ab9782dc0b610ff881a241ec3bc",
+        "app/src/main/java/takagi/ru/monica/ui/screens/CustomColorSettingsScreen.kt": "36eef5b16e65c277565c27281b3802e487f6a3c408c4ae69ea6778b0678f7b82",
+        "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt": "28410af924401e77111991c9cad0da3fe71f1202db5b16aeb0066987187b25fd",
+        "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt": "28f960f1d9fcceff264432d4cc1ad62413ff316465b8ff166fa37941bb2cd0d2",
+        "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt": "be6c62a94259ce90f321ae7e01b0715d600d64668e13922c771dbb26187e5d52",
+        "app/src/main/java/takagi/ru/monica/autofill_ng/ui/components/PasswordFormComponents.kt": "25249282cf5e031327b9f2efb55a9518f5f36e7cd1775b9407b189db7d9f2884",
+        "app/src/main/java/takagi/ru/monica/ui/components/MonicaSlider.kt": "177c3a27eb0febeded92d517bf561eb8e71445dc05229f09dc94333f1765cc5a",
+        "app/src/main/java/takagi/ru/monica/ui/components/SliderWheelShape.kt": "fc01883c89d6527b18b8a28901ed5dc10688ee060a04ada03ff60101b3a8cb10",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "d9a47f9a735db5d56a7f1dfadd2febd76b2db3ba24cf8963fec09d3eef741b8a",
+        "app/src/main/assets/licenses/ImageToolbox.txt": "0dbf8aa0e49988ce9dc7cef96ed3a4a6d59f773ba009e0ad3293cb37e32a884b",
+        "app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+        "app/src/test/java/takagi/ru/monica/ui/components/SliderTickGateTest.kt": "caa02aad86808db9400cda0bc879f45d2b904df6326364a6c595b1df32089134",
+        "app/src/androidTest/java/takagi/ru/monica/ui/components/MonicaSliderInstrumentedTest.kt": "278d0a9175911f6738edaed9f6ea125fe400734a022393793302b9109c2b1933"
+      },
+      "apks": [
+        {
+          "file": "app.apk",
+          "sha256": "b66c7a9d1fbf73e28b140dbf3fa94789a1a17ff09ca14c77516645badc7f8f13"
+        },
+        {
+          "file": "test.apk",
+          "sha256": "33cad25babe9b388f00c7d99978c26b40a25dce5e2602d316c5fd21701409ab9"
+        }
+      ]
+    },
+    "fd": {
+      "buildSeconds": 148.97595829999773,
+      "buildExit": 0,
+      "jvmPassed": 3,
+      "instrumentedPassed": 21,
+      "runnerSeconds": [
+        5.167,
+        13.016
+      ],
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 5,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 5,
+          "failures": 0,
+          "success": true,
+          "seconds": 7.849967399990419
+        },
+        {
+          "completedMethodPasses": 16,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest",
+          "tests": 16,
+          "failures": 0,
+          "success": true,
+          "seconds": 15.475097499991534
+        }
+      ],
+      "frozenInputsMatched": 6439,
+      "sourcePathsChanged": 15,
+      "sliderCallSites": 11,
+      "callSitesOnlyImportChanged": true,
+      "sourceHashes": {
+        "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "fc2f2e0189b05caed20446976fa2c740ff21ecc36b95b82ba9046bf35bc2d935",
+        "app/src/main/java/takagi/ru/monica/ui/components/CredentialGeneratorSheet.kt": "4c3c2c67415cdab2d5a6e5e7de2b7273977757101d6ffaafd096dcff8ef84238",
+        "app/src/main/java/takagi/ru/monica/ui/components/ImageImportConfirmDialog.kt": "10368874b194cd5c2a36727b8ab5a536ecf11ab9782dc0b610ff881a241ec3bc",
+        "app/src/main/java/takagi/ru/monica/ui/screens/CustomColorSettingsScreen.kt": "36eef5b16e65c277565c27281b3802e487f6a3c408c4ae69ea6778b0678f7b82",
+        "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt": "28410af924401e77111991c9cad0da3fe71f1202db5b16aeb0066987187b25fd",
+        "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt": "28f960f1d9fcceff264432d4cc1ad62413ff316465b8ff166fa37941bb2cd0d2",
+        "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt": "9e05976bb89e1ebfc5d6a945687184aa0c439314563d941ad5c638934cbae319",
+        "app/src/main/java/takagi/ru/monica/autofill_ng/ui/components/PasswordFormComponents.kt": "25249282cf5e031327b9f2efb55a9518f5f36e7cd1775b9407b189db7d9f2884",
+        "app/src/main/java/takagi/ru/monica/ui/components/MonicaSlider.kt": "177c3a27eb0febeded92d517bf561eb8e71445dc05229f09dc94333f1765cc5a",
+        "app/src/main/java/takagi/ru/monica/ui/components/SliderWheelShape.kt": "fc01883c89d6527b18b8a28901ed5dc10688ee060a04ada03ff60101b3a8cb10",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "e5ea98f2a972b98de16d36243d43cdab1718cd37f979cd28d27e3463a39181da",
+        "app/src/main/assets/licenses/ImageToolbox.txt": "0dbf8aa0e49988ce9dc7cef96ed3a4a6d59f773ba009e0ad3293cb37e32a884b",
+        "app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+        "app/src/test/java/takagi/ru/monica/ui/components/SliderTickGateTest.kt": "caa02aad86808db9400cda0bc879f45d2b904df6326364a6c595b1df32089134",
+        "app/src/androidTest/java/takagi/ru/monica/ui/components/MonicaSliderInstrumentedTest.kt": "278d0a9175911f6738edaed9f6ea125fe400734a022393793302b9109c2b1933"
+      },
+      "apks": [
+        {
+          "file": "app.apk",
+          "sha256": "d3ab72aa51d8e8898078aa3d519270ed16b4b5560ec830a60197751e5a378edb"
+        },
+        {
+          "file": "test.apk",
+          "sha256": "018aee159d3701f613b9282ee0d269bef0cc4d2e58d11988ada2da7e8fe7fc4f"
+        }
+      ]
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/components/CredentialGeneratorSheet.kt": "retained-edition-difference",
+    "app/src/main/java/takagi/ru/monica/ui/components/ImageImportConfirmDialog.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/screens/CustomColorSettingsScreen.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt": "retained-edition-difference",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/ui/components/PasswordFormComponents.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/components/MonicaSlider.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/components/SliderWheelShape.kt": "byte-identical",
+    "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "retained-edition-difference",
+    "app/src/main/assets/licenses/ImageToolbox.txt": "byte-identical",
+    "app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt": "byte-identical",
+    "app/src/test/java/takagi/ru/monica/ui/components/SliderTickGateTest.kt": "byte-identical",
+    "app/src/androidTest/java/takagi/ru/monica/ui/components/MonicaSliderInstrumentedTest.kt": "byte-identical"
+  },
+  "installedApks": {
+    "main": {
+      "app.apk": {
+        "sha256": "b66c7a9d1fbf73e28b140dbf3fa94789a1a17ff09ca14c77516645badc7f8f13",
+        "installedMatches": true
+      },
+      "test.apk": {
+        "sha256": "33cad25babe9b388f00c7d99978c26b40a25dce5e2602d316c5fd21701409ab9",
+        "installedMatches": true
+      },
+      "licenseAssetsMatch": true,
+      "abis": [
+        "x86_64"
+      ]
+    },
+    "fd": {
+      "app.apk": {
+        "sha256": "d3ab72aa51d8e8898078aa3d519270ed16b4b5560ec830a60197751e5a378edb",
+        "installedMatches": true
+      },
+      "test.apk": {
+        "sha256": "018aee159d3701f613b9282ee0d269bef0cc4d2e58d11988ada2da7e8fe7fc4f",
+        "installedMatches": true
+      },
+      "licenseAssetsMatch": true,
+      "abis": [
+        "x86_64"
+      ]
+    }
+  },
+  "licenseChecks": {
+    "main": {
+      "readmes": 4,
+      "licenseSha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "noticePackaged": true
+    },
+    "fd": {
+      "readmes": 3,
+      "licenseSha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "noticePackaged": true
+    }
+  },
+  "previousRuns": {
+    "fd-new01": {
+      "completedMethodPasses": 2,
+      "completedMethodFailures": 2,
+      "edition": "fd",
+      "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+      "tests": 0,
+      "failures": 0,
+      "success": false,
+      "seconds": 7.197032800002489
+    },
+    "main-new02": {
+      "completedMethodPasses": 4,
+      "completedMethodFailures": 1,
+      "edition": "main",
+      "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+      "tests": 5,
+      "failures": 1,
+      "success": false,
+      "seconds": 8.072284000008949
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 13,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.switchhapticsmain33120261125.localedebug",
+      "takagi.ru.monica.switchhapticsmain33120261125.localedebug.test",
+      "takagi.ru.monica.switchhapticsfd33120261125.localedebug",
+      "takagi.ru.monica.switchhapticsfd33120261125.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15083
+  }
+}

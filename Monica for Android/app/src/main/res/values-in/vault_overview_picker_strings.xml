@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_overview_picker_search_cards">Cari kartu, bank, atau digit terakhir</string>
+    <string name="vault_overview_picker_search_items">Cari judul atau akun</string>
+    <string name="vault_overview_picker_selected">%1$d dipilih</string>
+    <string name="vault_overview_picker_results">Hasil: %1$d</string>
+    <string name="vault_overview_picker_no_account">Tidak ada akun yang ditentukan</string>
+    <string name="vault_overview_picker_empty_hint">Coba kata kunci atau database lain.</string>
+    <string name="vault_overview_picker_limit">Hingga %1$d entri yang dipasangi pin</string>
+</resources>

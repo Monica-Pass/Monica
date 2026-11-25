@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">罢复制</string>
+    <string name="passkey_cancel_move">罢迁移</string>
+    <string name="passkey_copy_blocked_title">部分 Passkey 不可复制</string>
+    <string name="passkey_copy_result_summary">已摹 %1$d；略过或失败 %2$d</string>
+    <string name="passkey_copy_result_title">复制结果</string>
+    <string name="passkey_copy_success_count">已摹 %1$d 枚 Passkey</string>
+    <string name="passkey_move_blocked_title">部分 Passkey 不可迁移</string>
+    <string name="passkey_transfer_key_unavailable">此设备之私钥不可用。</string>
+    <string name="passkey_transfer_preflight_summary">有 %1$d 枚 Passkey 不可处理，%2$d 枚可继续。尚未作任何更改。</string>
+    <string name="passkey_transfer_restricted">此 Passkey 不可传至该目标。</string>
+    <string name="passkey_transfer_same_database_copy">此库须使信物 ID 唯一。请另择一库以摹此 Passkey。</string>
+    <string name="passkey_transfer_skip">略过 %1$d 项并继续</string>
+</resources>

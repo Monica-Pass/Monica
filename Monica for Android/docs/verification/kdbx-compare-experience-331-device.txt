@@ -1,0 +1,4649 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest:
+
+INSTRUMENTATION_STATUS: test=darkLargeTextCardShrinksSmoothlyAndCanReverse
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=darkLargeTextCardShrinksSmoothlyAndCanReverse
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lightCardShrinksSmoothlyAndImmediatelyRemovesPassword
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lightCardShrinksSmoothlyAndImmediatelyRemovesPassword
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareUiTest:
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #420 at (l=28.0, t=182.0, r=357.0, b=237.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #441 at (l=56.0, t=1554.0, r=504.0, b=1718.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable(DatabaseCompareUiTest.kt:449)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #420 at (l=28.0, t=182.0, r=357.0, b=237.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #441 at (l=56.0, t=1554.0, r=504.0, b=1718.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable(DatabaseCompareUiTest.kt:449)
+
+
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: test=externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #510 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #531 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration(DatabaseCompareUiTest.kt:394)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #510 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #531 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration(DatabaseCompareUiTest.kt:394)
+
+
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #688 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #709 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen(DatabaseCompareUiTest.kt:332)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #688 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #709 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen(DatabaseCompareUiTest.kt:332)
+
+
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: test=explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1274 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1291 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns(DatabaseCompareUiTest.kt:519)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1274 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1291 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns(DatabaseCompareUiTest.kt:519)
+
+
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=globalRelockCannotReuseOldNativeAuthenticationAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in globalRelockCannotReuseOldNativeAuthenticationAfterUnlock(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: test=globalRelockCannotReuseOldNativeAuthenticationAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1361 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1382 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backgroundClearsReviewAndLateInputPickerCannotCrossLock(DatabaseCompareUiTest.kt:408)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in backgroundClearsReviewAndLateInputPickerCannotCrossLock(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1361 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1382 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backgroundClearsReviewAndLateInputPickerCannotCrossLock(DatabaseCompareUiTest.kt:408)
+
+
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1430 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1451 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backFromOutputClearsPasswordsAndBackFromReviewClearsSession(DatabaseCompareUiTest.kt:367)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in backFromOutputClearsPasswordsAndBackFromReviewClearsSession(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1430 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1451 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backFromOutputClearsPasswordsAndBackFromReviewClearsSession(DatabaseCompareUiTest.kt:367)
+
+
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1520 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1541 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingDestinationPickerDiscardsEncryptedResult(DatabaseCompareUiTest.kt:384)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in cancellingDestinationPickerDiscardsEncryptedResult(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1520 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1541 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingDestinationPickerDiscardsEncryptedResult(DatabaseCompareUiTest.kt:384)
+
+
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+
+
+INSTRUMENTATION_STATUS: test=authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1589 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1610 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingBusyReadRejectsLateComparisonAndPreservesSource(DatabaseCompareUiTest.kt:435)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in cancellingBusyReadRejectsLateComparisonAndPreservesSource(takagi.ru.monica.databasecompare.DatabaseCompareUiTest):
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1589 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1610 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingBusyReadRejectsLateComparisonAndPreservesSource(DatabaseCompareUiTest.kt:435)
+
+
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 28.091
+
+There were 12 failures:
+
+1) realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #420 at (l=28.0, t=182.0, r=357.0, b=237.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #441 at (l=56.0, t=1554.0, r=504.0, b=1718.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable(DatabaseCompareUiTest.kt:449)
+
+2) externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+3) lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #510 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #531 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration(DatabaseCompareUiTest.kt:394)
+
+4) maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #688 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #709 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen(DatabaseCompareUiTest.kt:332)
+
+5) explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+6) currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1274 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1291 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns(DatabaseCompareUiTest.kt:519)
+
+7) globalRelockCannotReuseOldNativeAuthenticationAfterUnlock(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+8) backgroundClearsReviewAndLateInputPickerCannotCrossLock(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1361 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1382 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backgroundClearsReviewAndLateInputPickerCannotCrossLock(DatabaseCompareUiTest.kt:408)
+
+9) backFromOutputClearsPasswordsAndBackFromReviewClearsSession(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1430 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1451 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.backFromOutputClearsPasswordsAndBackFromReviewClearsSession(DatabaseCompareUiTest.kt:367)
+
+10) cancellingDestinationPickerDiscardsEncryptedResult(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1520 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1541 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison(DatabaseCompareUiTest.kt:218)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.startComparison$default(DatabaseCompareUiTest.kt:216)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingDestinationPickerDiscardsEncryptedResult(DatabaseCompareUiTest.kt:384)
+
+11) authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+takagi.ru.monica.utils.KeePassOperationException: 無法讀取或寫入 KeePass 檔案
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:108)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:8795)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6971)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.loadDatabase(KeePassKdbxService.kt:6690)
+
+	at takagi.ru.monica.utils.KeePassKdbxService.access$loadDatabase(KeePassKdbxService.kt:484)
+
+	at takagi.ru.monica.utils.KeePassKdbxService$loadDatabase$1.invokeSuspend(Unknown Source:16)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+Caused by: java.io.FileNotFoundException: 資料庫檔案不存在
+
+	at takagi.ru.monica.utils.KeePassKdbxService.openDatabaseStreamSource(KeePassKdbxService.kt:6960)
+
+	... 11 more
+
+12) cancellingBusyReadRejectsLateComparisonAndPreservesSource(takagi.ru.monica.databasecompare.DatabaseCompareUiTest)
+
+java.lang.AssertionError: Action performScrollTo() failed.
+
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains 'Choose a database' (ignoreCase: false))
+
+Nodes found:
+
+1) Node #1589 at (l=28.0, t=182.0, r=238.0, b=217.0)px
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+
+Has 4 siblings
+
+2) Node #1610 at (l=56.0, t=1057.0, r=504.0, b=1183.0)px, Tag: 'compare_right_choose'
+
+Focused = 'false'
+
+IsContainer = 'true'
+
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+
+Text = '[Choose a database]'
+
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+
+MergeDescendants = 'true'
+
+Has 1 sibling
+
+
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.chooseInputsAndStart(DatabaseCompareUiTest.kt:209)
+
+	at takagi.ru.monica.databasecompare.DatabaseCompareUiTest.cancellingBusyReadRejectsLateComparisonAndPreservesSource(DatabaseCompareUiTest.kt:435)
+
+
+
+FAILURES!!!
+
+Tests run: 17,  Failures: 12
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest:
+
+INSTRUMENTATION_STATUS: test=darkLargeTextCardShrinksSmoothlyAndCanReverse
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=darkLargeTextCardShrinksSmoothlyAndCanReverse
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lightCardShrinksSmoothlyAndImmediatelyRemovesPassword
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourceMotionTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lightCardShrinksSmoothlyAndImmediatelyRemovesPassword
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareUiTest:
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeDatabaseToolsEntryOpensComparisonWithCurrentDatabaseAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=realScreenAtLargeFontKeepsReviewChoicesAndOutputReachable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=externalDocumentStillRequiresPasswordEvenWhenSameRegisteredFileIsAuthenticated
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lockAfterRevealingValuesDiscardsReviewAndOldUnlockGeneration
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=localManagerDoesNotOfferKdbxComparisonAndLockedScreenHidesMenu
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=maskedValuesExplicitChoicesAndVerifiedExportUseRealScreen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentManagerRightPaneUsesItsDatabaseAndBackPreservesBothPanes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=explicitNativeLockRestoresCredentialsAndRevokesBorrowedReader
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentManagerKeepsComparisonRouteAcrossOutputPickerAndReturns
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=globalRelockCannotReuseOldNativeAuthenticationAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=globalRelockCannotReuseOldNativeAuthenticationAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backgroundClearsReviewAndLateInputPickerCannotCrossLock
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backFromOutputClearsPasswordsAndBackFromReviewClearsSession
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancellingDestinationPickerDiscardsEncryptedResult
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=authenticatedInternalAndRegisteredExternalCompareWithoutPasswordAndExport
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=17
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancellingBusyReadRejectsLateComparisonAndPreservesSource
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 41.832
+
+
+
+OK (17 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=sameTimestampDifferentHistoryValuesAreBothRetained
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sameTimestampDifferentHistoryValuesAreBothRetained
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=malformedPolicyAndIncompleteAssociationsBlockEncryptedOutput
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=malformedPolicyAndIncompleteAssociationsBlockEncryptedOutput
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=emptyAutoTypeAssociationSequenceSurvivesEncryptedMerge
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=emptyAutoTypeAssociationSequenceSurvivesEncryptedMerge
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancelDuringResultBuildKeepsBothSourcesAndNoOutput
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancelDuringResultBuildKeepsBothSourcesAndNoOutput
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=kdbx3FractionalMetadataAndMultipleHistoryTimesSurvive
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=kdbx3FractionalMetadataAndMultipleHistoryTimesSurvive
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=sourceConsistentLiveAndTombstoneCoexistenceIsPreserved
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sourceConsistentLiveAndTombstoneCoexistenceIsPreserved
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=invalidBooleanContentCannotSilentlyChangeNativePolicy
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=invalidBooleanContentCannotSilentlyChangeNativePolicy
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=kdbx3SubsecondHistoryVersionsAndCurrentChangesRemainDistinct
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=kdbx3SubsecondHistoryVersionsAndCurrentChangesRemainDistinct
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=validBooleanCaseAndInheritedGroupPolicyRoundTrip
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=validBooleanCaseAndInheritedGroupPolicyRoundTrip
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=customFieldNamesRemainDistinctFromGeneratedLabels
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=customFieldNamesRemainDistinctFromGeneratedLabels
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=independentlyKeyedInputsCreateResultUsingOnlyNewPassword
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=independentlyKeyedInputsCreateResultUsingOnlyNewPassword
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=staleSourceAndClosedSessionNeverPublish
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=staleSourceAndClosedSessionNeverPublish
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=mixedChangesCannotCreateReferenceCycle
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=mixedChangesCannotCreateReferenceCycle
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=groupMoveCycleCannotPublish
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.KdbxDatabaseCompareInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=groupMoveCycleCannotPublish
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=wrongPasswordAndStaleSourceNeverPublishResults
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=wrongPasswordAndStaleSourceNeverPublishResults
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockingAfterReviewRevokesGenerationEvenAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lockingAfterReviewRevokesGenerationEvenAfterUnlock
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancelledSourceReadCannotPublishAndClearsPrivateCapture
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancelledSourceReadCannotPublishAndClearsPrivateCapture
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=independentDestinationWriterSurvivesFailedReadback
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=independentDestinationWriterSurvivesFailedReadback
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=completeEncryptedExportReopensAndPreservesBothInputs
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=completeEncryptedExportReopensAndPreservesBothInputs
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockDuringReadbackClearsOnlyOwnEncryptedOutput
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lockDuringReadbackClearsOnlyOwnEncryptedOutput
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=31
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nonemptyDestinationIsNeverTruncated
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareControllerInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=31
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nonemptyDestinationIsNeverTruncated
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=32
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=cancelledCapturePreservesInputAndRemovesOwnedOutput
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=32
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancelledCapturePreservesInputAndRemovesOwnedOutput
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=33
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=sourceAndKeyFileCredentialsRemainIndependent
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=33
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sourceAndKeyFileCredentialsRemainIndependent
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=34
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=changedDocumentTreeAliasHasSameIdentity
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=34
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=changedDocumentTreeAliasHasSameIdentity
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=35
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=snapshotsAreIndependentAndRecheckOriginalBytes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.databasecompare.DatabaseCompareSourcesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=35
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=snapshotsAreIndependentAndRecheckOriginalBytes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=36
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=editingAndAddingOtpPreservesPasskeyAndRecoveryNotes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=36
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=editingAndAddingOtpPreservesPasskeyAndRecoveryNotes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=37
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=ordinaryTrashNamedGroupsAreNotRecycleBins
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=37
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=ordinaryTrashNamedGroupsAreNotRecycleBins
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=38
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=38
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=39
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=39
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=40
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=40
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=41
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=41
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=42
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=42
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=43
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=43
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=44
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=customFieldOnlyEntriesRemainReachableIncludingEmptyFields
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=44
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=customFieldOnlyEntriesRemainReachableIncludingEmptyFields
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=45
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=passwordCreationAndModificationDatesSurviveKdbx3And4Projection
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=45
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=passwordCreationAndModificationDatesSurviveKdbx3And4Projection
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=46
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=unknownAndIncompleteMonicaMetadataCannotHideAnEntry
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=46
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=unknownAndIncompleteMonicaMetadataCannotHideAnEntry
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=47
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=47
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=48
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=databaseCardCountsNativeEntriesRegardlessOfProjectionType
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=48
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=databaseCardCountsNativeEntriesRegardlessOfProjectionType
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=49
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=staleAndReadOnlyEditsPreserveTheCommittedDatabase
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=49
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=staleAndReadOnlyEditsPreserveTheCommittedDatabase
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=50
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=50
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=51
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=initializationError
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=51
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stack=java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in initializationError(takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest):
+
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+
+
+INSTRUMENTATION_STATUS: test=initializationError
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=52
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=initializationError
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=52
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=52
+
+INSTRUMENTATION_STATUS: stack=java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in initializationError(takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest):
+
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+
+
+INSTRUMENTATION_STATUS: test=initializationError
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 6.316
+
+There were 2 failures:
+
+1) initializationError(takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest)
+
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassCurrentFileMergeInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+2) initializationError(takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest)
+
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest'
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2606)
+
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest
+
+	at java.lang.Class.classForName(Native Method)
+
+	at java.lang.Class.forName(Class.java:607)
+
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+
+	... 5 more
+
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.keepass.KeePassNativeHistoryInstrumentedTest" on path: DexPathList[[zip file "/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk", zip file "/data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk"],nativeLibraryDirectories=[/data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/lib/x86_64, /data/app/~~5it1J422EcJTJtN47BhKcA==/takagi.ru.monica.compareuxmain33120261125.localedebug.test-4G9C6adBWN4hUn6B6hUcYQ==/base.apk!/lib/x86_64, /data/app/~~nRJg-64IwfXRxvU3aChIBw==/takagi.ru.monica.compareuxmain33120261125.localedebug-cAx60d6cFXq8O0w4fvHKYg==/base.apk!/lib/x86_64, /system/lib64, /system/product/lib64, /vendor/lib64, /vendor/lib64/hw]]
+
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:259)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:573)
+
+	... 8 more
+
+
+
+FAILURES!!!
+
+Tests run: 52,  Failures: 2
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.keepass.KeePassCurrentFileMergeTest:
+
+INSTRUMENTATION_STATUS: test=readOnlyCurrentFileMergeDoesNotWrite
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=readOnlyCurrentFileMergeDoesNotWrite
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=eachClientsAddedEntrySurvivesCurrentFileMerge
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=eachClientsAddedEntrySurvivesCurrentFileMerge
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lockedCurrentFileMergeDoesNotWrite
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lockedCurrentFileMergeDoesNotWrite
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=sourceChangedDuringMergeIsNotOverwritten
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassCurrentFileMergeTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sourceChangedDuringMergeIsNotOverwritten
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:
+
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 30.264
+
+
+
+OK (9 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">清银行卡中…</string>
+    <string name="clear_data_completed">清理已毕</string>
+    <string name="clear_data_completed_hint">所择数据已清。</string>
+    <string name="clear_data_count">已清 %1$d / %2$d 项</string>
+    <string name="clear_data_documents">清证件中…</string>
+    <string name="clear_data_failed">未能清尽所择数据</string>
+    <string name="clear_data_failed_hint">清理已止，已清之项不复。请查数据库连接后重试。</string>
+    <string name="clear_data_generator_history">清造钥旧录中…</string>
+    <string name="clear_data_notes">清简牍中…</string>
+    <string name="clear_data_passwords">清密钥中…</string>
+    <string name="clear_data_preparing">计所择项目中…</string>
+    <string name="clear_data_totp">清验码器中…</string>
+    <string name="clear_data_verifying">核验中…</string>
+    <string name="clear_data_wait">请候此事毕。</string>
+</resources>

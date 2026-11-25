@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Enregistrer en tant que nouvelle entrée</string>
+    <string name="autofill_save_local_source">Locale</string>
+    <string name="autofill_save_review_description">Sélectionnez une entrée pour la consulter avant de l\'enregistrer. Les dossiers, notes et autres comptes existants sont conservés.</string>
+    <string name="autofill_save_review_title">Mettre à jour un mot de passe existant ?</string>
+</resources>

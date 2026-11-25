@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Aggiungi abbonamento</string>
+    <string name="image_sources_cards">Grafica della carta</string>
+    <string name="image_sources_choose">Scegli tra gli abbonamenti</string>
+    <string name="image_sources_count">Immagini %1$d</string>
+    <string name="image_sources_empty">Aggiungi la tua prima fonte di immagine</string>
+    <string name="image_sources_error">Impossibile caricare o salvare. Controlla l\'origine, il formato e la connessione, quindi riprova. Gli abbonamenti esistenti e le immagini degli articoli vengono conservati.</string>
+    <string name="image_sources_formats">HTTPS JSON Pacchetti di immagini o collegamenti di immagini PNG, JPEG e WebP.</string>
+    <string name="image_sources_icons">Icone</string>
+    <string name="image_sources_name">Nome (facoltativo)</string>
+    <string name="image_sources_no_results">Nessuna immagine corrispondente</string>
+    <string name="image_sources_options">Opzioni di abbonamento</string>
+    <string name="image_sources_refresh">"Aggiorna"</string>
+    <string name="image_sources_remove">Annulla l\'iscrizione</string>
+    <string name="image_sources_remove_hint">Rimuovere questo abbonamento? Le immagini già utilizzate dai tuoi articoli verranno conservate.</string>
+    <string name="image_sources_retry">"Riprova"</string>
+    <string name="image_sources_search">Cerca immagini</string>
+    <string name="image_sources_settings_hint">Gestisci i pacchetti di icone e le fonti di grafica delle carte</string>
+    <string name="image_sources_title">Abbonamenti alle immagini</string>
+    <string name="image_sources_url">Abbonamento o immagine URL</string>
+    <string name="image_sources_use_hint">Scegli le immagini dall\'icona personalizzata o dall\'editor della grafica della carta.</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_title">Pencadangan perlu diperhatikan</string>
+    <string name="passkey_backup_problem_detail">Item ini tidak dapat dicadangkan. Data lokal dan cadangan jarak jauh yang ada tidak berubah.</string>
+    <string name="passkey_device_bound_solution">Daftarkan kunci sandi baru yang dapat diekspor pada layanan dan verifikasi bahwa kunci tersebut berfungsi sebelum menghentikan kunci lama. Anda juga dapat melewati item ini untuk saat ini.</string>
+    <string name="passkey_skip_explanation">Melewatkan hanya memengaruhi pencadangan ini dan tidak menghapus item lokal. Cadangan sebagian yang terpisah akan disimpan; cadangan jarak jauh yang ada dipertahankan. Itu tidak menggantikan cadangan penuh.</string>
+    <string name="passkey_skip_and_backup">Lewati %1$d dan buat cadangan</string>
+    <string name="passkey_retry_full_backup">Coba lagi pencadangan penuh</string>
+    <string name="passkey_problem_close">Tutup</string>
+    <string name="passkey_partial_saved">Cadangan sebagian disimpan</string>
+    <string name="passkey_partial_saved_detail">Kunci Sandi di bawah ini tidak disertakan. Catatan lokal dan cadangan jarak jauh yang ada disimpan. Waktu pencadangan penuh terakhir tidak berubah.</string>
+    <string name="passkey_partial_requires_encryption">Cadangan sebagian yang melewatkan Kunci Sandi tetap harus dienkripsi.</string>
+    <string name="passkey_partial_replace_blocked">Cadangan ini menghilangkan beberapa Kunci Sandi. Gunakan pemulihan gabungan; mengganti data lokal diblokir.</string>
+    <string name="passkey_partial_restore_warning">Cadangan sebagian ini menghilangkan Kunci Sandi yang dilewati. Pulihkan gabungan dengan catatan lokal yang ada.</string>
+</resources>

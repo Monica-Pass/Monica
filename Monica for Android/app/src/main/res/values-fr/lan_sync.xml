@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Synchronisation annulée</string>
+    <string name="lan_completed">La synchronisation des deux appareils est terminée</string>
+    <string name="lan_confirming">En attente que l\'autre appareil ait fini d\'appliquer les modifications…</string>
+    <string name="lan_conflicts">Les conflits %1$d doivent être examinés dans la gestion du coffre-fort. Les deux versions sont conservées.</string>
+    <string name="lan_connect">Associer et synchroniser</string>
+    <string name="lan_connecting">Vérification de l\'appairage…</string>
+    <string name="lan_copy_link">Copier le lien d\'appairage</string>
+    <string name="lan_description">Synchronisez un coffre-fort entre des téléphones et des ordinateurs sur le même réseau Wi-Fi. Recherchez un appareil et saisissez son code d\'appairage, ou scannez son code QR.</string>
+    <string name="lan_different_vault">Ce sont des coffres-forts différents. Sélectionnez le même coffre-fort sur les deux appareils ou recevez ce coffre-fort comme un nouveau.</string>
+    <string name="lan_discover">Rechercher des appareils à proximité</string>
+    <string name="lan_discovering">Recherche d\'appareils…</string>
+    <string name="lan_expired">Le couplage a expiré. Autorisez un appareil à se connecter à nouveau pour créer un nouveau code.</string>
+    <string name="lan_external_blobs">Ce coffre-fort fait référence aux fichiers stockés en dehors de celui-ci. La synchronisation à proximité nécessite actuellement que toutes les pièces jointes soient stockées dans le coffre-fort.</string>
+    <string name="lan_failed">La synchronisation n\'a pas été terminée</string>
+    <string name="lan_failed_hint">Vérifiez que les deux appareils sont toujours connectés au même Wi-Fi, puis associez-les à nouveau. Les modifications déjà validées sont conservées.</string>
+    <string name="lan_host">Autoriser un appareil à se connecter</string>
+    <string name="lan_imported">Le coffre-fort reçu a été ajouté à la gestion du coffre-fort.</string>
+    <string name="lan_invalid_code">Le code d\'appairage n\'est pas valide ou ne correspond plus. Obtenez un nouveau code de l\'autre appareil.</string>
+    <string name="lan_invitation_hint">L\'appairage expire après 10 minutes. Partagez ce code ou le code QR uniquement avec l\'appareil que vous souhaitez connecter.</string>
+    <string name="lan_manage">Gérer les coffres-forts</string>
+    <string name="lan_merging">Application des modifications au coffre-fort…</string>
+    <string name="lan_new_vault_hint">Pour la première connexion, saisissez le mot de passe du coffre-fort source. Le coffre-fort reçu est ajouté séparément. Pour les synchronisations ultérieures, sélectionnez le même coffre-fort sur les deux appareils.</string>
+    <string name="lan_no_devices">Aucun appareil trouvé pour l\'instant. Sur l\'autre appareil, choisissez « Autoriser un appareil à se connecter ». Vous pouvez également scanner ou coller son lien d\'appairage.</string>
+    <string name="lan_no_network">Aucune adresse Wi-Fi locale n\'a été trouvée.</string>
+    <string name="lan_pairing_autofilled">Code d\'appairage et lien renseignés automatiquement. Appuyez sur Associer et synchroniser pour continuer.</string>
+    <string name="lan_pairing_code">Code d\'appariement</string>
+    <string name="lan_pairing_needs_vault_password">Informations d\'appairage renseignées automatiquement. Saisissez le mot de passe du coffre-fort source pour le premier transfert, puis appuyez sur Associer et synchroniser.</string>
+    <string name="lan_paste_link">Lien d\'appairage</string>
+    <string name="lan_peer_failed">L\'autre appareil n\'a pas pu appliquer les modifications. Vérifiez-le et réessayez.</string>
+    <string name="lan_preparing">Préparation des données chiffrées du coffre-fort…</string>
+    <string name="lan_receive_new">Recevoir en tant que nouveau coffre-fort</string>
+    <string name="lan_scan">Scanner le code QR d\'appairage</string>
+    <string name="lan_select_vault">Choisissez un coffre-fort</string>
+    <string name="lan_title">Synchronisation à proximité</string>
+    <string name="lan_transferring">Transfert de données cryptées…</string>
+    <string name="lan_unavailable">La synchronisation à proximité n\'est pas disponible dans cette version.</string>
+    <string name="lan_vault_failed">Le coffre-fort n\'a pas pu être ouvert ou fusionné. Vérifiez le mot de passe du coffre-fort et le stockage disponible, puis réessayez.</string>
+    <string name="lan_vault_name">Nom du coffre-fort reçu</string>
+    <string name="lan_vault_password">Mot de passe du coffre-fort source</string>
+    <string name="lan_waiting">En attente de l\'autre appareil…</string>
+</resources>

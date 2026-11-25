@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T18:00:46.134Z" hostname="JOYIN" time="0.038">
+  <properties/>
+  <testcase name="aliasesDoNotDiscardOtherRequiredWordsAndDuplicatesAreRemoved" classname="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" time="0.033"/>
+  <testcase name="specificTitleRanksBeforeDescriptionAndParentPathMatches" classname="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" time="0.0"/>
+  <testcase name="englishCaseAndFullWidthInputAreNormalized" classname="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" time="0.001"/>
+  <testcase name="wordsCanMatchASettingAndItsLocationTogether" classname="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" time="0.001"/>
+  <testcase name="blankAndUnmatchedQueriesDoNotReturnEverySetting" classname="takagi.ru.monica.ui.screens.SettingsSearchIndexTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

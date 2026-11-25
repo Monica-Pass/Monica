@@ -5,7 +5,7 @@ import takagi.ru.monica.domain.provider.PasswordSource
 sealed class SecretValueState {
     data class Available(val value: String) : SecretValueState()
     object Empty : SecretValueState()
-    data class Unreadable(val source: PasswordSource) : SecretValueState()
+    data class Unreadable(val source: PasswordSource, val reason: PasswordReadFailure = PasswordReadFailure.UNKNOWN) : SecretValueState()
     object Hidden : SecretValueState()
 }
 

@@ -60,7 +60,8 @@ fun MasterPasswordLockingSettingsScreen(
     viewModel: SettingsViewModel,
     onNavigateBack: () -> Unit,
     onResetPassword: () -> Unit,
-    onSecurityQuestions: () -> Unit
+    onSecurityQuestions: () -> Unit,
+    onBackup: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val activity = context as? FragmentActivity
@@ -180,55 +181,66 @@ fun MasterPasswordLockingSettingsScreen(
                 )
             }
 
-            SettingsItemWithSwitch(
-                icon = Icons.Default.Fingerprint,
-                setting = Setting.BIOMETRIC_UNLOCK,
-                subtitle = biometricSubtitle,
-                checked = biometricSwitchState,
-                enabled = isBiometricAvailable && !busy,
-                onCheckedChange = { newState ->
-                    if (newState) {
-                        if (biometricHelper.isWeakBiometricOnly()) {
-                            showWeakBiometricWarning = true
+            SettingsSection(title = "") {
+                SettingsItemWithSwitch(
+                    icon = Icons.Default.Fingerprint,
+                    setting = Setting.BIOMETRIC_UNLOCK,
+                    subtitle = biometricSubtitle,
+                    checked = biometricSwitchState,
+                    enabled = isBiometricAvailable && !busy,
+                    sectionShape = settingsSectionItemShape(0, 6),
+                    onCheckedChange = { newState ->
+                        if (newState) {
+                            if (biometricHelper.isWeakBiometricOnly()) {
+                                showWeakBiometricWarning = true
+                            } else {
+                                startBiometricEnable()
+                            }
                         } else {
-                            startBiometricEnable()
+                            biometricSwitchState = false
+                            viewModel.updateBiometricEnabled(false)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.biometric_unlock_disabled),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        biometricSwitchState = false
-                        viewModel.updateBiometricEnabled(false)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.biometric_unlock_disabled),
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
-                }
-            )
+                )
 
-            SettingsItem(
-                icon = Icons.Default.Fingerprint,
-                setting = Setting.BIOMETRIC_REPAIR,
-                onClick = { if (!busy && foreground()) showRepair = true }
-            )
+                SettingsItem(
+                    icon = Icons.Default.Fingerprint,
+                    setting = Setting.BIOMETRIC_REPAIR,
+                    sectionShape = settingsSectionItemShape(1, 6),
+                    onClick = { if (!busy && foreground()) showRepair = true }
+                )
 
-            SettingsItem(
-                icon = Icons.Default.Timer,
-                setting = Setting.AUTO_LOCK,
-                subtitle = getAutoLockDisplayName(settings.autoLockMinutes, context),
-                onClick = { showAutoLockDialog = true }
-            )
+                takagi.ru.monica.ui.components.RecoveryProtectionSetting(
+                    manager, sectionShape = settingsSectionItemShape(2, 6), onBackup = onBackup
+                )
 
-            SettingsItem(
-                icon = Icons.Default.Security,
-                setting = Setting.SECURITY_QUESTIONS,
-                onClick = onSecurityQuestions
-            )
+                SettingsItem(
+                    icon = Icons.Default.Timer,
+                    setting = Setting.AUTO_LOCK,
+                    sectionShape = settingsSectionItemShape(3, 6),
+                    subtitle = getAutoLockDisplayName(settings.autoLockMinutes, context),
+                    onClick = { showAutoLockDialog = true }
+                )
 
-            SettingsItem(
-                icon = Icons.Default.VpnKey,
-                setting = Setting.RESET_MASTER_PASSWORD,
-                onClick = onResetPassword
-            )
+                SettingsItem(
+                    icon = Icons.Default.Security,
+                    setting = Setting.SECURITY_QUESTIONS,
+                    sectionShape = settingsSectionItemShape(4, 6),
+                    onClick = onSecurityQuestions
+                )
+
+                SettingsItem(
+                    icon = Icons.Default.VpnKey,
+                    setting = Setting.RESET_MASTER_PASSWORD,
+                    sectionShape = settingsSectionItemShape(5, 6),
+                    onClick = onResetPassword
+                )
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
         }

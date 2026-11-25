@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">サブスクリプションを追加</string>
+    <string name="image_sources_cards">カードアートワーク</string>
+    <string name="image_sources_choose">サブスクリプションから選択</string>
+    <string name="image_sources_count">%1$d 画像</string>
+    <string name="image_sources_empty">最初の画像ソースを追加します</string>
+    <string name="image_sources_error">ロードまたは保存できません。ソース、形式、接続を確認して、再試行してください。既存のサブスクリプションとアイテムの画像は保持されます。</string>
+    <string name="image_sources_formats">HTTPS JSON 画像パックまたは PNG、JPEG、および WebP 画像リンク。</string>
+    <string name="image_sources_icons">アイコン</string>
+    <string name="image_sources_name">名前 (オプション)</string>
+    <string name="image_sources_no_results">一致する画像はありません</string>
+    <string name="image_sources_options">サブスクリプション オプション</string>
+    <string name="image_sources_refresh">更新</string>
+    <string name="image_sources_remove">購読解除</string>
+    <string name="image_sources_remove_hint">このサブスクリプションを削除しますか?アイテムですでに使用されている画像は保持されます。</string>
+    <string name="image_sources_retry">再試行</string>
+    <string name="image_sources_search">画像検索</string>
+    <string name="image_sources_settings_hint">アイコン パックとカード アートワーク ソースを管理する</string>
+    <string name="image_sources_title">画像のサブスクリプション</string>
+    <string name="image_sources_url">サブスクリプションまたは画像 URL</string>
+    <string name="image_sources_use_hint">カスタム アイコンまたはカード アートワーク エディターから画像を選択します。</string>
+</resources>

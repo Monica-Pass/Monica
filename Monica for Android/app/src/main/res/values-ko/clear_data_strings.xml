@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">은행 카드 삭제 중…</string>
+    <string name="clear_data_completed">클리어 완료</string>
+    <string name="clear_data_completed_hint">선택한 데이터가 삭제되었습니다.</string>
+    <string name="clear_data_count">%1$d / %2$d 항목이 삭제되었습니다.</string>
+    <string name="clear_data_documents">문서를 지우는 중…</string>
+    <string name="clear_data_failed">선택한 데이터를 모두 지울 수 없습니다.</string>
+    <string name="clear_data_failed_hint">지우기가 중지되었습니다. 이미 삭제된 항목은 복원되지 않습니다. 데이터베이스 연결을 확인하고 다시 시도하세요.</string>
+    <string name="clear_data_generator_history">비밀번호 생성 내역을 삭제하는 중…</string>
+    <string name="clear_data_notes">메모 지우는 중…</string>
+    <string name="clear_data_passwords">비밀번호 지우는 중…</string>
+    <string name="clear_data_preparing">선택한 항목 계산 중…</string>
+    <string name="clear_data_totp">인증자를 지우는 중…</string>
+    <string name="clear_data_verifying">확인 중…</string>
+    <string name="clear_data_wait">이 작업이 완료될 때까지 기다려 주십시오.</string>
+</resources>

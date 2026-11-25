@@ -1,0 +1,223 @@
+{
+  "main": {
+    "buildSeconds": 140.3631427999935,
+    "buildLabel": "main03",
+    "apks": [
+      {
+        "name": "app.apk",
+        "sha256": "7cc7ec424ac70c1cab756ad9a2e8c9346245805fa12ae84310747b5a382e594b"
+      },
+      {
+        "name": "test.apk",
+        "sha256": "906238fa141b1a9436514d4e4c15b632e4407b056d6f52de37940f538f0696d6"
+      }
+    ],
+    "deviceMethods": 28,
+    "batches": [
+      {
+        "completedMethodPasses": 8,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest",
+        "tests": 8,
+        "failures": 0,
+        "success": true,
+        "seconds": 7.218736299997545
+      },
+      {
+        "completedMethodPasses": 20,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationPreservesThreePersistentTogglesAndFiveDestinations,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationSearchLocatesWalletWithoutChangingPreferenceAtLargeFont,takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest,takagi.ru.monica.ui.CredentialGeneratorSheetTest#invalidCharacterSelectionCannotApplyStaleResult,takagi.ru.monica.ui.CredentialGeneratorSheetTest#pinAndPhraseSwitchAndLengthControlsRegenerate,takagi.ru.monica.ui.screens.CloudBackupUiTest#contentSelectionPreservesLegacyFlagsAndUnavailableSources,takagi.ru.monica.ui.screens.CloudBackupUiTest#mergeDedupCanBeChosenWithoutAffectingReplacementPolicy,takagi.ru.monica.ui.screens.KeePassManagementUiTest#createFormPreservesValidationAndKeepsSubmitAboveRealKeyboard,takagi.ru.monica.ui.screens.KeePassManagementUiTest#realSettingsSaveAndIntegrityInspectionRemainConnected",
+        "tests": 20,
+        "failures": 0,
+        "success": true,
+        "seconds": 48.30358149998938
+      }
+    ],
+    "sourceMatchesBuild": true,
+    "unrelatedSourcesUnchanged": true,
+    "switchCallSites": 59,
+    "sourceHashes": {
+      "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "6dcee5bff8cc586174380803957ba58759bb8fc092784f6f923e0febce9f247d",
+      "app/src/main/java/takagi/ru/monica/ui/cardwallet/CardFaceCustomizer.kt": "dc77a64225a960aa9c389d605cc0cf172d2fe280f4e954913e087bc667d13ee5",
+      "app/src/main/java/takagi/ru/monica/ui/components/BottomNavConfigRow.kt": "7bfad0b41646ab6a19770194c568ef7e3c14adbd3d0642c033cd8a932c582fa1",
+      "app/src/main/java/takagi/ru/monica/ui/components/CredentialGeneratorSheet.kt": "12b103a84cdf99365a8982bb772badd0c044c8eba21ffa977570bfc5b8bbe65e",
+      "app/src/main/java/takagi/ru/monica/ui/components/CustomFieldComponents.kt": "4923ba81fbffaa9ad5d06d08e8ec562dc404fa9f305b1685cf0d6d69210ed19a",
+      "app/src/main/java/takagi/ru/monica/ui/components/CustomizationComponents.kt": "0624e944c7a2bfc088d88c14b711e1ef370eb3c93505610b9145c6b7bbcda60c",
+      "app/src/main/java/takagi/ru/monica/ui/components/SelectiveBackupCard.kt": "796fbf106ba0b2eb9f02d380abacd97fe6beab4070a28a998f773e4aa06818c5",
+      "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "378123fb587517fbe7f6f11e8524b89e035bd24ba2c196e6789c8141a8b50626",
+      "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt": "74ee588af3491f3acead840494cf2b804d39d12df310e52bfab1f23bb0942e63",
+      "app/src/main/java/takagi/ru/monica/ui/components/TemplateCredentialFields.kt": "92e4534cc74f5b3adc1a50fd33a634bab2c74e39e4fbf1673a19227382c3676c",
+      "app/src/main/java/takagi/ru/monica/ui/components/TrashSettingsSheet.kt": "28c2466ee491d729ca377a014332f9172b96d6c13b1f4bbe928fdb0379d8ec4c",
+      "app/src/main/java/takagi/ru/monica/ui/components/WalletEditorContent.kt": "23b62ec11a896686dcc974aab93fe8c3405a9236838c9516a0e6bc5b887ea155",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillProtectionScreen.kt": "64b95aab38eb2ede4ce3a7e089f69e38dc335cee0c8f6dc0a8d28fa7b17aa0d7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt": "89e4c82933cd44f804fda76524b568298b15e87d90504695dab3cdc950b048d4",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "386d85fc4a19ebd5acb136d002e7e534c0cfc2a95b8a7d5a7dc8c2cc34326ce9",
+      "app/src/main/java/takagi/ru/monica/ui/screens/BitwardenSendDraftUi.kt": "acb76cfae707360c0835a164a96a396e0b429a4d453e809914eb0b516791b726",
+      "app/src/main/java/takagi/ru/monica/ui/screens/CloudBackupComponents.kt": "8a9beee663cd88f86db9670bce37bcf817c663f8fc7b80dd789f100cf5b1a0e7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt": "ec17031dd03662f9e9a650f3df2b0218595532e681bfc8d2b7eb745ea079f0cf",
+      "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "3b0c235fa040a5569c3b2d51be110488aa22b8ba47e71347dff30bf224f9365a",
+      "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt": "f117b4b408ca38df7431680359c5e3047d203affd2fe20c14c42dfc4945e2819",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassDatabaseFormScreens.kt": "9dd5c54da1239d46f45d1cde36e401adb01c3a27bddfcfacb7cdd425c12521a7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeDatabaseSettingsScreen.kt": "57d47576150c4f2761a6580623d25807ef8f490dff2e09522536bdd6f5245df6",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeEntryEditorScreen.kt": "a06a262a35fa31c2b0d0ad0dab8692d821ba939962e16ef474ebc84f6c12fc5c",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeEntryProperties.kt": "44272e066e93bfc8b5b165aaefb1c8f0102a091dbe7a8a3e56fb94d1609e5c56",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeManagerScreen.kt": "14c7cda96af93c0f3efdaca423a2ae4d28869e9b1a43927da1f153c431309679",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassGoogleDriveBrowser.kt": "9ba318998258ddfd26c0981ca43092eb5cd59ff1bdea5d4abc876426b10348f8",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassOneDriveBrowser.kt": "3afa9160575b60e35fbf44c004d0dc6d053199f4e721e3893226c2cd767fb02e",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassWebDavBrowser.kt": "4d3f09d781014a3f365aef68fc655a11406ef7ff32df6e606c98bfe5bb2f0be9",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MdbxLocalCreateScreen.kt": "11e5e60d748d2cece5fedd2e4cc65744dcb87d877a1de3d0d9c0d992665fc34a",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt": "596e4dccf99ec69fb202aa9c7552bfe056817026e1446c2584e00cae931fcea5",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MonicaPlusScreen.kt": "70606a9016f9e8753129a16743e72d915fa9a89bcf92629e12941fb87476790d",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PasskeySettingsScreen.kt": "87de3bca07853a5090bc2dbd27e7e9a8287a5a7c9b642629b1fe8145f2c16db0",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt": "68d25c6d94b8702700ec91ce182f5926bfc4a8a615c03068652a5804c118fd2f",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PaymentScreen.kt": "6d1442bf998d37b442a2e6e81bf8edf8b97aa29f99e49df6a296628dd845c591",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PreviewFeaturesDialog.kt": "378d2c0a2aaae347b3e9e066845cde9025063df93e84f5642c5b7955c8406e87",
+      "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt": "ba979d6edcfb517f35915f95469a02df8d32b5234696705652b825057b0844ae",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt": "799da82e7b71efe4e8a1d622424c111512c1010b92881ad85cb9ae5f98fd23ca",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt": "feae996e1ec6da1282a56f005b2b771ad356670c61a5f558622ee57f859b5988",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": "8727b86e23aee05066bfc82e88c5cb9dad80a0a0af8070b552261eb822aa1556",
+      "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt": "3f93a3781e0eff2abfbb2a7f3643c0b6ae79c90fbbe91dfdc153ef0e266f4be4",
+      "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPickerSheet.kt": "a1f466b6991fc16ab403a6e378eaca896161ab27745ba0413beafae027fb81b8",
+      "app/src/main/java/takagi/ru/monica/steam/ui/SteamBatchSellSheet.kt": "37e64478c27c312faa2e759ef4b8dcb9d3aa66402b9341a6b6af547bd2468dbe",
+      "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt": "ed7b20944f27ee01fd48d87b1f08ff4f4816e14779896fad166795459d5f58d3",
+      "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSettingsComponents.kt": "b0357fa43501adf29587d3ba4c138855e12c58dd0b93d3b99448304bd3c85d74",
+      "app/src/main/java/takagi/ru/monica/ui/haptic/SwitchHaptics.kt": "f827c24e0432b5577d9eeca8d5aeb1feb3123a4dba6768cb62f0c487bc6e2938",
+      "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "c571be135f70e449c7546c97d4db350fe1ec943fdf69c4ca88f7ab8fa0400fda",
+      "app/src/androidTest/java/takagi/ru/monica/ui/haptic/SwitchHapticsInstrumentedTest.kt": "f9007b3681f952445ee6bc2c1c0e30af1f18462e34ba8d6651a8261fe9f2db61"
+    }
+  },
+  "fd": {
+    "buildSeconds": 329.5780148000049,
+    "buildLabel": "fd01",
+    "apks": [
+      {
+        "name": "app.apk",
+        "sha256": "5c96c2f9b63842ea1679fdf75ae6251c8c880e781a62e6b9377adaed2b276e1b"
+      },
+      {
+        "name": "test.apk",
+        "sha256": "df0af78e473701c8f716bc3e07282e858e98b95b2dbba698b9ea8b2018272b7a"
+      }
+    ],
+    "deviceMethods": 28,
+    "batches": [
+      {
+        "completedMethodPasses": 8,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest",
+        "tests": 8,
+        "failures": 0,
+        "success": true,
+        "seconds": 8.828384899999946
+      },
+      {
+        "completedMethodPasses": 20,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationPreservesThreePersistentTogglesAndFiveDestinations,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationSearchLocatesWalletWithoutChangingPreferenceAtLargeFont,takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest,takagi.ru.monica.ui.CredentialGeneratorSheetTest#invalidCharacterSelectionCannotApplyStaleResult,takagi.ru.monica.ui.CredentialGeneratorSheetTest#pinAndPhraseSwitchAndLengthControlsRegenerate,takagi.ru.monica.ui.screens.CloudBackupUiTest#contentSelectionPreservesLegacyFlagsAndUnavailableSources,takagi.ru.monica.ui.screens.CloudBackupUiTest#mergeDedupCanBeChosenWithoutAffectingReplacementPolicy,takagi.ru.monica.ui.screens.KeePassManagementUiTest#createFormPreservesValidationAndKeepsSubmitAboveRealKeyboard,takagi.ru.monica.ui.screens.KeePassManagementUiTest#realSettingsSaveAndIntegrityInspectionRemainConnected",
+        "tests": 20,
+        "failures": 0,
+        "success": true,
+        "seconds": 51.77312110000639
+      }
+    ],
+    "sourceMatchesBuild": true,
+    "unrelatedSourcesUnchanged": true,
+    "switchCallSites": 60,
+    "sourceHashes": {
+      "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "6dcee5bff8cc586174380803957ba58759bb8fc092784f6f923e0febce9f247d",
+      "app/src/main/java/takagi/ru/monica/ui/cardwallet/CardFaceCustomizer.kt": "dc77a64225a960aa9c389d605cc0cf172d2fe280f4e954913e087bc667d13ee5",
+      "app/src/main/java/takagi/ru/monica/ui/components/BottomNavConfigRow.kt": "7bfad0b41646ab6a19770194c568ef7e3c14adbd3d0642c033cd8a932c582fa1",
+      "app/src/main/java/takagi/ru/monica/ui/components/CredentialGeneratorSheet.kt": "8cc31fa48c0c3e1a4e290c4a6b48655d416a796ff8dd092399a8a80e6fda473d",
+      "app/src/main/java/takagi/ru/monica/ui/components/CustomFieldComponents.kt": "4923ba81fbffaa9ad5d06d08e8ec562dc404fa9f305b1685cf0d6d69210ed19a",
+      "app/src/main/java/takagi/ru/monica/ui/components/CustomizationComponents.kt": "0624e944c7a2bfc088d88c14b711e1ef370eb3c93505610b9145c6b7bbcda60c",
+      "app/src/main/java/takagi/ru/monica/ui/components/SelectiveBackupCard.kt": "796fbf106ba0b2eb9f02d380abacd97fe6beab4070a28a998f773e4aa06818c5",
+      "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "378123fb587517fbe7f6f11e8524b89e035bd24ba2c196e6789c8141a8b50626",
+      "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt": "74ee588af3491f3acead840494cf2b804d39d12df310e52bfab1f23bb0942e63",
+      "app/src/main/java/takagi/ru/monica/ui/components/TemplateCredentialFields.kt": "92e4534cc74f5b3adc1a50fd33a634bab2c74e39e4fbf1673a19227382c3676c",
+      "app/src/main/java/takagi/ru/monica/ui/components/TrashSettingsSheet.kt": "28c2466ee491d729ca377a014332f9172b96d6c13b1f4bbe928fdb0379d8ec4c",
+      "app/src/main/java/takagi/ru/monica/ui/components/WalletEditorContent.kt": "23b62ec11a896686dcc974aab93fe8c3405a9236838c9516a0e6bc5b887ea155",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillProtectionScreen.kt": "64b95aab38eb2ede4ce3a7e089f69e38dc335cee0c8f6dc0a8d28fa7b17aa0d7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt": "89e4c82933cd44f804fda76524b568298b15e87d90504695dab3cdc950b048d4",
+      "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "386d85fc4a19ebd5acb136d002e7e534c0cfc2a95b8a7d5a7dc8c2cc34326ce9",
+      "app/src/main/java/takagi/ru/monica/ui/screens/BitwardenSendDraftUi.kt": "acb76cfae707360c0835a164a96a396e0b429a4d453e809914eb0b516791b726",
+      "app/src/main/java/takagi/ru/monica/ui/screens/CloudBackupComponents.kt": "8a9beee663cd88f86db9670bce37bcf817c663f8fc7b80dd789f100cf5b1a0e7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt": "ec17031dd03662f9e9a650f3df2b0218595532e681bfc8d2b7eb745ea079f0cf",
+      "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "3b0c235fa040a5569c3b2d51be110488aa22b8ba47e71347dff30bf224f9365a",
+      "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt": "f117b4b408ca38df7431680359c5e3047d203affd2fe20c14c42dfc4945e2819",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassDatabaseFormScreens.kt": "9dd5c54da1239d46f45d1cde36e401adb01c3a27bddfcfacb7cdd425c12521a7",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeDatabaseSettingsScreen.kt": "57d47576150c4f2761a6580623d25807ef8f490dff2e09522536bdd6f5245df6",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeEntryEditorScreen.kt": "a06a262a35fa31c2b0d0ad0dab8692d821ba939962e16ef474ebc84f6c12fc5c",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeEntryProperties.kt": "44272e066e93bfc8b5b165aaefb1c8f0102a091dbe7a8a3e56fb94d1609e5c56",
+      "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeManagerScreen.kt": "14c7cda96af93c0f3efdaca423a2ae4d28869e9b1a43927da1f153c431309679",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassGoogleDriveBrowser.kt": "9ba318998258ddfd26c0981ca43092eb5cd59ff1bdea5d4abc876426b10348f8",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassOneDriveBrowser.kt": "3afa9160575b60e35fbf44c004d0dc6d053199f4e721e3893226c2cd767fb02e",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassWebDavBrowser.kt": "4d3f09d781014a3f365aef68fc655a11406ef7ff32df6e606c98bfe5bb2f0be9",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MdbxLocalCreateScreen.kt": "11e5e60d748d2cece5fedd2e4cc65744dcb87d877a1de3d0d9c0d992665fc34a",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt": "84962d52d7448067e4dc56790cfcebacfa37ca1401f4fc8077bae3fdf0112d29",
+      "app/src/main/java/takagi/ru/monica/ui/screens/MonicaPlusScreen.kt": "70606a9016f9e8753129a16743e72d915fa9a89bcf92629e12941fb87476790d",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PasskeySettingsScreen.kt": "87de3bca07853a5090bc2dbd27e7e9a8287a5a7c9b642629b1fe8145f2c16db0",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt": "68d25c6d94b8702700ec91ce182f5926bfc4a8a615c03068652a5804c118fd2f",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PaymentScreen.kt": "9eaa336ddf3588744245ad447a91e624e37f1c89a555bd69bdc86191702d6811",
+      "app/src/main/java/takagi/ru/monica/ui/screens/PreviewFeaturesDialog.kt": "378d2c0a2aaae347b3e9e066845cde9025063df93e84f5642c5b7955c8406e87",
+      "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt": "b0f9460ab0f172f03c9e9af58f051c79bfdd42c974b1250a676286dae449951b",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt": "799da82e7b71efe4e8a1d622424c111512c1010b92881ad85cb9ae5f98fd23ca",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt": "feae996e1ec6da1282a56f005b2b771ad356670c61a5f558622ee57f859b5988",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": "8727b86e23aee05066bfc82e88c5cb9dad80a0a0af8070b552261eb822aa1556",
+      "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt": "644aa9c47af61b4c3e536a5390593a021dcfb91437bde23ffbe92fb8663da98c",
+      "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPickerSheet.kt": "a1f466b6991fc16ab403a6e378eaca896161ab27745ba0413beafae027fb81b8",
+      "app/src/main/java/takagi/ru/monica/steam/ui/SteamBatchSellSheet.kt": "37e64478c27c312faa2e759ef4b8dcb9d3aa66402b9341a6b6af547bd2468dbe",
+      "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt": "b8f45050153e2ba7d52d491c4f3728c50dc3ff6cc52cf56341b4173b0e99dd14",
+      "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSettingsComponents.kt": "b0357fa43501adf29587d3ba4c138855e12c58dd0b93d3b99448304bd3c85d74",
+      "app/src/main/java/takagi/ru/monica/ui/haptic/SwitchHaptics.kt": "f827c24e0432b5577d9eeca8d5aeb1feb3123a4dba6768cb62f0c487bc6e2938",
+      "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "4b0f41622d82004387ab43dfaa31ec099d80d2e1b712fb096b864015b4ff44ca",
+      "app/src/androidTest/java/takagi/ru/monica/ui/haptic/SwitchHapticsInstrumentedTest.kt": "f9007b3681f952445ee6bc2c1c0e30af1f18462e34ba8d6651a8261fe9f2db61"
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 13,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.switchhapticsmain33120261125.localedebug",
+      "takagi.ru.monica.switchhapticsmain33120261125.localedebug.test",
+      "takagi.ru.monica.switchhapticsfd33120261125.localedebug",
+      "takagi.ru.monica.switchhapticsfd33120261125.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "stoppedOwnMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15081
+  },
+  "reference": {
+    "url": "https://github.com/T8RIN/ImageToolbox",
+    "commit": "ab763ce76effd13ae3b8c7cfea37835eb9e0f8b9",
+    "lightEffect": "CONTEXT_CLICK"
+  },
+  "sharedPaths": 47,
+  "preservedEditionDifferences": [
+    "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt"
+  ],
+  "failures": [
+    {
+      "batch": "main-initial01",
+      "passed": 0,
+      "failed": 7,
+      "reason": "Recording LocalView had no ViewGroup parent; attach it through AndroidView so Material ripple can use the real hierarchy. Kept assertions and actual touch input."
+    }
+  ],
+  "scope": "MuMu API35/x86_64 Debug synthetic packages; no physical motor/OEM/R8/system-service amplitude verification; no release or APK delivery."
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_two_factor_unsupported_short">Tidak didukung di klien ini</string>
+    <string name="bitwarden_two_factor_unsupported">Metode ini memerlukan alur masuk interaktif dan tidak dapat diselesaikan dengan kode di sini. Pilih autentikator, email, atau metode YubiKey OTP yang tersedia. Jika organisasi Anda memerlukan SSO atau kunci keamanan saja, gunakan klien yang mendukung alur tersebut.</string>
+    <string name="bitwarden_choose_method">Pilih metode verifikasi</string>
+    <string name="bitwarden_change_method">Ubah metode</string>
+    <string name="bitwarden_email_action_hint">Kirim kode, lalu masukkan kode yang diterima melalui email.</string>
+    <string name="bitwarden_totp_action_hint">Pilih pengautentikasi yang ada di Monica, atau masukkan kode saat ini.</string>
+    <string name="bitwarden_authenticator_search">Cari nama atau akun</string>
+    <string name="bitwarden_totp_picker_hint">Memilih item akan mengisi kode saat ini tanpa mengirimkannya.</string>
+    <string name="bitwarden_totp_generation_failed">Tidak dapat membuat kode. Periksa pengautentikasi ini atau pilih item lain.</string>
+</resources>

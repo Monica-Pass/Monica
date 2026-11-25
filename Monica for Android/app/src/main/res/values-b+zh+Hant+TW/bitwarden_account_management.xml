@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">建立帳號</string>
+    <string name="bitwarden_account_request_hint">要求主密碼提示</string>
+    <string name="bitwarden_account_password_hint">主密碼提示（選填）</string>
+    <string name="bitwarden_account_send_verification">傳送驗證郵件</string>
+    <string name="bitwarden_account_verification_pending">開啟驗證郵件，將其中的連結或權杖貼到此處。</string>
+    <string name="bitwarden_account_verification_input">電子郵件驗證連結或權杖</string>
+    <string name="bitwarden_account_verification_invalid">驗證連結或權杖不適用於此帳號。</string>
+    <string name="bitwarden_account_password_requirements">請使用至少 12 個字元的強主密碼。</string>
+    <string name="bitwarden_account_password_mismatch">兩次輸入的主密碼不一致。</string>
+    <string name="bitwarden_account_registration_success">帳號已建立，請使用新主密碼登入。</string>
+    <string name="bitwarden_account_hint_sent">如果此帳號存在，已要求傳送主密碼提示郵件。</string>
+    <string name="bitwarden_account_security">帳號安全</string>
+    <string name="bitwarden_account_devices">帳號裝置</string>
+    <string name="bitwarden_account_device_trusted">受信任的裝置</string>
+    <string name="bitwarden_account_device_untrusted">此裝置尚未受信任</string>
+    <string name="bitwarden_account_last_activity">最近活動</string>
+    <string name="bitwarden_account_web_settings">在網頁保險庫管理帳號</string>
+    <string name="bitwarden_account_no_devices">找不到裝置。</string>
+    <string name="bitwarden_account_request_failed">帳號要求失敗（HTTP %1$d）。</string>
+    <string name="bitwarden_account_operation_failed">無法完成帳號操作。</string>
+    <string name="bitwarden_account_invalid_email">請輸入有效的電子郵件地址。</string>
+</resources>

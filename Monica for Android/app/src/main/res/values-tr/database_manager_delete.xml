@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_title">Seçilen öğeler silinsin mi?</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d seçildi</string>
+    <string name="manager_delete_local_hint">Klasörler ve içerikleri dahildir. Yerel şifreler ve güvenli öğeler Çöp Kutusu\'na gider. Klasörler ve şifreler kalıcı olarak silinir.</string>
+    <string name="manager_delete_native_hint">Seçilen öğeler ve klasör içerikleri bu veritabanından kalıcı olarak silinecek. Bu geri alınamaz.</string>
+</resources>

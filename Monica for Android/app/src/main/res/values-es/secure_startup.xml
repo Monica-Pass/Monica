@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android actualmente no puede verificar la configuración cifrada de esta instalación. Se ha detenido el inicio normal. Monica no ha borrado la configuración ni reemplazado las claves.</string>
+    <string name="secure_startup_diagnostic">Copiar información de diagnóstico</string>
+    <string name="secure_startup_environment">Si esto comenzó después de restaurar los datos de la aplicación, actualizar una ROM o modificar el sistema, verifique si el sistema original y el entorno clave se pueden restaurar. Este error por sí solo no establece la causa.</string>
+    <string name="secure_startup_no_reset">No borre los datos de la aplicación ni desinstale Monica. Conserve los archivos originales. Si tiene una copia de seguridad exportada por Monica, verifíquela en otra instalación. Una clave del sistema perdida permanentemente no se puede recrear reintentando.</string>
+    <string name="secure_startup_preserved">Datos existentes preservados</string>
+    <string name="secure_startup_restart">Reinicie el teléfono, desbloquéelo con la credencial de bloqueo de pantalla del sistema y luego vuelva a intentarlo.</string>
+    <string name="secure_startup_retry">Reintentar</string>
+    <string name="secure_startup_title">Almacenamiento seguro no disponible</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Şifreli yedekleme formatı</string>
+    <string name="backup_kdf_compatible">Uyumlu V1 · 100000 mermi</string>
+    <string name="backup_kdf_enhanced">Geliştirilmiş V2 · 600000 mermi</string>
+    <string name="backup_kdf_scope">Yalnızca yeni oluşturulan şifrelenmiş ZIP yedeklemeleri bu seçeneği kullanır. Mevcut yedeklemeler değişmedi.</string>
+    <string name="backup_kdf_compatibility_warning">V2 uyumlu bir okuyucu gerektirir. Daha eski uzantılar veya masaüstü istemcileri onu geri yükleyemeyebilir. Daha önceki yedeklemeleri saklayın.</string>
+</resources>

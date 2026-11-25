@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">クロスデバイスの使用</string>
+    <string name="passkey_portability_algorithm_hint">宛先は同じ鍵アルゴリズムをサポートする必要があります。現在の Bitwarden 転送は ES256 のみをサポートします。</string>
+    <string name="passkey_portability_backup_hint">この資格情報はバックアップ対象外としてマークされています。そのプロパティを保存する宛先のみがそれを使用できます。 Bitwarden への変換または資格情報の交換はブロックされます。</string>
+    <string name="passkey_portability_checking">チェック中…</string>
+    <string name="passkey_portability_counter_hint">この資格情報には、ゼロ以外の署名カウンタ履歴があります。 Monica はゼロカウンターを使用します。クロスデバイスの使用は、事前のカウンターをチェックする Web サイトによって拒否される場合があります。</string>
+    <string name="passkey_portability_exportable">キーはエクスポートできます</string>
+    <string name="passkey_portability_exportable_hint">キーは、サポートされている暗号化形式でエクスポートできます。宛先は、その ID、キー、および登録プロパティを保持する必要があります。 Web サイトの互換性は依然として宛先クライアントに依存します。</string>
+    <string name="passkey_portability_invalid">メタデータが矛盾しています</string>
+    <string name="passkey_portability_invalid_hint">バックアップ プロパティが競合しています。署名によって、登録されたプロパティをサイレントに変更してはなりません。回復のためにソース資格情報を保持します。</string>
+    <string name="passkey_portability_key_unavailable">キーが利用できません</string>
+    <string name="passkey_portability_local_hint">秘密キーはこのデバイスにバインドされているため、エクスポートできません。データベースをコピーするだけでは、別のデバイスでサインインできるようになりません。</string>
+    <string name="passkey_portability_local_only">ローカルのみ</string>
+    <string name="passkey_portability_missing_hint">このデバイスでは使用可能な秘密キーが見つかりませんでした。このレコードだけでは、ここまたは別のデバイスにサインインできません。</string>
+    <string name="passkey_portability_restricted">転送制限あり</string>
+    <string name="passkey_portability_unknown">未検証</string>
+    <string name="passkey_portability_unknown_hint">キーの機能をチェックできませんでした。ソース データベースのロックを解除して、再試行してください。</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_zip_title">cadangan ZIP</string>
+    <string name="transfer_zip_description">Cadangkan hanya database yang dipilih.</string>
+    <string name="transfer_contents">Sertakan</string>
+    <string name="transfer_images_attachments">Gambar dan lampiran</string>
+    <string name="transfer_encrypt_backup">Enkripsi cadangan</string>
+    <string name="transfer_encryption_hint">Kunci sandi dan lampiran memerlukan cadangan terenkripsi.</string>
+    <string name="transfer_choose_location">Pilih tempat untuk menyimpan</string>
+    <string name="transfer_background_continue">Lanjutkan di latar belakang</string>
+    <string name="transfer_background_hint">Anda dapat meninggalkan halaman ini. Kemajuan akan muncul dalam pemberitahuan.</string>
+    <string name="transfer_reading">Membaca file…</string>
+    <string name="transfer_decrypting">Mendekripsi cadangan…</string>
+    <string name="transfer_preparing">Mempersiapkan item…</string>
+    <string name="transfer_writing">Menulis ke database…</string>
+    <string name="transfer_attachments">Menyalin lampiran…</string>
+    <string name="transfer_packing">Membuat arsip…</string>
+    <string name="transfer_encrypting">Mengenkripsi file…</string>
+    <string name="transfer_saving">Menyimpan file…</string>
+    <string name="transfer_items_progress">%1$d / %2$d</string>
+    <string name="transfer_export_complete">Mengekspor item %1$d.</string>
+    <string name="transfer_export_done">Ekspor selesai</string>
+    <string name="transfer_channel">Impor dan ekspor</string>
+    <string name="transfer_open_result">Buka Monica untuk melihat hasilnya.</string>
+    <string name="transfer_background_start_failed">Tidak dapat memulai ekspor. Coba lagi dengan Monica terbuka.</string>
+    <string name="transfer_cancelled">Ekspor dibatalkan.</string>
+    <string name="transfer_attachment_encryption">Enkripsi cadangan untuk menyertakan lampiran.</string>
+    <string name="transfer_password_mismatch">Kata sandi tidak cocok.</string>
+    <string name="transfer_kdbx_password_description">Tetapkan kata sandi untuk melindungi database KDBX yang diekspor.</string>
+    <string name="transfer_unsupported_token">Format token ini tidak dapat dikonversi. Gunakan cadangan ZIP.</string>
+    <string name="steam_mafile_export_title">File maSteam</string>
+    <string name="steam_mafile_export_desc">Ekspor akun Steam yang dipilih dari database ini.</string>
+    <string name="transfer_kdbx_description">Kata sandi, pengautentikasi, Kunci Sandi, dan lampiran dalam format KeePass.</string>
+    <string name="transfer_unsupported_records">Basis data ini berisi tipe item yang tidak didukung. Simpan salinan database asli sebagai gantinya.</string>
+    <string name="transfer_zip_password_title">Buka kunci cadangan ZIP</string>
+    <string name="transfer_zip_password_description">Masukkan kata sandi yang digunakan untuk membuat cadangan ZIP ini.</string>
+    <string name="transfer_attachment_export_failed">Tidak dapat mengekspor lampiran “%2$s” dari “%1$s”. %3$s</string>
+    <string name="transfer_attachment_key_unavailable">Kunci lampiran tidak dapat didekripsi. Buka kunci Monica dan coba buka lampiran di itemnya. Jika masih gagal, impor ulang dari perangkat asli atau cadangan yang dapat dibaca.</string>
+    <string name="transfer_attachment_content_unreadable">Lampiran gagal dalam pemeriksaan integritas, sehingga ekspor dihentikan. Periksa file asli atau pulihkan lampiran dari cadangan yang dapat dibaca.</string>
+    <string name="transfer_incomplete_export_file">File ekspor yang belum selesai tidak dapat dihapus secara otomatis. Hapus file kosong atau tidak lengkap ini secara manual; ini bukan cadangan yang dapat digunakan.</string>
+</resources>

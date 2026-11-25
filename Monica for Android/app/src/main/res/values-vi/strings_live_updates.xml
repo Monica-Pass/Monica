@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_copy_status">Sao chép</string>
+    <string name="live_update_seconds">%1$d</string>
+    <string name="live_update_smart_copy_channel">Bản sao thông tin xác thực tuần tự</string>
+    <string name="live_update_unlock_to_copy">Mở khóa thiết bị của bạn để sao chép</string>
+    <string name="live_update_unlock_to_view">Mở khóa để xem và tiếp tục</string>
+    <string name="permission_live_updates_description">Hiển thị đếm ngược OTP và thông tin xác thực tiếp theo để sao chép</string>
+    <string name="permission_live_updates_name">Cập nhật trực tiếp</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">カード &amp; ウォレット</string>
+    <string name="customization_group_fields_icons">フィールド &amp; アイコン</string>
+    <string name="customization_group_library">ライブラリ &amp; リスト</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">アクションは必要ありません</string>
+    <string name="permission_action_request">許可をリクエストする</string>
+    <string name="permission_help_actions">アクセス許可のリクエストを使用して Android にアクセスを要求するか、設定を開いてサービスと許可を管理します。\n\n「アクションは必要ありません」または「使用不可」とマークされたアイテムにはアクション ボタンがありません。必要なものだけを有効にします。\n\nシステム設定から戻るとステータスが更新されます。 [ステータスを更新] をタップして再度確認することもできます。</string>
+    <string name="permission_refresh_status">ステータスの更新</string>
+    <string name="permission_summary_granted">%1$d 権限が付与されました</string>
+    <string name="permission_summary_hint">使用する機能に必要な権限のみを有効にします。一部は Android によって自動的に付与されます。</string>
+    <string name="permission_summary_title">あなたの条件に基づく許可</string>
+</resources>

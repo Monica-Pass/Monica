@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-25T16:01:34.277Z" hostname="JOYIN" time="0.72">
+  <properties/>
+  <testcase name="retryAfterLostAcknowledgementVerifiesIdenticalContent" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.179"/>
+  <testcase name="creationRaceStillUsesConditionsAndVerifiesIdenticalContent" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.15"/>
+  <testcase name="successfulUploadKeepsPreflightAndUsesPutEtagWithoutPostflight" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.104"/>
+  <testcase name="sameNameDifferentContentIsNeverOverwritten" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.121"/>
+  <testcase name="staleEtagIsRejectedBeforePutEvenIfTheProviderIgnoresConditions" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.064"/>
+  <testcase name="confirmedUploadDoesNotFailBecauseAnUnnecessaryFollowupIsThrottled" classname="takagi.ru.monica.utils.WebDavMdbxRequestBudgetTest" time="0.093"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

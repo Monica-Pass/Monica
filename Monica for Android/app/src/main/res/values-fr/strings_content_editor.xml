@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Maintenez et faites glisser pour réorganiser</string>
+    <string name="entry_content_remove_message">Cela supprime le contenu de ce brouillon. Les modifications prennent effet lorsque vous enregistrez.</string>
+    <string name="entry_content_remove_title">Supprimer %1$s ?</string>
+</resources>

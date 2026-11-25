@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_error_certificate_expired">證書已過期。請檢查裝置日期與時間，並聯系伺服器管理員更新證書。</string>
+    <string name="bitwarden_error_certificate_not_yet_valid">證書尚未生效。請檢查裝置日期與時間，以及證書的有效期。</string>
+    <string name="bitwarden_error_certificate_hostname">伺服器證書與填寫的域名不匹配。請檢查自行託管地址，並確認反向代理返回的是該域名的證書。</string>
+    <string name="bitwarden_error_certificate_untrusted">無法驗證伺服器證書。請檢查伺服器是否提供完整證書鏈、裝置是否信任對應的 CA，以及代理是否替換了 HTTPS 證書。自簽名伺服器請在證書設定中設定對應的 CA。</string>
+    <string name="bitwarden_error_tls_handshake">無法建立安全的 TLS 連線。請檢查伺服器或反向代理的 TLS 設定、協議版本，以及啟用 mTLS 時的用戶端證書。</string>
+    <string name="bitwarden_error_dns">無法解析伺服器域名。請檢查自行託管地址、DNS、VPN 或代理設定。</string>
+    <string name="bitwarden_error_timeout">連線伺服器超時。請確認伺服器線上，並檢查連接埠、網路、VPN 或代理設定。</string>
+    <string name="bitwarden_error_connection">無法連線到伺服器。請檢查地址與連接埠，確認服務已啟動，並檢查防火牆與代理設定。</string>
+    <string name="bitwarden_error_proxy">代理伺服器拒絕連線或需要身分驗證。請檢查代理地址、連接埠和帳號設定。</string>
+    <string name="bitwarden_error_cleartext">伺服器地址使用 HTTP，目前安全策略不允許明文連線。請使用 HTTPS 地址，並檢查反向代理的 HTTPS 設定。</string>
+    <string name="bitwarden_error_network_io">與伺服器通信時發生網路錯誤。請檢查網路、VPN 或代理設定後重試。</string>
+    <string name="bitwarden_organization_sync_incomplete">有 %1$d 個團隊條目無法解密。可讀取的條目已同步，受影響的已有條目仍保留。請檢查組織成員狀態後重新登入。</string>
+    <string name="bitwarden_sync_incomplete_items">部分項目未能同步（%1$d）。可讀項目已同步，原有本機資料已保留。</string>
+</resources>

@@ -38,8 +38,11 @@ class AllLocalesInstrumentedTest {
     @Test fun everyLanguageCanBeSelectedPersistedAndResolved() = runBlocking {
         val cancelLabels = mapOf(
             Language.ENGLISH to "Cancel",
+            Language.INDONESIAN to "Batal",
+            Language.TURKISH to "İptal",
             Language.CHINESE to "取消",
             Language.TRADITIONAL_CHINESE to "取消",
+            Language.TRADITIONAL_CHINESE_TAIWAN to "取消",
             Language.CLASSICAL_CHINESE to "罢",
             Language.VIETNAMESE to "Hủy",
             Language.JAPANESE to "キャンセル",
@@ -50,6 +53,8 @@ class AllLocalesInstrumentedTest {
             Language.FRENCH to "Annuler",
             Language.POLISH to "Anuluj",
             Language.ITALIAN to "Annulla",
+            Language.PORTUGUESE_PORTUGAL to "Cancelar",
+            Language.PORTUGUESE_BRAZIL to "Cancelar",
         )
         assertEquals(languages.toSet(), cancelLabels.keys)
         languages.forEach { language ->

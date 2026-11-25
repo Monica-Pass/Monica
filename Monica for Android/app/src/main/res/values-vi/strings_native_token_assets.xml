@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">Không thể đọc hoặc lưu mọi tệp. Nội dung ban đầu của bạn đã được giữ lại. Kiểm tra quyền truy cập và kích thước tệp, sau đó thử lại.</string>
+    <string name="native_token_assets_limit">Tối đa 64 MiB tệp mới hoặc đã di chuyển cho mỗi lần lưu và 128 tệp đính kèm cho mỗi mã thông báo.</string>
+    <string name="native_token_backup_limit">Các tệp mã thông báo API gốc trong một bản sao lưu ZIP phải có tổng dung lượng từ 64 MiB trở xuống. Sử dụng bản sao lưu cơ sở dữ liệu gốc cho các vault lớn hơn.</string>
+    <string name="native_token_backup_needs_files">Cơ sở dữ liệu này chứa mã thông báo API cùng với các tệp. Bao gồm hình ảnh và tệp đính kèm để xuất bản sao lưu hoàn chỉnh.</string>
+    <string name="native_token_kdbx_files_unsupported">Mã thông báo API có tệp yêu cầu Monica ZIP được mã hóa hoặc sao lưu cơ sở dữ liệu gốc. Xuất KDBX hỗ trợ mã thông báo API không có tệp.</string>
+</resources>

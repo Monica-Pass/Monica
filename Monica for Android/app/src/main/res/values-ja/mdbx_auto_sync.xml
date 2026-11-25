@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">保存時にアップロードします。フォアグラウンドでロックが解除されているときに更新を確認する</string>
+    <string name="mdbx_auto_sync_manual_hint">オフ · 必要に応じて手動で同期します</string>
+    <string name="mdbx_auto_sync_title">自動同期</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">Dieser passkey verwendet einen gerätegebundenen Android Keystore-Schlüssel, der nicht exportiert werden kann. Es kann weiterhin auf dem Originalgerät funktionieren, kann jedoch nicht in ein tragbares Backup aufgenommen werden.</string>
+    <string name="backup_passkey_unavailable">Der private Schlüssel fehlt oder ist nicht lesbar. Importieren Sie erneut ein Backup mit dem privaten Schlüssel oder überprüfen Sie das Originalgerät. Andere Daten und das Remote-Backup blieben erhalten.</string>
+    <string name="backup_passkey_unreadable">Der geschützte private Schlüssel konnte nicht gelesen werden. Entsperren Sie Monica und versuchen Sie es erneut. Wenn dies weiterhin der Fall ist, überprüfen Sie das Originalgerät oder eine Sicherung mit dem privaten Schlüssel.</string>
+</resources>

@@ -33,6 +33,11 @@ class EmbeddedWalletUiTest {
     private lateinit var note: NoteViewModel
     private lateinit var editor: NoteEditorViewModel
     @Before fun setup() {
+        val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
+        runBlocking {
+            assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is
+                takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
         fixture = TransferFixture()
         bank = BankCardViewModel(fixture.secureItems, fixture.context, fixture.db.localKeePassDatabaseDao(), fixture.security,
             strings = AppLocaleStringResolver(fixture.context))

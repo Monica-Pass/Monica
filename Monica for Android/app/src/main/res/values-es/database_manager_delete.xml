@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Se incluyen carpetas y su contenido. Las contraseñas locales y los elementos seguros van a la Papelera. Las carpetas y passkeys se eliminan permanentemente.</string>
+    <string name="manager_delete_native_hint">Los elementos seleccionados y el contenido de la carpeta se eliminarán permanentemente de esta base de datos. Esto no se puede deshacer.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d seleccionado</string>
+    <string name="manager_delete_title">¿Eliminar elementos seleccionados?</string>
+</resources>

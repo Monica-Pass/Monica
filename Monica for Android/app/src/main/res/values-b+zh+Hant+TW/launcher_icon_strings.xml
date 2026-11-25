@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_icon_default">預設圖示</string>
+    <string name="launcher_icon_blue_star">Grok bot</string>
+    <string name="launcher_icon_selection_description">選擇桌面圖示，隨時可以切回。</string>
+    <string name="launcher_icon_refresh_hint">桌面可能需要幾秒更新圖示。</string>
+</resources>

@@ -1,0 +1,398 @@
+{
+  "main": {
+    "buildSeconds": 293.37863199999265,
+    "jvmTests": 21,
+    "jvmSuites": [
+      {
+        "file": "TEST-takagi.ru.monica.security.LocalPasswordKdfTest.xml",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.KeePassPortableSecretExportPolicyTest.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.PortableSecretExportPolicyTest.xml",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.PortableTotpBackupCodecTest.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "uniqueDeviceMethods": 40,
+    "deviceBatches": [
+      {
+        "label": "main-final-new02",
+        "completedMethodPasses": 8,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.security.CiphertextReadCompatibilityTest,takagi.ru.monica.credentialexchange.PortableArchiveFailureInstrumentedTest",
+        "tests": 8,
+        "failures": 0,
+        "success": true,
+        "seconds": 5.2481222999922466
+      },
+      {
+        "label": "main-final-ui02",
+        "completedMethodPasses": 4,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.credentialexchange.PortableBackupErrorUiTest",
+        "tests": 4,
+        "failures": 0,
+        "success": true,
+        "seconds": 5.977570200004266
+      },
+      {
+        "label": "main-final-regression02",
+        "completedMethodPasses": 28,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.security.SecurityKeyReadInstrumentedTest,takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest,takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#passwordAttemptPublishesOnlyAfterAcceptedCommit,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#cancelledStagedPasswordAttemptCannotEraseNewAuthentication,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey",
+        "tests": 28,
+        "failures": 0,
+        "success": true,
+        "seconds": 45.897295600007055
+      }
+    ],
+    "apks": [
+      {
+        "name": "app.apk",
+        "sha256": "696cfbfeb79bd365ab0fda22db1b14761d4e94d550f911ff4fa55a86f1be5daa"
+      },
+      {
+        "name": "test.apk",
+        "sha256": "cfdcbcb67a8ff3a22860c428fa9a8681126e37252be94bc5cfb449f73be383ca"
+      }
+    ]
+  },
+  "fd": {
+    "buildSeconds": 477.4637225000042,
+    "jvmTests": 21,
+    "jvmSuites": [
+      {
+        "file": "TEST-takagi.ru.monica.security.LocalPasswordKdfTest.xml",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.KeePassPortableSecretExportPolicyTest.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.PortableSecretExportPolicyTest.xml",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "file": "TEST-takagi.ru.monica.utils.PortableTotpBackupCodecTest.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "uniqueDeviceMethods": 40,
+    "deviceBatches": [
+      {
+        "label": "fd-final-new02",
+        "completedMethodPasses": 8,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.security.CiphertextReadCompatibilityTest,takagi.ru.monica.credentialexchange.PortableArchiveFailureInstrumentedTest",
+        "tests": 8,
+        "failures": 0,
+        "success": true,
+        "seconds": 4.635222700002487
+      },
+      {
+        "label": "fd-final-ui02",
+        "completedMethodPasses": 4,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.credentialexchange.PortableBackupErrorUiTest",
+        "tests": 4,
+        "failures": 0,
+        "success": true,
+        "seconds": 4.083528300005128
+      },
+      {
+        "label": "fd-final-regression02",
+        "completedMethodPasses": 28,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.security.SecurityKeyReadInstrumentedTest,takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest,takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#passwordAttemptPublishesOnlyAfterAcceptedCommit,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#cancelledStagedPasswordAttemptCannotEraseNewAuthentication,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles,takagi.ru.monica.security.KeystoreDataFailureInstrumentedTest#replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey",
+        "tests": 28,
+        "failures": 0,
+        "success": true,
+        "seconds": 35.570609399990644
+      }
+    ],
+    "apks": [
+      {
+        "name": "app.apk",
+        "sha256": "aee5ecc09063f2f4d969b33d7435abc266b6cc25959a21efaffe7bba6fe2c855"
+      },
+      {
+        "name": "test.apk",
+        "sha256": "be71a48732c941d88f75c38e373f8bb5f158c934d427b7eac6f2ce08f4369d4a"
+      }
+    ]
+  },
+  "sourceAudit": {
+    "main": {
+      "exactChangedSourcePaths": [
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt",
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml",
+        "app/src/main/res/values/strings_sensitive_backup.xml",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt"
+      ],
+      "unrelatedSourceFilesUnchanged": true,
+      "sourceHashes": {
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt": "1c42b3b4d18ec91573338bcd56883782a443a7fddb308c1e3395d30b530078d7",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt": "d85a6b93553e7a0fb967fbf4bf3c2cfd539f69ca88372698de6bcd0a406ecc17",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt": "060c3bc8abc6a5db16d25335e89a09feb4572bcaeacbdeb28f3035dc35779b03",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt": "f51f3cd50f7ceb9a3629d6c7a05343853d158e459d69204c625501cd8d55a10b",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt": "1fef598700657a76cfa49a7f15b9a57b780decd917e6a48b8631b9d1de6a6cc3",
+        "app/src/main/res/values/strings_sensitive_backup.xml": "70030acd717c9bc4b3c4c47d1b981339059ecfdf6685c3f0c5cf7d78f6f587e3",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml": "d5130a936568b81548f2c03f060680ca08679b9cf9ccab4f64e942c8c1517381",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml": "d5130a936568b81548f2c03f060680ca08679b9cf9ccab4f64e942c8c1517381",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml": "66d4f2b50ea95cdd5e445dbd34edcd3acaf0d848200c05884dd0e2c9bb29ef58",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml": "d425ac3355e315ba0356e06dc0217b69824e2e6b62c2a56d9fef6ef121bb5080",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml": "93455117fd01d530598c85482ebed978d0e93a1ea13729c314e642ea956eec62",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml": "e570830a047f509b76ddc9c8605df43d8db784f358e3d3d59f2bd6645117cdc4",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml": "d74fc6b3703d0a8afd659197304718857303f5e97d3b1ad5daf7d1ddf349ad19",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml": "738b9be6e565625feffb43b955c393cb4135e45a4914b73790be6a7d97447a80",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml": "3e3d7587ebc1b85c090a90c6ce12924999071e35ff7f02a2f114c027e8cd1707",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml": "4713a3602115b40281ce4db5de594e3407a03cc14c8063803afd789cf4a0ce8e",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml": "0d9b33dc56e9918626a83b5de20baa83244c597d0315f635890e1d7240cd219b",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml": "f6a8cbf21d8e17002df471ae93bf788549e2a66697b7afdf5bd53c531e680f1a",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml": "b23660df0d3a35e9506a72088029e11567b53ea50b557d9f54b77c5986390dc9",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml": "242107c9954bd25708b9d30f45662b452d9e859036f66e03090c9d11736ca28a",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml": "ba4565d98a8512d637d46be145ad4adc62d415359e3d6175f6f891d73cd82cd6",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml": "b5dcaf110beddf02261bb7ddddb0af4845f7316bca4555c3c94d2290e2ff16f6",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt": "ce3b8c1aa3a69e37e14edd104cc93905d77515f36b154b89ffa3f8350f86b3f9",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt": "9fa2da2b9ad4902501c302cccb2b05b4dc7f170f782a8da243291a75466ede0c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt": "33d36bacff2b56822107da5f97e7c39329ccacac2995f2df22384a0c1355e96c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt": "0ac8da20126de4597a52a3b1026b24b846f9b88f06073e1e41e223b4e4c55415",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt": "728c4945834e3b7c9c8f57e01212a4f85692984eb728474b8b513d538fca62ea"
+      },
+      "normalizedHashes": {
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt": "4c7b4e9ecb7401788244a765e86f561d685426133e9e937b80c47f15cb88bcf0",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt": "d85a6b93553e7a0fb967fbf4bf3c2cfd539f69ca88372698de6bcd0a406ecc17",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt": "f75557a1c6420119db7adfe865ab72f6fcd1b4faea335c9665175685610a02a3",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt": "f51f3cd50f7ceb9a3629d6c7a05343853d158e459d69204c625501cd8d55a10b",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt": "4a5adcc715a68f7cf515e23116e62d9858646fc96df06b7d8da3e97c7a535f0d",
+        "app/src/main/res/values/strings_sensitive_backup.xml": "cd22a7cdbc628898ed709960bea4b5ec7d28a4a389b6f95fee1e47fd10800b2f",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml": "9cb1bc344c1baab16a05a088473a7bfd7a184f77575c8af1e01ce34eb26136f5",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml": "9cb1bc344c1baab16a05a088473a7bfd7a184f77575c8af1e01ce34eb26136f5",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml": "80d54b54d9f4e6e98a3a3dd9acbe4ac329ec99fd92bfda524dbb78920347b1a7",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml": "11b8960f12bd1f6f41d7b6dd7a70173a2ecc0840b165c4f35ab8572fcd63904a",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml": "731e8090bac64ed44049c0293fb562efecdf7828baf91bccce302fa99518b048",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml": "84b4b252524a9c56953148cb8988243f88643d4b223e1e8c25f05a7b49737638",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml": "4d1f3a073526c842dcd95e75812a6eea2017f7cf56c5524f0c447d7bbb5c3bec",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml": "f533469ae3243b7436edca6c9e91555d85218ce17cf772ca814be1f9c63d8aac",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml": "940a226c030b829a32077ea7834300fd1edeaf8329c4f97160cff799e6f5efac",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml": "28b5d20abf9a72de1bb8733cd1987972e4765719cb4d1014c905f6b494bf101f",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml": "09f47c157b4de325f53553e42838f25530fb3709e37d3037ea3a4d33af9e16a5",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml": "27631eee0937a57d12ff4f02032959d8741a3bc4b1053a0de1da019cf69b5701",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml": "0b2ad7876ed4d99125edb3b849ae899582b0f9dc5421b30831d67bc89f53d9d2",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml": "3859e89d996e39d7bc1095554cae953b14824002443f6d71ad815b8f1d62332e",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml": "ea9240ce49e410e045da346197ee0e0197ec8de8087d672ac07a7cc475efc7c8",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml": "6294887302581478c325cffc63a438d485440f28938ddc3858e06399c1316aca",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt": "ce3b8c1aa3a69e37e14edd104cc93905d77515f36b154b89ffa3f8350f86b3f9",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt": "9fa2da2b9ad4902501c302cccb2b05b4dc7f170f782a8da243291a75466ede0c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt": "8055240a84c30f1300b17e9ae5a046b02ae7690b0e72a0a84090a1d1e40fd461",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt": "0ac8da20126de4597a52a3b1026b24b846f9b88f06073e1e41e223b4e4c55415",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt": "728c4945834e3b7c9c8f57e01212a4f85692984eb728474b8b513d538fca62ea"
+      },
+      "imagesIgnored": true
+    },
+    "fd": {
+      "exactChangedSourcePaths": [
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt",
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml",
+        "app/src/main/res/values/strings_sensitive_backup.xml",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt"
+      ],
+      "unrelatedSourceFilesUnchanged": true,
+      "sourceHashes": {
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt": "1c42b3b4d18ec91573338bcd56883782a443a7fddb308c1e3395d30b530078d7",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt": "f2b44cbac581a043158d07e0cb10564316f0f9d91785fa5e18f0be12caf8704b",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt": "060c3bc8abc6a5db16d25335e89a09feb4572bcaeacbdeb28f3035dc35779b03",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt": "d1bf1f769525bb6b9b8a1b9736e000909cf93536db788efea5df225ef78a2ffd",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt": "1fef598700657a76cfa49a7f15b9a57b780decd917e6a48b8631b9d1de6a6cc3",
+        "app/src/main/res/values/strings_sensitive_backup.xml": "70030acd717c9bc4b3c4c47d1b981339059ecfdf6685c3f0c5cf7d78f6f587e3",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml": "4ab7ff2ab3ae00824e54feeee6632a2a5554228c40dfdc089e7642f2e3bcc535",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml": "d5130a936568b81548f2c03f060680ca08679b9cf9ccab4f64e942c8c1517381",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml": "d5130a936568b81548f2c03f060680ca08679b9cf9ccab4f64e942c8c1517381",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml": "66d4f2b50ea95cdd5e445dbd34edcd3acaf0d848200c05884dd0e2c9bb29ef58",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml": "d425ac3355e315ba0356e06dc0217b69824e2e6b62c2a56d9fef6ef121bb5080",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml": "93455117fd01d530598c85482ebed978d0e93a1ea13729c314e642ea956eec62",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml": "e570830a047f509b76ddc9c8605df43d8db784f358e3d3d59f2bd6645117cdc4",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml": "d74fc6b3703d0a8afd659197304718857303f5e97d3b1ad5daf7d1ddf349ad19",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml": "738b9be6e565625feffb43b955c393cb4135e45a4914b73790be6a7d97447a80",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml": "3e3d7587ebc1b85c090a90c6ce12924999071e35ff7f02a2f114c027e8cd1707",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml": "4713a3602115b40281ce4db5de594e3407a03cc14c8063803afd789cf4a0ce8e",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml": "0d9b33dc56e9918626a83b5de20baa83244c597d0315f635890e1d7240cd219b",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml": "f6a8cbf21d8e17002df471ae93bf788549e2a66697b7afdf5bd53c531e680f1a",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml": "b23660df0d3a35e9506a72088029e11567b53ea50b557d9f54b77c5986390dc9",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml": "242107c9954bd25708b9d30f45662b452d9e859036f66e03090c9d11736ca28a",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml": "ba4565d98a8512d637d46be145ad4adc62d415359e3d6175f6f891d73cd82cd6",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml": "b5dcaf110beddf02261bb7ddddb0af4845f7316bca4555c3c94d2290e2ff16f6",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt": "a9c786ec3a99f6867e4e74b46c838a8a20b4c31b844734f450e5dbe856770a56",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt": "9fa2da2b9ad4902501c302cccb2b05b4dc7f170f782a8da243291a75466ede0c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt": "33d36bacff2b56822107da5f97e7c39329ccacac2995f2df22384a0c1355e96c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt": "0ac8da20126de4597a52a3b1026b24b846f9b88f06073e1e41e223b4e4c55415",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt": "c0d252d3ca9a41b098624d0449029d5005026ba9b2d00f0d9d7afe2a377d0983"
+      },
+      "normalizedHashes": {
+        "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt": "4c7b4e9ecb7401788244a765e86f561d685426133e9e937b80c47f15cb88bcf0",
+        "app/src/main/java/takagi/ru/monica/utils/PortableSecretExportPolicy.kt": "d85a6b93553e7a0fb967fbf4bf3c2cfd539f69ca88372698de6bcd0a406ecc17",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt": "f75557a1c6420119db7adfe865ab72f6fcd1b4faea335c9665175685610a02a3",
+        "app/src/main/java/takagi/ru/monica/transfer/AttachmentExportError.kt": "f51f3cd50f7ceb9a3629d6c7a05343853d158e459d69204c625501cd8d55a10b",
+        "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportService.kt": "4a5adcc715a68f7cf515e23116e62d9858646fc96df06b7d8da3e97c7a535f0d",
+        "app/src/main/res/values/strings_sensitive_backup.xml": "cd22a7cdbc628898ed709960bea4b5ec7d28a4a389b6f95fee1e47fd10800b2f",
+        "app/src/main/res/values-zh/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rCN/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rNY/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-zh-rXB/strings_sensitive_backup.xml": "f1234292bfd986f0c1e75225e412bac68b405462c3806f859dfd58279a9e3669",
+        "app/src/main/res/values-b+zh+Hant/strings_sensitive_backup.xml": "9cb1bc344c1baab16a05a088473a7bfd7a184f77575c8af1e01ce34eb26136f5",
+        "app/src/main/res/values-b+zh+Hant+TW/strings_sensitive_backup.xml": "9cb1bc344c1baab16a05a088473a7bfd7a184f77575c8af1e01ce34eb26136f5",
+        "app/src/main/res/values-b+lzh/strings_sensitive_backup.xml": "80d54b54d9f4e6e98a3a3dd9acbe4ac329ec99fd92bfda524dbb78920347b1a7",
+        "app/src/main/res/values-de/strings_sensitive_backup.xml": "11b8960f12bd1f6f41d7b6dd7a70173a2ecc0840b165c4f35ab8572fcd63904a",
+        "app/src/main/res/values-es/strings_sensitive_backup.xml": "731e8090bac64ed44049c0293fb562efecdf7828baf91bccce302fa99518b048",
+        "app/src/main/res/values-fr/strings_sensitive_backup.xml": "84b4b252524a9c56953148cb8988243f88643d4b223e1e8c25f05a7b49737638",
+        "app/src/main/res/values-in/strings_sensitive_backup.xml": "4d1f3a073526c842dcd95e75812a6eea2017f7cf56c5524f0c447d7bbb5c3bec",
+        "app/src/main/res/values-it/strings_sensitive_backup.xml": "f533469ae3243b7436edca6c9e91555d85218ce17cf772ca814be1f9c63d8aac",
+        "app/src/main/res/values-ja/strings_sensitive_backup.xml": "940a226c030b829a32077ea7834300fd1edeaf8329c4f97160cff799e6f5efac",
+        "app/src/main/res/values-ko/strings_sensitive_backup.xml": "28b5d20abf9a72de1bb8733cd1987972e4765719cb4d1014c905f6b494bf101f",
+        "app/src/main/res/values-pl/strings_sensitive_backup.xml": "09f47c157b4de325f53553e42838f25530fb3709e37d3037ea3a4d33af9e16a5",
+        "app/src/main/res/values-pt/strings_sensitive_backup.xml": "27631eee0937a57d12ff4f02032959d8741a3bc4b1053a0de1da019cf69b5701",
+        "app/src/main/res/values-pt-rBR/strings_sensitive_backup.xml": "0b2ad7876ed4d99125edb3b849ae899582b0f9dc5421b30831d67bc89f53d9d2",
+        "app/src/main/res/values-ru/strings_sensitive_backup.xml": "3859e89d996e39d7bc1095554cae953b14824002443f6d71ad815b8f1d62332e",
+        "app/src/main/res/values-tr/strings_sensitive_backup.xml": "ea9240ce49e410e045da346197ee0e0197ec8de8087d672ac07a7cc475efc7c8",
+        "app/src/main/res/values-vi/strings_sensitive_backup.xml": "6294887302581478c325cffc63a438d485440f28938ddc3858e06399c1316aca",
+        "app/src/main/java/takagi/ru/monica/transfer/BackgroundTaskResultCard.kt": "ce3b8c1aa3a69e37e14edd104cc93905d77515f36b154b89ffa3f8350f86b3f9",
+        "app/src/androidTest/java/takagi/ru/monica/security/CiphertextReadCompatibilityTest.kt": "9fa2da2b9ad4902501c302cccb2b05b4dc7f170f782a8da243291a75466ede0c",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableArchiveFailureInstrumentedTest.kt": "8055240a84c30f1300b17e9ae5a046b02ae7690b0e72a0a84090a1d1e40fd461",
+        "app/src/androidTest/java/takagi/ru/monica/credentialexchange/PortableBackupErrorUiTest.kt": "0ac8da20126de4597a52a3b1026b24b846f9b88f06073e1e41e223b4e4c55415",
+        "app/src/test/java/takagi/ru/monica/utils/PortableSecretExportPolicyTest.kt": "728c4945834e3b7c9c8f57e01212a4f85692984eb728474b8b513d538fca62ea"
+      }
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 13,
+    "retainedUsers": [
+      0,
+      10,
+      11,
+      12,
+      16
+    ],
+    "onlyTaskPackagesUninstalled": true,
+    "originalMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "deviceCommandReceipt": "cleanup-progress.json",
+    "initialFailures": [
+      "default-user uninstall rejected; corrected to explicit task user 13",
+      "immediate user removal rejected; after stopped-state confirmation retry succeeded"
+    ],
+    "mumuStartedHere": 0,
+    "stoppedMuMu": true,
+    "adbPort": 15079,
+    "stoppedAdb": true,
+    "mumuDataDiskRetained": true
+  },
+  "productionRootCauseOfUserIncidentConfirmed": false,
+  "externalEnvironmentChanged": false,
+  "releaseR8TestedThisTask": false,
+  "commitPushPublishApkDelivery": false
+}

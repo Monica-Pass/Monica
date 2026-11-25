@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Halten Sie die Maustaste gedrückt und ziehen Sie, um sie neu anzuordnen</string>
+    <string name="entry_content_remove_message">Dadurch wird der Inhalt aus diesem Entwurf entfernt. Änderungen werden beim Speichern wirksam.</string>
+    <string name="entry_content_remove_title">%1$s löschen?</string>
+</resources>

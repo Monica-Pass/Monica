@@ -1,0 +1,212 @@
+{
+  "version": "1.0.331",
+  "committed": false,
+  "published": false,
+  "device": "MuMu API 35 x86_64; owned secondary user",
+  "editions": {
+    "main": {
+      "translatableResources": 7351,
+      "xmlFiles": 130,
+      "unitTests": [
+        {
+          "class": "takagi.ru.monica.localization.DefaultLanguageResourceTest",
+          "tests": 1,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.localization.LocaleResourceCoverageTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.localization.TaiwanResourceTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.utils.StartupLanguageCacheTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        }
+      ],
+      "distinctDeviceMethodsPassed": 19,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 18,
+          "completedMethodFailures": 1,
+          "edition": "main",
+          "selector": "takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.ui.screens.LanguageSelectionDialogTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+          "tests": 19,
+          "failures": 1,
+          "success": false,
+          "seconds": 37.12457030000223
+        },
+        {
+          "completedMethodPasses": 18,
+          "completedMethodFailures": 1,
+          "edition": "main",
+          "selector": "takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.ui.screens.LanguageSelectionDialogTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+          "tests": 19,
+          "failures": 1,
+          "success": false,
+          "seconds": 30.402952899996308
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.LanguageSelectionDialogTest#taiwanCanBeSelectedSeparatelyFromHongKong",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.09867760000634
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.LanguageSelectionDialogTest#closeKeepsTheCurrentLanguage",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.257821699997294
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.LanguageSelectionDialogTest#taiwanLargeTextDialogKeepsTheSelectedRegionAndAllowsReturningToHongKong",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.269486599994707
+        }
+      ],
+      "appSha256": "5ec1fac94146fccce626748d625398af50ea4dc919527492e9fd51ff81b4d286",
+      "testSha256": "abc8754919625cf27eaaa40cbfa0c7835123fa88acb393a2f719880bfc2e5809",
+      "buildSeconds": 125.35159970000677,
+      "testRebuildSeconds": 203.24950410000747,
+      "hongKongSourceBytesPreserved": true,
+      "productionSourcesMatchTestedBuild": true,
+      "changedExistingSourceFiles": [
+        "app/src/test/java/takagi/ru/monica/localization/LocaleResourceCoverageTest.kt",
+        "app/src/test/java/takagi/ru/monica/utils/StartupLanguageCacheTest.kt",
+        "app/src/main/res/values/language_selection.xml",
+        "app/src/main/java/takagi/ru/monica/data/AppSettings.kt",
+        "app/src/main/java/takagi/ru/monica/utils/LocaleHelper.kt",
+        "app/src/main/java/takagi/ru/monica/ui/screens/LanguageSelectionDialog.kt",
+        "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/AllLocalesInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/ItalianLocaleInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/LocalizedRuntimeMessagesInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/PackagedLocaleFilterInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/LanguageSelectionDialogTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt"
+      ]
+    },
+    "fd": {
+      "translatableResources": 7351,
+      "xmlFiles": 131,
+      "unitTests": [
+        {
+          "class": "takagi.ru.monica.localization.DefaultLanguageResourceTest",
+          "tests": 1,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.localization.LocaleResourceCoverageTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.localization.TaiwanResourceTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        },
+        {
+          "class": "takagi.ru.monica.utils.StartupLanguageCacheTest",
+          "tests": 2,
+          "failures": 0,
+          "skipped": 0
+        }
+      ],
+      "distinctDeviceMethodsPassed": 19,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 19,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.localization.TaiwanLocaleInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.ui.screens.LanguageSelectionDialogTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+          "tests": 19,
+          "failures": 0,
+          "success": true,
+          "seconds": 27.306467700007488
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.LanguageSelectionDialogTest#closeKeepsTheCurrentLanguage",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.30483720000484
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.LanguageSelectionDialogTest#taiwanLargeTextDialogKeepsTheSelectedRegionAndAllowsReturningToHongKong",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.17598870000802
+        }
+      ],
+      "appSha256": "e3fcc117e3627b1572f2f79785a93d483342e7f9fd54075275abcdbcec1b85dd",
+      "testSha256": "761e30c98752080aae852702ebaf9c7bd0cd848aee6ec3ad7b8ea6ee19997389",
+      "buildSeconds": 322.1634223000001,
+      "testRebuildSeconds": 84.44797019999532,
+      "hongKongSourceBytesPreserved": true,
+      "productionSourcesMatchTestedBuild": true,
+      "changedExistingSourceFiles": [
+        "app/src/test/java/takagi/ru/monica/localization/LocaleResourceCoverageTest.kt",
+        "app/src/test/java/takagi/ru/monica/utils/StartupLanguageCacheTest.kt",
+        "app/src/main/res/values/language_selection.xml",
+        "app/src/main/java/takagi/ru/monica/data/AppSettings.kt",
+        "app/src/main/java/takagi/ru/monica/utils/LocaleHelper.kt",
+        "app/src/main/java/takagi/ru/monica/ui/screens/LanguageSelectionDialog.kt",
+        "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/AllLocalesInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/ItalianLocaleInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/LocalizedRuntimeMessagesInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/localization/PackagedLocaleFilterInstrumentedTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/LanguageSelectionDialogTest.kt",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt"
+      ]
+    }
+  },
+  "cleanup": {
+    "removedOwnedUser": 10,
+    "preservedOriginalUsers": [
+      0
+    ],
+    "originalUser0Restored": true,
+    "shellUid": 2000,
+    "ownPackagesAbsentInPmListPackagesU": true,
+    "extraUninstallAttempts": [
+      "not installed for 0",
+      "DELETE_FAILED_INTERNAL_ERROR after packages were already absent"
+    ],
+    "stoppedTaskStartedMuMuInstance": 2,
+    "stoppedTaskAdbPort": 15074,
+    "originalDataAndConfigurationPreserved": true
+  }
+}

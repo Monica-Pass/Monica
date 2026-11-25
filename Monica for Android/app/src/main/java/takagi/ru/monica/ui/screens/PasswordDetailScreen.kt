@@ -94,6 +94,8 @@ import takagi.ru.monica.data.model.TotpData
 import takagi.ru.monica.data.model.PasskeyBinding
 import takagi.ru.monica.data.model.PasskeyBindingCodec
 import takagi.ru.monica.ui.model.SecretValueState
+import takagi.ru.monica.ui.model.PasswordReadFailure
+import takagi.ru.monica.ui.components.UnreadablePasswordField
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -459,6 +461,7 @@ fun PasswordDetailScreen(
                             }
 
     var unavailablePasswordSources by remember { mutableStateOf<Map<Long, PasswordSource>>(emptyMap()) }
+    var passwordReadFailures by remember { mutableStateOf<Map<Long, PasswordReadFailure>>(emptyMap()) }
 
     // 加载密码详情
     // We need to observe all passwords to detect updates/siblings
@@ -473,6 +476,7 @@ fun PasswordDetailScreen(
         groupPasswords = emptyList()
         displayPasswords = emptyMap()
         unavailablePasswordSources = emptyMap()
+        passwordReadFailures = emptyMap()
         customFields = emptyList()
         val entry = withContext(Dispatchers.IO) {
             viewModel.getRawPasswordEntryById(passwordId)
@@ -505,12 +509,13 @@ fun PasswordDetailScreen(
             resolvePasswordDetailGroupPasswords(entry, allPasswords)
         }
         val detailPasswords = resolvedGroupPasswords.ifEmpty { listOf(entry) }
-        val (resolvedDisplayPasswords, resolvedUnavailableSources) = withContext(Dispatchers.IO) {
+        val (resolvedDisplayPasswords, resolvedUnavailableSources, resolvedFailures) = withContext(Dispatchers.IO) {
             val passwordValues = mutableMapOf<Long, String>()
             val unavailableSources = mutableMapOf<Long, PasswordSource>()
+            val failures = mutableMapOf<Long, PasswordReadFailure>()
             detailPasswords.forEach { current ->
                 val rawCurrent = viewModel.getRawPasswordEntryById(current.id) ?: current
-                when (val secretState = viewModel.inspectSecretState(rawCurrent)) {
+                when (val secretState = viewModel.inspectDetailSecretState(rawCurrent)) {
                     is SecretValueState.Available -> {
                         passwordValues[current.id] = secretState.value
                     }
@@ -522,10 +527,11 @@ fun PasswordDetailScreen(
 
                     is SecretValueState.Unreadable -> {
                         unavailableSources[current.id] = secretState.source
+                        failures[current.id] = secretState.reason
                     }
                 }
             }
-            passwordValues to unavailableSources
+            Triple(passwordValues, unavailableSources, failures)
         }
 
         // 加载自定义字段 (添加错误处理)
@@ -545,6 +551,7 @@ fun PasswordDetailScreen(
         groupPasswords = resolvedGroupPasswords
         displayPasswords = resolvedDisplayPasswords
         unavailablePasswordSources = resolvedUnavailableSources
+        passwordReadFailures = resolvedFailures
         customFields = resolvedCustomFields
         initialDetailDataLoaded = true
     }
@@ -571,12 +578,13 @@ fun PasswordDetailScreen(
         passwordEntry = updatedEntry
         groupPasswords = resolvedGroupPasswords
         val detailPasswords = resolvedGroupPasswords.ifEmpty { listOf(updatedEntry) }
-        val (resolvedDisplayPasswords, resolvedUnavailableSources) = withContext(Dispatchers.IO) {
+        val (resolvedDisplayPasswords, resolvedUnavailableSources, resolvedFailures) = withContext(Dispatchers.IO) {
             val passwordValues = mutableMapOf<Long, String>()
             val unavailableSources = mutableMapOf<Long, PasswordSource>()
+            val failures = mutableMapOf<Long, PasswordReadFailure>()
             detailPasswords.forEach { current ->
                 val rawCurrent = viewModel.getRawPasswordEntryById(current.id) ?: current
-                when (val secretState = viewModel.inspectSecretState(rawCurrent)) {
+                when (val secretState = viewModel.inspectDetailSecretState(rawCurrent)) {
                     is SecretValueState.Available -> {
                         passwordValues[current.id] = secretState.value
                     }
@@ -588,14 +596,16 @@ fun PasswordDetailScreen(
 
                     is SecretValueState.Unreadable -> {
                         unavailableSources[current.id] = secretState.source
+                        failures[current.id] = secretState.reason
                     }
                 }
             }
-            passwordValues to unavailableSources
+            Triple(passwordValues, unavailableSources, failures)
         }
         if (isLeavingDetail) return@LaunchedEffect
         displayPasswords = resolvedDisplayPasswords
         unavailablePasswordSources = resolvedUnavailableSources
+        passwordReadFailures = resolvedFailures
     }
 
     LaunchedEffect(groupPasswords) {
@@ -840,11 +850,10 @@ fun PasswordDetailScreen(
                     )
                 }
 
-                val credentialGroups = if (credentialMetadata.isNotEmpty()) detailPasswords.groupBy {
-                    credentialMetadata[it.id]?.groupId ?: "primary"
-                }.values.sortedBy { credentialMetadata[it.first().id]?.groupOrder ?: 0 }
-                else if (!entry.isSsoLogin() && !isGpgTemplate && !isApiTemplate &&
-                    (shouldShowBasicInfo || shouldShowPasswordCard || detailTotp != null)) listOf(detailPasswords)
+                val credentialGroups = if (credentialMetadata.isNotEmpty() ||
+                    (!entry.isSsoLogin() && !isGpgTemplate && !isApiTemplate &&
+                    (shouldShowBasicInfo || shouldShowPasswordCard || detailTotp != null)))
+                    ProjectCredentialGroup.rowGroups(detailPasswords, credentialMetadata)
                 else emptyList()
                 if (credentialGroups.isNotEmpty()) {
                     val primaryRows = credentialGroups.first()
@@ -852,9 +861,10 @@ fun PasswordDetailScreen(
                         ProjectCredentialDetailCard(primaryRows, credentialMetadata, displayPasswords, unavailablePasswordSources,
                             context, settings, onCreateSend, onEditPassword,
                             onResyncUnreadable = resyncUnreadable, isResyncingUnreadable = isResyncingUnreadablePassword,
+                            passwordReadFailures = passwordReadFailures,
                             onDelete = { itemToDelete = it; showDeleteDialog = true },
-                            resolvedTotp = if (credentialMetadata.isEmpty()) detailTotp else null,
-                            separatedUsername = if (credentialMetadata.isEmpty() && settings.separateUsernameAccountEnabled) separatedUsername else "")
+                            resolvedTotp = if (credentialMetadata.isEmpty() && credentialGroups.size == 1) detailTotp else null,
+                            separatedUsername = if (credentialMetadata.isEmpty() && credentialGroups.size == 1 && settings.separateUsernameAccountEnabled) separatedUsername else "")
                     }
                 }
                 if (shouldShowBasicInfo && credentialGroups.isEmpty()) {
@@ -885,6 +895,7 @@ fun PasswordDetailScreen(
                             passwords = detailPasswords,
                             displayPasswords = displayPasswords,
                             unavailablePasswordSources = unavailablePasswordSources,
+                            passwordReadFailures = passwordReadFailures,
                             onResyncUnreadable = resyncUnreadable,
                             isResyncingUnreadable = isResyncingUnreadablePassword,
                             showSecurityAnalysis = settings.passwordDetailSecurityAnalysisEnabled,
@@ -911,7 +922,7 @@ fun PasswordDetailScreen(
                     it.title == takagi.ru.monica.data.model.EntryContentFields.ORDER
                 }?.value?.split(',').orEmpty()
                 val detailBlocks = PasswordContentBlocks.read(customFields.map { takagi.ru.monica.data.CustomFieldDraft(id = it.id, title = it.title, value = it.value, isProtected = it.isProtected) })
-                val orderedContent = takagi.ru.monica.data.model.PasswordWalletProjection.walletOrder(savedContentOrder + credentialGroups.drop(1).map { ProjectCredentialGroup.token((credentialMetadata[it.first().id]?.groupId ?: "primary")) } + detailBlocks.map { it.token } + listOf("AUTHENTICATOR", "PAYMENT", "DOCUMENT", "CUSTOM_FIELDS", "ATTACHMENTS", "NOTES", "CONTACT", "ADDRESS"))
+                val orderedContent = takagi.ru.monica.data.model.PasswordWalletProjection.walletOrder(savedContentOrder + credentialGroups.drop(1).map { ProjectCredentialGroup.token(ProjectCredentialGroup.rowGroupId(it, credentialMetadata)) } + detailBlocks.map { it.token } + listOf("AUTHENTICATOR", "PAYMENT", "DOCUMENT", "CUSTOM_FIELDS", "ATTACHMENTS", "NOTES", "CONTACT", "ADDRESS"))
                 val walletSections = orderedContent.filter { section ->
                     val supplemental = displayCustomFields.any { field ->
                         takagi.ru.monica.ui.components.EntrySupplementalSpecs.forSection(section).any {
@@ -933,11 +944,12 @@ fun PasswordDetailScreen(
                     }
                 }
                 orderedContent.forEach { section ->
-                    credentialGroups.drop(1).firstOrNull { ProjectCredentialGroup.token((credentialMetadata[it.first().id]?.groupId ?: "primary")) == section }?.let { rows ->
+                    credentialGroups.drop(1).firstOrNull { ProjectCredentialGroup.token(ProjectCredentialGroup.rowGroupId(it, credentialMetadata)) == section }?.let { rows ->
                         item(key = section) {
                             ProjectCredentialDetailCard(rows, credentialMetadata, displayPasswords, unavailablePasswordSources,
                                 context, settings, onCreateSend, onEditPassword,
                             onResyncUnreadable = resyncUnreadable, isResyncingUnreadable = isResyncingUnreadablePassword,
+                            passwordReadFailures = passwordReadFailures,
                                 onDelete = { itemToDelete = it; showDeleteDialog = true })
                         }
                     }
@@ -2498,6 +2510,7 @@ internal fun ProjectCredentialDetailCard(
     onDelete: (PasswordEntry) -> Unit,
     resolvedTotp: TotpData? = null, separatedUsername: String = "",
     onResyncUnreadable: (PasswordEntry) -> Unit, isResyncingUnreadable: Boolean,
+    passwordReadFailures: Map<Long, PasswordReadFailure> = emptyMap(),
 ) {
     val ordered = rows.sortedBy { metadata[it.id]?.passwordOrder ?: 0 }
     val first = ordered.first()
@@ -2529,6 +2542,7 @@ internal fun ProjectCredentialDetailCard(
         passwordRows.forEachIndexed { index, row -> key(row.id) {
             DetailGroupItem(index + accounts.size, count) {
                 PasswordItemRow(entry = row, displayPassword = values[row.id].orEmpty(), unavailableSource = unavailable[row.id],
+                    readFailure = passwordReadFailures[row.id] ?: PasswordReadFailure.UNKNOWN,
                     onResyncUnreadable = { onResyncUnreadable(row) }, isResyncingUnreadable = isResyncingUnreadable,
                     showSecurityAnalysis = settings.passwordDetailSecurityAnalysisEnabled, index = index + 1,
                     showIndex = passwordRows.size > 1, onDelete = { onDelete(row) }, context = context,
@@ -2574,6 +2588,7 @@ private fun PasswordListCard(
     passwords: List<PasswordEntry>,
     displayPasswords: Map<Long, String>,
     unavailablePasswordSources: Map<Long, PasswordSource>,
+    passwordReadFailures: Map<Long, PasswordReadFailure>,
     onResyncUnreadable: (PasswordEntry) -> Unit,
     isResyncingUnreadable: Boolean,
     showSecurityAnalysis: Boolean,
@@ -2588,6 +2603,7 @@ private fun PasswordListCard(
                     entry = entry,
                     displayPassword = displayPasswords[entry.id].orEmpty(),
                     unavailableSource = unavailablePasswordSources[entry.id],
+                    readFailure = passwordReadFailures[entry.id] ?: PasswordReadFailure.UNKNOWN,
                     onResyncUnreadable = { onResyncUnreadable(entry) },
                     isResyncingUnreadable = isResyncingUnreadable,
                     showSecurityAnalysis = showSecurityAnalysis,
@@ -2616,7 +2632,8 @@ internal fun PasswordItemRow(
     onDelete: () -> Unit,
     context: Context,
     canDelete: Boolean,
-    onCreateSend: ((title: String, text: String) -> Unit)?
+    onCreateSend: ((title: String, text: String) -> Unit)?,
+    readFailure: PasswordReadFailure = PasswordReadFailure.UNKNOWN,
 ) {
     var visible by remember(entry.id, displayPassword, unavailableSource) { mutableStateOf(false) }
     val actionMenuState = rememberPasswordFieldActionMenuState()
@@ -2662,6 +2679,12 @@ internal fun PasswordItemRow(
                 context = context, onCreateSend = onCreateSend,
             )
             }
+        } else if (unavailableSource != null) {
+            key(entry.id) { UnreadablePasswordField(
+                label = if (showIndex) stringResource(R.string.password) + " $index" else stringResource(R.string.password),
+                source = unavailableSource,
+                failure = readFailure,
+            ) }
         } else {
         Row(
             modifier = Modifier.fillMaxWidth(),

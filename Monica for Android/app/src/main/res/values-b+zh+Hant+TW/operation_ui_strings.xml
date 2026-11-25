@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_message_delete_queue_failed">無法將 Bitwarden 刪除操作加入隊列</string>
+    <string name="bitwarden_message_conflict_detail">此條目在本機和伺服器上均有更改</string>
+    <string name="bitwarden_message_empty_vault">伺服器返回空資料，但本機仍有 %1$d 條記錄。同步已暫停以保護資料，請檢查伺服器和帳號後再繼續。</string>
+    <string name="runtime_kdbx_decode_failed">無法解碼 KDBX 資料庫</string>
+</resources>

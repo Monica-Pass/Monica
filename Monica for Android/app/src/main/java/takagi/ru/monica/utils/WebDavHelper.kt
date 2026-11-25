@@ -475,6 +475,7 @@ private data class PageAdjustmentSettingsBackupEntry(
     val validatorSmoothProgress: Boolean = true,
     val validatorVibrationEnabled: Boolean = true,
     val hapticFeedbackEnabled: Boolean = true,
+    val hapticFeedbackStrength: Int = 1,
     val copyNextCodeWhenExpiring: Boolean = false,
     val securityAnalysisAutoEnabled: Boolean = false,
     val passwordDetailSecurityAnalysisEnabled: Boolean = true,
@@ -805,6 +806,7 @@ class WebDavHelper(
             validatorSmoothProgress = validatorSmoothProgress,
             validatorVibrationEnabled = validatorVibrationEnabled,
             hapticFeedbackEnabled = hapticFeedbackEnabled,
+            hapticFeedbackStrength = hapticFeedbackStrength.coerceIn(1, 2),
             copyNextCodeWhenExpiring = copyNextCodeWhenExpiring,
             securityAnalysisAutoEnabled = securityAnalysisAutoEnabled,
             passwordDetailSecurityAnalysisEnabled = passwordDetailSecurityAnalysisEnabled,
@@ -4690,6 +4692,7 @@ class WebDavHelper(
                         pageAdjustmentBackup.validatorVibrationEnabled,
                     hapticFeedbackEnabled =
                         pageAdjustmentBackup.hapticFeedbackEnabled,
+                    hapticFeedbackStrength = pageAdjustmentBackup.hapticFeedbackStrength.coerceIn(1, 2),
                     copyNextCodeWhenExpiring =
                         pageAdjustmentBackup.copyNextCodeWhenExpiring,
                     securityAnalysisAutoEnabled =

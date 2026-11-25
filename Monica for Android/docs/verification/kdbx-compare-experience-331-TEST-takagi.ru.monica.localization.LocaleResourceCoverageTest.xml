@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuite name="takagi.ru.monica.localization.LocaleResourceCoverageTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-25T07:27:11.977Z" time="2.368">
+  <testcase name="theResourceContractCoversEveryAdvertisedLanguage" classname="takagi.ru.monica.localization.LocaleResourceCoverageTest" time="0.001" />
+  <testcase name="taiwanIncludesEveryCurrentResourceWithItsOriginalFormatContract" classname="takagi.ru.monica.localization.LocaleResourceCoverageTest" time="0.319" />
+  <testcase name="indonesianAndTurkishIncludeEveryCurrentResourceWithItsOriginalFormatContract" classname="takagi.ru.monica.localization.LocaleResourceCoverageTest" time="0.315" />
+  <testcase name="everyLocaleIncludesEveryTranslatableResourceAcrossAllModules" classname="takagi.ru.monica.localization.LocaleResourceCoverageTest" time="1.221" />
+  <testcase name="recentlyAddedFeatureMessagesHaveTranslationsInsteadOfEnglishCopies" classname="takagi.ru.monica.localization.LocaleResourceCoverageTest" time="0.512" />
+  </testsuite>

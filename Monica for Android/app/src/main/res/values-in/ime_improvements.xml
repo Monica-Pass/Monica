@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_scramble_pin_title">Mengacak tombol angka</string>
+    <string name="ime_scramble_pin_description">Kocok saat papan angka terbuka. Tombol tetap di tempatnya saat Anda mengetik.</string>
+    <string name="ime_hide_pin_preview_title">Sembunyikan pratinjau tombol angka</string>
+    <string name="ime_hide_pin_preview_description">Sembunyikan popup nomor dan sorotan tombol yang ditekan.</string>
+    <string name="ime_hide_keyboard">Sembunyikan papan ketik</string>
+    <string name="ime_switch_keyboard">Ganti metode masukan</string>
+    <string name="ime_fill_current_otp">Isi kode saat ini</string>
+    <string name="ime_otp_unavailable">Kode verifikasi saat ini tidak tersedia.</string>
+</resources>

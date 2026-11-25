@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_message_credentials_required">Masukkan nama akun dan kata sandi Anda</string>
+    <string name="steam_message_rsa_failed">Tidak dapat memperoleh kunci Steam RSA</string>
+    <string name="steam_message_rsa_incomplete">Steam mengembalikan data RSA yang tidak lengkap</string>
+    <string name="steam_message_password_encrypt">Tidak dapat mengenkripsi kata sandi Steam</string>
+    <string name="steam_message_login_request">Tidak dapat mengirim permintaan login Steam</string>
+    <string name="steam_message_login_failed">Gagal masuk Steam</string>
+    <string name="steam_message_login_rejected">Steam menolak login (EResult=%1$s, interval=%2$s)</string>
+    <string name="steam_message_login_incomplete">Steam mengembalikan respons login yang tidak lengkap. Verifikasi tambahan mungkin diperlukan.</string>
+    <string name="steam_message_session_invalid">Sesi login tidak valid</string>
+    <string name="steam_message_code_required">Masukkan kode verifikasi</string>
+    <string name="steam_message_session_expired">Sesi login telah berakhir. Mulai lagi.</string>
+    <string name="steam_message_verification_failed">Verifikasi Steam gagal</string>
+    <string name="steam_message_qr_create">Tidak dapat memulai login Steam QR</string>
+    <string name="steam_message_qr_failed">Steam QR gagal masuk</string>
+    <string name="steam_message_code_submit">Tidak dapat mengirimkan kode verifikasi Steam</string>
+    <string name="steam_message_session_needs_code">Sesi login ini memerlukan kode verifikasi</string>
+    <string name="steam_message_qr_expired">Sesi login QR telah berakhir. Mulai lagi.</string>
+    <string name="steam_message_not_qr">Sesi ini tidak menggunakan login QR</string>
+    <string name="steam_message_poll_failed">Tidak dapat memeriksa status login Steam</string>
+    <string name="steam_message_steamid_missing">Masuk ke Steam, tetapi SteamID tidak ada. Tidak dapat melanjutkan.</string>
+    <string name="steam_message_token_missing">Masuk ke Steam, tetapi tidak ada token akses yang diperoleh. Tidak dapat melanjutkan impor.</string>
+    <string name="steam_message_login_timeout">Waktu tunggu login Steam habis. Coba lagi nanti.</string>
+    <string name="steam_message_qr_parameters">Data sesi login QR tidak valid. Mulai lagi.</string>
+    <string name="steam_message_replacement_code">Akun ini sudah memiliki pengautentikasi. Masukkan kode untuk menggantinya.</string>
+    <string name="steam_message_steamid_invalid">SteamID tidak valid. Tidak dapat mengatur Steam Guard.</string>
+    <string name="steam_message_account_restricted">Akun Steam ini dibatasi dan tidak dapat menambahkan Steam Guard</string>
+    <string name="steam_message_rate_limited">Terlalu banyak permintaan Steam. Coba lagi nanti.</string>
+    <string name="steam_message_add_failed">Tidak dapat menambahkan Steam Guard</string>
+    <string name="steam_message_phone_required">Tautkan nomor telepon ke akun Steam ini sebelum menambahkan Steam Guard</string>
+    <string name="steam_message_response_missing">Steam mengembalikan data pengautentikasi yang tidak lengkap: %1$s hilang</string>
+    <string name="steam_message_activation_expired">Aktivasi Steam Guard telah berakhir. Masuk lagi.</string>
+    <string name="steam_message_activation_data">Data Steam Guard tidak lengkap. Tidak dapat membuat kode aktivasi.</string>
+    <string name="steam_message_activation_failed">Aktivasi Steam Guard gagal</string>
+    <string name="steam_message_activation_code_invalid">Kode aktivasi Steam tidak valid atau kedaluwarsa</string>
+    <string name="steam_message_activation_status">Aktivasi Steam Guard gagal (status=%1$d)</string>
+    <string name="steam_message_sequential_codes">Aktivasi Steam Guard gagal: tidak dapat menghasilkan kode berurutan yang dibutuhkan Steam</string>
+    <string name="steam_message_replace_start">Tidak dapat memulai penggantian pengautentikasi</string>
+    <string name="steam_message_replace_sms">Masukkan kode SMS untuk menggantikan pengautentikasi saat ini</string>
+    <string name="steam_message_replace_denied">Login Steam berhasil, tetapi transfer pengautentikasi ditolak (EResult=2). Akun tersebut mungkin tidak memiliki nomor telepon yang dapat digunakan atau transfer mungkin dibatasi. Impor maFile, atau tautkan nomor telepon di Steam dan coba lagi.</string>
+    <string name="steam_message_replace_forbidden">Login Steam berhasil, tetapi akses ke transfer autentikator ditolak (EResult=15). Impor maFile, atau masuk lagi nanti dan coba lagi.</string>
+    <string name="steam_message_replace_limited">Login Steam berhasil, namun transfer pengautentikasi untuk sementara dibatasi (EResult=84). Coba lagi nanti.</string>
+    <string name="steam_message_replace_result">Login Steam berhasil, tetapi transfer autentikator gagal (EResult=%1$d)</string>
+    <string name="steam_message_replace_session">Sesi penggantian tidak valid. Masuk lagi untuk mengimpor.</string>
+    <string name="steam_message_replace_failed">Penggantian autentikator gagal</string>
+    <string name="steam_message_session_state">Status sesi login tidak valid. Mulai lagi.</string>
+    <string name="steam_message_oauth_missing">Login Steam berhasil, tetapi tidak ada token OAuth yang dikembalikan. Tidak dapat melanjutkan impor.</string>
+    <string name="steam_message_captcha_unsupported">Steam memerlukan CAPTCHA yang tidak dapat diselesaikan oleh versi ini. Masuk sekali dengan klien Steam, lalu coba lagi.</string>
+    <string name="steam_message_enter_token_code">Masukkan kode Steam Guard Anda</string>
+    <string name="steam_message_enter_email_code">Masukkan kode yang dikirim melalui email</string>
+    <string name="steam_message_invalid_parameters">Steam menolak permintaan: parameter tidak valid</string>
+    <string name="steam_message_access_denied">Steam menolak akses</string>
+    <string name="steam_message_already_bound">Akun ini sudah memiliki autentikator Steam. Gunakan aliran penggantian.</string>
+    <string name="steam_message_operation_disallowed">Steam tidak mengizinkan tindakan ini dalam kondisi saat ini</string>
+    <string name="steam_message_confirmation_required">Steam memerlukan konfirmasi tambahan</string>
+    <string name="steam_message_code_invalid">Kode verifikasi Steam tidak valid atau kedaluwarsa</string>
+    <string name="steam_message_request_status">Permintaan Steam gagal (status=%1$d)</string>
+    <string name="steam_message_bad_credentials">Nama akun atau kata sandi Steam salah</string>
+    <string name="steam_message_duplicate_request">Steam melaporkan permintaan duplikat (EResult=29). Akun tersebut mungkin sudah memiliki pengautentikasi.</string>
+    <string name="steam_message_session_conflict">konflik sesi login Steam. Coba lagi nanti.</string>
+    <string name="steam_message_extra_verification">Steam memerlukan verifikasi login tambahan (EResult=63)</string>
+    <string name="steam_message_login_result">Login Steam gagal (EResult=%1$d)</string>
+    <string name="steam_message_token_code_invalid">Kode Steam Guard tidak valid atau kedaluwarsa</string>
+    <string name="steam_message_sms_email_code_invalid">Kode verifikasi SMS atau email tidak valid atau kedaluwarsa</string>
+</resources>

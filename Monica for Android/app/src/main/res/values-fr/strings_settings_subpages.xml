@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Portefeuille cartes &amp;</string>
+    <string name="customization_group_fields_icons">Champs Icônes &amp;</string>
+    <string name="customization_group_library">Listes de la bibliothèque &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Aucune action requise</string>
+    <string name="permission_action_request">Demander l\'autorisation</string>
+    <string name="permission_help_actions">Utilisez Demander l\'autorisation pour demander l\'accès à Android ou Ouvrir les paramètres pour gérer les services et les autorisations accordées.\n\nLes éléments marqués Aucune action requise ou Non disponible n\'ont pas de bouton d\'action. Activez uniquement ce dont vous avez besoin.\n\nLes statuts sont actualisés lorsque vous revenez des paramètres système. Vous pouvez également appuyer sur Actualiser l\'état pour vérifier à nouveau.</string>
+    <string name="permission_refresh_status">Actualiser l\'état</string>
+    <string name="permission_summary_granted">Autorisations %1$d accordées</string>
+    <string name="permission_summary_hint">Activez uniquement les autorisations nécessaires pour les fonctionnalités que vous utilisez. Certains sont accordés automatiquement par Android.</string>
+    <string name="permission_summary_title">Autorisations selon vos conditions</string>
+</resources>

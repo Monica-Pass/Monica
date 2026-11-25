@@ -130,7 +130,8 @@ internal sealed interface SecureStartupResult {
     data class Blocked(
         val failure: SecureStorageUnavailableException,
         val attempts: Int = 1,
-        val recoveryAvailable: Boolean = false
+        val recoveryAvailable: Boolean = false,
+        val recoveryMaterial: RecoveryMaterialState = RecoveryMaterialState.NOT_CHECKED
     ) : SecureStartupResult
 }
 
@@ -273,9 +274,11 @@ internal object SecureStorageStartup {
             // Authentication errors and missing key material require explicit user action.
             if (result.failure.reason != "UNREADABLE_SECURE_STORAGE" || attempt == 3) {
                 RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.RECOVERY_AVAILABLE)
-                val recoveryAvailable = LocalVaultRecovery(guard.context).available()
+                val recoveryMaterial = LocalVaultRecovery(guard.context).materialState()
                 guard.checkActive()
-                return result.copy(attempts = attempt, recoveryAvailable = recoveryAvailable)
+                return result.copy(attempts = attempt,
+                    recoveryAvailable = recoveryMaterial == RecoveryMaterialState.AVAILABLE,
+                    recoveryMaterial = recoveryMaterial)
             }
             RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.RETRY_DELAY)
             Thread.sleep(if (attempt == 1) 200L else 600L)
@@ -330,7 +333,8 @@ internal object SecureStorageStartup {
         }
     }
 
-    fun diagnostic(failure: SecureStorageUnavailableException, attempts: Int = 1): String = buildString {
+    fun diagnostic(failure: SecureStorageUnavailableException, attempts: Int = 1,
+        recoveryMaterial: RecoveryMaterialState = RecoveryMaterialState.NOT_CHECKED): String = buildString {
         appendLine("Monica ${takagi.ru.monica.BuildConfig.FULL_VERSION_NAME}")
         appendLine("Build: ${takagi.ru.monica.BuildConfig.GIT_SHA}")
         appendLine("Logcat tag: ${RuntimeDiagnostics.TAG}")
@@ -339,6 +343,7 @@ internal object SecureStorageStartup {
         appendLine("Code: ${failure.reason}")
         appendLine("Phase: ${failure.phase.name}")
         appendLine("Attempts: $attempts")
+        appendLine("Recovery material: ${recoveryMaterial.name}")
         // Types and numeric system codes only: never include exception messages, paths or values.
         val causes = generateSequence(failure.cause) { it.cause }.take(8).toList()
         appendLine("Causes: ${causes.joinToString(" -> ") { it.javaClass.simpleName }.ifEmpty { "none" }}")

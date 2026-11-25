@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_authenticator_search">名前またはアカウントを検索</string>
+    <string name="bitwarden_change_method">変更方法</string>
+    <string name="bitwarden_choose_method">確認方法を選択してください</string>
+    <string name="bitwarden_email_action_hint">コードを送信し、電子メールで受け取ったコードを入力します。</string>
+    <string name="bitwarden_totp_action_hint">Monica で既存のオーセンティケータを選択するか、その現在のコードを入力してください。</string>
+    <string name="bitwarden_totp_generation_failed">コードを生成できませんでした。この認証システムにチェックを入れるか、別の項目を選択してください。</string>
+    <string name="bitwarden_totp_picker_hint">アイテムを選択すると、送信せずに現在のコードが入力されます。</string>
+    <string name="bitwarden_two_factor_unsupported">この方法には対話型のサインイン フローが必要であり、ここのコードで完了することはできません。利用可能な認証システム、電子メール、または YubiKey OTP 方式を選択します。組織で SSO またはセキュリティ キーのみが必要な場合は、そのフローをサポートするクライアントを使用してください。</string>
+    <string name="bitwarden_two_factor_unsupported_short">このクライアントではサポートされていません</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_uploading">正在上傳</string>
+    <string name="transfer_downloading">正在下載</string>
+    <string name="transfer_task_busy">另一個資料工作正在執行，請等待完成。</string>
+    <string name="transfer_task_done">資料工作已完成</string>
+    <string name="transfer_task_failed">資料工作已停止或需要處理</string>
+    <string name="transfer_interrupted_check_result">上次工作被系統中斷。請先檢查已匯入資料或備份，再決定是否重試；未自動重新執行。</string>
+</resources>

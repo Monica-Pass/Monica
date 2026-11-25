@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_message_credentials_required">Hesap adınızı ve şifrenizi girin</string>
+    <string name="steam_message_rsa_failed">Steam RSA anahtarı alınamadı</string>
+    <string name="steam_message_rsa_incomplete">Steam eksik RSA verilerini döndürdü</string>
+    <string name="steam_message_password_encrypt">Steam şifresi şifrelenemedi</string>
+    <string name="steam_message_login_request">Steam oturum açma isteği gönderilemedi</string>
+    <string name="steam_message_login_failed">Steam oturum açma işlemi başarısız oldu</string>
+    <string name="steam_message_login_rejected">Steam oturum açmayı reddetti (EResult=%1$s, aralık=%2$s)</string>
+    <string name="steam_message_login_incomplete">Steam eksik bir oturum açma yanıtı döndürdü. Ekstra doğrulama gerekebilir.</string>
+    <string name="steam_message_session_invalid">Geçersiz oturum açma oturumu</string>
+    <string name="steam_message_code_required">Bir doğrulama kodu girin</string>
+    <string name="steam_message_session_expired">Oturum açma oturumunun süresi doldu. Tekrar başla.</string>
+    <string name="steam_message_verification_failed">Steam doğrulaması başarısız oldu</string>
+    <string name="steam_message_qr_create">Steam QR oturum açma işlemi başlatılamadı</string>
+    <string name="steam_message_qr_failed">Steam QR oturum açma işlemi başarısız oldu</string>
+    <string name="steam_message_code_submit">Steam doğrulama kodu gönderilemedi</string>
+    <string name="steam_message_session_needs_code">Bu oturum açma oturumu bir doğrulama kodu gerektiriyor</string>
+    <string name="steam_message_qr_expired">QR oturum açma oturumunun süresi doldu. Tekrar başla.</string>
+    <string name="steam_message_not_qr">Bu oturum QR oturum açma özelliğini kullanmıyor</string>
+    <string name="steam_message_poll_failed">Steam oturum açma durumu kontrol edilemedi</string>
+    <string name="steam_message_steamid_missing">Steam\'da oturum açıldı ancak SteamID eksik. Devam edilemiyor.</string>
+    <string name="steam_message_token_missing">Steam\'da oturum açıldı ancak erişim belirteci alınamadı. İçe aktarmaya devam edilemiyor.</string>
+    <string name="steam_message_login_timeout">Steam oturum açma işlemi beklenirken zaman aşımına uğradı. Daha sonra tekrar deneyin.</string>
+    <string name="steam_message_qr_parameters">Geçersiz QR oturum açma oturumu verileri. Tekrar başla.</string>
+    <string name="steam_message_replacement_code">Bu hesabın zaten bir kimlik doğrulayıcısı var. Değiştirmek için kodu girin.</string>
+    <string name="steam_message_steamid_invalid">Geçersiz SteamID. Steam Guard kurulamıyor.</string>
+    <string name="steam_message_account_restricted">Bu Steam hesabı kısıtlanmıştır ve Steam Guard eklenemez</string>
+    <string name="steam_message_rate_limited">Çok fazla Steam isteği. Daha sonra tekrar deneyin.</string>
+    <string name="steam_message_add_failed">Steam Guard eklenemedi</string>
+    <string name="steam_message_phone_required">Steam Guard\'yu eklemeden önce bu Steam hesabına bir telefon numarası bağlayın</string>
+    <string name="steam_message_response_missing">Steam eksik kimlik doğrulama verileri döndürdü: eksik %1$s</string>
+    <string name="steam_message_activation_expired">Steam Guard aktivasyonunun süresi doldu. Tekrar oturum açın.</string>
+    <string name="steam_message_activation_data">Steam Guard verileri eksik. Etkinleştirme kodu oluşturulamıyor.</string>
+    <string name="steam_message_activation_failed">Steam Guard aktivasyonu başarısız oldu</string>
+    <string name="steam_message_activation_code_invalid">Steam etkinleştirme kodu geçersiz veya süresi dolmuş</string>
+    <string name="steam_message_activation_status">Steam Guard etkinleştirmesi başarısız oldu (durum=%1$d)</string>
+    <string name="steam_message_sequential_codes">Steam Guard aktivasyonu başarısız oldu: Steam\'nun gerektirdiği ardışık kodları oluşturamadı</string>
+    <string name="steam_message_replace_start">Kimlik doğrulayıcının değiştirilmesi başlatılamadı</string>
+    <string name="steam_message_replace_sms">Geçerli kimlik doğrulayıcıyı değiştirmek için SMS kodunu girin</string>
+    <string name="steam_message_replace_denied">Steam oturum açma işlemi başarılı oldu, ancak kimlik doğrulayıcı aktarımı reddedildi (EResult=2). Hesabın kullanılabilir bir telefon numarası olmayabilir veya aktarım kısıtlanmış olabilir. Bir maFile\'ı içe aktarın veya Steam\'ya bir telefon numarası bağlayın ve tekrar deneyin.</string>
+    <string name="steam_message_replace_forbidden">Steam oturum açma işlemi başarılı oldu, ancak kimlik doğrulayıcı aktarımına erişim reddedildi (EResult=15). Bir maFile\'ı içe aktarın veya daha sonra tekrar oturum açıp yeniden deneyin.</string>
+    <string name="steam_message_replace_limited">Steam oturum açma işlemi başarılı oldu, ancak kimlik doğrulayıcı aktarımı geçici olarak sınırlandı (EResult=84). Daha sonra tekrar deneyin.</string>
+    <string name="steam_message_replace_result">Steam oturum açma işlemi başarılı oldu ancak kimlik doğrulayıcı aktarımı başarısız oldu (EResult=%1$d)</string>
+    <string name="steam_message_replace_session">Geçersiz değiştirme oturumu. İçe aktarmak için tekrar oturum açın.</string>
+    <string name="steam_message_replace_failed">Kimlik doğrulayıcının değiştirilmesi başarısız oldu</string>
+    <string name="steam_message_session_state">Geçersiz oturum açma oturumu durumu. Tekrar başla.</string>
+    <string name="steam_message_oauth_missing">Steam oturum açma işlemi başarılı oldu, ancak hiçbir OAuth belirteci döndürülmedi. İçe aktarmaya devam edilemiyor.</string>
+    <string name="steam_message_captcha_unsupported">Steam, bu sürümün tamamlayamayacağı bir CAPTCHA gerektiriyor. Steam istemcisiyle bir kez oturum açın ve ardından yeniden deneyin.</string>
+    <string name="steam_message_enter_token_code">Steam Guard kodunuzu girin</string>
+    <string name="steam_message_enter_email_code">E-postayla gönderilen kodu girin</string>
+    <string name="steam_message_invalid_parameters">Steam isteği reddetti: geçersiz parametreler</string>
+    <string name="steam_message_access_denied">Steam erişimi reddedildi</string>
+    <string name="steam_message_already_bound">Bu hesapta zaten bir Steam kimlik doğrulayıcı var. Değiştirme akışını kullanın.</string>
+    <string name="steam_message_operation_disallowed">Steam mevcut durumda bu eyleme izin vermiyor</string>
+    <string name="steam_message_confirmation_required">Steam ek onay gerektiriyor</string>
+    <string name="steam_message_code_invalid">Steam doğrulama kodu geçersiz veya süresi dolmuş</string>
+    <string name="steam_message_request_status">Steam isteği başarısız oldu (durum=%1$d)</string>
+    <string name="steam_message_bad_credentials">Steam hesap adı veya şifresi yanlış</string>
+    <string name="steam_message_duplicate_request">Steam yinelenen bir istek bildirdi (EResult=29). Hesabın zaten bir kimlik doğrulayıcısı olabilir.</string>
+    <string name="steam_message_session_conflict">Steam oturum açma oturumu çakışması. Daha sonra tekrar deneyin.</string>
+    <string name="steam_message_extra_verification">Steam ekstra giriş doğrulaması gerektiriyor (EResult=63)</string>
+    <string name="steam_message_login_result">Steam oturum açma işlemi başarısız oldu (EResult=%1$d)</string>
+    <string name="steam_message_token_code_invalid">Steam Guard kodu geçersiz veya süresi dolmuş</string>
+    <string name="steam_message_sms_email_code_invalid">SMS veya e-posta doğrulama kodu geçersiz veya süresi dolmuş</string>
+</resources>

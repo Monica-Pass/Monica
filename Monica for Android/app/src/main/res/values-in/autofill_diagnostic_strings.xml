@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_compat_android_old">IsiOtomatis memerlukan Android 8.0 atau lebih baru</string>
+    <string name="autofill_compat_huawei">Perangkat Huawei mungkin membatasi pengisian otomatis pada Android 10 atau lebih baru</string>
+    <string name="autofill_compat_xiaomi">Perangkat Xiaomi mungkin memerlukan izin pengisian otomatis di Keamanan MIUI</string>
+    <string name="autofill_compat_oppo">Perangkat OPPO/Realme mungkin memerlukan izin pengisian otomatis dalam pengaturan izin</string>
+    <string name="autofill_compat_vivo">Perangkat Vivo mungkin memerlukan izin pengisian otomatis di iManager</string>
+    <string name="autofill_compat_android12_rom">IsiOtomatis mungkin tidak dapat diandalkan pada beberapa ROM Android 12 karena masalah kompatibilitas sistem</string>
+    <string name="autofill_compat_inline">Perangkat ini tidak mendukung saran keyboard. IsiOtomatis akan menggunakan dropdown.</string>
+    <string name="autofill_compat_emulator">IsiOtomatis mungkin tidak dapat diandalkan di emulator ini</string>
+    <string name="autofill_compat_unsupported">Perangkat ini tidak mendukung kerangka isi otomatis</string>
+    <string name="autofill_compat_check_failed">Tidak dapat menyelesaikan pemeriksaan kompatibilitas</string>
+    <string name="autofill_check_manifest">Periksa apakah MonicaAutofillServiceNg dideklarasikan di AndroidManifest.xml</string>
+    <string name="autofill_check_permission_manifest">Layanan harus mendeklarasikan BIND_AUTOFILL_SERVICE dan filter maksud isi otomatis</string>
+    <string name="autofill_check_enable_system">Pilih Monica sebagai layanan pengisian otomatis di pengaturan sistem</string>
+    <string name="autofill_check_path_system">Setelan → Sistem → Bahasa &amp; input → Layanan isi otomatis</string>
+    <string name="autofill_check_path_xiaomi">Xiaomi: Setelan → Setelan tambahan → Bahasa &amp; input → Layanan isi otomatis</string>
+    <string name="autofill_check_miui_permission">Izinkan juga izin yang diperlukan di Keamanan MIUI</string>
+    <string name="autofill_check_path_huawei">Huawei: Setelan → Sistem &amp; pembaruan → Bahasa &amp; input → Layanan isi otomatis</string>
+    <string name="autofill_check_path_oppo">OPPO/Realme: Setelan → Setelan tambahan → Keyboard &amp; metode input → Layanan isi otomatis</string>
+    <string name="autofill_check_path_vivo">Vivo: Pengaturan → Pengaturan lainnya → Metode input → Layanan IsiOtomatis</string>
+    <string name="autofill_check_path_samsung">Samsung: Setelan → Manajemen umum → Bahasa &amp; input → Layanan isi otomatis</string>
+    <string name="autofill_check_enable_app">Aktifkan isi otomatis di pengaturan Monica</string>
+    <string name="autofill_check_app_permissions">Periksa apakah Monica memiliki izin aplikasi yang diperlukan</string>
+    <string name="autofill_check_issue_count">Masalah kompatibilitas: %1$d. Lihat detailnya di bawah ini.</string>
+    <string name="autofill_check_xiaomi_permission">Xiaomi: Keamanan → Kelola aplikasi → Monica → Izin → Izinkan isi otomatis</string>
+    <string name="autofill_check_huawei_autostart">Huawei: Anda mungkin perlu mengizinkan Monica diluncurkan secara otomatis di Pengelola Ponsel</string>
+    <string name="autofill_check_oppo_permission">OPPO/Realme: Pengaturan → Manajemen aplikasi → Monica → Izin → Izinkan isi otomatis</string>
+    <string name="autofill_check_vivo_permission">Vivo: iManager → Manajemen aplikasi → Manajemen izin → Monica → Izinkan pengisian otomatis</string>
+    <string name="autofill_check_background">Nonaktifkan pembatasan baterai untuk Monica dan izinkan peluncuran otomatis dan aktivitas latar belakang</string>
+    <string name="autofill_check_trigger_manually">Jika pengisian otomatis tetap tidak dapat diandalkan, picu secara manual dari kolom login untuk memulai sesi</string>
+    <string name="autofill_check_configured">Layanan dikonfigurasi dengan benar. Jika masalah terus berlanjut, mulai ulang Monica.</string>
+    <string name="autofill_check_view_logs">Gunakan alat pemecahan masalah untuk melihat log terperinci</string>
+    <string name="autofill_check_restart">Mulai ulang Monica setelah menerapkan perubahan ini</string>
+    <string name="autofill_check_recommendations_failed">Tidak dapat menghasilkan saran. Hubungi dukungan.</string>
+    <string name="autofill_report_parsing">Pengenalan lapangan</string>
+    <string name="autofill_report_matching">Pencocokan kata sandi</string>
+    <string name="autofill_report_building">Konstruksi respons</string>
+    <string name="autofill_report_performance">Kinerja</string>
+    <string name="autofill_report_parsing_failures">Kegagalan pengenalan lapangan: %1$d</string>
+    <string name="autofill_report_matching_failures">Permintaan tanpa kata sandi yang cocok: %1$d</string>
+    <string name="autofill_report_building_failures">Kegagalan konstruksi respons: %1$d</string>
+    <string name="autofill_report_slow">Waktu respons rata-rata terlalu tinggi: %1$d ms</string>
+    <string name="autofill_report_improve_recognition">Meningkatkan pengenalan lapangan</string>
+    <string name="autofill_report_recognition_hint">Beberapa bidang aplikasi tidak dapat dikenali. Periksa pengaturan parser bidang.</string>
+    <string name="autofill_report_add_passwords">Tambahkan entri kata sandi</string>
+    <string name="autofill_report_add_passwords_hint">Tidak ditemukan kata sandi yang cocok. Tambahkan entri kata sandi untuk aplikasi ini.</string>
+    <string name="autofill_report_integrity">Periksa kelengkapan data</string>
+    <string name="autofill_report_integrity_hint">Respons mungkin gagal jika data tidak lengkap. Periksa entri kata sandi.</string>
+    <string name="autofill_report_optimize">Tingkatkan kinerja</string>
+    <string name="autofill_report_optimize_hint">Responnya lambat. Coba bersihkan cache atau kurangi jumlah entri kata sandi.</string>
+    <string name="autofill_report_title">=== Diagnostik isi otomatis Monica ===</string>
+    <string name="autofill_report_exported_at">Diekspor pada: %1$s</string>
+    <string name="autofill_report_device">Informasi perangkat</string>
+    <string name="autofill_report_manufacturer">Pabrikan: %1$s</string>
+    <string name="autofill_report_model">Model: %1$s</string>
+    <string name="autofill_report_android">Android: %1$s (API %2$d)</string>
+    <string name="autofill_report_rom">ROM: %1$s</string>
+    <string name="autofill_report_inline">Saran keyboard yang didukung: %1$s</string>
+    <string name="autofill_report_statistics">Statistik</string>
+    <string name="autofill_report_log_details">Detail log</string>
+    <string name="autofill_report_end">=== Akhir log ===</string>
+</resources>

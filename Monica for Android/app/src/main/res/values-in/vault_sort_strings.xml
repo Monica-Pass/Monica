@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_sort">Urutkan berdasarkan</string>
+    <string name="vault_sort_scope">Berlaku untuk semua item, folder, dan hasil pencarian</string>
+    <string name="vault_sort_title_asc">Nama: A → Z</string>
+    <string name="vault_sort_title_desc">Nama: Z → A</string>
+    <string name="vault_sort_created_desc">Dibuat: terbaru dulu</string>
+    <string name="vault_sort_created_asc">Dibuat: yang terlama terlebih dahulu</string>
+    <string name="vault_sort_updated_desc">Diperbarui: terbaru terlebih dahulu</string>
+    <string name="vault_sort_updated_asc">Diperbarui: yang terlama terlebih dahulu</string>
+    <string name="vault_sort_unknown_date">Tanggal tidak diketahui</string>
+</resources>

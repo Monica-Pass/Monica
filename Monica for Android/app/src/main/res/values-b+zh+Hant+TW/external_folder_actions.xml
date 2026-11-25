@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">刪除資料夾“%1$s”及其包含的內容？請確認後繼續。</string>
+    <string name="external_folder_delete_keep_items">刪除資料夾“%1$s”？其中的條目會保留，不再歸屬此資料夾。</string>
+</resources>

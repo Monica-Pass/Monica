@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Những mục này không thể sao lưu được. Dữ liệu cục bộ và các bản sao lưu từ xa hiện có không thay đổi.</string>
+    <string name="passkey_backup_problem_title">Sao lưu cần chú ý</string>
+    <string name="passkey_device_bound_solution">Đăng ký passkey mới, có thể xuất trên dịch vụ và xác minh nó hoạt động trước khi gỡ bỏ khóa cũ. Bạn cũng có thể bỏ qua mục này bây giờ.</string>
+    <string name="passkey_partial_replace_blocked">Bản sao lưu này bỏ qua một số Passkeys. Sử dụng khôi phục hợp nhất; thay thế dữ liệu cục bộ bị chặn.</string>
+    <string name="passkey_partial_requires_encryption">Các bản sao lưu một phần bỏ qua Passkeys vẫn phải được mã hóa.</string>
+    <string name="passkey_partial_restore_warning">Bản sao lưu một phần này bỏ qua Passkeys. Khôi phục việc hợp nhất với các bản ghi cục bộ hiện có.</string>
+    <string name="passkey_partial_saved">Đã lưu bản sao lưu một phần</string>
+    <string name="passkey_partial_saved_detail">Passkeys bên dưới không được bao gồm. Hồ sơ cục bộ của họ và các bản sao lưu từ xa hiện có được giữ lại. Thời gian sao lưu toàn bộ lần cuối không thay đổi.</string>
+    <string name="passkey_problem_close">Đóng</string>
+    <string name="passkey_retry_full_backup">Thử lại bản sao lưu đầy đủ</string>
+    <string name="passkey_skip_and_backup">Bỏ qua %1$d và sao lưu</string>
+    <string name="passkey_skip_explanation">Việc bỏ qua chỉ ảnh hưởng đến bản sao lưu này và không xóa các mục cục bộ. Một bản sao lưu một phần riêng biệt sẽ được lưu lại; bản sao lưu từ xa hiện có được giữ lại. Nó không thay thế một bản sao lưu đầy đủ.</string>
+</resources>

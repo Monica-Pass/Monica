@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_title">Sinkronisasi otomatis</string>
+    <string name="mdbx_auto_sync_manual_hint">Mati · Sinkronkan secara manual bila diperlukan</string>
+    <string name="mdbx_auto_sync_enabled_hint">Unggah saat disimpan; periksa pembaruan saat tidak terkunci di latar depan</string>
+</resources>

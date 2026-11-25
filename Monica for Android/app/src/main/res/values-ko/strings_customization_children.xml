@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">사전 설정된 필드를 모두 제거하시겠습니까? 기존에 저장된 항목은 해당 필드를 유지합니다.</string>
+    <string name="customization_drag_handle">%1$s 재주문</string>
+    <string name="customization_filters_navigation">필터 및 탐색</string>
+    <string name="customization_live_preview">실시간 미리보기</string>
+</resources>

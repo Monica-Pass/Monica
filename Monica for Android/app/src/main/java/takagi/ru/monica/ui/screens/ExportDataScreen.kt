@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.bitwarden.export.*
 import takagi.ru.monica.security.SessionManager
 import androidx.lifecycle.Lifecycle
@@ -544,7 +546,8 @@ fun ExportDataScreen(
 @Composable
 private fun ExportScopeToggle(title: String, checked: Boolean, index: Int, count: Int,
     enabled: Boolean = true, onChange: (Boolean) -> Unit) {
-    Surface(onClick = { onChange(!checked) }, enabled = enabled,
+    val toggle = takagi.ru.monica.ui.haptic.switchCheckedChange(checked, enabled, onCheckedChange = onChange)
+    Surface(onClick = { toggle(!checked) }, enabled = enabled,
         shape = RoundedCornerShape(topStart = if (index == 0) 24.dp else 4.dp, topEnd = if (index == 0) 24.dp else 4.dp,
             bottomStart = if (index == count - 1) 24.dp else 4.dp, bottomEnd = if (index == count - 1) 24.dp else 4.dp),
         color = MaterialTheme.colorScheme.surfaceContainerLow) {

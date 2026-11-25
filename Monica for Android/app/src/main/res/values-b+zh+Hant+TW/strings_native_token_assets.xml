@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_limit">每次儲存新增或移動的檔案合計不超過 64 MiB，每個權杖最多 128 個附件。</string>
+    <string name="native_token_assets_error">未能完整讀取或儲存所有檔案，原有內容已保留。請檢查檔案權限和大小後重試。</string>
+    <string name="native_token_backup_needs_files">此資料庫含有帶檔案的 API 權杖。請包含圖片和附件，以匯出完整備份。</string>
+    <string name="native_token_backup_limit">單個 ZIP 備份內原生 API 權杖的檔案合計不能超過 64 MiB。更大的保險庫請使用原生資料庫備份。</string>
+    <string name="native_token_kdbx_files_unsupported">帶檔案的 API 權杖請使用加密 Monica ZIP 或原生資料庫備份。KDBX 匯出支援不帶檔案的 API 權杖。</string>
+</resources>

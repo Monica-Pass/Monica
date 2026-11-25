@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Geçici erişim noktası</string>
+    <string name="nearby_hotspot_create_hint">Cihazların paylaşılan Wi-Fi\'si olmadığında bağlanın.</string>
+    <string name="nearby_hotspot_title">Geçici erişim noktası</string>
+    <string name="nearby_hotspot_help">Bu kodun geçerliliği 10 dakika içinde dolacaktır. Bu paneli kapatmak, kilitlemek veya Monica\'dan ayrılmak, erişim noktasını durdurur. Eşleştirme hâlâ doğrulandı.</string>
+    <string name="nearby_hotspot_active">Geçici erişim noktası etkin</string>
+    <string name="nearby_hotspot_stop">Geçici erişim noktasını sonlandır</string>
+    <string name="nearby_hotspot_starting">Erişim noktası oluşturuluyor ve kod eşleniyor…</string>
+    <string name="nearby_hotspot_join_title">Bu erişim noktasına bağlanılsın mı?</string>
+    <string name="nearby_hotspot_join_hint">Android\'nun onayıyla %1$s\'ya katılın. Monica daha sonra eşlenen cihazı doğrular.</string>
+    <string name="nearby_hotspot_connecting">Wi-Fi bağlantısı bekleniyor…</string>
+    <string name="nearby_hotspot_failure">Android bağlantıyı tamamlayamadı. Manuel olarak bağlanıp kodu tekrar tarayabilirsiniz.</string>
+    <string name="nearby_hotspot_permissions">Android tarafından bir ortak erişim noktası oluşturmak veya bu noktaya katılmak için istenen Wi-Fi iznini verin.</string>
+    <string name="nearby_hotspot_unsupported">Otomatik erişim noktası bağlantısı kullanılamıyor. Manuel olarak bağlanın ve tekrar tarayın.</string>
+    <string name="nearby_hotspot_manual">Zaten bağlısınız, devam edin</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi ayarları</string>
+    <string name="nearby_hotspot_scan_hint">Monica eşleştirmesini veya geçici erişim noktası kodunu tarayın.</string>
+    <string name="nearby_hotspot_connect">Bağlan</string>
+    <string name="nearby_hotspot_copy_password">Erişim noktası şifresini kopyala</string>
+    <string name="nearby_hotspot_interrupted">Monica ön plandan ayrıldığında bağlantı iptal edildi. Erişim noktasına manuel olarak bağlanın, ardından kodu tekrar tarayın.</string>
+</resources>

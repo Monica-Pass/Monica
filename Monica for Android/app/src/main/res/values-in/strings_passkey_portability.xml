@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Penggunaan lintas perangkat</string>
+    <string name="passkey_portability_checking">Memeriksa…</string>
+    <string name="passkey_portability_exportable">Kunci dapat diekspor</string>
+    <string name="passkey_portability_local_only">Hanya lokal</string>
+    <string name="passkey_portability_key_unavailable">Kunci tidak tersedia</string>
+    <string name="passkey_portability_invalid">Metadata yang bertentangan</string>
+    <string name="passkey_portability_unknown">Tidak terverifikasi</string>
+    <string name="passkey_portability_restricted">Transfer terbatas</string>
+    <string name="passkey_portability_exportable_hint">Kuncinya dapat diekspor dalam format terenkripsi yang didukung. Tujuan harus mempertahankan properti ID, kunci, dan registrasinya; kompatibilitas website masih tergantung pada klien tujuan.</string>
+    <string name="passkey_portability_local_hint">Kunci pribadi terikat pada perangkat ini dan tidak dapat diekspor. Menyalin database saja tidak akan mengaktifkan proses masuk di perangkat lain.</string>
+    <string name="passkey_portability_missing_hint">Tidak ditemukan kunci pribadi yang dapat digunakan pada perangkat ini. Catatan ini saja tidak dapat masuk di sini atau di perangkat lain.</string>
+    <string name="passkey_portability_backup_hint">Kredensial ini ditandai sebagai tidak memenuhi syarat pencadangan. Hanya destinasi yang mempertahankan properti tersebut yang dapat menggunakannya; konversi ke Bitwarden atau pertukaran kredensial diblokir.</string>
+    <string name="passkey_portability_counter_hint">Kredensial ini memiliki riwayat penghitung tanda tangan bukan nol. Monica menggunakan penghitung nol; penggunaan lintas perangkat mungkin ditolak oleh situs web yang memeriksa penghitung sebelumnya.</string>
+    <string name="passkey_portability_algorithm_hint">Tujuan harus mendukung algoritma kunci yang sama. Transfer Bitwarden saat ini hanya mendukung ES256.</string>
+    <string name="passkey_portability_invalid_hint">Properti cadangan bertentangan. Penandatanganan tidak boleh secara diam-diam mengubah properti terdaftar; simpan kredensial sumber untuk pemulihan.</string>
+    <string name="passkey_portability_unknown_hint">Kemampuan kunci tidak dapat diperiksa. Buka kunci database sumber dan coba lagi.</string>
+</resources>

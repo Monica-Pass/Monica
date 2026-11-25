@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_title">圖源訂閱</string>
+    <string name="image_sources_icons">圖示</string>
+    <string name="image_sources_cards">卡面</string>
+    <string name="image_sources_add">新增訂閱</string>
+    <string name="image_sources_refresh">刷新</string>
+    <string name="image_sources_remove">取消訂閱</string>
+    <string name="image_sources_remove_hint">取消此訂閱？項目中已經使用的圖示和卡面會保留。</string>
+    <string name="image_sources_name">名稱（可選）</string>
+    <string name="image_sources_url">訂閱或圖片鏈接</string>
+    <string name="image_sources_formats">支援 HTTPS JSON 圖包或 PNG、JPEG、WebP 圖片直鏈。</string>
+    <string name="image_sources_empty">新增你的第一個圖源</string>
+    <string name="image_sources_count">%1$d 張圖片</string>
+    <string name="image_sources_error">讀取或儲存失敗，請檢查圖源、格式和網路後重試。已有訂閱及項目圖片會保留。</string>
+    <string name="image_sources_search">搜索圖片</string>
+    <string name="image_sources_retry">重試</string>
+    <string name="image_sources_options">訂閱選項</string>
+    <string name="image_sources_no_results">沒有匹配的圖片</string>
+    <string name="image_sources_use_hint">在自定義圖示或卡面編輯器中選用圖片。</string>
+    <string name="image_sources_choose">從訂閱中選擇</string>
+    <string name="image_sources_settings_hint">管理圖示包和卡面圖源</string>
+</resources>

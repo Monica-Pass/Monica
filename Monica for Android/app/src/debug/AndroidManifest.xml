@@ -8,6 +8,7 @@
         <activity android:name="takagi.ru.monica.suggestions.CommonInfoTestActivity" android:exported="false" />
         <activity android:name="takagi.ru.monica.credentialexchange.CxfImportTestActivity" android:exported="false" />
         <activity android:name="takagi.ru.monica.ui.screens.DefaultManagerTestActivity" android:exported="false" />
+        <activity android:name="takagi.ru.monica.utils.BiometricPromptTestActivity" android:exported="false" />
         <activity
             android:name="takagi.ru.monica.ui.screens.MdbxSyncOptionsTestActivity"
             android:exported="false" />

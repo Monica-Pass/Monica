@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Fotocopiatrice</string>
+    <string name="embedded_copy_document">Copia il documento</string>
+    <string name="embedded_copy_failed">La copia del contenuto è incompleta</string>
+    <string name="embedded_copy_failed_message">%1$s non può essere copiato completamente. La tua fonte e la bozza verranno mantenute. Verifica che il database di origine sia sbloccato e che gli allegati siano disponibili, quindi riprova.</string>
+    <string name="embedded_copy_independent">Copia indipendente · Allegati %1$d</string>
+    <string name="embedded_copy_note">Copia nota</string>
+    <string name="embedded_copy_working">Copia del contenuto completo…</string>
+    <string name="password_content_document">"Documento di identità"</string>
+    <string name="password_content_document_description">Campi identità, faccia della carta, foto e allegati</string>
+</resources>

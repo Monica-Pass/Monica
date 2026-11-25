@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="recovery_protection_title">Perlindungan pemulihan</string>
+    <string name="recovery_protection_summary">Verifikasi pemulihan menggunakan kata sandi utama asli Anda</string>
+    <string name="recovery_protection_verified">Diverifikasi dalam sesi ini di %1$s</string>
+    <string name="recovery_protection_not_ready">Perlindungan pemulihan tidak dapat diverifikasi. Data yang ada disimpan. Coba lagi atau buat cadangan terenkripsi.</string>
+    <string name="recovery_protection_needs_password">Masukkan kata sandi utama Anda untuk mempersiapkan dan memverifikasi pemulihan</string>
+    <string name="recovery_protection_explanation">Verifikasi bahwa kata sandi utama asli Anda dapat membuka materi pemulihan yang independen. Proses ini tidak mengganti brankas atau kunci perangkat Anda. Instalasi lama yang masih berfungsi dengan baik dapat menyiapkan materi pemulihan selama verifikasi.</string>
+    <string name="recovery_protection_limits">Simpan cadangan terenkripsi yang independen. Verifikasi berlaku untuk materi dan sesi saat ini; verifikasi tidak menjamin integritas berkas di masa mendatang atau pemulihan kredensial yang terikat pada perangkat keras. Penguncian atau perubahan materi mengharuskan verifikasi ulang.</string>
+    <string name="recovery_protection_verify">Verifikasi perlindungan pemulihan</string>
+    <string name="recovery_protection_checking">Memverifikasi perlindungan pemulihan…</string>
+    <string name="recovery_material_available">Materi pemulihan ditemukan. Pemulihan masih memerlukan verifikasi dengan kata sandi utama asli.</string>
+    <string name="recovery_material_missing">Tidak ada materi pemulihan independen yang ditemukan. Pulihkan lingkungan kunci asli atau verifikasi cadangan terenkripsi di instalasi lain.</string>
+    <string name="recovery_material_reenroll">Pemulihan harus disiapkan lagi setelah perubahan kredensial. Pulihkan akses normal, lalu verifikasi dengan kata sandi utama Anda saat ini.</string>
+    <string name="recovery_material_revoked">Materi pemulihan ini secara eksplisit dicabut dan tidak dapat digunakan. Simpan file aslinya.</string>
+    <string name="recovery_material_unsupported">Format pemulihan ini tidak didukung oleh versi ini. Simpan file dan gunakan versi Monica yang kompatibel.</string>
+    <string name="recovery_material_invalid">Materi pemulihan tidak lengkap atau tidak valid. Simpan berkas asli; jangan menggantinya dengan berkas kosong atau materi dari brankas lain.</string>
+    <string name="recovery_material_unreadable">Materi pemulihan tidak dapat dibaca. Simpan file, buka kunci perangkat, dan coba lagi.</string>
+    <string name="recovery_material_unchecked">Materi pemulihan belum diperiksa. Coba lagi setelah perangkat dibuka kuncinya dan pengoperasian saat ini selesai.</string>
+    <string name="secure_startup_key_missing">Layanan kunci sistem saat ini tidak dapat menemukan kunci asli. Ini saja tidak membuktikan bahwa kunci tersebut telah dihapus secara permanen.</string>
+    <string name="secure_startup_wait">Sistem belum siap atau operasi aman belum selesai. Buka kunci perangkat dan coba lagi nanti.</string>
+    <string name="secure_startup_inconsistent">Pengaturan terenkripsi dan status pemulihan tidak cocok. Simpan file aslinya; jangan hapus penanda pemulihan untuk melewati pemeriksaan ini.</string>
+    <string name="secure_startup_environment_omk">Jika masalah ini muncul setelah mengganti OMK atau modul kunci lain, pulihkan lingkungan kunci yang digunakan saat membuat brankas ini. Menghapus Monica dari cakupan yang baru ditambahkan mungkin membantu, tetapi langkah ini tidak sesuai untuk semua brankas. Pertahankan konfigurasi dan kunci modul. Jangan memasang ulang modul atau mereset seed-nya untuk mencoba-coba.</string>
+</resources>

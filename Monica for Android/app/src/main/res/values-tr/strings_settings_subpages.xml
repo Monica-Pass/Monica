@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="customization_group_library">Kitaplık ve listeler</string>
+    <string name="customization_group_cards">Kartlar ve cüzdan</string>
+    <string name="customization_group_fields_icons">Alanlar ve simgeler</string>
+    <string name="permission_summary_title">Şartlarınıza göre izinler</string>
+    <string name="permission_summary_hint">Yalnızca kullandığınız özellikler için gereken izinleri etkinleştirin. Bazıları Android tarafından otomatik olarak verilir.</string>
+    <string name="permission_summary_granted">%1$d izinleri verildi</string>
+    <string name="permission_refresh_status">Durumu yenile</string>
+    <string name="permission_action_request">İzin iste</string>
+    <string name="permission_action_none">Herhangi bir işlem yapılmasına gerek yok</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_help_actions">Android\'dan erişim istemek için İzin iste seçeneğini kullanın veya hizmetleri ve verilen izinleri yönetmek için Ayarları aç seçeneğini kullanın.\n\nEylem gerekmiyor veya Kullanılamaz olarak işaretlenen öğelerde eylem düğmesi yoktur. Yalnızca ihtiyacınız olanı etkinleştirin.\n\nSistem ayarlarından döndüğünüzde durumlar yenilenir. Tekrar kontrol etmek için Durumu yenile\'ye de dokunabilirsiniz.</string>
+</resources>

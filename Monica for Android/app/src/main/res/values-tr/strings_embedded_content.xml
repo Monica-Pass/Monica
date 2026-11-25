@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_working">İçeriğin tamamı kopyalanıyor…</string>
+    <string name="embedded_copy_failed">İçerik kopyası eksik</string>
+    <string name="embedded_copy_failed_message">%1$s tamamen kopyalanamadı. Kaynağınız ve taslağınız korunur. Kaynak veritabanının kilidinin açık olduğundan ve eklerin mevcut olduğundan emin olun ve ardından yeniden deneyin.</string>
+    <string name="embedded_copy_note">Notu kopyala</string>
+    <string name="embedded_copy_card">Kartı kopyala</string>
+    <string name="embedded_copy_independent">Bağımsız kopya · %1$d eklentileri</string>
+    <string name="embedded_copy_document">Belgeyi kopyala</string>
+    <string name="password_content_document">Kimlik belgesi</string>
+    <string name="password_content_document_description">Kimlik alanları, kart yüzü, fotoğraflar ve ekler</string>
+</resources>

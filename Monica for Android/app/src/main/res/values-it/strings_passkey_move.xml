@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">La modalità di archiviazione o la chiave privata non soddisfa i requisiti di migrazione Bitwarden. Sblocca Monica e riprova oppure scegli un altro caveau. Le chiavi associate al dispositivo non possono essere esportate; conservali sul dispositivo originale o registra un nuovo passkey al servizio.</string>
+    <string name="passkey_move_bound_reason">Questo passkey è collegato all\'immissione di una password e non può essere spostato separatamente. Spostare prima la voce della password collegata o scollegare passkey.</string>
+    <string name="passkey_move_cleanup_reason">La destinazione è stata salvata, ma la pulizia dell\'origine non è stata completata. Le copie possono rimanere in entrambi i depositi. Controlla la destinazione e il deposito di origine o lo stato della sincronizzazione prima di continuare; non ripetere la mossa alla cieca.</string>
+    <string name="passkey_move_conflict_reason">Il database KeePass di destinazione contiene già la stessa credenziale passkey. Non è stato sovrascritto nulla. Controlla la voce esistente o scegli un altro database.</string>
+    <string name="passkey_move_reference_reason">Questo elemento è solo un riferimento e non ha una chiave privata che possa essere spostata separatamente. Utilizza l\'app o il vault originale che contiene l\'attuale passkey.</string>
+    <string name="passkey_move_result_summary">Completato %1$d; necessita di attenzione %2$d</string>
+    <string name="passkey_move_result_title">Sposta risultato</string>
+    <string name="passkey_move_success_count">Elementi %1$d spostati</string>
+    <string name="passkey_move_unnamed_account">Account senza nome</string>
+    <string name="passkey_move_update_reason">Lo spostamento non è stato completato e non è stato possibile determinarne la causa esatta. Verificare che gli archivi di origine e di destinazione siano sbloccati e scrivibili, con spazio libero sufficiente. Ispezionare entrambi i depositi prima di riprovare; non eliminare la fonte.</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_message_bitwarden_unavailable">Bitwarden kullanılamıyor</string>
+    <string name="entry_message_unsupported_type">Bu işlem bu öğe türünü desteklemiyor</string>
+    <string name="entry_message_ownership_conflict">Bu öğeyi Monica\'ya taşımadan önce çakışan depolama bağlantılarını çözün</string>
+    <string name="entry_message_local_copy_failed">Monica\'da yerel bir kopya oluşturulamadı</string>
+    <string name="entry_message_attachments_incomplete">Eklerin tümü kopyalanmadı</string>
+    <string name="entry_message_bitwarden_sync_id_missing">Bitwarden öğesinin senkronizasyon kimliği yok</string>
+    <string name="entry_message_keepass_source_delete_failed">Orijinal KeePass öğesi silinemedi</string>
+    <string name="entry_message_source_delete_failed">Orijinal öğe silinemedi</string>
+    <string name="entry_message_storage_save_failed">Seçilen konuma kaydedilemedi</string>
+    <string name="entry_message_from_password">Şifreden: %1$s</string>
+    <string name="entry_message_passkey_android_required">Tam Geçiş Anahtarı desteği Android 14 veya üzerini gerektirir. Bu cihaz: %1$s</string>
+    <string name="entry_message_passkey_save_failed">Şifre kaydedilemedi: %1$s</string>
+    <string name="entry_message_passkey_missing">Şifre bulunamadı</string>
+    <string name="entry_message_passkey_update_failed">Şifre güncellenemedi: %1$s</string>
+    <string name="entry_message_passkey_ownership_failed">MDBX Geçiş Anahtarı bağlaması güncellenemedi: %1$s</string>
+    <string name="entry_message_passkey_binding_failed">Bağlama güncellenemedi: %1$s</string>
+    <string name="entry_message_passkey_usage_failed">Kullanım geçmişi güncellenemedi: %1$s</string>
+    <string name="entry_message_passkey_delete_failed">Şifre silinemedi: %1$s</string>
+    <string name="entry_message_category_path_invalid">Geçersiz klasör yolu</string>
+    <string name="entry_message_category_move_into_self">Bir klasör kendisine veya alt klasörlerinden birine taşınamaz</string>
+    <string name="entry_message_category_missing">Klasör bulunamadı</string>
+    <string name="entry_message_category_exists">Hedefte bu ada sahip bir klasör zaten mevcut</string>
+    <string name="entry_message_category_move_conflict">Taşıma, mevcut bir klasörle çakışmaya neden olur</string>
+    <string name="entry_message_category_name_required">Bir klasör adı girin</string>
+    <string name="entry_message_category_name_separator">Bir klasör adı / içeremez</string>
+    <string name="entry_message_category_rename_conflict">Yeniden adlandırma mevcut bir klasörle çakışabilir</string>
+    <string name="entry_message_saved">Kaydedildi</string>
+</resources>

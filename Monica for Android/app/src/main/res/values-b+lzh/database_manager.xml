@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">数据已发生变化，或目标校验未通过。已保留源数据，请刷新两栏并检查目标后再重试。</string>
     <string name="manager_failure_locked">数据库需要解锁，或原文件暂时不可用。请先在数据库设置中打开，再刷新这一栏。</string>
     <string name="manager_failure_general">操作未能完成，请检查两栏和技术详情后再重试：目标位置可能已存在部分副本。</string>
+    <string name="manager_clear_selection">撤销选择</string>
+    <string name="manager_copy_left">← 摹</string>
+    <string name="manager_copy_right">摹 →</string>
+    <string name="manager_focused_location">当前：%1$s · %2$s</string>
+    <string name="manager_focused_selection">当前：%1$s · 已择 %2$d 项</string>
+    <string name="manager_history_back">返</string>
+    <string name="manager_history_forward">前进</string>
+    <string name="manager_left_pane">左栏</string>
+    <string name="manager_move_left">← 迁</string>
+    <string name="manager_move_right">迁 →</string>
+    <string name="manager_new_folder_short">新卷夹</string>
+    <string name="manager_open_item">开</string>
+    <string name="manager_parent">上层</string>
+    <string name="manager_right_pane">右栏</string>
+    <string name="manager_switch_pane">换栏</string>
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Protección de recuperación</string>
+    <string name="recovery_protection_summary">Verificar la recuperación con la contraseña maestra original</string>
+    <string name="recovery_protection_verified">Verificada en esta sesión: %1$s</string>
+    <string name="recovery_protection_not_ready">No se pudo verificar la protección. Se conservaron los datos. Reintenta o crea una copia cifrada.</string>
+    <string name="recovery_protection_needs_password">Introduce la contraseña maestra para preparar y verificar la recuperación</string>
+    <string name="recovery_protection_explanation">Verifica que la contraseña maestra original abra el material de recuperación independiente. No sustituye la bóveda ni las claves del dispositivo. Una instalación antigua en buen estado puede preparar este material.</string>
+    <string name="recovery_protection_limits">Conserva una copia cifrada independiente. La verificación solo cubre el material y la sesión actuales; no garantiza su integridad futura ni recuperar credenciales vinculadas al hardware. Verifica de nuevo después de bloquear o modificar el material.</string>
+    <string name="recovery_protection_verify">Verificar recuperación</string>
+    <string name="recovery_protection_checking">Verificando recuperación…</string>
+    <string name="recovery_material_available">Se encontró material de recuperación. Aún requiere verificar la contraseña maestra original.</string>
+    <string name="recovery_material_missing">No se encontró material independiente. Restaura el entorno de claves original o verifica una copia cifrada en otra instalación.</string>
+    <string name="recovery_material_reenroll">Tras cambiar las credenciales hay que preparar la recuperación otra vez. Restaura el acceso normal y verifica con la contraseña maestra actual.</string>
+    <string name="recovery_material_revoked">Este material fue revocado expresamente y no se puede usar. Conserva los archivos originales.</string>
+    <string name="recovery_material_unsupported">Formato de recuperación no compatible. Conserva los archivos y utiliza una versión compatible de Monica.</string>
+    <string name="recovery_material_invalid">Material de recuperación incompleto o inválido. Conserva los originales; no los sustituyas por archivos vacíos ni de otra bóveda.</string>
+    <string name="recovery_material_unreadable">No se pudo leer el material. Conserva los archivos, desbloquea el dispositivo y reintenta.</string>
+    <string name="recovery_material_unchecked">El material aún no se ha comprobado. Reintenta tras desbloquear el dispositivo y finalizar la operación actual.</string>
+    <string name="secure_startup_key_missing">El servicio de claves actual no encuentra la clave original. Esto no demuestra que se haya eliminado permanentemente.</string>
+    <string name="secure_startup_wait">El sistema no está listo o hay una operación segura pendiente. Desbloquea el dispositivo y reintenta más tarde.</string>
+    <string name="secure_startup_inconsistent">La configuración cifrada y el estado de recuperación no coinciden. Conserva los originales; no borres los marcadores para eludir la comprobación.</string>
+    <string name="secure_startup_environment_omk">Si empezó tras cambiar OMK u otro módulo de claves, restaura el entorno usado al crear la bóveda. Quitar Monica de un ámbito añadido recientemente puede ayudar, pero no sirve para todas las bóvedas. Conserva la configuración y las claves; no reinstales módulos ni restablezcas su semilla para experimentar.</string>
+</resources>

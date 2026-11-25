@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Niestandardowy szablon QR</string>
+    <string name="qr_template_error">Nie można odczytać wpisu, zapisać szablonu lub wygenerować kodu. Sprawdź, czy baza danych jest odblokowana i zawartość mieści się w granicach, a następnie spróbuj ponownie.</string>
+    <string name="qr_template_field_error">Brakuje pola „%1$s”, jest ono nieczytelne lub niejednoznaczne. Przed wygenerowaniem wybierz dostępne pole.</string>
+    <string name="qr_template_generate">Wygeneruj kod QR</string>
+    <string name="qr_template_hint">Odczytuje bieżące pola po wygenerowaniu. Zapisuje szablon, a nie rozwiązaną kopię hasła. Szablony Wi-Fi automatycznie unikają wstawionych wartości.</string>
+    <string name="qr_template_insert">Wstaw pole</string>
+    <string name="qr_template_literal">Tekst</string>
+    <string name="qr_template_mode">Szablon pola</string>
+    <string name="qr_template_wifi">Wstępne ustawienie Wi-Fi</string>
+</resources>

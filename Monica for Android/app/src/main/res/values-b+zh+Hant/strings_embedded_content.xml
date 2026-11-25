@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">複製卡片</string>
+    <string name="embedded_copy_document">複製證件</string>
+    <string name="embedded_copy_failed">內容尚未完整複製</string>
+    <string name="embedded_copy_failed_message">未能完整複製“%1$s”。原項目和草稿已保留，請確認來源資料庫已解鎖、附件可讀取，然後重試。</string>
+    <string name="embedded_copy_independent">獨立副本 · %1$d 個附件</string>
+    <string name="embedded_copy_note">複製筆記</string>
+    <string name="embedded_copy_working">正在複製完整內容…</string>
+    <string name="password_content_document">證件</string>
+    <string name="password_content_document_description">身份字段、卡面、正反面照片和附件</string>
+</resources>

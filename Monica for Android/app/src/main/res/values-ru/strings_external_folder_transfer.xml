@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Папки Bitwarden остаются в одной учетной записи. Копирование папок с вложениями, passkeys или записями организаций пока не поддерживается.</string>
+    <string name="external_folder_choose_destination">Выберите целевую базу данных и папку.</string>
+    <string name="external_folder_copy_hint">Скопируйте папку и ее содержимое; оставь оригинал.</string>
+    <string name="external_folder_move_hint">Переместите папку и ее содержимое. Оригинал удаляется только после сохранения места назначения.</string>
+    <string name="external_folder_root">Корень базы данных</string>
+</resources>

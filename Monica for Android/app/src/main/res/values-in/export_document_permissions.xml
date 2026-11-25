@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">Pemilih file sistem tidak memberikan akses baca/tulis yang diperlukan. Pilih Unduh di penyimpanan utama perangkat atau lokasi lain yang dapat ditulisi. Pemilih mungkin telah membuat file kosong; ini bukan cadangan yang valid dan dapat dihapus di pengelola file Anda.</string>
+</resources>

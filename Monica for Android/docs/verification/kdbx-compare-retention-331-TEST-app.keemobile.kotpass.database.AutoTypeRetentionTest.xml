@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="app.keemobile.kotpass.database.AutoTypeRetentionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-23T14:26:11.215Z" time="0.225">
+  <testcase name="emptyAssociationElementsSurviveBothEncryptedFormats" classname="app.keemobile.kotpass.database.AutoTypeRetentionTest" time="0.22" />
+  </testsuite>

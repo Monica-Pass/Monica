@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">El modo de almacenamiento o clave privada no cumple con los requisitos de migración Bitwarden. Desbloquee Monica y vuelva a intentarlo, o elija otra bóveda. Las claves vinculadas al dispositivo no se pueden exportar; manténgalos en el dispositivo original o registre un nuevo passkey con el servicio.</string>
+    <string name="passkey_move_bound_reason">Este passkey está vinculado a una entrada de contraseña y no se puede mover por separado. Mueva la entrada de contraseña vinculada o desvincule el passkey primero.</string>
+    <string name="passkey_move_cleanup_reason">El destino se guardó, pero la limpieza del origen no finalizó. Pueden quedar copias en ambas bóvedas. Verifique el destino y la bóveda de origen o el estado de sincronización antes de continuar; No repita el movimiento a ciegas.</string>
+    <string name="passkey_move_conflict_reason">La base de datos KeePass de destino ya contiene la misma credencial passkey. No se sobrescribió nada. Verifique la entrada existente o elija otra base de datos.</string>
+    <string name="passkey_move_reference_reason">Este elemento es solo una referencia y no tiene una clave privada que se pueda mover por separado. Utilice la aplicación o bóveda original que contiene el passkey real.</string>
+    <string name="passkey_move_result_summary">Completado %1$d; necesita atención %2$d</string>
+    <string name="passkey_move_result_title">Mover resultado</string>
+    <string name="passkey_move_success_count">Elementos %1$d movidos</string>
+    <string name="passkey_move_unnamed_account">Cuenta sin nombre</string>
+    <string name="passkey_move_update_reason">La mudanza no se completó y no se pudo determinar la causa exacta. Compruebe que las bóvedas de origen y destino estén desbloqueadas y puedan escribirse, y que tengan suficiente espacio libre. Inspeccione ambas bóvedas antes de volver a intentarlo; no borre la fuente.</string>
+</resources>

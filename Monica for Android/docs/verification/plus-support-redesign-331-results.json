@@ -1,0 +1,221 @@
+{
+  "version": "1.0.331",
+  "scope": "Plus overview only; original payment page and copy unchanged",
+  "platform": "MuMu Android35 x86_64 Debug; isolated synthetic user",
+  "editions": {
+    "main": {
+      "fullDebugBuildSeconds": 84.74755039997399,
+      "finalTestBuildAndJvmSeconds": 110.64564049988985,
+      "unitTests": 3,
+      "deviceTests": 9,
+      "deviceProcessSeconds": 40.13407150004059,
+      "deviceResults": [
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#overviewPaymentReturnAndConfirmationKeepOriginalFlow",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 5.45049379998818
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#activeSwitchRetainsDeactivationAndFeatureAccessibility",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.337441900046542
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#lightOverviewAndAllBenefitsAreReadable",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.308212000178173
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#darkActiveOverviewIsReadable",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.034723500022665
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#narrowDoubleFontCanReachActionsAndEveryBenefit",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.508481499971822
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#allSupportedLocalesResolveDedicatedOverviewCopy",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 3.4541523999068886
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#plusPaymentQrCanBeZoomedAndSaved",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.633175800088793
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#plusFreeDonationSavesTheCurrentlySelectedQr",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.637289999984205
+        },
+        {
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#supportPageUsesTheSamePreviewAndSaveFlow",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.770100599853322
+        }
+      ],
+      "apkHashes": [
+        "7999dfabbc9b1fcc39fa23e58df2740fbe674c9d60db3c2fbd66bba45459d18c",
+        "9d0fc17f19458d9853125b78dd9efb9a6be91bd503b4433196b84da28d0def48"
+      ],
+      "existingResourcesAndPaymentUnchanged": 1675
+    },
+    "fd": {
+      "fullDebugBuildSeconds": 256.22487569996156,
+      "finalTestBuildAndJvmSeconds": 83.13971639983356,
+      "unitTests": 3,
+      "deviceTests": 9,
+      "deviceProcessSeconds": 39.626308700302616,
+      "deviceResults": [
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#overviewPaymentReturnAndConfirmationKeepOriginalFlow",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 6.309616200160235
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#activeSwitchRetainsDeactivationAndFeatureAccessibility",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.1075110998936
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#lightOverviewAndAllBenefitsAreReadable",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.0207253999542445
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#darkActiveOverviewIsReadable",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.083542100153863
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#narrowDoubleFontCanReachActionsAndEveryBenefit",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.247236500028521
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.PlusOverviewRedesignTest#allSupportedLocalesResolveDedicatedOverviewCopy",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 2.9222314001526684
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#plusPaymentQrCanBeZoomedAndSaved",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.612105299951509
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#plusFreeDonationSavesTheCurrentlySelectedQr",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.466979099903256
+        },
+        {
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.DonationQrPreviewTest#supportPageUsesTheSamePreviewAndSaveFlow",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.856361600104719
+        }
+      ],
+      "apkHashes": [
+        "6c43bc796d3bd3f729f4e7f95dea7265dc5ecc1a8ca24d2146fd88e8d02c451a",
+        "885f803826dcf7f255f4e946332c7c716755d4dfd271298ba04da69d3944c3df"
+      ],
+      "existingResourcesAndPaymentUnchanged": 1689
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/res/values/strings_plus_support.xml": "11949225925e435b17ae37e8a02b72da9d28e5e8312e311f9a2b40670b2aab7e",
+    "app/src/main/res/values-b+lzh/strings_plus_support.xml": "1d573a851bd992e5c867de140d75e726ce01e21bed2d9004a431e53ddf3bccc2",
+    "app/src/main/res/values-b+zh+Hant/strings_plus_support.xml": "845d65b805df9f979c5171a0dcaeda068a719e29ee8900cf73f8032859691b5b",
+    "app/src/main/res/values-de/strings_plus_support.xml": "73bd7bda373229c90c7ccc12da7b06fb9facedecdae894c0cd96918fcc65515e",
+    "app/src/main/res/values-es/strings_plus_support.xml": "cb7efe108396f13bedc8b17f54e8138ae388a3a357de24f8ab95e49787f262cc",
+    "app/src/main/res/values-fr/strings_plus_support.xml": "bbde91f0fe0a3ea9f568c02481786d333f54a29fc6921758acb1cc0585e927b5",
+    "app/src/main/res/values-it/strings_plus_support.xml": "908e011514a847a9e1386ae7d8b1ac519fc5b3e0a18547bf3904c02795b2ee8a",
+    "app/src/main/res/values-ja/strings_plus_support.xml": "0586b0e46967b1d51a722e196a28406eec0a072779007ec73e21db5c867e2bc7",
+    "app/src/main/res/values-ko/strings_plus_support.xml": "de9c8cc602482aba7600bf45e788a53bf042b078562159ae1084cf920a24d64f",
+    "app/src/main/res/values-pl/strings_plus_support.xml": "84b730ef03c2331c17ff55c3476ef687732365cce5f981c80897dba28158f550",
+    "app/src/main/res/values-pt/strings_plus_support.xml": "0581bbe8c7eb4b4645fd27ec77ae33ac07bf266c19a2955c529d135dae777ed7",
+    "app/src/main/res/values-pt-rBR/strings_plus_support.xml": "d5e0ef85b6eb77b73a977d0b5ea7bf28a9431e038b0bd21c9df989fbffe567c5",
+    "app/src/main/res/values-ru/strings_plus_support.xml": "d8ed5a16ef47f0024ff694762298717e7546167ede832272e9e90e3fd3974bc2",
+    "app/src/main/res/values-vi/strings_plus_support.xml": "58272c330e04b030c7cc21a320f165b672e2c5a7cb31d86e11d3dac31e225beb",
+    "app/src/main/res/values-zh/strings_plus_support.xml": "e391ddaec582e7701489ac8966b4f33ee8df70747d90d0bb6c1b00620c03d816",
+    "app/src/main/res/values-zh-rCN/strings_plus_support.xml": "e391ddaec582e7701489ac8966b4f33ee8df70747d90d0bb6c1b00620c03d816",
+    "app/src/main/res/values-zh-rNY/strings_plus_support.xml": "e391ddaec582e7701489ac8966b4f33ee8df70747d90d0bb6c1b00620c03d816",
+    "app/src/main/res/values-zh-rXB/strings_plus_support.xml": "e391ddaec582e7701489ac8966b4f33ee8df70747d90d0bb6c1b00620c03d816",
+    "app/src/main/java/takagi/ru/monica/ui/components/PlusFeatureCard.kt": "7031468bd744db5ebb6fe1e68499a2fa832f8aa5c8399ffc5d8e5706f3a83277",
+    "app/src/main/java/takagi/ru/monica/ui/components/PlusSupportContent.kt": "29f33e6a68f30ebea4ccc9b4a709195185afe60b603deb7360bf382868ffc321",
+    "app/src/main/java/takagi/ru/monica/ui/screens/MonicaPlusScreen.kt": "a536802e9c20c357e05c32effc5642ae2c630cba0eeee80f1756f283e8052db0",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/PlusOverviewRedesignTest.kt": "fa26c6b024b7c1daf70a16737e6445828ac160a19403e2d1bf6709881fe8a006"
+  },
+  "limitations": [
+    "Batch Compose test lifecycle occasionally loses roots; all batch failures retained; final9 methods per edition run in distinct instrumentation processes.",
+    "Screen callback harness, not full authenticated MainActivity or persistence integration.",
+    "No physical device, OEM, new R8, real payment or external checkout verification."
+  ],
+  "failures": [
+    "main-debug01 missing-brace syntax; corrected",
+    "main-ui01 7/9 (missing ActivityResultRegistryOwner in localized fixture; capture root missing)",
+    "main-ui02 8/9 (capture root missing)",
+    "main-verify01 ExperimentalTestApi opt-in missing; corrected",
+    "main-ui03 7/9 (root timeout and original QR test missing root)",
+    "Initial cleanup without --user rejected not installed for0; corrected explicit task user10"
+  ],
+  "cleanup": {
+    "originalUsersPackagesDisplayFontPreserved": true,
+    "onlyTaskUserAndPackagesRemoved": true,
+    "taskStartedMuMuAndAdbStopped": true
+  }
+}

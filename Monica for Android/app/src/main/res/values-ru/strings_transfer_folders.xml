@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">Отменить копирование</string>
+    <string name="passkey_cancel_move">Отменить перемещение</string>
+    <string name="passkey_copy_blocked_title">Некоторые Passkeys не могут быть скопированы</string>
+    <string name="passkey_copy_result_summary">Скопировано %1$d; пропущен или не выполнен: %2$d</string>
+    <string name="passkey_copy_result_title">Копировать результаты</string>
+    <string name="passkey_copy_success_count">Скопировано %1$d Passkeys</string>
+    <string name="passkey_move_blocked_title">Некоторые Passkeys невозможно переместить.</string>
+    <string name="passkey_transfer_key_unavailable">Закрытый ключ недоступен на этом устройстве.</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys не может быть обработан; %2$d может продолжать. Пока ничего не изменилось.</string>
+    <string name="passkey_transfer_restricted">Этот Passkey не может быть перенесен в этот пункт назначения.</string>
+    <string name="passkey_transfer_same_database_copy">Для этой базы данных требуется уникальный идентификатор учетных данных. Выберите другую базу данных, чтобы скопировать этот Passkey.</string>
+    <string name="passkey_transfer_skip">Пропустите %1$d и продолжите.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_applied">Monica выбран и системные настройки проверены.</string>
+    <string name="default_manager_apply">Установите значение Monica.</string>
+    <string name="default_manager_autofill">Сервис автозаполнения</string>
+    <string name="default_manager_confirm">Измените менеджер паролей по умолчанию для этого пользователя. Текущая конфигурация сначала будет сохранена локально для восстановления.</string>
+    <string name="default_manager_credential">Основной поставщик учетных данных</string>
+    <string name="default_manager_denied">Разрешение отклонено. Разрешите Monica в Shizuku и повторите попытку.</string>
+    <string name="default_manager_description">Установите менеджера по умолчанию для текущего пользователя Android. Требуется Android 14 или новее и авторизация Shizuku или Root. Успешная проверка настроек не гарантирует каждый поток HyperOS passkey.</string>
+    <string name="default_manager_entry_hint">Установите Monica с помощью Shizuku или Root, когда HyperOS скрывает настройки стороннего менеджера паролей</string>
+    <string name="default_manager_grant">Авторизовать Shizuku</string>
+    <string name="default_manager_include_autofill">Также установите автозаполнение</string>
+    <string name="default_manager_include_autofill_hint">Переключите службу автозаполнения на Monica</string>
+    <string name="default_manager_keep_others">Оставьте других поставщиков учетных данных</string>
+    <string name="default_manager_keep_others_hint">Оставьте включенных поставщиков и сделайте Monica основным поставщиком.</string>
+    <string name="default_manager_open_shizuku">Открыть Shizuku</string>
+    <string name="default_manager_permission">Требуется авторизация</string>
+    <string name="default_manager_read_failed">Не удалось прочитать системные настройки. Обновить и повторить попытку</string>
+    <string name="default_manager_ready">Подключено и авторизовано</string>
+    <string name="default_manager_refresh">Обновить статус</string>
+    <string name="default_manager_replace_warning">Другие поставщики учетных данных будут отключены. Их данные не будут удалены.</string>
+    <string name="default_manager_restore">Восстановить предыдущие настройки</string>
+    <string name="default_manager_restore_confirm">Восстановите конфигурацию системы, сохраненную до последнего переключения.</string>
+    <string name="default_manager_restored">Предыдущие системные настройки восстановлены и проверены</string>
+    <string name="default_manager_source">На основе cr-жичен/password-manager-switch · MIT</string>
+    <string name="default_manager_stopped">Установите и запустите Shizuku</string>
+    <string name="default_manager_title">Менеджер паролей по умолчанию</string>
+    <string name="default_manager_unknown">Еще не прочитано</string>
+    <string name="default_manager_unset">Не задан</string>
+    <string name="default_manager_unsupported">Требуется Android 14+ и Shizuku 13+.</string>
+    <string name="default_manager_write_failed">Не удалось завершить или проверить изменение. Обновите, чтобы проверить состояние; сохраненная конфигурация доступна для восстановления.</string>
+</resources>

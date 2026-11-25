@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_remove_title">Hapus %1$s?</string>
+    <string name="entry_content_remove_message">Tindakan ini menghapus konten dari draf ini. Perubahan akan berlaku saat Anda menyimpan.</string>
+    <string name="entry_content_drag">Tahan dan seret untuk menyusun ulang</string>
+</resources>

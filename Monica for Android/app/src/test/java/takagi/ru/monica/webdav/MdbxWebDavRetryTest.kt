@@ -7,6 +7,31 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class MdbxWebDavRetryTest {
+    @Test fun oneSyncSharesItsRetryBudgetAcrossFiles() = runBlocking<Unit> {
+        val waits = mutableListOf<Long>()
+        val retry = MdbxWebDavRetry("fixture", { 0L }, { waits += it })
+        repeat(2) {
+            var attempts = 0
+            retry.run { if (attempts++ == 0) throw RateLimitedIOException("limited", 1000) }
+        }
+        var attempts = 0
+        val error = runCatching { retry.run { attempts++; throw RateLimitedIOException("limited", 1000) } }.exceptionOrNull()
+        assertTrue(error is RateLimitedIOException)
+        assertEquals(1, attempts)
+        assertEquals(listOf(1000L, 1000L), waits)
+    }
+
+    @Test fun cancellationBeforeTheNextOperationDoesNotSendARequest() = runBlocking<Unit> {
+        val job = kotlinx.coroutines.Job()
+        job.cancel()
+        var requests = 0
+        val error = runCatching { kotlinx.coroutines.withContext(job) {
+            MdbxWebDavRetry("fixture").run { requests++ }
+        } }.exceptionOrNull()
+        assertTrue(error is CancellationException)
+        assertEquals(0, requests)
+    }
+
     @Test fun temporary503ResumesOnlyTheFailedOperation() = runBlocking<Unit> {
         var requests = 0
         val waits = mutableListOf<Long>()

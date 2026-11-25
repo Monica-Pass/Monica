@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">此通行之钥系于本机 Android Keystore，不可导出。仍可于原设备使用，然不可纳入可迁移备份。</string>
+    <string name="backup_passkey_unavailable">私钥已失或不可读。请重纳含私钥之备份，或查原设备。其余数据与远端备份皆已保留。</string>
+    <string name="backup_passkey_unreadable">受护私钥不可读。请启封 Monica 后重试；若仍失败，请查原设备或含私钥之备份。</string>
+</resources>

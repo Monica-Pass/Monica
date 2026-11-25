@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_title">Yakındaki senkronizasyon</string>
+    <string name="lan_description">Aynı Wi-Fi üzerindeki telefonlar ve bilgisayarlar arasında bir kasayı senkronize edin. Bir cihaz bulun ve eşleştirme kodunu girin veya QR kodunu tarayın.</string>
+    <string name="lan_select_vault">Bir kasa seçin</string>
+    <string name="lan_receive_new">Yeni bir kasa olarak al</string>
+    <string name="lan_new_vault_hint">İlk bağlantı için kaynak kasa şifresini girin. Alınan kasa ayrı olarak eklenir. Daha sonraki senkronizasyonlar için her iki cihazda da aynı kasayı seçin.</string>
+    <string name="lan_vault_name">Alınan kasanın adı</string>
+    <string name="lan_vault_password">Kaynak kasa şifresi</string>
+    <string name="lan_host">Bir cihazın bağlanmasına izin ver</string>
+    <string name="lan_manage">Kasaları yönet</string>
+    <string name="lan_invitation_hint">Eşleştirmenin süresi 10 dakika sonra sona erer. Bu kodu veya QR kodunu yalnızca bağlanmak istediğiniz cihazla paylaşın.</string>
+    <string name="lan_pairing_code">Eşleştirme kodu</string>
+    <string name="lan_pairing_autofilled">Eşleştirme kodu ve bağlantı otomatik olarak doldurulur. Devam etmek için Eşleştir ve senkronize et\'e dokunun.</string>
+    <string name="lan_pairing_needs_vault_password">Eşleştirme bilgileri otomatik olarak doldurulur. İlk aktarım için kaynak kasa parolasını girin ve ardından Eşleştir ve senkronize et\'e dokunun.</string>
+    <string name="lan_no_network">Yerel Wi-Fi adresi bulunamadı.</string>
+    <string name="lan_copy_link">Eşleştirme bağlantısını kopyala</string>
+    <string name="lan_discover">Yakındaki cihazları bulun</string>
+    <string name="lan_discovering">Cihazlar bulunuyor…</string>
+    <string name="lan_no_devices">Henüz cihaz bulunamadı. Diğer cihazda \"Cihazın bağlanmasına izin ver\"i seçin. Ayrıca eşleştirme bağlantısını tarayabilir veya yapıştırabilirsiniz.</string>
+    <string name="lan_paste_link">Eşleştirme bağlantısı</string>
+    <string name="lan_scan">Eşleştirme QR kodunu tarayın</string>
+    <string name="lan_connect">Eşleştir ve senkronize et</string>
+    <string name="lan_preparing">Şifrelenmiş kasa verileri hazırlanıyor…</string>
+    <string name="lan_waiting">Diğer cihaz bekleniyor…</string>
+    <string name="lan_connecting">Eşleştirme doğrulanıyor…</string>
+    <string name="lan_transferring">Şifrelenmiş veriler aktarılıyor…</string>
+    <string name="lan_merging">Kasaya değişiklikler uygulanıyor…</string>
+    <string name="lan_confirming">Diğer cihazın değişiklikleri uygulamayı bitirmesi bekleniyor…</string>
+    <string name="lan_completed">Her iki cihazın senkronizasyonu tamamlandı</string>
+    <string name="lan_cancelled">Senkronizasyon iptal edildi</string>
+    <string name="lan_failed">Senkronizasyon tamamlanmadı</string>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_conflicts">%1$d çakışmalarının kasa yönetiminde incelenmesi gerekiyor. Her iki versiyon da korunur.</string>
+    <string name="lan_imported">Alınan kasa kasa yönetimine eklendi.</string>
+    <string name="lan_different_vault">Bunlar farklı kasalardır. Her iki cihazda da aynı kasayı seçin veya bu kasayı yeni bir kasa olarak alın.</string>
+    <string name="lan_unavailable">Yakın senkronizasyon bu yapıda mevcut değil.</string>
+    <string name="lan_invalid_code">Eşleştirme kodu geçersiz veya artık eşleşmiyor. Diğer cihazdan yeni bir kod alın.</string>
+    <string name="lan_expired">Eşleştirmenin süresi doldu. Yeni bir kod oluşturmak için cihazın tekrar bağlanmasına izin verin.</string>
+    <string name="lan_peer_failed">Diğer cihaz değişiklikleri uygulayamadı. Kontrol edip tekrar deneyin.</string>
+    <string name="lan_vault_failed">Kasa açılamadı veya birleştirilemedi. Kasa parolasını ve kullanılabilir depolama alanını kontrol edip yeniden deneyin.</string>
+    <string name="lan_failed_hint">Her iki cihazın da hala aynı Wi-Fi\'ye bağlı olup olmadığını kontrol edin, ardından tekrar eşleştirin. Zaten taahhüt edilen değişiklikler korunur.</string>
+    <string name="lan_external_blobs">Bu kasa, dışında depolanan dosyalara referans veriyor. Yakındaki senkronizasyon şu anda tüm eklerin kasanın içinde saklanmasını gerektiriyor.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Ví đựng thẻ &amp;</string>
+    <string name="customization_group_fields_icons">Các trường &amp; biểu tượng</string>
+    <string name="customization_group_library">Danh sách thư viện &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Không cần thực hiện hành động nào</string>
+    <string name="permission_action_request">Yêu cầu quyền</string>
+    <string name="permission_help_actions">Sử dụng quyền Yêu cầu để yêu cầu Android cấp quyền truy cập hoặc Mở cài đặt để quản lý dịch vụ và cấp quyền.\n\nCác mục được đánh dấu Không cần hành động hoặc Không khả dụng không có nút hành động. Chỉ kích hoạt những gì bạn cần.\n\nTrạng thái làm mới khi bạn quay lại từ cài đặt hệ thống. Bạn cũng có thể nhấn vào trạng thái Làm mới để kiểm tra lại.</string>
+    <string name="permission_refresh_status">Trạng thái làm mới</string>
+    <string name="permission_summary_granted">Đã cấp quyền %1$d</string>
+    <string name="permission_summary_hint">Chỉ bật các quyền cần thiết cho các tính năng bạn sử dụng. Một số được Android cấp tự động.</string>
+    <string name="permission_summary_title">Quyền theo điều khoản của bạn</string>
+</resources>

@@ -52,7 +52,8 @@ import takagi.ru.monica.util.VibrationPatterns
 class HapticFeedbackHelper(
     private val context: Context,
     private val view: View? = null,
-    private val enabled: Boolean = true
+    private val enabled: Boolean = true,
+    private val strength: Int = 1
 ) {
 
     private val vibrator: Vibrator? by lazy {
@@ -83,7 +84,14 @@ class HapticFeedbackHelper(
     }
     
     // ==================== 标准触觉反馈 ====================
-    
+
+    /** UI feedback has a bounded compatibility path when the host rejects it. */
+    fun performSliderTick(): InteractionHapticResult = dispatchInteractionHaptic(
+        enabled, strength, tick = true, AndroidInteractionHapticDevice(context, view))
+
+    fun performSwitchToggle(): InteractionHapticResult = dispatchInteractionHaptic(
+        enabled, strength, tick = false, AndroidInteractionHapticDevice(context, view))
+
     /**
      * 轻量点击反馈
      * 
@@ -398,7 +406,8 @@ fun rememberHapticFeedback(): HapticFeedbackHelper {
     val view = LocalView.current
     val enabled = LocalHapticFeedbackEnabled.current
 
-    return remember(context, view, enabled) {
-        HapticFeedbackHelper(context, view, enabled)
+    val strength = takagi.ru.monica.ui.LocalHapticFeedbackStrength.current
+    return remember(context, view, enabled, strength) {
+        HapticFeedbackHelper(context, view, enabled, strength)
     }
 }

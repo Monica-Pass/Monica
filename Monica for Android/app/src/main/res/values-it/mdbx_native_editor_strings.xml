@@ -14,6 +14,6 @@
     <string name="mdbx_native_delete_confirm">Eliminare questa voce e i suoi allegati?</string>
     <string name="mdbx_native_editable">Le modifiche vengono scritte direttamente in questo database cifrato.</string>
     <string name="mdbx_native_app_locked">Sblocca Monica con la normale procedura dell’app per continuare.</string>
-    <string name="mdbx_client_mode_unsupported_title">Glitter is not supported yet</string>
-    <string name="mdbx_client_mode_unsupported">The Android client does not support Glitter yet. Choose Sky, Multi or Power. Existing database files and records are preserved without automatic downgrade or conversion. Use a client that supports Glitter to access them.</string>
+    <string name="mdbx_client_mode_unsupported_title">Glitter non è ancora supportato</string>
+    <string name="mdbx_client_mode_unsupported">Il client Android non supporta ancora Glitter. Scegli Sky, Multi o Power. I file e i record del database esistenti vengono conservati senza downgrade o conversione automatici. Utilizzare un client che supporti Glitter per accedervi.</string>
 </resources>

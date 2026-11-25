@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden 폴더는 동일한 계정 내에 유지됩니다. 첨부 파일, passkeys 또는 조직 항목이 있는 폴더 복사는 아직 지원되지 않습니다.</string>
+    <string name="external_folder_choose_destination">대상 데이터베이스 및 폴더 선택</string>
+    <string name="external_folder_copy_hint">폴더와 해당 내용을 복사합니다. 원본을 유지하세요.</string>
+    <string name="external_folder_move_hint">폴더와 해당 내용을 이동합니다. 원본은 대상이 저장된 후에만 제거됩니다.</string>
+    <string name="external_folder_root">데이터베이스 루트</string>
+</resources>

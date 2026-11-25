@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">Bitwarden JSON terenkripsi kata sandi</string>
+    <string name="bw_json_description">JSON standar atau terenkripsi kata sandi untuk login, catatan, kartu, identitas, dan kunci SSH.</string>
+    <string name="bw_json_boundary">Impor ke brankas lokal saja. Ekspor dari brankas lokal atau satu akun Bitwarden pribadi. File lampiran, status Kirim dan arsip tidak disertakan. Konten yang tidak didukung memblokir seluruh transfer; meninjau setiap item yang dilaporkan.</string>
+    <string name="bw_json_import_hint">Pilih file Bitwarden JSON standar atau terenkripsi kata sandi.</string>
+    <string name="bw_json_file_password">Kata sandi berkas</string>
+    <string name="bw_json_check">Periksa file</string>
+    <string name="bw_json_review">Tinjau impor JSON</string>
+    <string name="bw_json_counts">item %1$d · folder %2$d</string>
+    <string name="bw_json_blocked">Seluruh transfer diblokir. Selesaikan setiap item di bawah sebelum mencoba lagi.</string>
+    <string name="bw_json_ready">File dapat diimpor. Konfirmasikan untuk menambahkan semua item ke brankas lokal.</string>
+    <string name="bw_json_export_success">Mengekspor item %1$d dan folder %2$d. File lampiran, status Kirim dan arsip tidak disertakan.</string>
+    <string name="bw_json_reason_invalid">Data tidak valid atau rusak</string>
+    <string name="bw_json_reason_unknown">Bidang tidak dikenal; tidak bisa melestarikannya</string>
+    <string name="bw_json_reason_type">Jenis item tidak didukung</string>
+    <string name="bw_json_reason_value">Nilai ini tidak dapat dipertahankan sepenuhnya</string>
+    <string name="bw_json_reason_limit">Batas file atau pemrosesan terlampaui</string>
+    <string name="bw_json_reason_organization">Organisasi dan konten koleksi tidak didukung</string>
+    <string name="bw_json_reason_attachments">File lampiran memerlukan transfer terpisah</string>
+    <string name="bw_json_reason_archived">Status yang diarsipkan tidak dapat disimpan dalam format ini</string>
+    <string name="bw_json_reason_destination">Sumber atau tujuan ini tidak didukung</string>
+    <string name="bw_json_reason_pending">Selesaikan perubahan yang tertunda sebelum mengekspor akun</string>
+    <string name="bw_json_reason_unavailable">Sumber data atau kunci yang diperlukan tidak tersedia</string>
+    <string name="bw_json_item">Barang %1$d</string>
+    <string name="bw_json_plain_warning">JSON yang tidak terenkripsi berisi kata sandi dan kunci pribadi yang dapat dibaca. Simpan file dengan aman.</string>
+</resources>

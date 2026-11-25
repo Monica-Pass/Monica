@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_title">Kelola informasi asli</string>
+    <string name="mdbx_native_summary">Telusuri folder, entri, dan kolom asli</string>
+    <string name="mdbx_native_search">Cari nama atau tipe</string>
+    <string name="mdbx_native_readonly">Bidang asli hanya dapat dibaca. Ganti nama entri dari daftar tanpa mengubah isinya.</string>
+    <string name="mdbx_native_schema">Versi format data: %1$d</string>
+    <string name="mdbx_native_failed">Operasi tidak dapat diselesaikan. Segarkan untuk memeriksa status tersimpan sebelum mencoba lagi.</string>
+    <string name="mdbx_native_snapshot_readonly">Struktur snapshot hanya-baca. Memulihkan tersedia dari menu snapshot.</string>
+</resources>

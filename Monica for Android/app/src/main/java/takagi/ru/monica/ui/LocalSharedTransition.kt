@@ -22,3 +22,6 @@ val LocalReduceAnimations = staticCompositionLocalOf { false }
  * VIBRATE 属于普通权限、无法在系统设置中撤销，因此必须由应用自身提供关闭入口。
  */
 val LocalHapticFeedbackEnabled = staticCompositionLocalOf { true }
+
+/** 1 = light (default), 2 = strong; the total switch handles off. */
+val LocalHapticFeedbackStrength = staticCompositionLocalOf { 1 }

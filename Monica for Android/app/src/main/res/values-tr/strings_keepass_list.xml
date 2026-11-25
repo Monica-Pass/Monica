@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Yükleniyor…</string>
+    <string name="kp_list_preview">Önceki liste: %1$s</string>
+    <string name="kp_list_locked">Kilitli</string>
+    <string name="kp_list_failed">Yüklenemedi</string>
+    <string name="kp_list_unlock">Kilidi aç</string>
+    <string name="kp_list_unlock_help">Bu veritabanını kayıtlı kimlik bilgileriyle açmak için Monica ana şifrenizi doğrulayın.</string>
+    <string name="kp_list_auth_failed">Doğrulama başarısız oldu veya zaman aşımına uğradı. Lütfen tekrar deneyin.</string>
+    <string name="kp_list_loading_databases">Yükleniyor… · %1$d kasaları</string>
+</resources>

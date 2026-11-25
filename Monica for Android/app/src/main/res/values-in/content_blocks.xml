@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_block_api_key">Kunci API</string>
+    <string name="content_block_api_token">token API</string>
+    <string name="content_block_ssh">Kunci SSH</string>
+    <string name="content_block_gpg">Kunci GPG</string>
+    <string name="content_block_qr">kode QR</string>
+    <string name="content_block_key">Kunci</string>
+    <string name="content_block_token">Token</string>
+    <string name="content_block_provider">Penyedia</string>
+    <string name="content_block_url">titik akhir API</string>
+    <string name="content_block_algorithm">Algoritma</string>
+    <string name="content_block_public">Kunci publik</string>
+    <string name="content_block_private">Kunci pribadi</string>
+    <string name="content_block_fingerprint">Sidik Jari</string>
+    <string name="content_block_identity">Identitas / komentar</string>
+    <string name="content_block_content">Teks atau tautan</string>
+    <string name="content_block_import">Impor dari file</string>
+    <string name="content_block_export">Ekspor ke file</string>
+    <string name="content_block_unavailable">Konten tidak didukung</string>
+    <string name="content_block_preserved">Konten asli dipertahankan. Buka dengan versi yang kompatibel untuk diedit.</string>
+    <string name="content_block_save_error">Tidak dapat menyimpan atau membaca konten ini. Periksa file dan ukurannya (maksimum 256 KiB).</string>
+    <string name="content_block_more">Lebih banyak konten</string>
+    <string name="content_block_key_size">Ukuran kunci</string>
+    <string name="content_block_format">Formatnya</string>
+    <string name="content_block_qr_error">Konten ini terlalu panjang untuk kode QR. Anda masih dapat melihat atau menyalin nilai penuh.</string>
+</resources>

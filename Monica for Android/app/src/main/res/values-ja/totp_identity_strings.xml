@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">元の KeePass 認証エントリを一意に識別できませんでした。データベースを更新して再試行してください。</string>
+</resources>

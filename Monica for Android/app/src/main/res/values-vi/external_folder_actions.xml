@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">Xóa thư mục “%1$s” và nội dung của nó? Vui lòng xác nhận trước khi tiếp tục.</string>
+    <string name="external_folder_delete_keep_items">Xóa thư mục “%1$s”? Các mục trong đó sẽ được giữ mà không có thư mục này.</string>
+</resources>

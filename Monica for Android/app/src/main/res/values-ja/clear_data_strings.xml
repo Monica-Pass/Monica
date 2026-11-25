@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">銀行カードの清算中…</string>
+    <string name="clear_data_completed">清算が完了しました</string>
+    <string name="clear_data_completed_hint">選択したデータはクリアされました。</string>
+    <string name="clear_data_count">%1$d / %2$d エントリをクリアしました</string>
+    <string name="clear_data_documents">書類をクリア中…</string>
+    <string name="clear_data_failed">選択したデータをすべてクリアできませんでした</string>
+    <string name="clear_data_failed_hint">決済が停止しました。すでにクリアされたエントリは復元されません。データベース接続を確認して、再試行してください。</string>
+    <string name="clear_data_generator_history">パスワード生成履歴をクリアしています…</string>
+    <string name="clear_data_notes">メモをクリア中…</string>
+    <string name="clear_data_passwords">パスワードをクリアしています…</string>
+    <string name="clear_data_preparing">選択したエントリをカウントしています…</string>
+    <string name="clear_data_totp">認証システムをクリアしています…</string>
+    <string name="clear_data_verifying">確認中…</string>
+    <string name="clear_data_wait">この操作が完了するまでお待ちください。</string>
+</resources>

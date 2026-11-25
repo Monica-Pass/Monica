@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Защита восстановления</string>
+    <string name="recovery_protection_summary">Проверка восстановления исходным мастер-паролем</string>
+    <string name="recovery_protection_verified">Проверено в этом сеансе: %1$s</string>
+    <string name="recovery_protection_not_ready">Не удалось проверить защиту восстановления. Данные сохранены. Повторите или создайте зашифрованную копию.</string>
+    <string name="recovery_protection_needs_password">Введите мастер-пароль для подготовки и проверки восстановления</string>
+    <string name="recovery_protection_explanation">Проверяет открытие независимых данных восстановления исходным мастер-паролем. Хранилище и ключи устройства не заменяются. В исправной старой установке данные могут быть подготовлены.</string>
+    <string name="recovery_protection_limits">Храните независимую зашифрованную копию. Проверка относится к текущим данным и сеансу; она не гарантирует будущую целостность файлов или восстановление аппаратных учётных данных. После блокировки или изменений нужна новая проверка.</string>
+    <string name="recovery_protection_verify">Проверить восстановление</string>
+    <string name="recovery_protection_checking">Проверка восстановления…</string>
+    <string name="recovery_material_available">Данные восстановления найдены. Требуется проверка исходного мастер-пароля.</string>
+    <string name="recovery_material_missing">Независимые данные не найдены. Верните исходную среду ключей или проверьте зашифрованную копию в другой установке.</string>
+    <string name="recovery_material_reenroll">После изменения учётных данных нужна новая подготовка. Восстановите обычный доступ и проверьте текущим мастер-паролем.</string>
+    <string name="recovery_material_revoked">Эти данные восстановления явно отозваны. Сохраните исходные файлы.</string>
+    <string name="recovery_material_unsupported">Формат восстановления не поддерживается. Сохраните файлы и используйте совместимую версию Monica.</string>
+    <string name="recovery_material_invalid">Данные восстановления неполны или недействительны. Сохраните оригиналы; не заменяйте их пустыми файлами или данными другого хранилища.</string>
+    <string name="recovery_material_unreadable">Не удалось прочитать данные. Сохраните файлы, разблокируйте устройство и повторите.</string>
+    <string name="recovery_material_unchecked">Данные ещё не проверены. Повторите после разблокировки и завершения текущей операции.</string>
+    <string name="secure_startup_key_missing">Текущая служба ключей не находит исходный ключ. Это не доказывает его безвозвратное удаление.</string>
+    <string name="secure_startup_wait">Система не готова или защищённая операция не завершена. Разблокируйте устройство и повторите позже.</string>
+    <string name="secure_startup_inconsistent">Зашифрованные настройки и состояние восстановления не совпадают. Сохраните оригиналы; не удаляйте метки для обхода проверки.</string>
+    <string name="secure_startup_environment_omk">Если это началось после изменения OMK или другого модуля ключей, верните среду создания хранилища. Исключение Monica из недавно добавленной области может помочь, но подходит не всем хранилищам. Сохраните настройки и ключи; не переустанавливайте модули и не сбрасывайте seed ради эксперимента.</string>
+</resources>

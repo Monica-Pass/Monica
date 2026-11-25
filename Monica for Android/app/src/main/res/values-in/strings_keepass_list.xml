@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Memuat…</string>
+    <string name="kp_list_preview">Daftar sebelumnya: %1$s</string>
+    <string name="kp_list_locked">Terkunci</string>
+    <string name="kp_list_failed">Tidak dapat memuat</string>
+    <string name="kp_list_unlock">Buka kunci</string>
+    <string name="kp_list_unlock_help">Verifikasi kata sandi utama Monica Anda untuk membuka database ini dengan kredensial yang disimpannya.</string>
+    <string name="kp_list_auth_failed">Verifikasi gagal atau waktu habis. Silakan coba lagi.</string>
+    <string name="kp_list_loading_databases">Memuat… · %1$d brankas</string>
+</resources>

@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -251,10 +255,10 @@ fun CustomFieldEditCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable {
-                            onFieldChange(field.copy(isProtected = !field.isProtected))
-                            if (!field.isProtected) valueVisible = false
-                        },
+                        .clickable(onClick = switchClick(field.isProtected) { next ->
+                            onFieldChange(field.copy(isProtected = next))
+                            if (next) valueVisible = false
+                        }),
                     shape = RoundedCornerShape(16.dp),
                     color = MaterialTheme.colorScheme.surfaceContainerHighest
                 ) {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_face_rotate_left">向左旋轉90°</string>
+    <string name="card_face_rotate_right">向右旋轉90°</string>
+    <string name="card_face_crop_rotation_hint">拖動調整位置，雙指縮放；可旋轉或上下、左右翻轉。</string>
+    <string name="card_face_flip_horizontal">左右翻轉</string>
+    <string name="card_face_flip_vertical">上下翻轉</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Backup could not be completed because sensitive data in “%1$s” could not be read. The original data was kept.</string>
+</resources>

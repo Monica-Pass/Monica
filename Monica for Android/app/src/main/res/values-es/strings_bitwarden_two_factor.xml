@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_authenticator_search">Buscar nombre o cuenta</string>
+    <string name="bitwarden_change_method">Cambiar método</string>
+    <string name="bitwarden_choose_method">Elija el método de verificación</string>
+    <string name="bitwarden_email_action_hint">Envía un código, luego ingresa el código recibido por correo electrónico.</string>
+    <string name="bitwarden_totp_action_hint">Elija un autenticador existente en Monica, o ingrese su código actual.</string>
+    <string name="bitwarden_totp_generation_failed">No se pudo generar un código. Marque este autenticador o elija otro elemento.</string>
+    <string name="bitwarden_totp_picker_hint">Al seleccionar un artículo se completa su código actual sin enviarlo.</string>
+    <string name="bitwarden_two_factor_unsupported">Este método requiere un flujo de inicio de sesión interactivo y no se puede completar con un código aquí. Elija un autenticador disponible, correo electrónico o método YubiKey OTP. Si su organización requiere SSO o solo una clave de seguridad, utilice un cliente que admita ese flujo.</string>
+    <string name="bitwarden_two_factor_unsupported_short">No compatible con este cliente</string>
+</resources>

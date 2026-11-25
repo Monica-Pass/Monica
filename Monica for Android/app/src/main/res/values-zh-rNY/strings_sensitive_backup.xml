@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">无法读取“%1$s”的敏感数据，备份未完成。原数据已保留。</string>
+</resources>

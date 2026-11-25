@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">삭제가 완료되지 않았습니다.</string>
+    <string name="batch_delete_interrupted_count">%2$d 항목의 %1$d를 처리한 후 중단되었습니다. 다시 시도하기 전에 나머지 항목을 확인하세요.</string>
+</resources>

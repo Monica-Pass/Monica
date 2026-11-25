@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Abonnement hinzufügen</string>
+    <string name="image_sources_cards">Kartengrafik</string>
+    <string name="image_sources_choose">Wählen Sie aus Abonnements</string>
+    <string name="image_sources_count">%1$d-Bilder</string>
+    <string name="image_sources_empty">Fügen Sie Ihre erste Bildquelle hinzu</string>
+    <string name="image_sources_error">Laden oder Speichern nicht möglich. Überprüfen Sie die Quelle, das Format und die Verbindung und versuchen Sie es dann erneut. Bestehende Abonnements und Artikelbilder bleiben erhalten.</string>
+    <string name="image_sources_formats">HTTPS JSON Bildpakete oder PNG-, JPEG- und WebP-Bildlinks.</string>
+    <string name="image_sources_icons">Symbole</string>
+    <string name="image_sources_name">Name (optional)</string>
+    <string name="image_sources_no_results">Keine passenden Bilder</string>
+    <string name="image_sources_options">Abonnementoptionen</string>
+    <string name="image_sources_refresh">Aktualisieren</string>
+    <string name="image_sources_remove">Abmelden</string>
+    <string name="image_sources_remove_hint">Dieses Abonnement entfernen? Von Ihren Artikeln bereits verwendete Bilder bleiben erhalten.</string>
+    <string name="image_sources_retry">Wiederholen</string>
+    <string name="image_sources_search">Bilder suchen</string>
+    <string name="image_sources_settings_hint">Verwalten Sie Symbolpakete und Kartengrafikquellen</string>
+    <string name="image_sources_title">Bildabonnements</string>
+    <string name="image_sources_url">Abonnement oder Bild URL</string>
+    <string name="image_sources_use_hint">Wählen Sie Bilder aus dem benutzerdefinierten Symbol- oder Kartengrafik-Editor aus.</string>
+</resources>

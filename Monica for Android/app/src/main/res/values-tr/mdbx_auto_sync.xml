@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_title">Otomatik senkronizasyon</string>
+    <string name="mdbx_auto_sync_manual_hint">Kapalı · Gerektiğinde manuel olarak senkronize edin</string>
+    <string name="mdbx_auto_sync_enabled_hint">Kaydedildiğinde yükle; ön planda kilit açıkken güncellemeleri kontrol edin</string>
+</resources>

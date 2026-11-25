@@ -1,0 +1,12 @@
+Final build: main-final07
+JVM: 9 tests, 0 failures, 0 errors, 0 skipped
+
+PASS takagi.ru.monica.localization.DefaultLanguageResourceTest#englishFallbackDoesNotContainChineseUiText (0.18s)
+PASS takagi.ru.monica.localization.IndonesianTurkishResourceTest#terminologyAndRecoveryConditionsAreLocalized (0.224s)
+PASS takagi.ru.monica.localization.IndonesianTurkishResourceTest#existingLanguageNamesAndPositionsRemainStable (0.007s)
+PASS takagi.ru.monica.localization.LocaleResourceCoverageTest#theResourceContractCoversEveryAdvertisedLanguage (0.011s)
+PASS takagi.ru.monica.localization.LocaleResourceCoverageTest#indonesianAndTurkishIncludeEveryCurrentResourceWithItsOriginalFormatContract (0.422s)
+PASS takagi.ru.monica.localization.TaiwanResourceTest#existingSavedLanguageNamesAndOrdinalsStayStable (0.053s)
+PASS takagi.ru.monica.localization.TaiwanResourceTest#taiwanUsesRegionalTermsAndRetainsTechnicalTokens (0.076s)
+PASS takagi.ru.monica.utils.StartupLanguageCacheTest#cachedLanguageParsingFailsSafelyToSystemLanguage (0.003s)
+PASS takagi.ru.monica.utils.StartupLanguageCacheTest#activityStartupUsesCacheInsteadOfWaitingForDataStore (0.008s)

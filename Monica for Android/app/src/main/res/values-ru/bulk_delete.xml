@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Удаление не завершено</string>
+    <string name="batch_delete_interrupted_count">Прервано после обработки %1$d элементов %2$d. Прежде чем повторить попытку, проверьте остальные элементы.</string>
+</resources>

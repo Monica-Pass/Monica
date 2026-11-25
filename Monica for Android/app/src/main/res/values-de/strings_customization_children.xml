@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">Alle voreingestellten Felder entfernen? Vorhandene gespeicherte Einträge behalten ihre Felder.</string>
+    <string name="customization_drag_handle">%1$s neu anordnen</string>
+    <string name="customization_filters_navigation">Filter und Navigation</string>
+    <string name="customization_live_preview">Live-Vorschau</string>
+</resources>

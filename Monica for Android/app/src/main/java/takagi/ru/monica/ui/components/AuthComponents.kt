@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -174,7 +175,12 @@ fun PasswordVerificationContent(
                     else manager.verifyMasterPassword(submittedPassword, checkNotNull(verifyAttempt)) { ensureActive() }
                 }
                 if (!isCurrent()) return@launch
-                if (accepted == true && (setup || verifyAttempt?.commit() == true)) completeAuthentication()
+                if (accepted == true && (setup || verifyAttempt?.commit() == true)) {
+                    completeAuthentication()
+                    if (persistVaultUnlockToSession) runCatching {
+                        takagi.ru.monica.security.BackgroundRecoveryVerification.start(manager, submittedPassword, passwordLifecycle)
+                    }
+                }
                 else errorMessage = context.getString(if (setup)
                     R.string.local_password_protection_reset_failed else R.string.error_invalid_password)
             } finally {
@@ -348,7 +354,10 @@ fun PasswordVerificationContent(
         Spacer(modifier = Modifier.height(32.dp))
         
         // Master Password Field
-        if (!passwordBusy && passwordForeground) MasterPasswordTextField(
+        // Keep the field in the layout during verification and lifecycle changes.
+        // Inputs are still erased by revokePasswordRequest; only the geometry remains.
+        MasterPasswordTextField(
+            enabled = !passwordBusy && passwordForeground && !authenticationCompleted,
             value = if (internalIsConfirming) confirmPassword else masterPassword,
             onValueChange = { input ->
                 if (internalIsConfirming) {
@@ -377,7 +386,7 @@ fun PasswordVerificationContent(
                     passwordVisible = visible
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("auth_master_password_field"),
             imeAction = if (isFirstTime && !internalIsConfirming) ImeAction.Next else ImeAction.Done,
             keyboardActions = KeyboardActions(
                 onNext = { submitPassword() },

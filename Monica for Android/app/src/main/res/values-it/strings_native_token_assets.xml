@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">Impossibile leggere o salvare tutti i file. Il tuo contenuto originale è stato mantenuto. Controlla l\'accesso e le dimensioni del file, quindi riprova.</string>
+    <string name="native_token_assets_limit">Fino a 64 MiB di file nuovi o spostati per salvataggio e 128 allegati per token.</string>
+    <string name="native_token_backup_limit">I file token API nativi in un backup ZIP devono avere una dimensione totale di 64 MiB o meno. Utilizza il backup del database nativo per depositi più grandi.</string>
+    <string name="native_token_backup_needs_files">Questo database contiene token API con file. Includi immagini e allegati per esportare un backup completo.</string>
+    <string name="native_token_kdbx_files_unsupported">I token API con file richiedono un Monica ZIP crittografato o un backup del database nativo. L\'esportazione KDBX supporta i token API senza file.</string>
+</resources>

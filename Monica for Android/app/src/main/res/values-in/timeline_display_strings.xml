@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timeline_display_content_summary">Ringkasan konten</string>
+    <string name="timeline_display_deleted_state">Status penghapusan</string>
+    <string name="timeline_display_metadata">Metadata</string>
+    <string name="mdbx_message_no_objects">Tidak ada perubahan objek</string>
+    <string name="mdbx_message_no_fields">Tidak ada perubahan bidang</string>
+    <string name="mdbx_message_object_preview">%1$s … (objek %2$d)</string>
+    <string name="mdbx_message_field_preview">%1$s … (bidang %2$d)</string>
+    <string name="mdbx_message_folder_exists">Folder MDBX bernama %1$s sudah ada</string>
+</resources>

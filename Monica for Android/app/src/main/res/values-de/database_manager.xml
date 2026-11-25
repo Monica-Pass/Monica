@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Daten geändert oder Prüfung fehlgeschlagen. Die Quelle bleibt erhalten. Beide Spalten aktualisieren und das Ziel vor einem erneuten Versuch prüfen.</string>
     <string name="manager_failure_locked">Datenbank gesperrt oder Originaldatei nicht verfügbar. In den Datenbankeinstellungen öffnen und diese Spalte aktualisieren.</string>
     <string name="manager_failure_general">Vorgang nicht abgeschlossen. Beide Spalten und die Details prüfen: Am Ziel können unvollständige Kopien liegen.</string>
+    <string name="manager_clear_selection">Auswahl löschen</string>
+    <string name="manager_copy_left">← Kopieren</string>
+    <string name="manager_copy_right">Kopieren →</string>
+    <string name="manager_focused_location">Aktiv: %1$s · %2$s</string>
+    <string name="manager_focused_selection">Aktiv: %1$s · %2$d ausgewählt</string>
+    <string name="manager_history_back">Zurück</string>
+    <string name="manager_history_forward">Vorwärts</string>
+    <string name="manager_left_pane">Linker Bereich</string>
+    <string name="manager_move_left">← Verschieben</string>
+    <string name="manager_move_right">Verschieben →</string>
+    <string name="manager_new_folder_short">Neuer Ordner</string>
+    <string name="manager_open_item">Öffnen</string>
+    <string name="manager_parent">Oben</string>
+    <string name="manager_right_pane">Rechter Bereich</string>
+    <string name="manager_switch_pane">Bereich wechseln</string>
 </resources>

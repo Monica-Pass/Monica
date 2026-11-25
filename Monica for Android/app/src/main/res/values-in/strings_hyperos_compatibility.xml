@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">Kompatibilitas HyperOS</string>
+    <string name="hyperos_compatibility_subtitle">Kunci sandi, petunjuk penyimpanan, dan animasi dalam aplikasi</string>
+    <string name="hyperos_compatibility_shared_settings_note">Opsi ini berbagi nilainya dengan pengaturan umum. Pengurangan gerakan mempengaruhi animasi di dalam Monica.</string>
+</resources>

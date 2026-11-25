@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_authenticator_search">寻名称或名籍</string>
+    <string name="bitwarden_change_method">更换验证之法</string>
+    <string name="bitwarden_choose_method">择验证之法</string>
+    <string name="bitwarden_email_action_hint">请先寄验证码，再填邮件所收之码。</string>
+    <string name="bitwarden_totp_action_hint">可择 Monica 中已有验码器，亦可填其当前之码。</string>
+    <string name="bitwarden_totp_generation_failed">未能制码。请查此验码器，或另择一项。</string>
+    <string name="bitwarden_totp_picker_hint">择项即填其当前之码，尚不提交。</string>
+    <string name="bitwarden_two_factor_unsupported">此法须经交互登录，此处仅填码不能完成。请选择可用验码器、邮件或 YubiKey OTP。若组织仅许 SSO 或安全钥匙，请用支持该流程之客户端。</string>
+    <string name="bitwarden_two_factor_unsupported_short">此客户端尚不支持</string>
+</resources>

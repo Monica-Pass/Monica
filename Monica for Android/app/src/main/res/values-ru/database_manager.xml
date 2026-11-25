@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Данные изменились или проверка не пройдена. Источник сохранён. Обновите обе панели и проверьте назначение перед повтором.</string>
     <string name="manager_failure_locked">База заблокирована или исходный файл недоступен. Откройте её в настройках и обновите панель.</string>
     <string name="manager_failure_general">Операция не завершена. Проверьте обе панели и подробности: в назначении могут остаться частичные копии.</string>
+    <string name="manager_clear_selection">Очистить выбор</string>
+    <string name="manager_copy_left">← Копировать</string>
+    <string name="manager_copy_right">Копировать →</string>
+    <string name="manager_focused_location">Активен: %1$s · %2$s</string>
+    <string name="manager_focused_selection">Активно: %1$s · %2$d выбрано</string>
+    <string name="manager_history_back">Назад</string>
+    <string name="manager_history_forward">Вперед</string>
+    <string name="manager_left_pane">Левая панель</string>
+    <string name="manager_move_left">← Переместить</string>
+    <string name="manager_move_right">Переместить →</string>
+    <string name="manager_new_folder_short">Новая папка</string>
+    <string name="manager_open_item">Открыть</string>
+    <string name="manager_parent">Вверх</string>
+    <string name="manager_right_pane">Правая панель</string>
+    <string name="manager_switch_pane">Панель переключения</string>
 </resources>

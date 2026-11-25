@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_conflict_review">İncele ve birleştir</string>
+    <string name="keepass_conflict_banner_title">Değişikliklerin birleştirilmesi gerekiyor</string>
+    <string name="keepass_conflict_banner_summary">Senkronizasyona devam etmek için her iki sürümü de inceleyin.</string>
+    <string name="keepass_conflict_merge_sync">Birleştir ve senkronize et</string>
+    <string name="keepass_conflict_comparing">Her iki sürüm karşılaştırılıyor…</string>
+    <string name="keepass_conflict_merging">Birleştiriliyor ve senkronize ediliyor…</string>
+    <string name="keepass_conflict_refresh">Karşılaştırmayı yenile</string>
+    <string name="keepass_conflict_merge_help">Farklı girişlerde veya alanlarda yapılan değişiklikler birleştirilir. Her iki tarafta da aynı alanın değiştiği bir sürüm seçin.</string>
+    <string name="keepass_conflict_auto_merge">Birleşmeye hazır</string>
+    <string name="keepass_conflict_other_options">Diğer seçenekler</string>
+    <string name="keepass_conflict_recovery_hint">Orijinal sürümler veritabanı kurtarma kopyalarında tutulur.</string>
+    <string name="keepass_conflict_keep_local_confirm">Uzak veritabanı yerel sürümün tamamıyla değiştirilsin mi? Yalnızca uzaktan yapılan değişiklikler kurtarma kopyasında kalacaktır.</string>
+    <string name="keepass_conflict_use_remote_confirm">Yerel veritabanı uzak sürümün tamamıyla değiştirilsin mi? Yalnızca yerel değişiklikler kurtarma kopyasında kalacaktır.</string>
+    <string name="keepass_conflict_selected_count">%2$d çakışmalarından %1$d seçildi</string>
+    <string name="keepass_conflict_no_changes">Her iki sürüm de aynı verileri içerir.</string>
+    <string name="keepass_conflict_protected_value">Korunan değer</string>
+    <string name="keepass_conflict_properties_value">Bu sürümdeki özellikler</string>
+    <string name="keepass_conflict_kind_entry">Giriş</string>
+    <string name="keepass_conflict_kind_group">Klasör</string>
+    <string name="keepass_conflict_kind_metadata">Veritabanı ayarları</string>
+    <string name="keepass_conflict_kind_deleted_object">Silme kaydı</string>
+    <string name="keepass_conflict_kind_binary">Ek</string>
+    <string name="keepass_conflict_kind_icon">Özel simge</string>
+    <string name="keepass_conflict_change_added">Eklendi</string>
+    <string name="keepass_conflict_change_modified">Değiştirildi</string>
+    <string name="keepass_conflict_change_moved">Taşındı</string>
+    <string name="keepass_conflict_change_deleted">Silindi</string>
+    <string name="keepass_conflict_change_unchanged">Değişmedi</string>
+</resources>

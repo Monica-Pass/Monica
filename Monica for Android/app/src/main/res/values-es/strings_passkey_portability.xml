@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Uso entre dispositivos</string>
+    <string name="passkey_portability_algorithm_hint">El destino debe admitir el mismo algoritmo de clave. La transferencia actual de Bitwarden solo admite ES256.</string>
+    <string name="passkey_portability_backup_hint">Esta credencial se marcó como no apta para copia de seguridad. Sólo un destino que conserve esa propiedad puede utilizarla; la conversión a Bitwarden o el intercambio de credenciales están bloqueados.</string>
+    <string name="passkey_portability_checking">Comprobando…</string>
+    <string name="passkey_portability_counter_hint">Esta credencial tiene un historial de contador de firmas distinto de cero. Monica utiliza contadores cero; El uso entre dispositivos puede ser rechazado por un sitio web que verifique los contadores anteriores.</string>
+    <string name="passkey_portability_exportable">La clave se puede exportar</string>
+    <string name="passkey_portability_exportable_hint">La clave se puede exportar en un formato cifrado compatible. El destino debe conservar sus propiedades de identificación, clave y registro; La compatibilidad del sitio web aún depende del cliente de destino.</string>
+    <string name="passkey_portability_invalid">Metadatos en conflicto</string>
+    <string name="passkey_portability_invalid_hint">Las propiedades de la copia de seguridad entran en conflicto. La firma no debe cambiar silenciosamente las propiedades registradas; mantenga la credencial de origen para la recuperación.</string>
+    <string name="passkey_portability_key_unavailable">Clave no disponible</string>
+    <string name="passkey_portability_local_hint">La clave privada está vinculada a este dispositivo y no se puede exportar. Copiar la base de datos por sí sola no permitirá el inicio de sesión en otro dispositivo.</string>
+    <string name="passkey_portability_local_only">Solo local</string>
+    <string name="passkey_portability_missing_hint">No se encontró ninguna clave privada utilizable en este dispositivo. Este registro por sí solo no puede iniciar sesión aquí ni en otro dispositivo.</string>
+    <string name="passkey_portability_restricted">Transferencia limitada</string>
+    <string name="passkey_portability_unknown">No verificado</string>
+    <string name="passkey_portability_unknown_hint">No se pudo verificar la capacidad de la clave. Desbloquee la base de datos de origen e inténtelo de nuevo.</string>
+</resources>

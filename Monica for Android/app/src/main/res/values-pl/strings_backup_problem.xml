@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Nie można utworzyć kopii zapasowej tych elementów. Dane lokalne i istniejące zdalne kopie zapasowe pozostają niezmienione.</string>
+    <string name="passkey_backup_problem_title">Kopia zapasowa wymaga uwagi</string>
+    <string name="passkey_device_bound_solution">Zarejestruj nowy, możliwy do eksportu passkey w serwisie i sprawdź, czy działa, zanim wycofasz stary klucz. Możesz także na razie pominąć ten element.</string>
+    <string name="passkey_partial_replace_blocked">Ta kopia zapasowa pomija niektóre Passkeys. Użyj przywracania scalającego; wymiana danych lokalnych jest zablokowana.</string>
+    <string name="passkey_partial_requires_encryption">Częściowe kopie zapasowe pomijające Passkeys muszą być nadal szyfrowane.</string>
+    <string name="passkey_partial_restore_warning">Ta częściowa kopia zapasowa pomija pominięte Passkeys. Przywróć łączy się z istniejącymi rekordami lokalnymi.</string>
+    <string name="passkey_partial_saved">Zapisano częściową kopię zapasową</string>
+    <string name="passkey_partial_saved_detail">Poniższe Passkeys nie są uwzględnione. Ich zapisy lokalne i istniejące zdalne kopie zapasowe zostaną zachowane. Czas ostatniej pełnej kopii zapasowej pozostaje niezmieniony.</string>
+    <string name="passkey_problem_close">Zamknij</string>
+    <string name="passkey_retry_full_backup">Ponów próbę wykonania pełnej kopii zapasowej</string>
+    <string name="passkey_skip_and_backup">Pomiń %1$d i wykonaj kopię zapasową</string>
+    <string name="passkey_skip_explanation">Pomijanie wpływa tylko na tę kopię zapasową i nie usuwa elementów lokalnych. Zostanie zapisana osobna częściowa kopia zapasowa; istniejące zdalne kopie zapasowe zostaną zachowane. Nie zastępuje pełnej kopii zapasowej.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">プリセットフィールドをすべて削除しますか?保存されている既存のエントリのフィールドは保持されます。</string>
+    <string name="customization_drag_handle">%1$s を再注文</string>
+    <string name="customization_filters_navigation">フィルターとナビゲーション</string>
+    <string name="customization_live_preview">ライブプレビュー</string>
+</resources>

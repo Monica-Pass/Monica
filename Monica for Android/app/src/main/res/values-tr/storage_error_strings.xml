@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_error_read_only">Bu veritabanı salt okunurdur. Düzenlemeden önce ayarlarından salt okunur modunu kapatın.</string>
+    <string name="keepass_error_write_permission">KDBX yazma erişimi eksik. Kaydetmeden veya silmeden önce veritabanı ayarlarında tekrar erişim izni verin.</string>
+    <string name="keepass_error_memory">KDF ayarları, bu cihazın sağlayabileceğinden daha fazla bellek gerektiriyor. Bellek kullanımını veya paralelliği azaltın.</string>
+    <string name="keepass_error_credentials">Yanlış veritabanı şifresi veya anahtar dosyası</string>
+    <string name="keepass_error_legacy">Eski .kdb (KeePass 1.x) veritabanları desteklenmez. Veritabanını KeePassDX veya KeePassXC\'ya .kdbx olarak kaydedin ve ardından içe aktarın.</string>
+    <string name="keepass_error_format">Desteklenmeyen veritabanı formatı veya hasarlı dosya</string>
+    <string name="keepass_error_io">KeePass dosyası okunamadı veya yazılamadı</string>
+    <string name="keepass_error_operation">KeePass işlemi başarısız oldu</string>
+    <string name="onedrive_error_redirect">Daha eski bir Monica Steam sürümü, OneDrive oturum açma işlemini engelliyor. Monica Steam\'yu güncelleyin ve tekrar deneyin. Veritabanı dosyası zarar görmemiş.</string>
+    <string name="onedrive_error_power">OneDrive şu anda oturum açma oturumunu yenileyemiyor. Pil optimizasyonunu devre dışı bırakın veya yeniden denemeden önce ekranı açın ve Monica\'yu yeniden açın.</string>
+    <string name="onedrive_error_operation">OneDrive işlemi başarısız oldu</string>
+    <string name="keepass_error_not_remote">Bu veritabanının uzak kaynağı yok</string>
+    <string name="keepass_error_remote_source_missing">Uzak kaynak bulunamadı</string>
+    <string name="keepass_error_working_copy_missing">Yerel çalışma kopyası bulunamadı</string>
+    <string name="keepass_sync_pulled">En son uzak sürümü indirdi</string>
+    <string name="keepass_sync_both_changed">Uzak dosya ve yerel çalışma kopyası değişti. Senkronizasyondan önce çakışmayı çözün.</string>
+    <string name="keepass_sync_up_to_date">Uzak veritabanı güncel</string>
+    <string name="keepass_sync_remote_changed">Uzaktaki dosya değişti. Devam etmeden önce tekrar senkronize edin.</string>
+    <string name="keepass_sync_complete">Uzaktan senkronizasyon tamamlandı</string>
+    <string name="keepass_error_group_name_required">Bir grup adı girin</string>
+    <string name="keepass_error_group_path">Geçersiz grup yolu</string>
+    <string name="keepass_error_group_missing">Grup bulunamadı: %1$s</string>
+    <string name="keepass_error_group_child">Bir grup kendi içine veya alt gruplarından birine taşınamaz</string>
+    <string name="keepass_error_group_uuid">Hedef zaten aynı UUID\'ye sahip farklı bir gruba sahip: %1$s</string>
+    <string name="keepass_error_select_folder">En az bir klasör seçin</string>
+    <string name="keepass_group_unnamed">Adsız grup</string>
+    <string name="keepass_error_parent_group">Üst grup bulunamadı: %1$s</string>
+    <string name="keepass_error_group_exists">Bu adda bir grup burada zaten mevcut</string>
+    <string name="keepass_error_no_credentials">Hiçbir veritabanı kimlik bilgisi mevcut değil</string>
+    <string name="keepass_error_source_type">Desteklenmeyen uzak kaynak türü: %1$s</string>
+    <string name="keepass_error_upload_verification">Uzaktan doğrulama başarısız oldu: yüklenen içerik farklı (%1$d/%2$d bayt)</string>
+    <string name="storage_error_invalid_path">Geçersiz dosya yolu</string>
+    <string name="storage_error_create_directory">Veritabanı dizini oluşturulamadı</string>
+    <string name="storage_error_read_database">Veritabanı dosyası okunamadı</string>
+    <string name="storage_error_open_database">Veritabanı dosyası açılamadı</string>
+    <string name="storage_error_recovery_copy">KeePass kurtarma kopyası oluşturulamadı</string>
+    <string name="storage_error_verify_database">Veritabanı dosyası doğrulanamadı</string>
+    <string name="storage_error_write_verification">Harici KeePass dosyası yazıldıktan sonra doğrulama başarısız oldu</string>
+    <string name="storage_error_rollback_verification">Harici KeePass dosyası geri yüklendikten sonra doğrulama başarısız oldu</string>
+    <string name="storage_error_write_database">Veritabanı dosyası yazılamadı</string>
+    <string name="keepass_error_conflict_cache_missing">Çakışmaları çözmek için gereken önbelleğe alınmış kopya eksik</string>
+    <string name="onedrive_error_session_expired">OneDrive hesap oturumunun süresi doldu. Tekrar oturum açın.</string>
+</resources>

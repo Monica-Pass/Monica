@@ -7,7 +7,7 @@
     <string name="bitwarden_account_verification_pending">啟驗書，貼其鏈或符於此。</string>
     <string name="bitwarden_account_verification_input">郵驗鏈或符</string>
     <string name="bitwarden_account_verification_invalid">此驗鏈或符不合此帳。</string>
-    <string name="bitwarden_account_password_requirements">主密須強，字數至少十二。</string>
+    <string name="bitwarden_account_password_requirements">总钥须强，至少 12 字符。</string>
     <string name="bitwarden_account_password_mismatch">兩次主密不合。</string>
     <string name="bitwarden_account_registration_success">帳已立，以新主密登入。</string>
     <string name="bitwarden_account_hint_sent">若此帳存，已索主密提示書。</string>

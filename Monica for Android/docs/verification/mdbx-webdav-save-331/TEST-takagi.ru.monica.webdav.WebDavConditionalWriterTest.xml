@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.webdav.WebDavConditionalWriterTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-25T16:01:35.380Z" hostname="JOYIN" time="0.256">
+  <properties/>
+  <testcase name="conditionalReplacementUsesExactEtag" classname="takagi.ru.monica.webdav.WebDavConditionalWriterTest" time="0.162"/>
+  <testcase name="createOnlyUsesAtomicIfNoneMatchAndStreamsFile" classname="takagi.ru.monica.webdav.WebDavConditionalWriterTest" time="0.027"/>
+  <testcase name="ifMatchRequiresARealProviderToken" classname="takagi.ru.monica.webdav.WebDavConditionalWriterTest" time="0.011"/>
+  <testcase name="transient503RetainsRetryAfterAndConditionalHeaderOnRetry" classname="takagi.ru.monica.webdav.WebDavConditionalWriterTest" time="0.038"/>
+  <testcase name="preconditionFailureIsNotDowngradedToSuccess" classname="takagi.ru.monica.webdav.WebDavConditionalWriterTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

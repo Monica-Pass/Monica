@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_decrease">감소</string>
+    <string name="cg_email_alias">이메일 및 별칭</string>
+    <string name="cg_increase">증가</string>
+    <string name="cg_invalid_options">문자를 선택하고 길이 내에서 최소 총계를 유지합니다.</string>
+    <string name="cg_length">길이</string>
+    <string name="cg_minimum">최소 개수</string>
+    <string name="cg_random_username">임의의 사용자 이름</string>
+    <string name="cg_saved_suggestions">저장된 제안</string>
+    <string name="cg_symbols">무작위 기호</string>
+    <string name="cg_use">사용</string>
+    <string name="cg_username_title">사용자 이름 생성기</string>
+    <string name="cg_valid_email">유효한 이메일 주소를 입력하세요</string>
+    <string name="cg_words">단어</string>
+</resources>

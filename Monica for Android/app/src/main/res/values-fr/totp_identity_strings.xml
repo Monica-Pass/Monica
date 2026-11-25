@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Impossible d\'identifier de manière unique l\'entrée d\'authentification d\'origine KeePass. Actualisez la base de données et réessayez.</string>
+</resources>

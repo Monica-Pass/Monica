@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_compat_android_old">Otomatik doldurma, Android 8.0 veya üzerini gerektirir</string>
+    <string name="autofill_compat_huawei">Huawei cihazları, Android 10 veya sonraki sürümlerde otomatik doldurmayı kısıtlayabilir</string>
+    <string name="autofill_compat_xiaomi">Xiaomi cihazları MIUI Güvenliğinde otomatik doldurma izni gerektirebilir</string>
+    <string name="autofill_compat_oppo">OPPO/Realme cihazları, izin ayarlarında otomatik doldurma izni gerektirebilir</string>
+    <string name="autofill_compat_vivo">Vivo cihazları iManager\'da otomatik doldurma izni gerektirebilir</string>
+    <string name="autofill_compat_android12_rom">Otomatik doldurma, sistem uyumluluk sorunları nedeniyle bazı Android 12 ROM\'larda güvenilir olmayabilir</string>
+    <string name="autofill_compat_inline">Bu cihaz klavye önerilerini desteklemiyor. Otomatik doldurma bir açılır menü kullanacaktır.</string>
+    <string name="autofill_compat_emulator">Otomatik doldurma bu öykünücüde güvenilir olmayabilir</string>
+    <string name="autofill_compat_unsupported">Bu cihaz otomatik doldurma çerçevesini desteklemiyor</string>
+    <string name="autofill_compat_check_failed">Uyumluluk kontrolü tamamlanamadı</string>
+    <string name="autofill_check_manifest">MonicaAutofillServiceNg\'nin AndroidManifest.xml\'de bildirildiğini kontrol edin</string>
+    <string name="autofill_check_permission_manifest">Hizmet, BIND_AUTOFILL_SERVICE ve bir otomatik doldurma amaç filtresi bildirmeli</string>
+    <string name="autofill_check_enable_system">Sistem ayarlarında otomatik doldurma hizmeti olarak Monica\'yu seçin</string>
+    <string name="autofill_check_path_system">Ayarlar → Sistem → Diller ve giriş → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_path_xiaomi">Xiaomi: Ayarlar → Ek ayarlar → Diller ve giriş → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_miui_permission">MIUI Güvenliğinde gerekli izinlere de izin verin</string>
+    <string name="autofill_check_path_huawei">Huawei: Ayarlar → Sistem ve güncellemeler → Diller ve giriş → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_path_oppo">OPPO/Realme: Ayarlar → Ek ayarlar → Klavye ve giriş yöntemi → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_path_vivo">Vivo: Ayarlar → Diğer ayarlar → Giriş yöntemi → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_path_samsung">Samsung: Ayarlar → Genel yönetim → Dil ve giriş → Otomatik doldurma hizmeti</string>
+    <string name="autofill_check_enable_app">Monica ayarlarında otomatik doldurmayı etkinleştir</string>
+    <string name="autofill_check_app_permissions">Monica\'nın gerekli uygulama izinlerine sahip olup olmadığını kontrol edin</string>
+    <string name="autofill_check_issue_count">Uyumluluk sorunları: %1$d. Aşağıdaki ayrıntılara bakın.</string>
+    <string name="autofill_check_xiaomi_permission">Xiaomi: Güvenlik → Uygulamaları yönet → Monica → İzinler → Otomatik doldurmaya izin ver</string>
+    <string name="autofill_check_huawei_autostart">Huawei: Monica\'nın Telefon Yöneticisi\'nde otomatik olarak başlatılmasına izin vermeniz gerekebilir</string>
+    <string name="autofill_check_oppo_permission">OPPO/Realme: Ayarlar → Uygulama yönetimi → Monica → İzinler → Otomatik doldurmaya izin ver</string>
+    <string name="autofill_check_vivo_permission">Vivo: iManager → Uygulama yönetimi → İzin yönetimi → Monica → Otomatik doldurmaya izin ver</string>
+    <string name="autofill_check_background">Monica için pil kısıtlamalarını devre dışı bırakın ve otomatik başlatmaya ve arka plan etkinliğine izin verin</string>
+    <string name="autofill_check_trigger_manually">Otomatik doldurma güvenilir değilse oturum başlatmak için oturum açma alanından manuel olarak tetikleyin</string>
+    <string name="autofill_check_configured">Hizmet doğru şekilde yapılandırıldı. Sorunlar devam ederse Monica\'yu yeniden başlatın.</string>
+    <string name="autofill_check_view_logs">Ayrıntılı günlükleri görüntülemek için sorun giderme araçlarını kullanın</string>
+    <string name="autofill_check_restart">Bu değişiklikleri uyguladıktan sonra Monica\'yu yeniden başlatın</string>
+    <string name="autofill_check_recommendations_failed">Öneriler oluşturulamadı. Desteğe başvurun.</string>
+    <string name="autofill_report_parsing">Alan tanıma</string>
+    <string name="autofill_report_matching">Şifre eşleştirme</string>
+    <string name="autofill_report_building">Yanıt yapısı</string>
+    <string name="autofill_report_performance">Performans</string>
+    <string name="autofill_report_parsing_failures">Alan tanıma hataları: %1$d</string>
+    <string name="autofill_report_matching_failures">Eşleşen şifresi olmayan istekler: %1$d</string>
+    <string name="autofill_report_building_failures">Yanıt oluşturma hataları: %1$d</string>
+    <string name="autofill_report_slow">Ortalama yanıt süresi çok yüksek: %1$d ms</string>
+    <string name="autofill_report_improve_recognition">Alan tanımayı geliştirin</string>
+    <string name="autofill_report_recognition_hint">Bazı uygulama alanları tanınamadı. Alan ayrıştırıcı ayarlarını kontrol edin.</string>
+    <string name="autofill_report_add_passwords">Şifre girişlerini ekle</string>
+    <string name="autofill_report_add_passwords_hint">Eşleşen şifre bulunamadı. Bu uygulamalar için şifre girişleri ekleyin.</string>
+    <string name="autofill_report_integrity">Verilerin eksiksizliğini kontrol edin</string>
+    <string name="autofill_report_integrity_hint">Veriler eksik olduğunda yanıtlar başarısız olabilir. Şifre girişlerini kontrol edin.</string>
+    <string name="autofill_report_optimize">Performansı artırın</string>
+    <string name="autofill_report_optimize_hint">Yanıtlar yavaş. Önbelleği temizlemeyi veya şifre girişi sayısını azaltmayı deneyin.</string>
+    <string name="autofill_report_title">=== Monica otomatik doldurma teşhisi ===</string>
+    <string name="autofill_report_exported_at">Dışa aktarıldığı yer: %1$s</string>
+    <string name="autofill_report_device">Cihaz bilgisi</string>
+    <string name="autofill_report_manufacturer">Üretici: %1$s</string>
+    <string name="autofill_report_model">Modeli: %1$s</string>
+    <string name="autofill_report_android">Android: %1$s (API %2$d)</string>
+    <string name="autofill_report_rom">ROM: %1$s</string>
+    <string name="autofill_report_inline">Desteklenen klavye önerileri: %1$s</string>
+    <string name="autofill_report_statistics">İstatistikler</string>
+    <string name="autofill_report_log_details">Günlük ayrıntıları</string>
+    <string name="autofill_report_end">=== Günlüğün sonu ===</string>
+</resources>

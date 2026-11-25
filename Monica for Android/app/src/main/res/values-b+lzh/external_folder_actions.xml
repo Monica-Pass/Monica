@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">果欲删卷夹“%1$s”及其内容乎？请确认后再继续。</string>
+    <string name="external_folder_delete_keep_items">果欲删卷夹“%1$s”乎？其中项目仍留，唯不再属此卷夹。</string>
+</resources>

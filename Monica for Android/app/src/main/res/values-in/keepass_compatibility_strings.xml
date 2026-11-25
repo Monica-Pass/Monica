@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_otp_secret_invalid">Masukkan rahasia Base32 OTP yang valid.</string>
+    <string name="keepass_entry_properties">Properti entri</string>
+    <string name="keepass_entry_tags_hint">Pisahkan tag dengan baris, koma, atau titik koma baru</string>
+    <string name="keepass_entry_expires">Kedaluwarsa</string>
+    <string name="keepass_entry_never_expires">Tidak pernah kadaluwarsa</string>
+    <string name="keepass_entry_expires_at">Kedaluwarsa: %1$s</string>
+    <string name="keepass_entry_expired_at">Kedaluwarsa: %1$s</string>
+    <string name="keepass_hotp_saving">Penghitung penghematan…</string>
+    <string name="keepass_hotp_counter_exhausted">Penghitung telah mencapai nilai maksimumnya.</string>
+</resources>

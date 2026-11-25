@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">Salin hasilnya</string>
+    <string name="passkey_copy_result_summary">Disalin %1$d; dilewati atau gagal: %2$d</string>
+    <string name="passkey_copy_success_count">Menyalin Kunci Sandi %1$d</string>
+    <string name="passkey_transfer_key_unavailable">Kunci pribadi tidak tersedia di perangkat ini.</string>
+    <string name="passkey_transfer_restricted">Kunci Sandi ini tidak dapat ditransfer ke tujuan ini.</string>
+    <string name="passkey_transfer_same_database_copy">Basis data ini memerlukan ID kredensial unik. Pilih database lain untuk menyalin Kunci Sandi ini.</string>
+    <string name="passkey_copy_blocked_title">Beberapa Kunci Sandi tidak dapat disalin</string>
+    <string name="passkey_move_blocked_title">Beberapa Kunci Sandi tidak dapat dipindahkan</string>
+    <string name="passkey_transfer_preflight_summary">Kunci Sandi %1$d tidak dapat diproses; %2$d dapat melanjutkan. Belum ada yang berubah.</string>
+    <string name="passkey_cancel_copy">Batalkan penyalinan</string>
+    <string name="passkey_cancel_move">Batalkan perpindahan</string>
+    <string name="passkey_transfer_skip">Lewati %1$d dan lanjutkan</string>
+</resources>

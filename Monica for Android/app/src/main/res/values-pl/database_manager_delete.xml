@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Uwzględniono foldery i ich zawartość. Lokalne hasła i bezpieczne elementy trafiają do Kosza. Foldery i passkeys zostaną trwale usunięte.</string>
+    <string name="manager_delete_native_hint">Wybrane elementy i zawartość folderu zostaną trwale usunięte z tej bazy danych. Tego nie można cofnąć.</string>
+    <string name="manager_delete_source">Wybrano %1$s · %2$s · %3$d</string>
+    <string name="manager_delete_title">Usunąć wybrane elementy?</string>
+</resources>

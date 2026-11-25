@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_crop_title">Pangkas foto</string>
+    <string name="photo_crop_skip">Lewati pemotongan</string>
+    <string name="photo_crop_continue">Pangkas dan lanjutkan</string>
+    <string name="card_face_crop_apply">Gunakan karya seni</string>
+</resources>

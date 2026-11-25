@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_report_title">Monica 應用程式清單診斷報告</string>
+    <string name="app_report_generated">產生時間：%1$s</string>
+    <string name="app_report_brand">裝置品牌：%1$s</string>
+    <string name="app_report_model">裝置型號：%1$s</string>
+    <string name="app_report_android">Android 版本：%1$s（API %2$d）</string>
+    <string name="app_report_summary">統計摘要</string>
+    <string name="app_report_total">應用程式總數：%1$d</string>
+    <string name="app_report_user_count">使用者應用程式：%1$d</string>
+    <string name="app_report_system_count">系統應用程式：%1$d（已更新：%2$d）</string>
+    <string name="app_report_visible_percent">目前顯示：%1$d（%2$s%%）</string>
+    <string name="app_report_hidden_percent">已隱藏：%1$d（%2$s%%）</string>
+    <string name="app_report_filter_health">過濾規則評估：%1$s</string>
+    <string name="app_report_filter_loose">規則可能過於寬鬆，隱藏的系統元件較少</string>
+    <string name="app_report_filter_strict">規則可能過於嚴格，有用的應用程式也可能被隱藏</string>
+    <string name="app_report_filter_good">過濾規則較為適中</string>
+    <string name="app_report_visible_apps">目前顯示的應用程式：%1$d</string>
+    <string name="app_report_user_apps">使用者安裝的應用程式：%1$d</string>
+    <string name="app_report_system_apps">系統應用程式：%1$d</string>
+    <string name="app_report_more_apps">其餘應用程式：%1$d</string>
+    <string name="app_report_hidden_components">已隱藏的系統元件：%1$d</string>
+    <string name="app_report_hidden_feedback">若有用的應用程式被誤隱藏，請在反饋中提供包名。</string>
+    <string name="app_report_android_core">Android 核心</string>
+    <string name="app_report_android_system">Android 系統</string>
+    <string name="app_report_google_services">Google 服務</string>
+    <string name="app_report_chip_vendor">芯片廠商元件</string>
+    <string name="app_report_other">其他元件</string>
+    <string name="app_report_more_components">其餘元件：%1$d</string>
+    <string name="app_report_all_apps">完整應用程式清單：%1$d</string>
+    <string name="app_report_format">格式：[狀態] 應用程式名稱</string>
+    <string name="app_report_package_type">包名 · 類型</string>
+    <string name="app_report_unknown_app">未知應用程式</string>
+    <string name="app_report_user_app">使用者應用程式</string>
+    <string name="app_report_system_app">系統應用程式</string>
+    <string name="app_report_updated_system_app">已更新的系統應用程式</string>
+    <string name="app_report_filter_rules">應用程式過濾規則</string>
+    <string name="app_report_rule_count">過濾規則數量：%1$d</string>
+    <string name="app_report_rules_feedback">如需調整過濾規則，請存取：</string>
+    <string name="app_report_complete">報告產生完成</string>
+    <string name="app_report_hidden_count">已隱藏應用程式：%1$d</string>
+    <string name="app_report_path">檔案路徑：</string>
+</resources>

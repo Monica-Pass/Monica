@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_account_choose">選擇帳號</string>
+    <string name="send_search_or_link_hint">搜尋 Send 或貼上 Send 連結</string>
+    <string name="send_draft_replace_title">開啟這份草稿？</string>
+    <string name="send_draft_replace_message">這會取代目前表單中尚未儲存的修改，已儲存的草稿會保留。</string>
+</resources>

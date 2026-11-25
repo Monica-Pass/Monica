@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">Belum ada lampiran</string>
+    <string name="attachment_editor_hint">Pilih file, gambar atau dokumen</string>
+    <string name="attachment_editor_working">Bekerja…</string>
+</resources>

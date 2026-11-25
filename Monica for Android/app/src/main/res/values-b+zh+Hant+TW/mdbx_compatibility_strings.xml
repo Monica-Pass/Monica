@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_unknown_read_only">尚不支援編輯此類型的項目，您仍可查看所有資料。</string>
+    <string name="mdbx_unknown_unavailable">無法讀取此項目。請解鎖資料庫後重新開啟詳細資料。</string>
+    <string name="mdbx_unknown_show">顯示值</string>
+    <string name="mdbx_unknown_hide">隱藏值</string>
+</resources>

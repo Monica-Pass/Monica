@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">Nie można odczytać lub zapisać każdego pliku. Twoja oryginalna treść została zachowana. Sprawdź dostęp do pliku i jego rozmiar, a następnie spróbuj ponownie.</string>
+    <string name="native_token_assets_limit">Do 64 MiB nowych lub przeniesionych plików na każdy zapis i 128 załączników na token.</string>
+    <string name="native_token_backup_limit">Natywne pliki tokenów API w jednej kopii zapasowej ZIP muszą mieć łącznie 64 MiB lub mniej. W przypadku większych skarbców użyj natywnej kopii zapasowej bazy danych.</string>
+    <string name="native_token_backup_needs_files">Ta baza danych zawiera tokeny API wraz z plikami. Dołącz obrazy i załączniki, aby wyeksportować pełną kopię zapasową.</string>
+    <string name="native_token_kdbx_files_unsupported">Tokeny API z plikami wymagają zaszyfrowanej kopii zapasowej Monica ZIP lub natywnej bazy danych. Eksport KDBX obsługuje tokeny API bez plików.</string>
+</resources>

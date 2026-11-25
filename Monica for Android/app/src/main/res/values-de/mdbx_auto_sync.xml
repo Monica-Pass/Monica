@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Beim Speichern hochladen; Überprüfen Sie Updates, während Sie im Vordergrund entsperrt sind</string>
+    <string name="mdbx_auto_sync_manual_hint">Aus · Bei Bedarf manuell synchronisieren</string>
+    <string name="mdbx_auto_sync_title">Automatische Synchronisierung</string>
+</resources>

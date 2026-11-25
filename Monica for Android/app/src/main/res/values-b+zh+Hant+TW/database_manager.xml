@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_open_database">開啟資料庫設定</string>
+    <string name="manager_dual">切換單欄／雙欄</string>
+    <string name="manager_databases">資料庫</string>
+    <string name="manager_choose_destination">選擇目標資料夾</string>
+    <string name="manager_selection_destination">已選 %1$d 項 → %2$s</string>
+    <string name="manager_items_selected">%1$d 項 · 已選 %2$d 項</string>
+    <string name="manager_confirm_transfer">將選取的 %1$d 項從「%2$s」傳送到「%3$s / %4$s」？目標資料驗證完成前會保留來源資料。</string>
+    <string name="manager_result">操作結果</string>
+    <string name="manager_result_count">已完成 %1$d 項 · 需處理 %2$d 項</string>
+    <string name="manager_technical_details">技術詳細資訊</string>
+    <string name="manager_select">選取此項</string>
+    <string name="manager_failure_format">目標格式無法完整儲存這些原始資訊。已保留來源，請選擇相同格式的資料庫，具體欄位見詳細資訊。</string>
+    <string name="manager_failure_changed">資料已變更，或目標驗證未通過。已保留來源，請重新整理兩欄並檢查目標後再重試。</string>
+    <string name="manager_failure_locked">資料庫需要解鎖，或原始檔案暫時無法使用。請先在設定中開啟，再重新整理此欄。</string>
+    <string name="manager_failure_general">操作未能完成，請檢查兩欄和技術詳細資訊後再重試：目標可能已存在部分副本。</string>
+    <string name="manager_left_pane">左欄</string>
+    <string name="manager_right_pane">右欄</string>
+    <string name="manager_copy_left">← 複製</string>
+    <string name="manager_copy_right">複製 →</string>
+    <string name="manager_move_left">← 移動</string>
+    <string name="manager_move_right">移動 →</string>
+    <string name="manager_focused_selection">目前：%1$s · 已選 %2$d 項</string>
+    <string name="manager_focused_location">目前：%1$s · %2$s</string>
+    <string name="manager_history_back">後退</string>
+    <string name="manager_history_forward">前進</string>
+    <string name="manager_new_folder_short">新建</string>
+    <string name="manager_switch_pane">切換欄</string>
+    <string name="manager_parent">上一級</string>
+    <string name="manager_open_item">開啟</string>
+    <string name="manager_clear_selection">取消選擇</string>
+</resources>

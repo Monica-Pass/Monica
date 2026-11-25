@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_stack_loop_title">卡疊循環</string>
+    <string name="wallet_stack_loop_desc">上下滑動可循環翻閱卡疊，末張與首張相接。</string>
+    <string name="page_adjustment_preview_games">遊戲</string>
+    <string name="page_adjustment_preview_folder">目錄1</string>
+    <string name="page_adjustment_preview_subfolder">子目錄</string>
+</resources>

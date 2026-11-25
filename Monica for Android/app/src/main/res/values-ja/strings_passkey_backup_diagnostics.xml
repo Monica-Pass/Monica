@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">この passkey は、エクスポートできないデバイスにバインドされた Android Keystore キーを使用しています。元のデバイスでは引き続き動作しますが、ポータブル バックアップに含めることはできません。</string>
+    <string name="backup_passkey_unavailable">秘密キーが見つからないか、読み取ることができません。秘密キーを含むバックアップを再インポートするか、元のデバイスを確認してください。他のデータとリモートバックアップは保持されました。</string>
+    <string name="backup_passkey_unreadable">保護された秘密キーを読み取れませんでした。 Monica のロックを解除して再試行してください。これが続く場合は、元のデバイスまたは秘密キーを含むバックアップを確認してください。</string>
+</resources>

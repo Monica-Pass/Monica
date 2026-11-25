@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.ui
 
+import takagi.ru.monica.ui.haptic.switchClick
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -54,7 +56,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -687,9 +689,8 @@ internal fun SteamSellItemSheet(
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(enabled = !marketState.actionLoading) {
-                        autoConfirm = !autoConfirm
-                    },
+                    .clickable(enabled = !marketState.actionLoading,
+                        onClick = switchClick(autoConfirm, !marketState.actionLoading) { autoConfirm = it }),
                 shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.surfaceContainer
             ) {

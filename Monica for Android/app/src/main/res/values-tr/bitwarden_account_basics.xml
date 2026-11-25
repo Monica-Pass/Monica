@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Doğrulama e-postasını yeniden gönder</string>
+    <string name="bitwarden_new_device_resend_sent">Doğrulama e-postası istendi. Gelen kutunuzu kontrol edin.</string>
+    <string name="bitwarden_new_device_resend_failed">Doğrulama e-postası istenemedi. Tekrar deneyin.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Bu sunucu, yeni cihaz doğrulama e-postalarının yeniden gönderilmesini desteklemiyor.</string>
+    <string name="bitwarden_new_device_resend_wait">%1$d saniye içinde tekrar deneyin.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Çok fazla istek var. Tekrar denemeden önce bekleyin.</string>
+    <string name="bitwarden_account_fingerprint">Hesap parmak izi ifadesi</string>
+    <string name="bitwarden_account_fingerprint_hint">Hesap kimliğinizi doğrulamanıza yardımcı olması için bu ifadeyi başka bir güvenilir kanalla karşılaştırın.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Kimlik anahtarını yüklemek için bu hesabı senkronize edin ve tekrar deneyin.</string>
+    <string name="bitwarden_account_fingerprint_copy">İfadeyi kopyala</string>
+</resources>

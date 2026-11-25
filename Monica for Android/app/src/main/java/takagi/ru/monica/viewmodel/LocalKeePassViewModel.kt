@@ -1443,6 +1443,10 @@ class LocalKeePassViewModel(
     /**
      * 创建新的 KeePass 数据库
      */
+    suspend fun reorderDatabaseDisplay(ids: List<Long>) = withContext(Dispatchers.IO) {
+        dao.reorderDisplay(ids)
+    }
+
     fun createDatabase(
         name: String,
         password: String,
@@ -1451,9 +1455,9 @@ class LocalKeePassViewModel(
         keyFileUri: Uri? = null,
         creationOptions: KeePassDatabaseCreationOptions = KeePassDatabaseCreationOptions(),
         description: String? = null,
-        keepKeyFileCopy: Boolean = false
-    ) {
-        viewModelScope.launch {
+        keepKeyFileCopy: Boolean = false,
+        onResult: (Boolean) -> Unit = {},
+    ): kotlinx.coroutines.Job = viewModelScope.launch {
             _operationState.value = OperationState.Loading(strings.get(R.string.keepass_operation_creating))
             
             try {
@@ -1547,16 +1551,19 @@ class LocalKeePassViewModel(
                 createdDatabaseId?.let { databaseId ->
 
                 }
+                onResult(true)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_webdav_create_failed, formatOperationError(e)))
+                onResult(false)
             }
         }
-    }
     
     /**
      * 生成新的密钥文件 (XML 格式)
      */
-    fun generateKeyFile(uri: Uri) {
+    fun generateKeyFile(uri: Uri, onResult: (Boolean) -> Unit = {}): kotlinx.coroutines.Job =
         viewModelScope.launch {
             _operationState.value = OperationState.Loading(strings.get(R.string.keepass_operation_generate_key))
             
@@ -1596,11 +1603,14 @@ class LocalKeePassViewModel(
                 }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_key_generated))
+                onResult(true)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_key_generate_failed, formatOperationError(e)))
+                onResult(false)
             }
         }
-    }
 
     /**
      * 导入外部 KeePass 数据库（添加引用，不复制文件）
@@ -1611,9 +1621,9 @@ class LocalKeePassViewModel(
         password: String,
         keyFileUri: Uri? = null,
         description: String? = null,
-        keepKeyFileCopy: Boolean = false
-    ) {
-        viewModelScope.launch {
+        keepKeyFileCopy: Boolean = false,
+        onResult: (Boolean) -> Unit = {},
+    ): kotlinx.coroutines.Job = viewModelScope.launch {
             _operationState.value = OperationState.Loading(strings.get(R.string.keepass_operation_adding))
             
             try {
@@ -1738,11 +1748,14 @@ class LocalKeePassViewModel(
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_added, verifyElapsedMs))
 
+                onResult(true)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_add_failed, formatOperationError(e)))
+                onResult(false)
             }
         }
-    }
 
     fun addWebDavDatabase(
         name: String,
@@ -2479,7 +2492,7 @@ class LocalKeePassViewModel(
             }
         }
     }
-    
+
     /**
      * 复制外部数据库到内部存储
      */

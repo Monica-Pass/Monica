@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_uploading">Yükleniyor</string>
+    <string name="transfer_downloading">İndiriliyor</string>
+    <string name="transfer_task_busy">Başka bir veri görevi çalışıyor. Lütfen bitmesini bekleyin.</string>
+    <string name="transfer_task_done">Veri görevi tamamlandı</string>
+    <string name="transfer_task_failed">Veri görevi durduruldu veya ilgilenilmesi gerekiyor</string>
+    <string name="transfer_interrupted_check_result">Önceki görev sistem tarafından kesintiye uğradı. Yeniden denemeden önce içe aktarılan verileri veya yedeklemeyi kontrol edin; otomatik olarak yeniden başlatılmadı.</string>
+</resources>

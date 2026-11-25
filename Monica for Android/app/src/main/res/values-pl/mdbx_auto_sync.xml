@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Prześlij po zapisaniu; sprawdzaj aktualizacje po odblokowaniu na pierwszym planie</string>
+    <string name="mdbx_auto_sync_manual_hint">Wył. · W razie potrzeby synchronizuj ręcznie</string>
+    <string name="mdbx_auto_sync_title">Automatyczna synchronizacja</string>
+</resources>

@@ -15,6 +15,9 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.BringIntoViewSpec
+import androidx.compose.foundation.gestures.LocalBringIntoViewSpec
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,6 +65,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -78,6 +82,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -1391,7 +1397,7 @@ private fun NoteEditorModeTopBar(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun NoteEditorModeBody(
     fullScreen: Boolean,
@@ -1416,6 +1422,20 @@ private fun NoteEditorModeBody(
     onAddImageClick: () -> Unit,
     onRemoveImage: (String) -> Unit
 ) {
+    val density = LocalDensity.current
+    val showToolbar = !editorState.isMarkdownPreview
+    var toolbarHeight by remember { mutableStateOf(64.dp) }
+    val toolbarClearance = if (showToolbar) toolbarHeight + 24.dp else 0.dp
+    val defaultBringIntoViewSpec = LocalBringIntoViewSpec.current
+    val toolbarClearancePx = with(density) { toolbarClearance.toPx() }
+    val editorBringIntoViewSpec = remember(defaultBringIntoViewSpec, toolbarClearancePx) {
+        object : BringIntoViewSpec {
+            override fun calculateScrollDistance(offset: Float, size: Float, containerSize: Float): Float =
+                defaultBringIntoViewSpec.calculateScrollDistance(
+                    offset, size, (containerSize - toolbarClearancePx).coerceAtLeast(1f)
+                )
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -1424,19 +1444,15 @@ private fun NoteEditorModeBody(
                 scaleX = scale
                 scaleY = scale
             }
+            .imePadding()
+            .navigationBarsPadding()
     ) {
         if (fullScreen) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .imePadding()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 12.dp)
-            ) {
+            Box(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
                 NoteEditorSection(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
+                        .padding(bottom = toolbarClearance),
                     title = editorState.title,
                     onTitleChange = onTitleChange,
                     content = editorState.contentField,
@@ -1454,112 +1470,83 @@ private fun NoteEditorModeBody(
                     showTags = false,
                     editorTakesRemainingSpace = true
                 )
+            }
+        } else {
+            // Keep the viewport behind the toolbar. Only the scrollable content gets
+            // trailing space; focus requests use the unobscured portion of the viewport.
+            CompositionLocalProvider(LocalBringIntoViewSpec provides editorBringIntoViewSpec) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(normalEditorScrollState)
+                        .padding(top = 12.dp, bottom = toolbarClearance + 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    // Nested text fields keep their own normal scrolling behavior.
+                    CompositionLocalProvider(LocalBringIntoViewSpec provides defaultBringIntoViewSpec) {
+                        storageSelectorContent()
 
-                if (!editorState.isMarkdownPreview) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp, bottom = 4.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Surface(
-                            shape = RoundedCornerShape(20.dp),
-                            color = MaterialTheme.colorScheme.surface,
-                            tonalElevation = 6.dp,
-                            shadowElevation = 8.dp
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                            ) {
-                                toolbarContent()
-                            }
+                        NoteEditorSection(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = editorState.title,
+                            onTitleChange = onTitleChange,
+                            content = editorState.contentField,
+                            onContentChange = onContentChange,
+                            isMarkdownPreview = editorState.isMarkdownPreview,
+                            onMarkdownPreviewModeChange = onPreviewModeChange,
+                            showModeSwitcher = true,
+                            codeBlockCollapseMode = NoteCodeBlockCollapseMode.COMPACT,
+                            inlineImageBitmaps = noteImageBitmaps,
+                            onPreviewInlineImage = onPreviewInlineImage,
+                            onTaskItemToggle = onTaskItemToggle,
+                            tagsText = editorState.tagsText,
+                            onTagsTextChange = onTagsTextChange,
+                            borderless = false,
+                            showTags = true,
+                            editorTakesRemainingSpace = false
+                        )
+
+                        CustomFieldEditorSection(
+                            fields = customFields,
+                            onFieldsChange = onCustomFieldsChange,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        if (isEditing) {
+                            NoteImagesSection(
+                                noteImagePaths = editorState.noteImagePaths,
+                                noteImageBitmaps = noteImageBitmaps,
+                                imageActionsEnabled = !isBitwardenNoteTarget,
+                                disabledReason = if (isBitwardenNoteTarget) {
+                                    stringResource(R.string.note_bitwarden_inline_image_disabled_reason)
+                                } else {
+                                    null
+                                },
+                                onAddImageClick = onAddImageClick,
+                                onPreviewImage = onPreviewInlineImage,
+                                onRemoveImage = onRemoveImage
+                            )
                         }
+
+                        attachmentsContent()
                     }
                 }
             }
-        } else {
-            Column(
+        }
+        if (showToolbar) {
+            Surface(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .imePadding()
+                    .align(Alignment.BottomCenter)
                     .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .padding(bottom = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                    .onSizeChanged { toolbarHeight = with(density) { it.height.toDp() } },
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 6.dp,
+                shadowElevation = 8.dp
             ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(normalEditorScrollState),
-                    verticalArrangement = Arrangement.spacedBy(14.dp)
-                ) {
-                    storageSelectorContent()
-
-                    NoteEditorSection(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = editorState.title,
-                        onTitleChange = onTitleChange,
-                        content = editorState.contentField,
-                        onContentChange = onContentChange,
-                        isMarkdownPreview = editorState.isMarkdownPreview,
-                        onMarkdownPreviewModeChange = onPreviewModeChange,
-                        showModeSwitcher = true,
-                        codeBlockCollapseMode = NoteCodeBlockCollapseMode.COMPACT,
-                        inlineImageBitmaps = noteImageBitmaps,
-                        onPreviewInlineImage = onPreviewInlineImage,
-                        onTaskItemToggle = onTaskItemToggle,
-                        tagsText = editorState.tagsText,
-                        onTagsTextChange = onTagsTextChange,
-                        borderless = false,
-                        showTags = true,
-                        editorTakesRemainingSpace = false
-                    )
-
-                    CustomFieldEditorSection(
-                        fields = customFields,
-                        onFieldsChange = onCustomFieldsChange,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    if (isEditing) {
-                        NoteImagesSection(
-                            noteImagePaths = editorState.noteImagePaths,
-                            noteImageBitmaps = noteImageBitmaps,
-                            imageActionsEnabled = !isBitwardenNoteTarget,
-                            disabledReason = if (isBitwardenNoteTarget) {
-                                stringResource(R.string.note_bitwarden_inline_image_disabled_reason)
-                            } else {
-                                null
-                            },
-                            onAddImageClick = onAddImageClick,
-                            onPreviewImage = onPreviewInlineImage,
-                            onRemoveImage = onRemoveImage
-                        )
-                    }
-
-                    attachmentsContent()
-                }
-
-                if (!editorState.isMarkdownPreview) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp)
-                            .navigationBarsPadding(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Surface(
-                            shape = RoundedCornerShape(20.dp),
-                            color = MaterialTheme.colorScheme.surface,
-                            tonalElevation = 6.dp,
-                            shadowElevation = 8.dp
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                            ) {
-                                toolbarContent()
-                            }
-                        }
-                    }
+                Column(Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+                    toolbarContent()
                 }
             }
         }

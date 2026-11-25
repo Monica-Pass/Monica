@@ -253,6 +253,10 @@ class SettingsViewModel(
         }
     }
 
+    fun updateHapticFeedbackStrength(strength: Int) {
+        viewModelScope.launch { settingsManager.updateHapticFeedbackStrength(strength) }
+    }
+
     fun updateHapticFeedbackEnabled(enabled: Boolean) {
         viewModelScope.launch {
             settingsManager.updateHapticFeedbackEnabled(enabled)

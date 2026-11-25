@@ -44,7 +44,10 @@ enum class Language {
     TRADITIONAL_CHINESE,
     ITALIAN,
     PORTUGUESE_PORTUGAL,
-    PORTUGUESE_BRAZIL
+    PORTUGUESE_BRAZIL,
+    TRADITIONAL_CHINESE_TAIWAN,
+    INDONESIAN,
+    TURKISH
 }
 
 enum class ProgressBarStyle {
@@ -545,6 +548,7 @@ data class AppSettings(
     val validatorUnifiedProgressBar: UnifiedProgressBarMode = UnifiedProgressBarMode.ENABLED, // 统一进度条模式
     val validatorSmoothProgress: Boolean = true, // 平滑进度条（无停顿感）
     val hapticFeedbackEnabled: Boolean = true, // 触觉反馈总开关
+    val hapticFeedbackStrength: Int = 1,
     val validatorVibrationEnabled: Boolean = true, // 验证器震动提醒
     val hideFabOnScroll: Boolean = false, // 滚动时隐藏悬浮按钮
     val securityAnalysisAutoEnabled: Boolean = false, // 安全分析自动分析

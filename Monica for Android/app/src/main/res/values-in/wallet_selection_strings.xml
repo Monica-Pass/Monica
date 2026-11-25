@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_selection_stack_title">Tumpukan · %1$s</string>
+    <string name="wallet_selection_unstacked">Kartu individu</string>
+    <string name="wallet_selection_group_count">%1$d dari %2$d dipilih</string>
+    <string name="wallet_selection_visible_group_count">%1$d dari %2$d kartu terlihat dipilih</string>
+    <string name="wallet_selection_collapse_stack">Ciutkan tumpukan</string>
+    <string name="wallet_selection_expand_stack">Perluas tumpukan</string>
+</resources>

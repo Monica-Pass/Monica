@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_error_certificate_expired">Sertifikanın süresi doldu. Cihazınızın tarihini ve saatini kontrol edin ve sunucu yöneticisinden sertifikayı yenilemesini isteyin.</string>
+    <string name="bitwarden_error_certificate_not_yet_valid">Sertifika henüz geçerli değil. Cihazınızın tarih ve saatini ve sertifikanın geçerlilik süresini kontrol edin.</string>
+    <string name="bitwarden_error_certificate_hostname">Sunucu sertifikası girdiğiniz alan adıyla eşleşmiyor. Şirket içinde barındırılan adresi ve ters proxy tarafından döndürülen sertifikayı kontrol edin.</string>
+    <string name="bitwarden_error_certificate_untrusted">Sunucu sertifikasını doğrulayamadık. Sunucu sertifika zincirinin tamamını, aygıtın güvenilen CA\'larını ve bir proxy\'nin HTTPS sertifikalarının yerini alıp almadığını kontrol edin. Kendinden imzalı bir sunucu için, sertifika ayarlarında CA\'sını yapılandırın.</string>
+    <string name="bitwarden_error_tls_handshake">Güvenli bir TLS bağlantısı kuramadık. Sunucunun veya ters proxy\'nin TLS yapılandırmasını ve protokol sürümlerini ve mTLS etkinse istemci sertifikasını kontrol edin.</string>
+    <string name="bitwarden_error_dns">Sunucu etki alanını çözemedik. Şirket içinde barındırılan adresi, DNS\'yi, VPN\'yi ve proxy ayarlarını kontrol edin.</string>
+    <string name="bitwarden_error_timeout">Sunucuyla bağlantı zaman aşımına uğradı. Sunucunun çevrimiçi olup olmadığını kontrol edin ve bağlantı noktası, ağ, VPN ve proxy ayarlarını gözden geçirin.</string>
+    <string name="bitwarden_error_connection">Sunucuya bağlanamadık. Adresi ve bağlantı noktasını kontrol edin, hizmetin çalıştığını doğrulayın ve güvenlik duvarı ile proxy ayarlarını inceleyin.</string>
+    <string name="bitwarden_error_proxy">Proxy bağlantıyı reddetti veya kimlik doğrulama gerektiriyor. Proxy adresini, bağlantı noktasını ve hesap ayarlarını kontrol edin.</string>
+    <string name="bitwarden_error_cleartext">Sunucu adresi, mevcut güvenlik politikasının izin vermediği HTTP\'yu kullanıyor. Bir HTTPS adresi kullanın ve ters proxy\'nin HTTPS yapılandırmasını kontrol edin.</string>
+    <string name="bitwarden_error_network_io">Bir ağ hatası sunucuyla iletişimi kesintiye uğrattı. Ağınızı, VPN\'inizi ve proxy ayarlarınızı kontrol edip tekrar deneyin.</string>
+    <string name="bitwarden_organization_sync_incomplete">Bazı ekip öğelerinin şifresi çözülemedi (%1$d). Okunabilir öğeler senkronize edildi; etkilenen mevcut öğeler muhafaza edildi. Kuruluş üyeliğini kontrol edin ve tekrar oturum açın.</string>
+    <string name="bitwarden_sync_incomplete_items">Bazı öğeler senkronize edilemedi (%1$d). Okunabilir öğeler senkronize edildi; mevcut yerel veriler korundu.</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">¿Eliminar la carpeta “%1$s” y su contenido? Por favor confirme antes de continuar.</string>
+    <string name="external_folder_delete_keep_items">¿Eliminar carpeta “%1$s”? Los elementos que contiene se conservarán sin esta carpeta.</string>
+</resources>

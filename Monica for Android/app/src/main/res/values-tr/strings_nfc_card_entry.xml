@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="nfc_card_unlock_retap">Monica\'nın kilidini açın, ardından karta tekrar dokunun.</string>
+    <string name="nfc_card_unsupported">Kullanılabilir bir banka kartı numarası okunmadı. Kartı telefonun yakınında tutun ve tekrar deneyin; bazı kartlar bu bilgiyi açığa çıkarmaz.</string>
+    <string name="nfc_card_read_failed">Kart okunamadı. Telefonun yakınında tutun ve tekrar deneyin.</string>
+    <string name="nfc_card_new_title">Banka kartı oluşturulsun mu?</string>
+    <string name="nfc_card_new_message">Bir banka kartı okundu, ancak bu sayfa başka bir öğe türü içindir. Yeni bir banka kartı sayfası mı açacaksınız? Mevcut içeriğiniz saklanacaktır.</string>
+    <string name="nfc_card_replace_title">Mevcut kart ayrıntıları değiştirilsin mi?</string>
+    <string name="nfc_card_replace_message">Taranan ayrıntılar formdan farklı. Yalnızca kartın sağladığı kart numarası, son kullanma tarihi ve kart sahibi bilgileri değiştirilecektir. Diğer içerikler saklanacaktır.</string>
+    <string name="nfc_card_busy">Bir kartı taramadan önce mevcut işlemi bitirin.</string>
+    <string name="nfc_card_new_action">Yeni kartı aç</string>
+    <string name="nfc_card_replace_action">Değiştir</string>
+    <string name="nfc_card_type_select">Kart tipini seçin</string>
+</resources>

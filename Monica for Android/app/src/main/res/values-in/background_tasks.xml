@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_uploading">Mengunggah</string>
+    <string name="transfer_downloading">Mengunduh</string>
+    <string name="transfer_task_busy">Tugas data lain sedang berjalan. Mohon tunggu hingga selesai.</string>
+    <string name="transfer_task_done">Tugas data selesai</string>
+    <string name="transfer_task_failed">Tugas data terhenti atau memerlukan perhatian</string>
+    <string name="transfer_interrupted_check_result">Tugas sebelumnya dihentikan oleh sistem. Periksa data atau cadangan yang diimpor sebelum mencoba lagi; itu belum dimulai ulang secara otomatis.</string>
+</resources>

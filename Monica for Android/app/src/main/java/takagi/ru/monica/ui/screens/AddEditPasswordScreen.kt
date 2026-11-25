@@ -302,6 +302,7 @@ fun AddEditPasswordScreen(
     passwordId: Long?,
     initialDraft: AddEditPasswordInitialDraft? = null,
     autofillPasswordUpdate: String? = null,
+    nativeEditorAuthorization: (() -> Boolean)? = null,
     forceShowAppBinding: Boolean = false,
     initialCategoryId: Long? = null,
     initialStorageExplicit: Boolean = false,
@@ -369,11 +370,19 @@ fun AddEditPasswordScreen(
             onNavigateBack()
         }
     }
-    DisposableEffect(passwordId, nativeCreationTarget?.databaseId) {
-        val nativeMdbxEditor = viewModel.beginNativePasswordEditor()
+    val currentEditorAuthorization = androidx.compose.runtime.rememberUpdatedState(nativeEditorAuthorization)
+    val editorLifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(passwordId, nativeCreationTarget?.databaseId, editorLifecycle, nativeEditorAuthorization != null) {
+        val nativeMdbxEditor = viewModel.beginNativePasswordEditor(
+            if (nativeEditorAuthorization != null) ({ currentEditorAuthorization.value?.invoke() == true }) else null)
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_STOP) nativeMdbxEditor?.close()
+        }
+        editorLifecycle.addObserver(observer)
         val nativeRead = if (nativeCreationTarget != null) viewModel.holdNativeKeePassRead(nativeCreationTarget.databaseId)
             else passwordId?.let { viewModel.holdNativeKeePassEntryRead(it) }
         onDispose {
+            editorLifecycle.removeObserver(observer)
             nativeMdbxEditor?.close()
             nativeRead?.close()
             nativeCreationTarget?.let { viewModel.refreshKeePassOverviewAfterNativeRead(it.databaseId) }
@@ -2378,7 +2387,9 @@ private fun PasswordEntryEditor(
                             viewModel.getCustomFieldsByEntryIds(siblings.map { it.id }).mapValues { (_, fields) -> fields.map(CustomFieldDraft::fromCustomField) }
                         }
                         hasProjectCredentialMetadata = projectFields.values.any { fields -> fields.any { it.title == ProjectCredentialGroup.FIELD } }
-                        val restoredGroups = if (hasProjectCredentialMetadata) try {
+                        val needsLegacyAccountGroups = isPasswordCredentialMode &&
+                            ProjectCredentialGroup.rowGroups(siblings, emptyMap()).size > 1
+                        val restoredGroups = if (hasProjectCredentialMetadata || needsLegacyAccountGroups) try {
                             withContext(Dispatchers.IO) { ProjectCredentialGroup.restoreForEditing(siblings.map { sibling ->
                                 val state = viewModel.inspectSecretState(sibling)
                                 check(state is SecretValueState.Available || state == SecretValueState.Empty)
@@ -2428,7 +2439,7 @@ private fun PasswordEntryEditor(
                                 }
                             )
                             originalIds = primarySiblings.map { s: PasswordEntry -> s.id }
-                            if (!hasProjectCredentialMetadata) primaryProjectGroup = primaryProjectGroup.copy(
+                            if (restoredGroups.isEmpty()) primaryProjectGroup = primaryProjectGroup.copy(
                                 username = username, passwords = primarySiblings.mapIndexed { index, sibling ->
                                     ProjectCredentialGroup.Password(value = passwords[index], originalEntryId = sibling.id)
                                 })
@@ -3225,7 +3236,7 @@ private fun PasswordEntryEditor(
             } else {
                 viewModel.savePasswordsAcrossTargets(
                             embeddedContentSave = deferredEmbeddedSave,
-                    originalIds = (if (hasProjectCredentialMetadata) allProjectOriginalIds else originalIds).takeIf { isEditing }.orEmpty(),
+                    originalIds = (if (usesProjectCredentialSave) allProjectOriginalIds else originalIds).takeIf { isEditing }.orEmpty(),
                     projectCredentials = if (usesProjectCredentialSave) {
                         listOf(primaryProjectGroup.copy(username = currentUsername, otp = currentAuthKey,
                             passwords = passwords.mapIndexed { index, value ->

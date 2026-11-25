@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">Anuluj kopiowanie</string>
+    <string name="passkey_cancel_move">Anuluj przenoszenie</string>
+    <string name="passkey_copy_blocked_title">Niektórych Passkeys nie można skopiować</string>
+    <string name="passkey_copy_result_summary">Skopiowano %1$d; pominięty lub nie powiódł się: %2$d</string>
+    <string name="passkey_copy_result_title">Skopiuj wyniki</string>
+    <string name="passkey_copy_success_count">Skopiowano %1$d Passkeys</string>
+    <string name="passkey_move_blocked_title">Niektórych Passkeys nie można przenieść</string>
+    <string name="passkey_transfer_key_unavailable">Klucz prywatny jest niedostępny na tym urządzeniu.</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys nie można przetworzyć; %2$d może kontynuować. Nic jeszcze nie zostało zmienione.</string>
+    <string name="passkey_transfer_restricted">Tego Passkey nie można przenieść do tego miejsca docelowego.</string>
+    <string name="passkey_transfer_same_database_copy">Ta baza danych wymaga unikalnego identyfikatora danych uwierzytelniających. Wybierz inną bazę danych, aby skopiować tę Passkey.</string>
+    <string name="passkey_transfer_skip">Pomiń %1$d i kontynuuj</string>
+</resources>

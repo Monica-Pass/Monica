@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Клиринг банковских карт…</string>
+    <string name="clear_data_completed">Очистка завершена</string>
+    <string name="clear_data_completed_hint">Выбранные данные удалены.</string>
+    <string name="clear_data_count">Удалены записи %1$d / %2$d.</string>
+    <string name="clear_data_documents">Удаление документов…</string>
+    <string name="clear_data_failed">Не удалось удалить все выбранные данные.</string>
+    <string name="clear_data_failed_hint">Очистка остановлена. Уже удаленные записи не будут восстановлены. Проверьте подключение к базе данных и повторите попытку.</string>
+    <string name="clear_data_generator_history">Очистка истории создания паролей…</string>
+    <string name="clear_data_notes">Удаление заметок…</string>
+    <string name="clear_data_passwords">Удаление паролей…</string>
+    <string name="clear_data_preparing">Подсчет выбранных записей…</string>
+    <string name="clear_data_totp">Очистка аутентификаторов…</string>
+    <string name="clear_data_verifying">Проверка…</string>
+    <string name="clear_data_wait">Пожалуйста, дождитесь завершения этой операции.</string>
+</resources>

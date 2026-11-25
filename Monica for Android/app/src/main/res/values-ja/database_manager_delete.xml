@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">フォルダーとその内容が含まれます。ローカルのパスワードと安全なアイテムはゴミ箱に移動します。フォルダーと passkeys は完全に削除されます。</string>
+    <string name="manager_delete_native_hint">選択したアイテムとフォルダーの内容は、このデータベースから完全に削除されます。これを元に戻すことはできません。</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d が選択されました</string>
+    <string name="manager_delete_title">選択したアイテムを削除しますか?</string>
+</resources>

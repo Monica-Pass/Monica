@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">Вложений пока нет</string>
+    <string name="attachment_editor_hint">Выберите файлы, изображения или документы.</string>
+    <string name="attachment_editor_working">Работаю…</string>
+</resources>

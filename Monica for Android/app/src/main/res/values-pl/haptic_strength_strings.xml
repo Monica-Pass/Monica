@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haptic_strength">Siła wibracji</string>
+    <string name="haptic_strength_description">0 = Wyłączone · 1 = Lekkie · 2 = Silne</string>
+    <string name="haptic_test">Testuj wibracje</string>
+    <string name="haptic_system_disabled">Włącz reakcję na dotyk w ustawieniach systemu, aby poczuć wibracje.</string>
+    <string name="haptic_unavailable">Wibracje są niedostępne na tym urządzeniu lub zostały odrzucone przez system.</string>
+</resources>

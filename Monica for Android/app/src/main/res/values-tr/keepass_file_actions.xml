@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Verileri kaydet</string>
+    <string name="kp_file_merge">Verileri birleştir</string>
+    <string name="kp_file_reload">Verileri yeniden yükle</string>
+    <string name="kp_file_ready">Kaydedildi · KDBX</string>
+    <string name="kp_file_busy">Veritabanı üzerinde çalışılıyor…</string>
+    <string name="kp_file_saved">Veri kaydedildi</string>
+    <string name="kp_file_external_reloaded">Harici değişiklikler yüklendi</string>
+    <string name="kp_file_reloaded">Veri yeniden yüklendi</string>
+    <string name="kp_file_merged">Veriler birleştirildi</string>
+    <string name="kp_file_merged_conflicts">Birleştirildi; eşleşen zaman damgalarının giriş geçmişinde alternatif versiyonları var</string>
+    <string name="kp_file_reload_failed">Yeniden yüklenemedi; önceden yüklenen verileri gösteriyor</string>
+    <string name="kp_file_failed">İşlem tamamlanamadı</string>
+    <string name="kp_file_failure_help">Dosya erişimini, kaynak şifresini ve harici değişiklikleri kontrol edip tekrar deneyin.</string>
+    <string name="kp_file_merge_summary">Mevcut girişleri eşleştirin ve güncellemeleri, geçmişi ve silme kayıtlarını birleştirin.</string>
+    <string name="kp_file_select_source">KDBX dosyasını seçin</string>
+    <string name="kp_file_source_selected">Kaynak seçildi · dosyayı değiştir</string>
+    <string name="kp_file_source_password">Kaynak veritabanı şifresi</string>
+    <string name="kp_file_select_key">Anahtar dosyası (isteğe bağlı)</string>
+    <string name="kp_file_key_selected">Anahtar dosyası seçildi · değiştir</string>
+    <string name="kp_file_merge_notice">İlk önce bir kurtarma kopyası oluşturulur. Daha yeni girişler önceliklidir. Zaman damgaları eşleştiğinde geçerli sürüm tutulur ve diğer sürüm geçmişe gider.</string>
+    <string name="kp_file_merge_confirm">Birleştir ve kaydet</string>
+</resources>

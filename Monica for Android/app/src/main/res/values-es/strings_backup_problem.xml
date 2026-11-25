@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">No se pudo realizar una copia de seguridad de estos elementos. Los datos locales y las copias de seguridad remotas existentes no se modifican.</string>
+    <string name="passkey_backup_problem_title">La copia de seguridad necesita atención</string>
+    <string name="passkey_device_bound_solution">Registre un nuevo passkey exportable en el servicio y verifique que funcione antes de retirar la clave anterior. También puedes omitir este artículo por ahora.</string>
+    <string name="passkey_partial_replace_blocked">Esta copia de seguridad omite algunos Passkeys. Utilice la restauración de fusión; La sustitución de datos locales está bloqueada.</string>
+    <string name="passkey_partial_requires_encryption">Las copias de seguridad parciales que omiten Passkeys aún deben estar cifradas.</string>
+    <string name="passkey_partial_restore_warning">Esta copia de seguridad parcial omite el Passkeys omitido. Restaurar fusiones con registros locales existentes.</string>
+    <string name="passkey_partial_saved">Copia de seguridad parcial guardada</string>
+    <string name="passkey_partial_saved_detail">Los Passkeys siguientes no están incluidos. Se conservan sus registros locales y las copias de seguridad remotas existentes. La hora de la última copia de seguridad completa no cambia.</string>
+    <string name="passkey_problem_close">Cerrar</string>
+    <string name="passkey_retry_full_backup">Reintentar copia de seguridad completa</string>
+    <string name="passkey_skip_and_backup">Omitir %1$d y realizar copia de seguridad</string>
+    <string name="passkey_skip_explanation">Omitir afecta esta copia de seguridad únicamente y no elimina elementos locales. Se guardará una copia de seguridad parcial por separado; Se conservan las copias de seguridad remotas existentes. No reemplaza una copia de seguridad completa.</string>
+</resources>

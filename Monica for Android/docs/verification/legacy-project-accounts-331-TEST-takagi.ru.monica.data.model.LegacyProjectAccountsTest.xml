@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.model.LegacyProjectAccountsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-25T14:39:40.727Z" hostname="JOYIN" time="0.127">
+  <properties/>
+  <testcase name="threeLegacyAccountsKeepEveryUsernamePasswordAndOriginalId" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.057"/>
+  <testcase name="conflictingExplicitAccountStillRefusesToSave" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.06"/>
+  <testcase name="legacyOtpDifferencesAndExactUsernamesNeverGetMerged" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.001"/>
+  <testcase name="malformedMetadataIsRetainedAndNotTreatedAsLegacy" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.003"/>
+  <testcase name="multiplePasswordsOfOneLegacyAccountRemainOneGroupWithoutValueDeduplication" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.0"/>
+  <testcase name="absentMetadataDoesNotSilentlyJoinAnExplicitAccount" classname="takagi.ru.monica.data.model.LegacyProjectAccountsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

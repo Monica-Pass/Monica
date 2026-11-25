@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Senkronize edilemeyen öğeler</string>
+    <string name="bitwarden_sync_issues_button">Senkronizasyon sorunlarını görüntüle (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Bu hesap için son deneme. Başlıklar mevcut olduğunda gösterilir; Başlığı okunamayan bir öğeyi bulmak için öğe kimliğini kullanın. Bu hesap kilitlendiğinde ayrıntılar silinir.</string>
+    <string name="bitwarden_sync_issues_empty">Bu denemede öğe hatası yok.</string>
+    <string name="bitwarden_sync_issues_running">Senkronizasyon hâlâ çalışıyor.</string>
+    <string name="bitwarden_sync_issues_no_title">Başlık mevcut değil</string>
+    <string name="bitwarden_sync_issues_id">Öğe Kimliği: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Başlığı veya öğe kimliğini arayın</string>
+    <string name="bitwarden_sync_issues_no_matches">Eşleşen öğe yok</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Kasa öğesi</string>
+    <string name="bitwarden_sync_issue_kind_folder">Klasör</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Ek</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Geçiş anahtarı</string>
+    <string name="bitwarden_sync_issue_phase_download">İndir</string>
+    <string name="bitwarden_sync_issue_phase_create">Yeni öğe yükle</string>
+    <string name="bitwarden_sync_issue_phase_update">Değişiklikleri yükle</string>
+    <string name="bitwarden_sync_issue_phase_delete">Sil</string>
+    <string name="bitwarden_sync_issue_phase_restore">Geri Yükle</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Kilidi açın veya tekrar oturum açın, ardından yeniden deneyin.</string>
+    <string name="bitwarden_sync_issue_reason_network">Sunucuya ulaşılamadı. Bağlantıyı kontrol edip yeniden deneyin.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Bu öğe değişti. Yeniden denemeden önce çakışmayı inceleyin.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Bu öğe desteklenmeyen veya eksik bir biçim kullanıyor.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">Bu öğenin şifresi çözülemedi veya doğrulanamadı.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">İşlem tamamlanamadı. Yerel değişiklikler korunur.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">Ek aktarılamadı veya doğrulanamadı.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Yeniden denemeden önce üst öğeyi yükleyin ve ekin kullanılabilirliğini kontrol edin.</string>
+</resources>

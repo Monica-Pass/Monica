@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_decrease">Уменьшение</string>
+    <string name="cg_email_alias">Адрес электронной почты плюс псевдоним</string>
+    <string name="cg_increase">Увеличение</string>
+    <string name="cg_invalid_options">Выберите символы и сохраняйте их минимальное количество в пределах длины.</string>
+    <string name="cg_length">Длина</string>
+    <string name="cg_minimum">Минимальное количество</string>
+    <string name="cg_random_username">Случайное имя пользователя</string>
+    <string name="cg_saved_suggestions">Сохраненные предложения</string>
+    <string name="cg_symbols">Случайные символы</string>
+    <string name="cg_use">Использовать этот пароль</string>
+    <string name="cg_username_title">Генератор имен пользователей</string>
+    <string name="cg_valid_email">Введите действительный адрес электронной почты.</string>
+    <string name="cg_words">Слова</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Utilisation multi-appareils</string>
+    <string name="passkey_portability_algorithm_hint">La destination doit prendre en charge le même algorithme de clé. Le transfert Bitwarden actuel prend en charge uniquement ES256.</string>
+    <string name="passkey_portability_backup_hint">Cet identifiant a été marqué comme non éligible à la sauvegarde. Seule une destination qui préserve cette propriété peut l\'utiliser ; la conversion en Bitwarden ou l\'échange d\'informations d\'identification est bloqué.</string>
+    <string name="passkey_portability_checking">Vérification…</string>
+    <string name="passkey_portability_counter_hint">Cet identifiant a un historique de compteur de signature différent de zéro. Monica utilise des compteurs zéro ; l\'utilisation multi-appareils peut être rejetée par un site Web qui vérifie les compteurs antérieurs.</string>
+    <string name="passkey_portability_exportable">La clé peut être exportée</string>
+    <string name="passkey_portability_exportable_hint">La clé peut être exportée dans un format crypté pris en charge. La destination doit conserver ses propriétés d\'identification, de clé et d\'enregistrement ; la compatibilité du site Web dépend toujours du client de destination.</string>
+    <string name="passkey_portability_invalid">Métadonnées en conflit</string>
+    <string name="passkey_portability_invalid_hint">Les propriétés de sauvegarde sont en conflit. La signature ne doit pas modifier silencieusement les propriétés enregistrées ; conservez les informations d\'identification source pour la récupération.</string>
+    <string name="passkey_portability_key_unavailable">Clé indisponible</string>
+    <string name="passkey_portability_local_hint">La clé privée est liée à cet appareil et ne peut pas être exportée. La copie seule de la base de données ne permettra pas la connexion sur un autre appareil.</string>
+    <string name="passkey_portability_local_only">Local uniquement</string>
+    <string name="passkey_portability_missing_hint">Aucune clé privée utilisable n\'a été trouvée sur cet appareil. Cet enregistrement seul ne permet pas de se connecter ici ou sur un autre appareil.</string>
+    <string name="passkey_portability_restricted">Transfert limité</string>
+    <string name="passkey_portability_unknown">Non vérifié</string>
+    <string name="passkey_portability_unknown_hint">La fonctionnalité clé n\'a pas pu être vérifiée. Déverrouillez la base de données source et réessayez.</string>
+</resources>

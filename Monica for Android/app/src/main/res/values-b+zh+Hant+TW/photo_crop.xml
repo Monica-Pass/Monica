@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_crop_title">裁剪照片</string>
+    <string name="photo_crop_skip">不裁剪</string>
+    <string name="photo_crop_continue">裁剪並繼續</string>
+    <string name="card_face_crop_apply">使用卡面</string>
+</resources>

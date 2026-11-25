@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden klasörleri aynı hesapta kalır. Ekler, şifre anahtarları veya kuruluş girişleri içeren klasörlerin kopyalanması henüz desteklenmiyor.</string>
+    <string name="external_folder_choose_destination">Bir hedef veritabanı ve klasör seçin</string>
+    <string name="external_folder_root">Veritabanı kökü</string>
+    <string name="external_folder_copy_hint">Klasörü ve içeriğini kopyalayın; orijinalini sakla.</string>
+    <string name="external_folder_move_hint">Klasörü ve içeriğini taşıyın. Orijinal yalnızca hedef kaydedildikten sonra kaldırılır.</string>
+</resources>

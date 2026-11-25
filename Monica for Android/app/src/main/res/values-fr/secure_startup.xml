@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android ne peut actuellement pas vérifier les paramètres cryptés de cette installation. Le démarrage normal a été arrêté. Monica n’a pas effacé les paramètres ni remplacé les clés.</string>
+    <string name="secure_startup_diagnostic">Copier les informations de diagnostic</string>
+    <string name="secure_startup_environment">Si cela a commencé après la restauration des données de l\'application, le flashage d\'une ROM ou la modification du système, vérifiez si le système et l\'environnement clé d\'origine peuvent être restaurés. Cette erreur à elle seule n’établit pas la cause.</string>
+    <string name="secure_startup_no_reset">N\'effacez pas les données de l\'application et ne désinstallez pas Monica. Conservez les fichiers originaux. Si vous disposez d\'une sauvegarde exportée Monica, vérifiez-la dans une autre installation. Une clé système définitivement perdue ne peut pas être recréée en réessayant.</string>
+    <string name="secure_startup_preserved">Données existantes préservées</string>
+    <string name="secure_startup_restart">Redémarrez le téléphone, déverrouillez-le avec les informations d\'identification de verrouillage de l\'écran du système, puis réessayez.</string>
+    <string name="secure_startup_retry">Réessayer</string>
+    <string name="secure_startup_title">Stockage sécurisé indisponible</string>
+</resources>

@@ -27,6 +27,8 @@ internal class MdbxPasswordEditor(context: Context, private val db: PasswordData
     @Volatile private var active = false
     private var generation = -1L
     private var foregroundGeneration = -1L
+    private var lockGeneration = -1L
+    @Volatile private var requestAuthorized: (() -> Boolean)? = null
     private data class Projection(val databaseId: Long, val saved: List<Pair<PasswordEntry, MdbxNativeObjectDetail>>,
         val removed: List<Long>, val vaultId: String, val branches: List<MdbxBranchInfo>, val source: LocalMdbxDatabase)
     @Volatile private var pending: Projection? = null
@@ -36,24 +38,30 @@ internal class MdbxPasswordEditor(context: Context, private val db: PasswordData
     @Volatile private var committed: Committed? = null
     private var revocation: AutoCloseable? = null
     private fun revoke() = synchronized(stateLock) {
-        active = false; epoch++; baselines.clear(); pending = null; committed = null
+        active = false; epoch++; baselines.clear(); pending = null; committed = null; requestAuthorized = null
     }
 
-    fun begin(): AutoCloseable = synchronized(stateLock) {
+    // Autofill owns an authenticated request, not the main application's unlock state.
+    // Its caller must recheck that request and foreground lifecycle on every use.
+    fun begin(isRequestAuthorized: (() -> Boolean)? = null): AutoCloseable = synchronized(stateLock) {
         revocation?.close()
         val token = ++epoch
         baselines.clear(); pending = null; committed = null
         generation = SecurityManager.dataReadGeneration.value
         foregroundGeneration = Mdbx2NativeReadSessions.foregroundGeneration
+        lockGeneration = SessionManager.lockGeneration.value
+        requestAuthorized = isRequestAuthorized
         active = true
         val listener = Mdbx2NativeReadSessions.onRevoke(::revoke)
         revocation = listener
         AutoCloseable { listener.close(); synchronized(stateLock) { if (epoch == token) revoke() } }
     }
     private fun checkSession(token: Long) {
-        check(active && epoch == token && generation == SecurityManager.dataReadGeneration.value &&
+        val authorized = requestAuthorized?.invoke() ?: (
             foregroundGeneration == Mdbx2NativeReadSessions.foregroundGeneration &&
-            SessionManager.isUnlocked.value && Mdbx2NativeReadSessions.isForeground) { "MDBX editor session expired" }
+                SessionManager.isUnlocked.value && Mdbx2NativeReadSessions.isForeground)
+        check(active && epoch == token && generation == SecurityManager.dataReadGeneration.value &&
+            lockGeneration == SessionManager.lockGeneration.value && authorized) { "MDBX editor session expired" }
     }
     private inline fun <T> publishState(token: Long, block: () -> T): T = synchronized(stateLock) {
         checkSession(token)

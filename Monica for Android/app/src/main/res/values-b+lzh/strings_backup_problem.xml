@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">此等项目未能备份。本机数据与既有远端备份皆不变。</string>
+    <string name="passkey_backup_problem_title">备份有待处理</string>
+    <string name="passkey_device_bound_solution">请于服务另注册可导出之通行之钥，并验证可用后，方可停用旧钥。亦可暂略此项。</string>
+    <string name="passkey_partial_replace_blocked">此备份未含部分 Passkey。请用合并恢复；不可替换本机数据。</string>
+    <string name="passkey_partial_requires_encryption">略过 Passkey 之部分备份，仍须加密。</string>
+    <string name="passkey_partial_restore_warning">此部分备份未含所略 Passkey。恢复时将与本机旧录合并。</string>
+    <string name="passkey_partial_saved">部分备份已存</string>
+    <string name="passkey_partial_saved_detail">下列 Passkey 未纳入。本机记录与既有远端备份皆留，上次完整备份时刻不变。</string>
+    <string name="passkey_problem_close">闭</string>
+    <string name="passkey_retry_full_backup">重试完整备份</string>
+    <string name="passkey_skip_and_backup">略过 %1$d 项并备份</string>
+    <string name="passkey_skip_explanation">略过仅影响此次备份，不删本机项目。将另存部分备份，既有远端备份皆留。此不能替代完整备份。</string>
+</resources>

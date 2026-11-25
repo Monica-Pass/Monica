@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Perlindungan cadangan</string>
+    <string name="zip_protection_plain">ZIP tidak terenkripsi</string>
+    <string name="zip_protection_plain_warning">Siapa pun yang memiliki file ini dapat membaca isinya.</string>
+    <string name="zip_protection_required">Kunci sandi, lampiran, dan konfigurasi Monica memerlukan enkripsi. Batalkan pilihan untuk mengekspor ZIP yang tidak terenkripsi.</string>
+</resources>

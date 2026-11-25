@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_type_api_token">API Jetonu</string>
+    <string name="api_token_no_database">API belirteçlerini görüntülemek veya oluşturmak için yerel bir MDBX veritabanını açın.</string>
+    <string name="api_token_load_error">Belirteç yüklenemedi veya kaydedilemedi. Veritabanını yeniden açın veya senkronize edin, ardından yeniden yükleyin. Mevcut veriler tutuldu.</string>
+    <string name="api_token_reload">Yeniden Yükle</string>
+    <string name="api_token_root_collection">Veritabanı kökü</string>
+    <string name="api_token_database">Veritabanı</string>
+    <string name="api_token_collection">Kategori</string>
+    <string name="api_token_complete_payload">Tam jeton verileri (JSON)</string>
+    <string name="api_token_empty">Bu veritabanında API belirteci yok.</string>
+    <string name="api_token_native_hint">Monica CLI ile uyumlu, yerel bir MDBX API belirteci olarak depolanır.</string>
+    <string name="api_token_toggle_visibility">Değeri göster veya gizle</string>
+    <string name="api_token_validation">Bir sağlayıcı ve jeton girin. İsteğe bağlı API adresi bir HTTP veya HTTPS URL olmalıdır.</string>
+    <string name="api_token_fields_limit">128\'e kadar özel alan kullanın. Notlar ve alan değerleri birlikte 64 KB boyutuna sığmalıdır.</string>
+    <string name="api_token_import_json">JSON jetonunu yapıştır</string>
+    <string name="api_token_parse">Ayrıştırma</string>
+    <string name="api_token_delete_confirmation">Bu API jetonu veritabanından silinsin mi?</string>
+    <string name="api_token_entry_id">Giriş Kimliği</string>
+    <string name="api_token_collection_id">Koleksiyon Kimliği</string>
+    <string name="api_token_provider">Sağlayıcı</string>
+    <string name="api_token_api_base">API tabanı URL</string>
+    <string name="api_token_note">Not</string>
+    <string name="api_token_schema">Yük şeması</string>
+    <string name="api_token_name">Belirteç adı</string>
+    <string name="api_token_add">API jetonunu ekle</string>
+    <string name="api_token_edit">API jetonunu düzenle</string>
+    <string name="api_token_credentials">Jeton ayrıntıları</string>
+    <string name="api_token_manage_databases">Veritabanlarını yönet</string>
+    <string name="api_token_folder_error">Kategoriler yüklenemedi. Yeniden denemek için depolama seçiciyi yeniden açın.</string>
+    <string name="api_token_storage">Depolama konumu</string>
+    <string name="api_token_advanced">Daha fazla bilgi</string>
+    <string name="api_token_unknown_schema">Bu belirteç başka bir format kullanıyor. Tüm verilerini aşağıda görüntüleyebilir ve kopyalayabilirsiniz.</string>
+    <string name="api_token_discard_title">Değişiklikler silinsin mi?</string>
+    <string name="api_token_discard_message">Kaydedilmemiş değişiklikleriniz kaybolacak.</string>
+    <string name="api_token_discard">At</string>
+    <string name="api_token_name_hint">1–64 harf, rakam, - veya _</string>
+</resources>

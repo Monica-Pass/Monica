@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">Impossible de lire ou d\'enregistrer tous les fichiers. Votre contenu original a été conservé. Vérifiez l\'accès et la taille du fichier, puis réessayez.</string>
+    <string name="native_token_assets_limit">Jusqu\'à 64 MiB de fichiers nouveaux ou déplacés par sauvegarde et 128 pièces jointes par jeton.</string>
+    <string name="native_token_backup_limit">Les fichiers de jetons natifs API dans une sauvegarde ZIP doivent totaliser 64 MiB ou moins. Utilisez la sauvegarde de base de données native pour les coffres-forts plus grands.</string>
+    <string name="native_token_backup_needs_files">Cette base de données contient des jetons API avec des fichiers. Incluez des images et des pièces jointes pour exporter une sauvegarde complète.</string>
+    <string name="native_token_kdbx_files_unsupported">Les jetons API avec fichiers nécessitent un Monica ZIP crypté ou une sauvegarde de base de données native. L\'exportation KDBX prend en charge les jetons API sans fichiers.</string>
+</resources>

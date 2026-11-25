@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android 当前不能核验此安装之加密设置，正常启动已止。Monica 未清设置，亦未换密钥。</string>
+    <string name="secure_startup_diagnostic">摹诊断信息</string>
+    <string name="secure_startup_environment">若此事始于恢复应用数据、刷入 ROM 或修改系统之后，请查能否还原原系统与密钥环境。仅凭此错，不能断其缘由。</string>
+    <string name="secure_startup_no_reset">勿清应用数据，勿卸载 Monica。请留原文件。若有 Monica 导出之备份，请于另一安装中核验。系统密钥若永久失去，重试不能重造。</string>
+    <string name="secure_startup_preserved">既有数据已保留</string>
+    <string name="secure_startup_restart">请重启手机，以系统锁屏信物启封后，再试。</string>
+    <string name="secure_startup_retry">重试</string>
+    <string name="secure_startup_title">安全存储不可用</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Templat QR khusus</string>
+    <string name="qr_template_literal">Teks biasa</string>
+    <string name="qr_template_mode">Templat lapangan</string>
+    <string name="qr_template_insert">Sisipkan bidang</string>
+    <string name="qr_template_wifi">Prasetel Wi-Fi</string>
+    <string name="qr_template_generate">Hasilkan kode QR</string>
+    <string name="qr_template_hint">Membaca kolom saat ini saat dibuat. Menyimpan templat, bukan salinan kata sandi yang telah diselesaikan. Templat Wi-Fi keluar dari nilai yang dimasukkan secara otomatis.</string>
+    <string name="qr_template_error">Tidak dapat membaca entri, menyimpan templat, atau membuat kode. Periksa apakah basis data tidak terkunci dan konten berada dalam batas, lalu coba lagi.</string>
+    <string name="qr_template_field_error">Bidang “%1$s” hilang, tidak terbaca, atau ambigu. Pilih bidang yang tersedia sebelum menghasilkan.</string>
+</resources>

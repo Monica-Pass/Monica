@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Bankkarten löschen…</string>
+    <string name="clear_data_completed">Löschen abgeschlossen</string>
+    <string name="clear_data_completed_hint">Die ausgewählten Daten wurden gelöscht.</string>
+    <string name="clear_data_count">Einträge %1$d / %2$d gelöscht</string>
+    <string name="clear_data_documents">Dokumente löschen…</string>
+    <string name="clear_data_failed">Es konnten nicht alle ausgewählten Daten gelöscht werden</string>
+    <string name="clear_data_failed_hint">Löschen gestoppt. Bereits gelöschte Einträge werden nicht wiederhergestellt. Überprüfen Sie Ihre Datenbankverbindung und versuchen Sie es erneut.</string>
+    <string name="clear_data_generator_history">Verlauf der Passwortgenerierung wird gelöscht…</string>
+    <string name="clear_data_notes">Notizen löschen…</string>
+    <string name="clear_data_passwords">Passwörter löschen…</string>
+    <string name="clear_data_preparing">Ausgewählte Einträge werden gezählt…</string>
+    <string name="clear_data_totp">Authentifikatoren werden gelöscht…</string>
+    <string name="clear_data_verifying">Überprüft…</string>
+    <string name="clear_data_wait">Bitte warten Sie, bis dieser Vorgang abgeschlossen ist.</string>
+</resources>

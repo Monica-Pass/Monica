@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_type_api_token">API 權杖</string>
+    <string name="api_token_no_database">請先開啟原生 MDBX 資料庫，以查看或新增 API 權杖。</string>
+    <string name="api_token_load_error">權杖讀取或儲存失敗。請重新開啟或同步資料庫後重試，已有資料已保留。</string>
+    <string name="api_token_reload">重新載入</string>
+    <string name="api_token_root_collection">資料庫根目錄</string>
+    <string name="api_token_database">資料庫</string>
+    <string name="api_token_collection">分類</string>
+    <string name="api_token_complete_payload">完整權杖資料（JSON）</string>
+    <string name="api_token_empty">此資料庫中還沒有 API 權杖。</string>
+    <string name="api_token_native_hint">以 MDBX 原生 API 權杖儲存，與 Monica CLI 兼容。</string>
+    <string name="api_token_toggle_visibility">顯示或隱藏內容</string>
+    <string name="api_token_validation">請填寫服務商和權杖。API 地址可留空，填寫時須為 HTTP 或 HTTPS 網址。</string>
+    <string name="api_token_fields_limit">最多新增 128 個自訂欄位，備註與欄位內容合計不能超過 64 KB。</string>
+    <string name="api_token_import_json">貼上權杖 JSON</string>
+    <string name="api_token_parse">解析</string>
+    <string name="api_token_delete_confirmation">從資料庫中刪除此 API 權杖？</string>
+    <string name="api_token_entry_id">條目 ID</string>
+    <string name="api_token_collection_id">分類 ID</string>
+    <string name="api_token_provider">服務商</string>
+    <string name="api_token_api_base">API 地址</string>
+    <string name="api_token_note">備註</string>
+    <string name="api_token_schema">資料格式版本</string>
+    <string name="api_token_name">權杖名稱</string>
+    <string name="api_token_add">新增 API 權杖</string>
+    <string name="api_token_edit">編輯 API 權杖</string>
+    <string name="api_token_credentials">權杖資料</string>
+    <string name="api_token_manage_databases">管理資料庫</string>
+    <string name="api_token_folder_error">分類讀取失敗，請重新開啟儲存位置選擇器重試。</string>
+    <string name="api_token_storage">儲存位置</string>
+    <string name="api_token_advanced">更多資料</string>
+    <string name="api_token_unknown_schema">此權杖使用其他資料格式，可在下方查看和複製完整資料。</string>
+    <string name="api_token_discard_title">放棄修改？</string>
+    <string name="api_token_discard_message">尚未儲存的修改將丟失。</string>
+    <string name="api_token_discard">放棄</string>
+    <string name="api_token_name_hint">1–64 個字母、數字、- 或 _</string>
+</resources>

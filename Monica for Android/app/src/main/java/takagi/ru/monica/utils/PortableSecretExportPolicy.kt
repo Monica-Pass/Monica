@@ -1,12 +1,11 @@
 package takagi.ru.monica.utils
 
+import java.util.concurrent.CancellationException
+
 internal class PortableSecretExportException(
     val entryTitle: String,
     cause: Throwable
-) : IllegalStateException(
-    "无法读取“${entryTitle.ifBlank { "未命名条目" }}”的敏感数据，已取消备份。请先解锁 Monica 后重试。",
-    cause
-)
+) : IllegalStateException("Sensitive data could not be read for backup", cause)
 
 /** Backups must contain portable values, never ciphertext bound to the current installation. */
 internal object PortableSecretExportPolicy {
@@ -18,7 +17,9 @@ internal object PortableSecretExportPolicy {
         if (storedValue.isEmpty()) return ""
         return try {
             decryptIfNeeded(storedValue)
-        } catch (error: Throwable) {
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
             throw PortableSecretExportException(entryTitle, error)
         }
     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_review_title">Perbarui kata sandi yang ada?</string>
+    <string name="autofill_save_review_description">Pilih entri untuk ditinjau sebelum disimpan. Folder, catatan, dan akun lain yang ada dipertahankan.</string>
+    <string name="autofill_save_as_new">Simpan sebagai entri baru</string>
+    <string name="autofill_save_local_source">Lokal</string>
+</resources>

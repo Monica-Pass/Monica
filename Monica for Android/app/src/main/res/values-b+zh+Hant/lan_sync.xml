@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">同步已取消</string>
+    <string name="lan_completed">兩台設備均已完成同步</string>
+    <string name="lan_confirming">等待對方設備完成合並…</string>
+    <string name="lan_conflicts">有 %1$d 項衝突，請到密碼庫管理中處理，雙方版本均已保留。</string>
+    <string name="lan_connect">配對並同步</string>
+    <string name="lan_connecting">正在驗證配對…</string>
+    <string name="lan_copy_link">複製配對鏈接</string>
+    <string name="lan_description">在同一 Wi-Fi 下同步手機和電腦的密碼庫。發現設備後輸入配對碼，也可以掃描對方的二維碼連接。</string>
+    <string name="lan_different_vault">兩端選擇了不同的密碼庫，請選擇同一密碼庫，或將對方的庫接收為新密碼庫。</string>
+    <string name="lan_discover">發現附近設備</string>
+    <string name="lan_discovering">正在發現設備…</string>
+    <string name="lan_expired">配對已過期，請重新點“允許設備連接”獲取新配對碼。</string>
+    <string name="lan_external_blobs">這個密碼庫引用了庫外的附件文件。附近同步目前要求附件保存在密碼庫內，請先在來源設備處理。</string>
+    <string name="lan_failed">同步未完成</string>
+    <string name="lan_failed_hint">請確認兩台設備仍在同一 Wi-Fi 下，再重新配對。已經提交的變更會保留。</string>
+    <string name="lan_host">允許設備連接</string>
+    <string name="lan_imported">收到的密碼庫已添加到密碼庫管理。</string>
+    <string name="lan_invalid_code">配對碼無效或已更換，請從對方設備獲取新的配對碼。</string>
+    <string name="lan_invitation_hint">配對有效期為 10 分鐘，請只向要連接的設備提供配對碼或二維碼。</string>
+    <string name="lan_manage">管理密碼庫</string>
+    <string name="lan_merging">正在將變更寫入密碼庫…</string>
+    <string name="lan_new_vault_hint">首次連接需要輸入來源密碼庫的密碼，收到的密碼庫會單獨添加。後續同步時，在兩端選擇同一個密碼庫。</string>
+    <string name="lan_no_devices">暫未發現設備。請在對方設備上點“允許設備連接”，也可以掃描或粘貼配對鏈接。</string>
+    <string name="lan_no_network">沒有找到本地 Wi-Fi 地址。</string>
+    <string name="lan_pairing_autofilled">配對碼和鏈接已自動填寫，點擊“配對並同步”即可繼續。</string>
+    <string name="lan_pairing_code">配對碼</string>
+    <string name="lan_pairing_needs_vault_password">配對信息已自動填寫；首次接收請填寫來源密碼庫密碼，再點擊“配對並同步”。</string>
+    <string name="lan_paste_link">配對鏈接</string>
+    <string name="lan_peer_failed">對方設備未能完成合並，請檢查後重試。</string>
+    <string name="lan_preparing">正在準備加密的密碼庫資料…</string>
+    <string name="lan_receive_new">接收為新密碼庫</string>
+    <string name="lan_scan">掃描配對二維碼</string>
+    <string name="lan_select_vault">選擇密碼庫</string>
+    <string name="lan_title">附近設備同步</string>
+    <string name="lan_transferring">正在傳輸加密資料…</string>
+    <string name="lan_unavailable">當前構建暫不支持附近設備同步。</string>
+    <string name="lan_vault_failed">密碼庫未能打開或合併，請檢查密碼庫密碼和可用存儲空間後重試。</string>
+    <string name="lan_vault_name">接收後的密碼庫名稱</string>
+    <string name="lan_vault_password">來源密碼庫的密碼</string>
+    <string name="lan_waiting">等待對方設備連接…</string>
+</resources>

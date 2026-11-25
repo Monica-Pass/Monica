@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">同期をキャンセルしました</string>
+    <string name="lan_completed">両方のデバイスが同期を完了しました</string>
+    <string name="lan_confirming">他のデバイスが変更の適用を完了するのを待っています…</string>
+    <string name="lan_conflicts">%1$d の競合は、ボールト管理で確認する必要があります。両方のバージョンが保存されます。</string>
+    <string name="lan_connect">ペアリングと同期</string>
+    <string name="lan_connecting">ペアリングを確認しています…</string>
+    <string name="lan_copy_link">ペアリングリンクをコピー</string>
+    <string name="lan_description">同じ Wi-Fi 上の電話機とコンピュータ間でボールトを同期します。デバイスを見つけてペアリング コードを入力するか、QR コードをスキャンします。</string>
+    <string name="lan_different_vault">これらは別の保管庫です。両方のデバイスで同じボールトを選択するか、このボールトを新しいボールトとして受け取ります。</string>
+    <string name="lan_discover">近くのデバイスを検索する</string>
+    <string name="lan_discovering">デバイスを検索しています…</string>
+    <string name="lan_expired">ペアリングの有効期限が切れました。デバイスが再度接続して新しいコードを作成できるようにします。</string>
+    <string name="lan_external_blobs">このボールトは、その外部に保存されているファイルを参照します。現在、Nearby Sync では、すべての添付ファイルをボールト内に保存する必要があります。</string>
+    <string name="lan_failed">同期が完了しませんでした</string>
+    <string name="lan_failed_hint">両方のデバイスがまだ同じ Wi-Fi に接続されていることを確認し、再度ペアリングします。すでにコミットされた変更は保存されます。</string>
+    <string name="lan_host">デバイスの接続を許可する</string>
+    <string name="lan_imported">受信したボールトがボールト管理に追加されました。</string>
+    <string name="lan_invalid_code">ペアリング コードが無効であるか、一致しません。他のデバイスから新しいコードを取得します。</string>
+    <string name="lan_invitation_hint">ペアリングは 10 分後に期限切れになります。このコードまたは QR コードは、接続するデバイスとのみ共有してください。</string>
+    <string name="lan_manage">ボールトの管理</string>
+    <string name="lan_merging">ボールトに変更を適用しています…</string>
+    <string name="lan_new_vault_hint">最初の接続では、ソース ボールトのパスワードを入力します。受信したボールトは別途追加されます。後で同期するには、両方のデバイスで同じコンテナーを選択します。</string>
+    <string name="lan_no_devices">デバイスはまだ見つかりません。他のデバイスで、「デバイスの接続を許可する」を選択します。ペアリング リンクをスキャンまたは貼り付けることもできます。</string>
+    <string name="lan_no_network">ローカル Wi-Fi アドレスが見つかりませんでした。</string>
+    <string name="lan_pairing_autofilled">ペアリング コードとリンクは自動的に入力されます。 [ペアリングして同期] をタップして続行します。</string>
+    <string name="lan_pairing_code">ペアリングコード</string>
+    <string name="lan_pairing_needs_vault_password">ペアリング情報が自動的に入力されます。最初の転送用のソースボールトのパスワードを入力し、「ペアリングして同期」をタップします。</string>
+    <string name="lan_paste_link">ペアリングリンク</string>
+    <string name="lan_peer_failed">他のデバイスは変更を適用できませんでした。確認して再試行してください。</string>
+    <string name="lan_preparing">暗号化されたボールト データを準備しています…</string>
+    <string name="lan_receive_new">新しいボールトとして受信</string>
+    <string name="lan_scan">ペアリング QR コードをスキャンします</string>
+    <string name="lan_select_vault">保管庫を選択してください</string>
+    <string name="lan_title">近くの同期</string>
+    <string name="lan_transferring">暗号化データを転送中…</string>
+    <string name="lan_unavailable">このビルドでは近くの同期は利用できません。</string>
+    <string name="lan_vault_failed">ボールトを開いたりマージしたりできませんでした。ボールトのパスワードと利用可能なストレージを確認して、再試行してください。</string>
+    <string name="lan_vault_name">受信したボールトの名前</string>
+    <string name="lan_vault_password">ソースボールトのパスワード</string>
+    <string name="lan_waiting">他のデバイスを待っています…</string>
+</resources>

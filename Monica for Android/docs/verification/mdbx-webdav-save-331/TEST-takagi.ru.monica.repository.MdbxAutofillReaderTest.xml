@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.repository.MdbxAutofillReaderTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-25T16:01:27.796Z" hostname="JOYIN" time="0.107">
+  <properties/>
+  <testcase name="duplicatesEscapesAndConflictingAliasesFailClosed" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.028"/>
+  <testcase name="wrappedLoginRejectsOuterSecretAliasesAndUnknownInnerEncoding" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.002"/>
+  <testcase name="nativeAndCliPlaintextPrefixesAreNotReinterpretedAsCiphertext" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.001"/>
+  <testcase name="cancelledLegacyDecodeIsNeverSuppressed" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.002"/>
+  <testcase name="oversizedAndOvernestedPayloadsAreRejected" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.012"/>
+  <testcase name="knownWalletShapesRequireTypeKindAndValidNestedDocument" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.03"/>
+  <testcase name="explicitEmptyAndNullNeverResurrectOldPassword" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.0"/>
+  <testcase name="logicalWalletIdentityCannotBeForgedWithSameRoomNumber" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.001"/>
+  <testcase name="knownOlderAndroidCiphertextsRequireSuccessfulDecode" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.003"/>
+  <testcase name="desktopWrappedLoginRemainsPlaintextAndUsesNativeIdentity" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.003"/>
+  <testcase name="urlRulesDistinguishMissingFromInvalidAndDuplicateMetadata" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.007"/>
+  <testcase name="futureUnknownAndNonLoginShapesAreExcluded" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.001"/>
+  <testcase name="actualVaultIdentityDoesNotDependOnMutableLogicalMetadata" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.001"/>
+  <testcase name="nativeAuthorizationOutcomesAndAllUnknownClientConstraintsAreRejected" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.009"/>
+  <testcase name="logicalLoginIdentityRequiresTheActualVaultAndPhysicalObject" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.002"/>
+  <testcase name="connectorReplicasArchivedAndDeletedRecordsAreExcluded" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.001"/>
+  <testcase name="embeddedFieldsAndLegacyWalletValuesStayRequestOwned" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.0"/>
+  <testcase name="sourceHashIsUnambiguousAndDoesNotExposeInputs" classname="takagi.ru.monica.repository.MdbxAutofillReaderTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

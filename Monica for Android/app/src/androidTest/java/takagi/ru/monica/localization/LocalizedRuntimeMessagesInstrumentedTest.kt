@@ -48,7 +48,7 @@ class LocalizedRuntimeMessagesInstrumentedTest {
             val status = checker.checkServiceStatus()
             // Japanese legitimately uses kanji; Chinese and Classical Chinese
             // also use this range. Only apply the leftover-Chinese guard elsewhere.
-            val usesCjk = language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE, Language.JAPANESE)
+            val usesCjk = language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.TRADITIONAL_CHINESE_TAIWAN, Language.CLASSICAL_CHINESE, Language.JAPANESE)
             (status.compatibilityIssues + status.recommendations).forEach {
                 if (!usesCjk) assertFalse("$language: $it", cjk.containsMatchIn(it))
             }

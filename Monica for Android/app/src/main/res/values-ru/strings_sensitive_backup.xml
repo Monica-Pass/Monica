@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Не удалось завершить резервное копирование: конфиденциальные данные записи «%1$s» не читаются. Исходные данные сохранены.</string>
+</resources>

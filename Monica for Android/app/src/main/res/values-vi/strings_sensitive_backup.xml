@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Không thể hoàn tất sao lưu vì không đọc được dữ liệu nhạy cảm trong “%1$s”. Dữ liệu gốc đã được giữ nguyên.</string>
+</resources>

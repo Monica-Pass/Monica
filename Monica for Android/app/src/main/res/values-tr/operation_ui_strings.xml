@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_message_delete_queue_failed">Bitwarden silme işlemi sıraya alınamadı</string>
+    <string name="bitwarden_message_conflict_detail">Bu giriş hem yerel olarak hem de sunucuda değişti</string>
+    <string name="bitwarden_message_empty_vault">Sunucu veri döndürmedi ancak %1$d yerel girişleri kaldı. Verilerinizi korumak için senkronizasyon duraklatıldı. Devam etmeden önce sunucuyu ve hesabı kontrol edin.</string>
+    <string name="runtime_kdbx_decode_failed">KDBX veritabanı okunamadı</string>
+</resources>

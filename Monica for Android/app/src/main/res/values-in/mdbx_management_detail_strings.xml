@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_conflict_choice_effect">Ini menyelesaikan bidang yang bertentangan menggunakan versi yang dipilih, termasuk penghapusan yang bertentangan. Hasilnya akan dibagikan pada sinkronisasi berikutnya. Tinjau pilihan Anda sebelum melanjutkan.</string>
+    <string name="mdbx_conflict_confirm_choice">Konfirmasikan pilihan</string>
+    <string name="mdbx_conflict_values_unavailable">Nilai historis tidak dapat dipratinjau di sini. Periksa item pada perangkat sumber sebelum memilih.</string>
+    <string name="mdbx_conflict_show_values">Tampilkan perbandingan versi</string>
+    <string name="mdbx_conflict_version_help">Lokal: perangkat ini pada saat konflik.\nIncoming: versi yang diterima, yang mungkin bukan yang terbaru.</string>
+    <string name="mdbx_copy_parameters">Salin parameter</string>
+    <string name="mdbx_snapshot_retention_help">Snapshot otomatis dapat dipangkas. Snapshot manual tetap ada sampai Anda menghapusnya.</string>
+</resources>

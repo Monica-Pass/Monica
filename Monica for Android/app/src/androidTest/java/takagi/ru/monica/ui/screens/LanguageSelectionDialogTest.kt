@@ -36,9 +36,9 @@ class LanguageSelectionDialogTest {
     private val selections = mutableListOf<Language>()
     private var dismissals = 0
 
-    private fun show(currentLanguage: Language, dark: Boolean = false, fontScale: Float = 1f) {
+    private fun show(currentLanguage: Language, dark: Boolean = false, fontScale: Float = 1f, localeTag: String = "zh-CN") {
         val configuration = Configuration(context.resources.configuration).apply {
-            setLocale(Locale.SIMPLIFIED_CHINESE)
+            setLocale(Locale.forLanguageTag(localeTag))
             this.fontScale = fontScale
         }
         val localized = context.createConfigurationContext(configuration)
@@ -112,10 +112,10 @@ class LanguageSelectionDialogTest {
     }
 
     @Test
-    fun italianOptionUsesChineseNicknameAndCanBeSelected() {
+    fun italianOptionUsesNativeNameAndCanBeSelected() {
         show(Language.ITALIAN, dark = true, fontScale = 1.5f)
         compose.onNodeWithTag("language_options").performScrollToNode(hasTestTag("language_option_ITALIAN"))
-        compose.onNodeWithText("超级马里奥语").assertIsDisplayed()
+        compose.onNodeWithText("Italiano").assertIsDisplayed()
         compose.onNodeWithTag("language_option_ITALIAN").assertIsSelected().performClick()
         compose.runOnIdle { assertEquals(listOf(Language.ITALIAN), selections) }
         capture("language-dialog-italian-dark-large-text.png")
@@ -127,7 +127,7 @@ class LanguageSelectionDialogTest {
         compose.onNodeWithTag("language_chinese_expand").performClick()
         compose.onNodeWithTag("language_option_NYA").assertDoesNotExist()
         compose.onNodeWithTag("language_option_SNOW_LEOPARD").assertDoesNotExist()
-        assertEquals(listOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE), chineseLanguageVariants)
+        assertEquals(listOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.TRADITIONAL_CHINESE_TAIWAN, Language.CLASSICAL_CHINESE), chineseLanguageVariants)
     }
 
     private fun chineseCloseLabel(): String = context.createConfigurationContext(
@@ -137,9 +137,32 @@ class LanguageSelectionDialogTest {
     private fun capture(name: String) {
         compose.waitForIdle()
         val screenshot = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
-        File(context.getExternalFilesDir(null), name).outputStream().use {
+        File(context.filesDir, name).outputStream().use {
             screenshot.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
         screenshot.recycle()
+    }
+
+    @Test
+    fun taiwanCanBeSelectedSeparatelyFromHongKong() {
+        show(Language.TRADITIONAL_CHINESE)
+        compose.onNodeWithText("繁體中文（香港）").assertIsDisplayed()
+        compose.onNodeWithTag("language_chinese_expand").performClick()
+        compose.onNodeWithTag("language_option_TRADITIONAL_CHINESE").assertIsSelected()
+        compose.onNodeWithText("繁體中文（台灣）").assertIsDisplayed().performClick()
+        compose.runOnIdle { assertEquals(listOf(Language.TRADITIONAL_CHINESE_TAIWAN), selections) }
+    }
+
+    @Test
+    fun taiwanLargeTextDialogKeepsTheSelectedRegionAndAllowsReturningToHongKong() {
+        show(Language.TRADITIONAL_CHINESE_TAIWAN, dark = true, fontScale = 1.5f, localeTag = "zh-Hant-TW")
+        compose.onNodeWithText("語言").assertIsDisplayed()
+        compose.onNodeWithText("繁體中文（台灣）").assertIsDisplayed()
+        compose.onNodeWithTag("language_chinese_primary").assertIsSelected()
+        capture("language-dialog-taiwan-dark-large-text.png")
+        compose.onNodeWithTag("language_chinese_expand").performClick()
+        compose.onNodeWithTag("language_option_TRADITIONAL_CHINESE_TAIWAN").assertIsSelected()
+        compose.onNodeWithText("繁體中文（香港）").performClick()
+        compose.runOnIdle { assertEquals(listOf(Language.TRADITIONAL_CHINESE), selections) }
     }
 }

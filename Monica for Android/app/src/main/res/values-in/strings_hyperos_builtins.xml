@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">Diagnostik konfigurasi</string>
+    <string name="hyperos_diagnostics_note">Memeriksa deklarasi dan pemilihan layanan, bukan perutean kunci sandi yang berhasil. Pengaturan aman memerlukan Shizuku atau root resmi.</string>
+    <string name="hyperos_diag_declaration">Layanan Monica yang valid dan kemampuan kunci sandi</string>
+    <string name="hyperos_diag_feature">Fitur sistem kredensial tersedia</string>
+    <string name="hyperos_diag_unrestricted">IsiOtomatis diperbolehkan untuk pengguna Android ini</string>
+    <string name="hyperos_diag_framework">Kerangka mengenali Monica sebagai diaktifkan</string>
+    <string name="hyperos_diag_registered">Monica dalam layanan kredensial yang diaktifkan</string>
+    <string name="hyperos_drift_title">Mendeteksi perubahan setelah perbaikan</string>
+    <string name="hyperos_drift_note">Memeriksa setiap 30 detik saat halaman ini terlihat dan ketika dibuka kembali. Jangan pernah menulis pengaturan secara otomatis.</string>
+    <string name="hyperos_drift_result">Dibandingkan dengan perbaikan terverifikasi terakhir</string>
+    <string name="hyperos_drift_off">Deteksi nonaktif</string>
+    <string name="hyperos_drift_no_baseline">Terapkan konfigurasi terlebih dahulu untuk membuat garis dasar.</string>
+    <string name="hyperos_drift_unchanged">Konfigurasi tidak berubah</string>
+    <string name="hyperos_drift_changed">Konfigurasi berubah. Anda sendiri mungkin telah berganti manajer; tinjau sebelum memulihkan.</string>
+    <string name="hyperos_update_failed">Tidak dapat menyimpan. Segarkan dan periksa status saat ini.</string>
+    <string name="hyperos_check_yes">Ya</string>
+    <string name="hyperos_check_no">Tidak</string>
+    <string name="hyperos_check_unsupported">Tidak didukung</string>
+    <string name="hyperos_module_title">Modul kompatibilitas opsional</string>
+    <string name="hyperos_module_requirements">Memerlukan LSPosed API 102+ yang kompatibel, Android 14–16, dan pengguna pemilik Xiaomi/Redmi/POCO. Aktifkan Monica dan cakupan yang diperlukan dalam kerangka kerja. Semua opsi mati secara default.</string>
+    <string name="hyperos_module_connected">Kerangka terhubung; ini tidak membuktikan kait berfungsi.</string>
+    <string name="hyperos_module_disconnected">Kerangka kerja yang kompatibel tidak tersedia</string>
+    <string name="hyperos_module_scope">Cakupan yang diberikan: %1$s</string>
+    <string name="hyperos_hook_reset">Blokir Pusat Keamanan direset</string>
+    <string name="hyperos_hook_reset_note">Intercept hanya mengidentifikasi metode konfigurasi kredensial.</string>
+    <string name="hyperos_hook_settings">Kompatibilitas halaman pemilihan sistem</string>
+    <string name="hyperos_hook_settings_note">Sesuaikan pengontrol Pengaturan yang teridentifikasi; metode yang tidak kompatibel menjaga perilaku sistem.</string>
+    <string name="hyperos_hook_chooser">Pemilih kredensial Google</string>
+    <string name="hyperos_hook_chooser_note">Membutuhkan pemilih layanan Google Play sistem yang diaktifkan.</string>
+    <string name="hyperos_hook_hybrid">Kompatibilitas kredensial lintas perangkat</string>
+    <string name="hyperos_hook_hybrid_note">Gunakan layanan hybrid Google yang tervalidasi dan rute pemindai Xiaomi.</string>
+    <string name="hyperos_module_restart">Pengaktifannya memerlukan memulai ulang proses yang terpengaruh atau perangkat itu sendiri. Menonaktifkan pemberhentian akan menimpa kait yang dimuat ketika kerangka kerja memberikan perubahan. Tidak ada restart otomatis.</string>
+    <string name="hyperos_physical_feedback">Tidak diuji pada perangkat HyperOS fisik. Silakan laporkan versi ROM Anda dan langkah-langkah reproduksi dalam masalah GitHub; hilangkan kata sandi dan kunci.</string>
+    <string name="hyperos_reference_projects">Proyek referensi dan lisensi</string>
+    <string name="hyperos_module_confirmation">Aktifkan perubahan perilaku sistem eksperimental ini? Diperlukan kerangka kerja dan komponen target yang kompatibel. Ini mungkin memengaruhi pengelola kata sandi lainnya. Anda dapat menonaktifkannya di sini atau di kerangka.</string>
+    <string name="hyperos_feedback_action">Laporkan masalah kompatibilitas</string>
+    <string name="hyperos_module_entry_note">Default nonaktif · Membutuhkan LSPosed yang kompatibel</string>
+</resources>

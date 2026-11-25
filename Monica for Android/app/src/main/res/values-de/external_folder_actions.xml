@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">Ordner „%1$s“ und seinen Inhalt löschen? Bitte bestätigen Sie, bevor Sie fortfahren.</string>
+    <string name="external_folder_delete_keep_items">Ordner „%1$s“ löschen? Die darin enthaltenen Elemente bleiben ohne diesen Ordner erhalten.</string>
+</resources>

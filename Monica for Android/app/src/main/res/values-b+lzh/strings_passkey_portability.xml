@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">跨设备使用</string>
+    <string name="passkey_portability_algorithm_hint">目标须支持同一密钥算法。当前向 Bitwarden 传送仅支持 ES256。</string>
+    <string name="passkey_portability_backup_hint">此信物已标记为不可备份，唯保留此属性之目标可用；不可转换至 Bitwarden 或用于信物交换。</string>
+    <string name="passkey_portability_checking">检查中…</string>
+    <string name="passkey_portability_counter_hint">此信物有非零签名计数旧录。Monica 用零计数；跨设备使用时，核查旧计数之网站或拒之。</string>
+    <string name="passkey_portability_exportable">密钥可导出</string>
+    <string name="passkey_portability_exportable_hint">可用受支持之加密格式导出密钥。目标须保留其 ID、密钥与注册属性；网站是否兼容，仍视目标客户端而定。</string>
+    <string name="passkey_portability_invalid">元数据相冲突</string>
+    <string name="passkey_portability_invalid_hint">备份属性相冲突。签名不得暗改注册属性；请留来源信物，以备恢复。</string>
+    <string name="passkey_portability_key_unavailable">密钥不可用</string>
+    <string name="passkey_portability_local_hint">私钥系于此设备，不可导出。仅摹数据库，不能使另一设备登入。</string>
+    <string name="passkey_portability_local_only">仅限本机</string>
+    <string name="passkey_portability_missing_hint">此设备未寻得可用私钥。仅凭此记录，不能于本机或另一设备登入。</string>
+    <string name="passkey_portability_restricted">传送受限</string>
+    <string name="passkey_portability_unknown">尚未核验</string>
+    <string name="passkey_portability_unknown_hint">未能核查密钥能力。请启封来源库后重试。</string>
+</resources>

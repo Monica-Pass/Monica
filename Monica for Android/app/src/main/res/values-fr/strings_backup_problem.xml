@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Ces éléments n\'ont pas pu être sauvegardés. Les données locales et les sauvegardes à distance existantes sont inchangées.</string>
+    <string name="passkey_backup_problem_title">La sauvegarde nécessite une attention particulière</string>
+    <string name="passkey_device_bound_solution">Enregistrez un nouveau passkey exportable sur le service et vérifiez qu\'il fonctionne avant de retirer l\'ancienne clé. Vous pouvez également ignorer cet élément pour le moment.</string>
+    <string name="passkey_partial_replace_blocked">Cette sauvegarde omet certains Passkeys. Utilisez la restauration par fusion ; le remplacement des données locales est bloqué.</string>
+    <string name="passkey_partial_requires_encryption">Les sauvegardes partielles qui ignorent Passkeys doivent toujours être chiffrées.</string>
+    <string name="passkey_partial_restore_warning">Cette sauvegarde partielle omet le Passkeys ignoré. La restauration fusionne avec les enregistrements locaux existants.</string>
+    <string name="passkey_partial_saved">Sauvegarde partielle enregistrée</string>
+    <string name="passkey_partial_saved_detail">Les Passkeys ci-dessous ne sont pas inclus. Leurs enregistrements locaux et les sauvegardes à distance existantes sont conservés. L\'heure de la dernière sauvegarde complète reste inchangée.</string>
+    <string name="passkey_problem_close">Fermer</string>
+    <string name="passkey_retry_full_backup">Réessayez la sauvegarde complète</string>
+    <string name="passkey_skip_and_backup">Ignorer %1$d et sauvegarder</string>
+    <string name="passkey_skip_explanation">L\'omission affecte uniquement cette sauvegarde et ne supprime pas les éléments locaux. Une sauvegarde partielle distincte sera enregistrée ; les sauvegardes à distance existantes sont conservées. Cela ne remplace pas une sauvegarde complète.</string>
+</resources>

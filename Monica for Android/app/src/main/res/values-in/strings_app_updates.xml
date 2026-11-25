@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Secara otomatis memeriksa pembaruan</string>
+    <string name="update_auto_check_summary">Periksa paling banyak satu kali sehari setelah membuka kunci. Anda dapat menonaktifkannya kapan saja.</string>
+    <string name="update_now">Perbarui sekarang</string>
+    <string name="update_skip_version">Lewati versi ini</string>
+    <string name="update_view_details">Lihat detailnya</string>
+    <string name="update_later">Nanti</string>
+    <string name="update_whats_new">Apa yang baru</string>
+    <string name="update_open_fdroid">Buka F-Droid</string>
+    <string name="update_fdroid_source">Pembaruan diperiksa dan diinstal melalui repositori resmi F-Droid.</string>
+    <string name="update_notes_unavailable">Catatan rilis tidak tersedia. Lihat detail untuk informasi lebih lanjut.</string>
+    <string name="update_notes_truncated">Catatan ini panjang. Lihat detailnya untuk membaca catatan rilis lengkap.</string>
+</resources>

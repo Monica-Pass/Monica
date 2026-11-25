@@ -30,6 +30,9 @@ class LocalCredentialCreateAtomicityTest {
     private var inserts = 0
     private var lockAfterInsert = false
     private var cancelAfterInsert = false
+    private var lockAfterFields = -1
+    private var cancelAfterFields = -1
+    private val cancellationReached = CompletableDeferred<Unit>()
     private var readDuringInsert: (suspend () -> Unit)? = null
     private val inserted = CompletableDeferred<Unit>()
     private val common = PasswordEntry(title = "Synthetic local project", username = "same-user", password = "", website = "https://example.invalid")
@@ -61,6 +64,11 @@ class LocalCredentialCreateAtomicityTest {
                 fieldWrites++
                 if (fieldWrites == failFieldWrite && !failAfterFields) throw IOException("Synthetic field failure")
                 actual.replaceFieldsForEntry(entryId, newFields)
+                if (fieldWrites == lockAfterFields) SessionManager.markLocked()
+                if (fieldWrites == cancelAfterFields) {
+                    cancellationReached.complete(Unit)
+                    currentCoroutineContext().cancel()
+                }
                 if (fieldWrites == failFieldWrite && failAfterFields) throw IOException("Synthetic failure after field write")
             }
         }
@@ -195,6 +203,46 @@ class LocalCredentialCreateAtomicityTest {
         failFieldWrite = fieldWrites + 1; failAfterFields = true
         assertNull(save(passwords = listOf("changed-secret", "changed-secret"), ids = original.map { it.id }))
         assertEquals(original.sortedBy { it.id }, rows().sortedBy { it.id })
+        assertEquals(originalFields, db.customFieldDao().getAllFieldsSync())
+    }
+    @Test fun failedLegacyAccountEditPreservesAllOriginalRowsAndFields() = runBlocking {
+        checkLegacyAccountEditFailure(lock = false)
+    }
+    @Test fun lockingDuringLegacyAccountEditRollsBackAllAccounts() = runBlocking {
+        checkLegacyAccountEditFailure(lock = true)
+    }
+    @Test fun cancellingLegacyAccountEditPreservesRowsAndDoesNotReportSuccess() = runBlocking {
+        checkLegacyAccountEditFailure(lock = false, cancel = true)
+    }
+    private suspend fun checkLegacyAccountEditFailure(lock: Boolean, cancel: Boolean = false) {
+        val project = java.util.UUID.randomUUID().toString()
+        repeat(3) { index ->
+            val id = db.passwordEntryDao().insertPasswordEntry(common.copy(username = "account-$index",
+                password = security.encryptData("old-$index"), passwordGroupId = project))
+            db.customFieldDao().replaceFieldsForEntry(id, listOf(CustomField(entryId = id,
+                title = "Unknown-$index", value = "kept-$index", isProtected = true, sortOrder = 0)))
+        }
+        val original = rows().sortedBy { it.id }
+        val originalFields = db.customFieldDao().getAllFieldsSync()
+        val draft = ProjectCredentialGroup.restoreForEditing(original.map { it.copy(password = security.decryptData(it.password)) },
+            original.associate { row -> row.id to originalFields.filter { it.entryId == row.id }.map(CustomFieldDraft::fromCustomField) })
+            .map { group -> group.copy(username = group.username + "-edited",
+                passwords = group.passwords.map { it.copy(value = "new-secret") }) }
+        if (cancel) {
+            cancelAfterFields = 2
+            val callback = CompletableDeferred<Long?>()
+            val scopeJob = requireNotNull(model.viewModelScope.coroutineContext[Job])
+            val previousJobs = scopeJob.children.toSet()
+            model.savePasswordsAcrossTargets(original.map { it.id }, common, emptyList(), targets, fields,
+                projectCredentials = draft, onComplete = { callback.complete(it) })
+            val saveJobs = scopeJob.children.filterNot { it in previousJobs }.toList()
+            withTimeout(30_000) { cancellationReached.await(); saveJobs.joinAll() }
+            assertFalse(callback.isCompleted)
+        } else {
+            if (lock) lockAfterFields = 2 else { failFieldWrite = 2; failAfterFields = true }
+            assertNull(save(ids = original.map { it.id }, groups = draft))
+        }
+        assertEquals(original, rows().sortedBy { it.id })
         assertEquals(originalFields, db.customFieldDao().getAllFieldsSync())
     }
     @Test fun lockingAfterActualInsertRollsBackLocalSave() = runBlocking {

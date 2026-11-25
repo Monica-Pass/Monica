@@ -15,6 +15,7 @@ object LocaleHelper {
             Language.ENGLISH -> Locale.ENGLISH
             Language.CHINESE -> Locale.forLanguageTag("zh-Hans-CN")
             Language.TRADITIONAL_CHINESE -> Locale.forLanguageTag("zh-Hant-HK")
+            Language.TRADITIONAL_CHINESE_TAIWAN -> Locale.forLanguageTag("zh-Hant-TW")
             Language.CLASSICAL_CHINESE -> Locale.forLanguageTag("lzh")
             Language.VIETNAMESE -> Locale("vi", "VN")
             Language.JAPANESE -> Locale.JAPAN
@@ -27,6 +28,8 @@ object LocaleHelper {
             Language.ITALIAN -> Locale.ITALIAN
             Language.PORTUGUESE_PORTUGAL -> Locale.forLanguageTag("pt-PT")
             Language.PORTUGUESE_BRAZIL -> Locale.forLanguageTag("pt-BR")
+            Language.INDONESIAN -> Locale.forLanguageTag("id-ID")
+            Language.TURKISH -> Locale.forLanguageTag("tr-TR")
         }
 
         return updateResources(context, locale)
@@ -106,6 +109,7 @@ object LocaleHelper {
 
         return when (currentLocale.language) {
             "zh" -> when {
+                isTraditionalChinese(currentLocale) && currentLocale.country == "TW" -> Language.TRADITIONAL_CHINESE_TAIWAN
                 isTraditionalChinese(currentLocale) -> Language.TRADITIONAL_CHINESE
                 else -> Language.CHINESE
             }
@@ -120,6 +124,8 @@ object LocaleHelper {
             "fr" -> Language.FRENCH
             "pl" -> Language.POLISH
             "it" -> Language.ITALIAN
+            "id", "in" -> Language.INDONESIAN
+            "tr" -> Language.TURKISH
             "pt" -> if (currentLocale.country == "BR") Language.PORTUGUESE_BRAZIL else Language.PORTUGUESE_PORTUGAL
             else -> Language.SYSTEM
         }

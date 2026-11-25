@@ -8,6 +8,7 @@ import takagi.ru.monica.attachments.model.normalizeAttachmentFailure
 import takagi.ru.monica.attachments.storage.AttachmentKeyUnavailableException
 import takagi.ru.monica.attachments.ui.attachmentErrorMessage
 import takagi.ru.monica.attachments.util.AttachmentLogger
+import takagi.ru.monica.utils.PortableSecretExportException
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 /** Display names are kept out of the exception message/stack trace exported in diagnostic logs. */
@@ -40,6 +41,10 @@ internal suspend fun <T> withAttachmentExportError(attachment: ExportAttachment,
 
 internal fun databaseExportErrorMessage(context: Context, error: Throwable): String {
     val strings = AppLocaleStringResolver(context)
+    if (error is PortableSecretExportException) return strings.get(
+        R.string.backup_sensitive_data_unreadable,
+        error.entryTitle.ifBlank { strings.get(R.string.untitled) },
+    )
     if (error !is AttachmentExportException) return error.message ?: strings.get(R.string.export_data_error)
     val cause = checkNotNull(error.cause)
     val reason = when {

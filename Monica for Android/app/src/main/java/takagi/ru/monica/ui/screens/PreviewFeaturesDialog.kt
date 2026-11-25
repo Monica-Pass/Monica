@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -69,7 +73,7 @@ internal fun PreviewFeaturesDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable { onHideFabOnScrollChanged(!settings.hideFabOnScroll) }
+                        .clickable(onClick = switchClick(settings.hideFabOnScroll, onCheckedChange = onHideFabOnScrollChanged))
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -102,11 +106,8 @@ internal fun PreviewFeaturesDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable {
-                            onBitwardenStatusChanged(
-                                !settings.bitwardenBottomStatusBarEnabled
-                            )
-                        }
+                        .clickable(onClick = switchClick(settings.bitwardenBottomStatusBarEnabled,
+                            onCheckedChange = onBitwardenStatusChanged))
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -139,7 +140,7 @@ internal fun PreviewFeaturesDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable { onReduceAnimationsChanged(!settings.reduceAnimations) }
+                        .clickable(onClick = switchClick(settings.reduceAnimations, onCheckedChange = onReduceAnimationsChanged))
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

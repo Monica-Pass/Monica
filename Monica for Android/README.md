@@ -206,3 +206,11 @@ The Android 14+ helper in developer and autofill settings adapts the secure-sett
 
 On multi-user devices, Shizuku may also require Monica to be installed for the owner user before starting the helper for a secondary user. Only the calling user settings are changed.
 多用户设备上，Shizuku 可能需要主用户也安装 Monica 才能启动副用户的辅助服务；实际更改仍限定于调用用户。
+
+## ImageToolbox slider attribution
+
+The filled slider track and rotating floral thumb are adapted from [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox), specifically `FancySlider.kt` and `MaterialStarShape.kt`, by T8RIN (Malik Mukhametzyanov), under Apache-2.0. Monica uses Material3 input handling, distance-based rotation in either direction, and drag haptics that respect app/system preferences. The [attribution notice](app/src/main/assets/licenses/ImageToolbox.txt) records the revision and modifications; the complete [Apache-2.0 license](app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt) is bundled with the app.
+
+Interaction strength also follows ImageToolbox’s 1/light (CONTEXT_CLICK) and 2/strong (LONG_PRESS) choices. Monica adds a test button and one touch-attributed fallback for rejected requests, while respecting the system feedback setting.
+
+多选菜单的圆形实色图标按钮也参考 ImageToolbox 的视觉处理；主题对比度与窄屏布局由 Monica 独立实现。

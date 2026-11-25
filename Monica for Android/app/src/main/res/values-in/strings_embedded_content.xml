@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_working">Menyalin konten lengkap…</string>
+    <string name="embedded_copy_failed">Salinan konten tidak lengkap</string>
+    <string name="embedded_copy_failed_message">%1$s tidak dapat disalin seluruhnya. Sumber dan draf Anda dipertahankan. Periksa apakah database sumber tidak terkunci dan lampiran tersedia, lalu coba lagi.</string>
+    <string name="embedded_copy_note">Salin catatan</string>
+    <string name="embedded_copy_card">Salin kartu</string>
+    <string name="embedded_copy_independent">Salinan independen · lampiran %1$d</string>
+    <string name="embedded_copy_document">Salin dokumen</string>
+    <string name="password_content_document">Dokumen identitas</string>
+    <string name="password_content_document_description">Bidang identitas, tampilan kartu, foto dan lampiran</string>
+</resources>

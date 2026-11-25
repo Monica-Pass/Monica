@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_repair_title">Biyometrik kilit açmayı onarın</string>
+    <string name="biometric_repair_summary">Şifre kilidi açıldıktan sonra biyometrik kilit açma işlemi hala başarısız olursa bu cihazı yeniden bağlayın</string>
+    <string name="biometric_repair_explanation">Bu cihazı yeniden bağlamak için orijinal ana şifrenizi girin. Kasanız, şifre korumanız ve önceki kurtarma materyalleriniz saklanacaktır. Bu, biyometrik kilit açmayı etkinleştirmez.</string>
+    <string name="biometric_repair_confirm">Onarımı onaylayın</string>
+    <string name="biometric_repair_working">Doğrulanıyor ve onarılıyor…</string>
+    <string name="biometric_repair_success">Kilit açma bağlantısı onarıldı. Kasanız ve önceki kurtarma malzemeleriniz saklandı. Artık mevcutsa biyometrik kilit açmayı etkinleştirebilirsiniz.</string>
+    <string name="biometric_repair_failed">Onarım onaylanamadı. Kasanız ve önceki kurtarma malzemeleriniz saklandı. Ana şifrenizle kilidi açın ve daha sonra tekrar deneyin.</string>
+    <string name="biometric_repair_device_auth">Cihazın kilidini ekran kilidiyle açın, ardından yeniden deneyin. Mevcut kimlik doğrulama gereksinimi korunacaktır.</string>
+    <string name="biometric_requires_password_reentry">Ana şifrenizle kilidi açın. Biyometrik kilit açma işlemi hala başarısız olursa, Ayarlar → Ana şifre ve kilitleme → Biyometrik kilit açmayı onar seçeneğini açın.</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">Das Festlegen des Standard-Passwort-Managers erfordert Android 14 oder höher.</string>
+    <string name="privilege_method">Autorisierungsmethode</string>
+    <string name="privilege_recovery_title">Erweiterte Wiederherstellung · Optional</string>
+    <string name="privilege_root_confirm_body">Dafür muss das Gerät bereits gerootet sein und Monica im Root-Manager zugelassen werden. Monica verwendet Root nur für Systemeinstellungen, die zur erweiterten Wiederherstellung des Bedienungshilfedienstes und zum Standard-Passwortmanager gehören. Dabei wird weder Ihr Tresor entsperrt noch auf Daten anderer Apps zugegriffen.\n\nDie erweiterte Wiederherstellung verbindet ausschließlich den bereits aktivierten Bedienungshilfedienst von Monica erneut. Nach der Aktivierung kann sie auch nach einem App- oder Geräteneustart weiterlaufen und das Ausfüllen kurz unterbrechen.\n\nDeaktivieren Sie Root hier, um die weitere Nutzung zu beenden. Entfernen Sie Monica aus Ihrem Root-Manager, um die Systemberechtigung zu widerrufen. Root wird niemals als Ersatz für Shizuku angefordert.</string>
+    <string name="privilege_root_confirm_title">Monica erlauben, Root zu verwenden?</string>
+    <string name="privilege_root_denied">Root-Zugriff wurde verweigert. Lassen Sie Monica in Ihrem Root-Manager zu und versuchen Sie es erneut.</string>
+    <string name="privilege_root_disable">Deaktivieren Sie Root in Monica</string>
+    <string name="privilege_root_grant">Root autorisieren</string>
+    <string name="privilege_root_hint">Verwenden Sie direkt den Root-Zugriff dieses Geräts</string>
+    <string name="privilege_root_not_authorized">Root ist nicht autorisiert. Tippen Sie auf Root autorisieren, um fortzufahren.</string>
+    <string name="privilege_root_ready">Root für Systemeinstellungen aktiviert</string>
+    <string name="privilege_root_requesting">Warten auf Root-Autorisierung…</string>
+    <string name="privilege_root_timeout">Zeitüberschreitung bei Root-Autorisierung oder -Befehl. Überprüfen Sie Ihren Root-Manager und versuchen Sie es erneut.</string>
+    <string name="privilege_root_unavailable">Kein verwendbarer su-Befehl gefunden. Dieses Gerät muss zuerst gerootet werden.</string>
+    <string name="privilege_shizuku_hint">Autorisieren Sie über einen laufenden Shizuku-Dienst</string>
+</resources>

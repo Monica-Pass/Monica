@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.components.MonicaSlider as Slider
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context

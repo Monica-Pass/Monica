@@ -346,7 +346,9 @@ class BitwardenPasswordHistoryStoreInstrumentedTest {
             })
             fun label(res: Int) = localized.getString(res)
             compose.setContent {
-                CompositionLocalProvider(LocalContext provides localized) {
+                CompositionLocalProvider(LocalContext provides localized,
+                    androidx.compose.ui.platform.LocalConfiguration provides localized.resources.configuration,
+                    androidx.compose.ui.platform.LocalResources provides localized.resources) {
                     MonicaTheme {
                         val visibility = remember { mutableStateMapOf<Long, Boolean>() }
                         var deleting by remember { mutableStateOf<PasswordHistoryEntry?>(null) }

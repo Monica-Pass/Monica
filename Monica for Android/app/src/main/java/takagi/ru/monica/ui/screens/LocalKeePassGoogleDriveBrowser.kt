@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import android.app.Activity
@@ -46,7 +48,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -766,7 +768,7 @@ private fun CreateGoogleDriveDatabaseDialog(
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = MaterialTheme.colorScheme.surfaceContainer,
-                    onClick = { useKeyFile = !useKeyFile }
+                    onClick = switchClick(useKeyFile) { useKeyFile = it }
                 ) {
                     Row(
                         modifier = Modifier

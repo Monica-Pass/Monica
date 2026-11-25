@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Kimlik doğrulayıcı veya geçiş anahtarı QR kodunu tarayın</string>
+    <string name="qr_credentials_invalid">Bu, desteklenen bir kimlik doğrulayıcı veya geçiş anahtarı QR kodu değil</string>
+    <string name="qr_multiple_codes">Birden fazla QR kodu algılandı. Yalnızca bir koda odaklanın.</string>
+</resources>

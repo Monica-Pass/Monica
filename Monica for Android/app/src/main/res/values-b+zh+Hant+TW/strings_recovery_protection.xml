@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">復原保護</string>
+    <string name="recovery_protection_summary">使用原主密碼驗證復原能力</string>
+    <string name="recovery_protection_verified">本次工作階段已驗證：%1$s</string>
+    <string name="recovery_protection_not_ready">無法驗證復原保護，原資料已保留。請重試或建立加密備份。</string>
+    <string name="recovery_protection_needs_password">輸入主密碼，準備並驗證復原保護</string>
+    <string name="recovery_protection_explanation">驗證能否使用原主密碼開啟獨立復原資料。此操作不會取代密碼庫或裝置金鑰；正常的舊安裝可能在驗證時補齊復原資料。</string>
+    <string name="recovery_protection_limits">請保留獨立加密備份。驗證僅適用於目前資料和工作階段，不保證檔案日後不損壞，也不保證硬體綁定憑證可復原。鎖定或資料變更後需重新驗證。</string>
+    <string name="recovery_protection_verify">驗證復原保護</string>
+    <string name="recovery_protection_checking">正在驗證復原保護…</string>
+    <string name="recovery_material_available">已找到復原資料，仍需使用原主密碼驗證後才能復原。</string>
+    <string name="recovery_material_missing">找不到獨立復原資料。請還原原金鑰環境，或在另一安裝中驗證加密備份。</string>
+    <string name="recovery_material_reenroll">憑證變更後需要重新準備復原保護。請先恢復正常存取，再使用目前主密碼驗證。</string>
+    <string name="recovery_material_revoked">此復原資料已被明確撤銷，不能用於復原。請保留原檔案。</string>
+    <string name="recovery_material_unsupported">目前版本不支援此復原格式。請保留檔案，使用相容的 Monica 版本。</string>
+    <string name="recovery_material_invalid">復原資料不完整或無效。請保留原檔案，不要換成空檔案或其他密碼庫的資料。</string>
+    <string name="recovery_material_unreadable">無法讀取復原資料。請保留檔案，解鎖裝置後重試。</string>
+    <string name="recovery_material_unchecked">尚未檢查復原資料。請在裝置解鎖且目前操作結束後重試。</string>
+    <string name="secure_startup_key_missing">目前系統金鑰服務找不到原金鑰。僅憑此錯誤不能斷定金鑰已永久刪除。</string>
+    <string name="secure_startup_wait">系統尚未就緒，或安全操作尚未完成。請解鎖裝置，稍後重試。</string>
+    <string name="secure_startup_inconsistent">加密設定與復原狀態不一致。請保留原檔案，不要刪除復原標記以略過檢查。</string>
+    <string name="secure_startup_environment_omk">若問題出現在更改 OMK 等金鑰模組之後，請還原建立此密碼庫時的金鑰環境。若剛把 Monica 加入作用範圍，取消該項可能有幫助，但不適用於所有密碼庫。請保留模組設定和金鑰，不要透過重裝模組或重設種子嘗試修復。</string>
+</resources>

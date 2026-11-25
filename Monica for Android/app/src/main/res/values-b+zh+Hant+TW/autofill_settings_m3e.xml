@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_selected_source_unavailable">所選資料庫暫時無法使用</string>
+</resources>

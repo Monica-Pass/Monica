@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Использование нескольких устройств</string>
+    <string name="passkey_portability_algorithm_hint">Пункт назначения должен поддерживать один и тот же алгоритм ключа. Текущая передача Bitwarden поддерживает только ES256.</string>
+    <string name="passkey_portability_backup_hint">Эти учетные данные были помечены как непригодные для резервного копирования. Только пункт назначения, который сохраняет эту собственность, может использовать ее; преобразование в Bitwarden или обмен учетными данными заблокированы.</string>
+    <string name="passkey_portability_checking">Проверка…</string>
+    <string name="passkey_portability_counter_hint">Эти учетные данные имеют ненулевую историю счетчика подписей. Monica использует нулевые счетчики; использование нескольких устройств может быть отклонено веб-сайтом, который проверяет предыдущие счетчики.</string>
+    <string name="passkey_portability_exportable">Ключ можно экспортировать</string>
+    <string name="passkey_portability_exportable_hint">Ключ можно экспортировать в поддерживаемом зашифрованном формате. Пункт назначения должен сохранить свой идентификатор, ключ и регистрационные свойства; совместимость веб-сайта по-прежнему зависит от целевого клиента.</string>
+    <string name="passkey_portability_invalid">Конфликтующие метаданные</string>
+    <string name="passkey_portability_invalid_hint">Конфликт свойств резервной копии. Подписание не должно незаметно изменять зарегистрированные свойства; сохраните исходные учетные данные для восстановления.</string>
+    <string name="passkey_portability_key_unavailable">Ключ недоступен</string>
+    <string name="passkey_portability_local_hint">Закрытый ключ привязан к этому устройству и не может быть экспортирован. Копирование только базы данных не позволит войти в систему на другом устройстве.</string>
+    <string name="passkey_portability_local_only">Только локально</string>
+    <string name="passkey_portability_missing_hint">На этом устройстве не найден пригодный для использования закрытый ключ. Сама по себе эта запись не позволяет войти здесь или на другом устройстве.</string>
+    <string name="passkey_portability_restricted">Передача ограничена</string>
+    <string name="passkey_portability_unknown">Не проверено</string>
+    <string name="passkey_portability_unknown_hint">Не удалось проверить возможности ключа. Разблокируйте исходную базу данных и повторите попытку.</string>
+</resources>

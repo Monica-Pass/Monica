@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_title">Orijinal bilgileri yönet</string>
+    <string name="mdbx_native_summary">Klasörlere, girişlere ve orijinal alanlara göz atın</string>
+    <string name="mdbx_native_search">Adları veya türleri arayın</string>
+    <string name="mdbx_native_readonly">Orijinal alanlar salt okunurdur. İçeriklerini değiştirmeden listedeki girişleri yeniden adlandırın.</string>
+    <string name="mdbx_native_schema">Veri formatı sürümü: %1$d</string>
+    <string name="mdbx_native_failed">İşlem tamamlanamadı. Tekrar denemeden önce kayıtlı durumu kontrol etmek için yenileyin.</string>
+    <string name="mdbx_native_snapshot_readonly">Salt okunur anlık görüntü yapısı. Geri yükleme anlık görüntü menüsünden yapılabilir.</string>
+</resources>

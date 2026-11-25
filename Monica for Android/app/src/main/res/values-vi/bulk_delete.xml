@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Xóa chưa hoàn tất</string>
+    <string name="batch_delete_interrupted_count">Bị gián đoạn sau khi xử lý %1$d của các mục %2$d. Kiểm tra các mục còn lại trước khi thử lại.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">すべてのファイルの読み取りまたは保存ができませんでした。オリジナルのコンテンツは保持されています。ファイルのアクセスとサイズを確認して、再試行してください。</string>
+    <string name="native_token_assets_limit">保存ごとに最大 64 MiB の新規ファイルまたは移動ファイル、トークンごとに 128 の添付ファイル。</string>
+    <string name="native_token_backup_limit">1 つの ZIP バックアップ内のネイティブ API トークン ファイルは、合計 64 MiB 以下である必要があります。大規模なコンテナーにはネイティブ データベース バックアップを使用します。</string>
+    <string name="native_token_backup_needs_files">このデータベースには、API トークンとファイルが含まれています。完全なバックアップをエクスポートするには、画像と添付ファイルを含めます。</string>
+    <string name="native_token_kdbx_files_unsupported">ファイルを含む API トークンには、暗号化された Monica ZIP またはネイティブ データベース バックアップが必要です。 KDBX エクスポートは、ファイルなしの API トークンをサポートします。</string>
+</resources>

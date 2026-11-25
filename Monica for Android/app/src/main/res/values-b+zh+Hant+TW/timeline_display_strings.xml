@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timeline_display_content_summary">內容摘要</string>
+    <string name="timeline_display_deleted_state">刪除狀態</string>
+    <string name="timeline_display_metadata">中繼資料</string>
+    <string name="mdbx_message_no_objects">沒有對象變更</string>
+    <string name="mdbx_message_no_fields">沒有欄位變更</string>
+    <string name="mdbx_message_object_preview">%1$s 等 %2$d 個對象</string>
+    <string name="mdbx_message_field_preview">%1$s 等 %2$d 項</string>
+    <string name="mdbx_message_folder_exists">MDBX 資料夾已存在：%1$s</string>
+</resources>

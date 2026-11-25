@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="customization_group_library">Pustaka &amp; daftar</string>
+    <string name="customization_group_cards">Kartu &amp; dompet</string>
+    <string name="customization_group_fields_icons">Kolom &amp; ikon</string>
+    <string name="permission_summary_title">Izin sesuai ketentuan Anda</string>
+    <string name="permission_summary_hint">Aktifkan hanya izin yang diperlukan untuk fitur yang Anda gunakan. Beberapa diberikan secara otomatis oleh Android.</string>
+    <string name="permission_summary_granted">Izin %1$d diberikan</string>
+    <string name="permission_refresh_status">Segarkan status</string>
+    <string name="permission_action_request">Minta izin</string>
+    <string name="permission_action_none">Tidak perlu tindakan apa pun</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_help_actions">Gunakan Minta izin untuk meminta akses kepada Android, atau Buka pengaturan untuk mengelola layanan dan memberikan izin. \n\nItem yang ditandai Tidak diperlukan tindakan atau Tidak tersedia tidak memiliki tombol tindakan. Aktifkan hanya yang Anda butuhkan.\n\nStatus disegarkan saat Anda kembali dari pengaturan sistem. Anda juga dapat mengetuk Segarkan status untuk memeriksanya lagi.</string>
+</resources>

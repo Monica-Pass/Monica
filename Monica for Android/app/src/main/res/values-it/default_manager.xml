@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_applied">Monica selezionato e impostazioni di sistema verificate</string>
+    <string name="default_manager_apply">Impostato su Monica</string>
+    <string name="default_manager_autofill">Servizio di compilazione automatica</string>
+    <string name="default_manager_confirm">Modificare il gestore password predefinito per questo utente. La configurazione corrente verrà prima salvata localmente per il ripristino.</string>
+    <string name="default_manager_credential">Fornitore di credenziali primario</string>
+    <string name="default_manager_denied">Autorizzazione negata. Consenti Monica in Shizuku e riprova</string>
+    <string name="default_manager_description">Imposta il gestore predefinito per l\'utente Android corrente. Richiede Android 14 o successivo e l\'autorizzazione Shizuku o Root. La corretta verifica delle impostazioni non garantisce ogni flusso HyperOS passkey.</string>
+    <string name="default_manager_entry_hint">Imposta Monica utilizzando Shizuku o Root quando HyperOS nasconde le impostazioni del gestore password di terze parti</string>
+    <string name="default_manager_grant">Autorizza Shizuku</string>
+    <string name="default_manager_include_autofill">Imposta anche il riempimento automatico</string>
+    <string name="default_manager_include_autofill_hint">Passa il servizio di compilazione automatica a Monica</string>
+    <string name="default_manager_keep_others">Mantieni altri fornitori di credenziali</string>
+    <string name="default_manager_keep_others_hint">Mantieni i provider abilitati e rendi Monica il provider principale</string>
+    <string name="default_manager_open_shizuku">Apri Shizuku</string>
+    <string name="default_manager_permission">Autorizzazione richiesta</string>
+    <string name="default_manager_read_failed">Impossibile leggere le impostazioni di sistema. Aggiorna e riprova</string>
+    <string name="default_manager_ready">Connesso e autorizzato</string>
+    <string name="default_manager_refresh">Aggiorna stato</string>
+    <string name="default_manager_replace_warning">Gli altri fornitori di credenziali verranno disabilitati. I loro dati non verranno cancellati.</string>
+    <string name="default_manager_restore">Ripristina le impostazioni precedenti</string>
+    <string name="default_manager_restore_confirm">Ripristina la configurazione del sistema salvata prima dell\'ultimo passaggio.</string>
+    <string name="default_manager_restored">Impostazioni di sistema precedenti ripristinate e verificate</string>
+    <string name="default_manager_source">Basato su cr-zhichen/password-manager-switch · MIT</string>
+    <string name="default_manager_stopped">Installa e avvia Shizuku</string>
+    <string name="default_manager_title">Gestore password predefinito</string>
+    <string name="default_manager_unknown">Non ancora letto</string>
+    <string name="default_manager_unset">Non impostato</string>
+    <string name="default_manager_unsupported">Richiede Android 14+ e Shizuku 13+</string>
+    <string name="default_manager_write_failed">Impossibile completare o verificare la modifica. Aggiorna per verificare lo stato; la configurazione salvata è disponibile per il ripristino.</string>
+</resources>

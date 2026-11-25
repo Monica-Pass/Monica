@@ -12,4 +12,5 @@
     <string name="bitwarden_error_cleartext">サーバーのアドレスは HTTP を使用していますが、現在のセキュリティポリシーでは許可されていません。HTTPS アドレスを使用し、リバースプロキシの HTTPS 設定を確認してください。</string>
     <string name="bitwarden_error_network_io">ネットワークエラーによりサーバーとの通信が中断されました。ネットワーク、VPN、プロキシの設定を確認して再試行してください。</string>
     <string name="bitwarden_sync_incomplete_items">一部の項目を同期できませんでした（%1$d）。読み取れる項目は同期され、既存のローカルデータは保持されています。</string>
+    <string name="bitwarden_organization_sync_incomplete">一部のチーム アイテムを復号化できませんでした (%1$d)。読み取り可能な項目は同期されました。既存の影響を受けるアイテムは保持されました。組織のメンバーシップを確認し、再度サインインします。</string>
 </resources>

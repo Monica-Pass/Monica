@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_completed">Kliring selesai</string>
+    <string name="clear_data_failed">Tidak dapat menghapus semua data yang dipilih</string>
+    <string name="clear_data_preparing">Menghitung entri yang dipilih…</string>
+    <string name="clear_data_passwords">Menghapus kata sandi…</string>
+    <string name="clear_data_totp">Menghapus pengautentikasi…</string>
+    <string name="clear_data_notes">Menghapus catatan…</string>
+    <string name="clear_data_documents">Menghapus dokumen…</string>
+    <string name="clear_data_bank_cards">Menghapus kartu bank…</string>
+    <string name="clear_data_generator_history">Menghapus riwayat pembuatan kata sandi…</string>
+    <string name="clear_data_count">Menghapus entri %1$d / %2$d</string>
+    <string name="clear_data_wait">Harap tunggu hingga operasi ini selesai.</string>
+    <string name="clear_data_completed_hint">Data yang dipilih telah dihapus.</string>
+    <string name="clear_data_failed_hint">Pembersihan dihentikan. Entri yang sudah dihapus tidak akan dikembalikan. Periksa koneksi database Anda dan coba lagi.</string>
+    <string name="clear_data_verifying">Memverifikasi…</string>
+</resources>

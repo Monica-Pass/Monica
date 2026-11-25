@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Simpan data</string>
+    <string name="kp_file_merge">Gabungkan data</string>
+    <string name="kp_file_reload">Muat ulang data</string>
+    <string name="kp_file_ready">Tersimpan · KDBX</string>
+    <string name="kp_file_busy">Bekerja pada basis data…</string>
+    <string name="kp_file_saved">Data disimpan</string>
+    <string name="kp_file_external_reloaded">Perubahan eksternal dimuat</string>
+    <string name="kp_file_reloaded">Data dimuat ulang</string>
+    <string name="kp_file_merged">Data digabungkan</string>
+    <string name="kp_file_merged_conflicts">Digabung; stempel waktu yang cocok memiliki versi alternatif dalam riwayat entri</string>
+    <string name="kp_file_reload_failed">Tidak dapat memuat ulang; menampilkan data yang dimuat sebelumnya</string>
+    <string name="kp_file_failed">Operasi tidak dapat diselesaikan</string>
+    <string name="kp_file_failure_help">Periksa akses file, kata sandi sumber, dan perubahan eksternal, lalu coba lagi.</string>
+    <string name="kp_file_merge_summary">Cocokkan entri yang ada dan gabungkan pembaruan, riwayat, dan catatan penghapusan.</string>
+    <string name="kp_file_select_source">Pilih berkas KDBX</string>
+    <string name="kp_file_source_selected">Sumber dipilih · ubah file</string>
+    <string name="kp_file_source_password">Kata sandi basis data sumber</string>
+    <string name="kp_file_select_key">File kunci (opsional)</string>
+    <string name="kp_file_key_selected">File kunci dipilih · ubah</string>
+    <string name="kp_file_merge_notice">Salinan pemulihan dibuat terlebih dahulu. Entri baru diutamakan. Ketika stempel waktu cocok, versi saat ini disimpan dan versi lainnya dimasukkan ke dalam riwayat.</string>
+    <string name="kp_file_merge_confirm">Gabungkan dan simpan</string>
+</resources>

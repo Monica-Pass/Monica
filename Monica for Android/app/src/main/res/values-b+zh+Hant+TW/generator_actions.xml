@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generator_create_username">使用此使用者名稱建立項目</string>
+    <string name="generator_create_password">使用此密碼建立項目</string>
+</resources>

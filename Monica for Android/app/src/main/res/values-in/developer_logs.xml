@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="developer_logs_title">Log diagnostik</string>
+    <string name="developer_logs_entry_description">Cari, filter, dan bagikan laporan diagnostik lengkap</string>
+    <string name="developer_logs_search">Cari log, tag, atau pengecualian</string>
+    <string name="developer_logs_source">Sumber: %1$s</string>
+    <string name="developer_logs_hint">Reproduksi isu tersebut, lalu segarkan. Log tingkat kesalahan tidak selalu berarti suatu fitur telah gagal.</string>
+    <string name="developer_logs_share_full">Bagikan log lengkap</string>
+    <string name="developer_logs_result_count">%1$d dari acara %2$d · %3$s yang diperbarui</string>
+    <string name="developer_logs_no_matches">Tidak ada log yang cocok. Coba kata kunci atau filter lain.</string>
+    <string name="developer_logs_clear_confirmation">Hapus buffer log diagnostik? Data dan pengaturan Vault disimpan. Detail lingkungan saat ini dan log baru mungkin masih muncul.</string>
+    <string name="developer_logs_copy_event">Salin acara</string>
+    <string name="developer_logs_preview_limit">Pratinjau dipersingkat. Salin acara atau bagikan laporan lengkap untuk melihat semua teks.</string>
+    <string name="developer_logs_expand">Perluas peristiwa log</string>
+    <string name="developer_logs_collapse">Ciutkan peristiwa log</string>
+    <string name="developer_logs_security">Keamanan</string>
+    <string name="developer_verification_group">Verifikasi &amp; kompatibilitas</string>
+    <string name="developer_forensics_group">Diagnostik sinkronisasi Bitwarden</string>
+    <string name="developer_logs_copy_failed">Tidak dapat menyalin acara ini. Bagikan file log lengkap sebagai gantinya.</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_message_empty">Dışa aktarılan yedekleme dosyası boş</string>
+    <string name="export_message_empty_zip">ZIP yedeklemesinin içeriği yok</string>
+    <string name="export_message_open_failed">Dışa aktarma hedefi açılamıyor</string>
+    <string name="export_message_incomplete">Dışa aktarma tamamlanmadı: %1$d/%2$d bayt</string>
+    <string name="export_message_invalid_encrypted">Yazılı yedeklemenin geçersiz şifrelenmiş biçimi var</string>
+    <string name="export_message_verify_failed">Dışa aktarılan dosya doğrulanamadı</string>
+    <string name="export_message_backup_summary">Yedekleme dışa aktarıldı: %1$d şifreleri ve %2$d görüntüleri</string>
+    <string name="import_message_aegis_unencrypted">Bu içe aktarma işlemi için şifrelenmemiş bir Aegis JSON dışa aktarımı gerekiyor</string>
+    <string name="import_message_aegis_missing">Geçersiz Aegis dosyası: eksik %1$s</string>
+    <string name="import_message_aegis_empty_slots">Geçersiz Aegis dosyası: yuvalar boş</string>
+    <string name="import_message_aegis_slot_type">Desteklenmeyen Aegis yuvası türü: %1$s</string>
+    <string name="import_message_aegis_no_totp">Aegis dosyasında geçerli TOTP girişi bulunamadı</string>
+    <string name="import_message_aegis_failed">Aegis dosyası içe aktarılamadı: %1$s</string>
+    <string name="import_message_key_length">Şifresi çözülmüş anahtarın uzunluğu geçersiz</string>
+    <string name="import_message_steam_missing">Geçersiz Steam Guard verileri: eksik %1$s</string>
+    <string name="import_message_steam_device_id">Geçersiz cihaz kimliği. Beklenen format: android:xxxx</string>
+    <string name="import_message_steam_secret">Geçersiz Steam paylaşılan_gizli biçim</string>
+    <string name="import_message_steam_exists">Bu Steam Guard kimlik doğrulayıcı zaten mevcut</string>
+    <string name="export_message_empty_mafile">Dışa aktarılan maFile boş</string>
+    <string name="crypto_message_encrypt_failed">Şifreleme başarısız oldu: %1$s</string>
+    <string name="crypto_message_decrypt_failed">Şifre çözme başarısız oldu: %1$s</string>
+    <string name="crypto_message_file_too_small">Şifrelenmiş dosya çok küçük ve hasar görmüş olabilir</string>
+    <string name="crypto_message_invalid_file">Geçersiz şifrelenmiş dosya biçimi</string>
+    <string name="crypto_message_password_or_corrupt">Yanlış şifre veya hasarlı şifrelenmiş veri</string>
+    <string name="crypto_message_invalid_text">Geçersiz şifrelenmiş metin biçimi</string>
+    <string name="photo_message_camera_failed">Kamera açılamadı: %1$s</string>
+    <string name="photo_message_gallery_missing">Galeri uygulaması mevcut değil</string>
+    <string name="photo_message_gallery_failed">Galeri açılamadı: %1$s</string>
+    <string name="photo_message_data_failed">Döndürülen resim okunamadı: %1$s</string>
+    <string name="photo_message_file_missing">Fotoğraf dosyası boş veya eksik</string>
+    <string name="photo_message_not_selected">Hiçbir resim seçilmedi</string>
+</resources>

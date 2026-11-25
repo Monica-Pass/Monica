@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">自定義二維碼模板</string>
+    <string name="qr_template_error">無法讀取項目、保存模板或生成二維碼。請確認資料庫已解鎖、內容未超限後重試。</string>
+    <string name="qr_template_field_error">字段“%1$s”缺失、不可讀取或名稱重複，請選擇可用字段後生成。</string>
+    <string name="qr_template_generate">生成二維碼</string>
+    <string name="qr_template_hint">生成時讀取最新字段，僅保存模板，不額外保存展開後的密碼。Wi-Fi 模板會自動轉義插入值。</string>
+    <string name="qr_template_insert">插入字段</string>
+    <string name="qr_template_literal">普通文本</string>
+    <string name="qr_template_mode">字段模板</string>
+    <string name="qr_template_wifi">Wi-Fi 預設</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Silme işlemi tamamlanmadı</string>
+    <string name="batch_delete_interrupted_count">%2$d öğelerinin %1$d\'su işlendikten sonra kesintiye uğradı. Tekrar denemeden önce kalan öğeleri kontrol edin.</string>
+</resources>

@@ -140,9 +140,10 @@ internal class DatabaseArchiveExporter(context: Context) {
                     }.toString())
                 }
                 if (preferences.includeTrashAndHistory && passwordIds.isNotEmpty()) {
+                    val passwordTitles = snapshot.passwords.associate { it.id to it.title }
                     val history = PasswordDatabase.getDatabase(context).passwordHistoryDao().getAllHistorySync()
                         .filter { it.entryId in passwordIds }.map { entry ->
-                            PasswordHistoryBackupEntry(entry.entryId, plain(entry.password), entry.lastUsedAt.time)
+                            PasswordHistoryBackupEntry(entry.entryId, plain(entry.password, passwordTitles[entry.entryId].orEmpty()), entry.lastUsedAt.time)
                         }
                     if (history.isNotEmpty()) write("password_history.json", Json.encodeToString(history))
                 }
@@ -197,19 +198,19 @@ internal class DatabaseArchiveExporter(context: Context) {
         }
     }
 
-    private fun plain(value: String) = PortableSecretExportPolicy.resolve(value, "", security::decryptDataIfMonicaCiphertext)
+    private fun plain(value: String, title: String) = PortableSecretExportPolicy.resolve(value, title, security::decryptDataIfMonicaCiphertext)
 
     private fun passwordJson(entry: PasswordEntry, snapshot: DatabaseExportSnapshot) = JSONObject()
         .put("passwordGroupId", entry.explicitPasswordGroupId())
-        .put("id", entry.id).put("title", entry.title).put("username", entry.username).put("password", plain(entry.password))
+        .put("id", entry.id).put("title", entry.title).put("username", entry.username).put("password", plain(entry.password, entry.title))
         .put("website", entry.website).put("notes", entry.notes).put("isFavorite", entry.isFavorite).put("sortOrder", entry.sortOrder)
         .put("categoryName", snapshot.categories[entry.categoryId]).put("appPackageName", entry.appPackageName).put("appName", entry.appName)
         .put("email", entry.email).put("phone", entry.phone).put("addressLine", entry.addressLine).put("city", entry.city)
         .put("state", entry.state).put("zipCode", entry.zipCode).put("country", entry.country)
-        .put("creditCardNumber", plain(entry.creditCardNumber)).put("creditCardHolder", entry.creditCardHolder)
-        .put("creditCardExpiry", entry.creditCardExpiry).put("creditCardCVV", plain(entry.creditCardCVV))
+        .put("creditCardNumber", plain(entry.creditCardNumber, entry.title)).put("creditCardHolder", entry.creditCardHolder)
+        .put("creditCardExpiry", entry.creditCardExpiry).put("creditCardCVV", plain(entry.creditCardCVV, entry.title))
         .put("isArchived", entry.isArchived).put("archivedAt", entry.archivedAt?.time).put("createdAt", entry.createdAt.time).put("updatedAt", entry.updatedAt.time)
-        .put("authenticatorKey", plain(entry.authenticatorKey)).put("passkeyBindings", entry.passkeyBindings)
+        .put("authenticatorKey", plain(entry.authenticatorKey, entry.title)).put("passkeyBindings", entry.passkeyBindings)
         .put("sshKeyData", entry.sshKeyData).put("loginType", entry.loginType).put("ssoProvider", entry.ssoProvider)
         .put("ssoRefEntryId", entry.ssoRefEntryId?.takeIf { id -> snapshot.passwords.any { it.id == id } }).put("boundNoteId", entry.boundNoteId?.takeIf { id -> snapshot.secureItems.any { it.id == id } }).put("wifiMetadata", entry.wifiMetadata)
         .put("customIconType", entry.customIconType).put("customIconValue", entry.customIconValue?.let {
@@ -221,7 +222,7 @@ internal class DatabaseArchiveExporter(context: Context) {
     private fun itemJson(item: SecureItem, snapshot: DatabaseExportSnapshot) = JSONObject()
         .put("id", item.id).put("title", item.title).put("itemType", item.itemType.name)
         .put("itemData", if (item.itemType == ItemType.TOTP) PortableTotpBackupCodec.encode(item.itemData, item.title,
-            security::decryptDataIfMonicaCiphertext) else plain(item.itemData))
+            security::decryptDataIfMonicaCiphertext) else plain(item.itemData, item.title))
         .put("notes", item.notes).put("isFavorite", item.isFavorite).put("sortOrder", item.sortOrder)
         .put("imagePaths", item.imagePaths).put("createdAt", item.createdAt.time).put("updatedAt", item.updatedAt.time)
         .put("categoryName", snapshot.categories[item.categoryId])

@@ -8,7 +8,7 @@
     <string name="hyperos_diag_framework">"系統框架已識別 Monica 啟用"</string>
     <string name="hyperos_diag_registered">"Monica 已登記為憑據服務"</string>
     <string name="hyperos_drift_title">"察驗修復後之變"</string>
-    <string name="hyperos_drift_note">"此頁可見時每三十秒及重開時察驗，絕不自動改寫配置。"</string>
+    <string name="hyperos_drift_note">此页可见时每 30 秒检查，重开时亦查。绝不自动改写设置。</string>
     <string name="hyperos_drift_result">"與上次核驗之修復結果相比"</string>
     <string name="hyperos_drift_off">"察驗已關"</string>
     <string name="hyperos_drift_no_baseline">"請先應用一次配置，以立比較之據。"</string>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_passkey_settings_title">Isi otomatis &amp; kunci sandi</string>
+    <string name="hardware_key_enable">Aktifkan kunci fisik</string>
+    <string name="hardware_key_enable_description">Gunakan kunci keamanan USB atau NFC dengan Monica. Mati secara default. Kunci sandi perangkat lunak yang disimpan tidak terpengaruh.</string>
+</resources>

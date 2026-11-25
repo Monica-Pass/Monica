@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_error_read_only">Basis data ini hanya dapat dibaca. Matikan mode baca-saja di pengaturannya sebelum mengedit.</string>
+    <string name="keepass_error_write_permission">Akses tulis KDBX tidak ada. Berikan akses lagi di pengaturan database sebelum menyimpan atau menghapus.</string>
+    <string name="keepass_error_memory">Pengaturan KDF memerlukan lebih banyak memori daripada yang dapat disediakan perangkat ini. Kurangi penggunaan memori atau paralelisme.</string>
+    <string name="keepass_error_credentials">Kata sandi basis data atau file kunci salah</string>
+    <string name="keepass_error_legacy">Basis data .kdb (KeePass 1.x) lama tidak didukung. Simpan database sebagai .kdbx di KeePassDX atau KeePassXC, lalu impor.</string>
+    <string name="keepass_error_format">Format database tidak didukung atau file rusak</string>
+    <string name="keepass_error_io">Tidak dapat membaca atau menulis file KeePass</string>
+    <string name="keepass_error_operation">Operasi KeePass gagal</string>
+    <string name="onedrive_error_redirect">Versi Monica Steam yang lebih lama mencegat proses masuk OneDrive. Perbarui Monica Steam dan coba lagi. File database tidak rusak.</string>
+    <string name="onedrive_error_power">OneDrive tidak dapat menyegarkan sesi login saat ini. Nonaktifkan pengoptimalan baterai, atau hidupkan layar dan buka kembali Monica sebelum mencoba lagi.</string>
+    <string name="onedrive_error_operation">Operasi OneDrive gagal</string>
+    <string name="keepass_error_not_remote">Basis data ini tidak memiliki sumber jarak jauh</string>
+    <string name="keepass_error_remote_source_missing">Sumber jarak jauh tidak ditemukan</string>
+    <string name="keepass_error_working_copy_missing">Salinan kerja lokal tidak ditemukan</string>
+    <string name="keepass_sync_pulled">Mengunduh versi jarak jauh terbaru</string>
+    <string name="keepass_sync_both_changed">File jarak jauh dan copy pekerjaan lokal keduanya berubah. Selesaikan konflik sebelum menyinkronkan.</string>
+    <string name="keepass_sync_up_to_date">Basis data jarak jauh sudah diperbarui</string>
+    <string name="keepass_sync_remote_changed">File jarak jauh berubah. Sinkronkan lagi sebelum melanjutkan.</string>
+    <string name="keepass_sync_complete">Sinkronisasi jarak jauh selesai</string>
+    <string name="keepass_error_group_name_required">Masukkan nama grup</string>
+    <string name="keepass_error_group_path">Jalur grup tidak valid</string>
+    <string name="keepass_error_group_missing">Grup tidak ditemukan: %1$s</string>
+    <string name="keepass_error_group_child">Suatu grup tidak dapat dipindahkan ke dalam grupnya sendiri atau salah satu subgrupnya</string>
+    <string name="keepass_error_group_uuid">Tujuan sudah memiliki grup berbeda dengan UUID yang sama: %1$s</string>
+    <string name="keepass_error_select_folder">Pilih setidaknya satu folder</string>
+    <string name="keepass_group_unnamed">Grup tanpa nama</string>
+    <string name="keepass_error_parent_group">Grup induk tidak ditemukan: %1$s</string>
+    <string name="keepass_error_group_exists">Grup dengan nama ini sudah ada di sini</string>
+    <string name="keepass_error_no_credentials">Tidak ada kredensial basis data yang tersedia</string>
+    <string name="keepass_error_source_type">Jenis sumber jarak jauh yang tidak didukung: %1$s</string>
+    <string name="keepass_error_upload_verification">Verifikasi jarak jauh gagal: konten yang diunggah berbeda (%1$d/%2$d byte)</string>
+    <string name="storage_error_invalid_path">Jalur file tidak valid</string>
+    <string name="storage_error_create_directory">Tidak dapat membuat direktori database</string>
+    <string name="storage_error_read_database">Tidak dapat membaca file database</string>
+    <string name="storage_error_open_database">Tidak dapat membuka file database</string>
+    <string name="storage_error_recovery_copy">Tidak dapat membuat salinan pemulihan KeePass</string>
+    <string name="storage_error_verify_database">Tidak dapat memverifikasi file database</string>
+    <string name="storage_error_write_verification">Verifikasi gagal setelah menulis file KeePass eksternal</string>
+    <string name="storage_error_rollback_verification">Verifikasi gagal setelah memulihkan file KeePass eksternal</string>
+    <string name="storage_error_write_database">Tidak dapat menulis file database</string>
+    <string name="keepass_error_conflict_cache_missing">Salinan cache yang diperlukan untuk menyelesaikan konflik tidak ada</string>
+    <string name="onedrive_error_session_expired">Sesi akun OneDrive telah berakhir. Masuk lagi.</string>
+</resources>

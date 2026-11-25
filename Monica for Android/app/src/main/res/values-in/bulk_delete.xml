@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Penghapusan tidak selesai</string>
+    <string name="batch_delete_interrupted_count">Terganggu setelah memproses %1$d dari item %2$d. Periksa item yang tersisa sebelum mencoba lagi.</string>
+</resources>

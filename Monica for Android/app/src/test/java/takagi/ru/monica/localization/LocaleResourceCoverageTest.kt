@@ -20,6 +20,7 @@ class LocaleResourceCoverageTest {
     private val localeDirectories = mapOf(
         Language.CHINESE to "values-zh",
         Language.TRADITIONAL_CHINESE to "values-b+zh+Hant",
+        Language.TRADITIONAL_CHINESE_TAIWAN to "values-b+zh+Hant+TW",
         Language.CLASSICAL_CHINESE to "values-b+lzh",
         Language.VIETNAMESE to "values-vi",
         Language.JAPANESE to "values-ja",
@@ -32,6 +33,8 @@ class LocaleResourceCoverageTest {
         Language.ITALIAN to "values-it",
         Language.PORTUGUESE_PORTUGAL to "values-pt",
         Language.PORTUGUESE_BRAZIL to "values-pt-rBR",
+        Language.INDONESIAN to "values-in",
+        Language.TURKISH to "values-tr",
     )
     private val base by lazy { resources("values") }
 
@@ -93,6 +96,12 @@ class LocaleResourceCoverageTest {
             "mdbx_ui_manager_health_title",
             "autofill_v2_default_bitwarden_desc",
             "notification_validator_ready",
+            "mdbx_client_mode_unsupported",
+            "mdbx_client_mode_unsupported_title",
+            "nearby_deletion_review_body",
+            "privilege_root_confirm_body",
+            "local_recovery_limits",
+            "secure_startup_no_reset",
         )
         localeDirectories.forEach { (language, directory) ->
             val localized = resources(directory)
@@ -101,6 +110,36 @@ class LocaleResourceCoverageTest {
                     "$language/$name still uses its English default",
                     base.getValue(name).values == localized.getValue(name).values,
                 )
+            }
+        }
+    }
+
+    @Test
+    fun taiwanIncludesEveryCurrentResourceWithItsOriginalFormatContract() {
+        checkResourceContract("values-b+zh+Hant+TW")
+    }
+
+    @Test
+    fun indonesianAndTurkishIncludeEveryCurrentResourceWithItsOriginalFormatContract() {
+        listOf("values-in", "values-tr").forEach(::checkResourceContract)
+    }
+
+    private fun checkResourceContract(directory: String) {
+        val localized = resources(directory)
+        assertEquals(base.keys, localized.keys)
+        base.forEach { (name, source) ->
+            val translated = localized.getValue(name)
+            assertEquals(name, source.type, translated.type)
+            assertEquals(name, source.formatted, translated.formatted)
+            if (source.type == "plurals") assertTrue(name, "other" in translated.values)
+            else assertEquals(name, source.values.keys, translated.values.keys)
+            translated.values.forEach { (part, text) ->
+                val sourceText = source.values[part] ?: source.values.getValue("other")
+                if (sourceText.isNotBlank()) assertTrue(name, text.isNotBlank())
+                if (source.formatted) assertEquals(name, tokens(FORMAT, sourceText), tokens(FORMAT, text))
+                assertEquals(name, tokens(NAMED_TOKEN, sourceText), tokens(NAMED_TOKEN, text))
+                assertEquals(name, lineBreaks(sourceText), lineBreaks(text))
+                assertFalse(name, GUARD_TOKEN.containsMatchIn(text))
             }
         }
     }
@@ -144,8 +183,8 @@ class LocaleResourceCoverageTest {
     }
 
     private fun requiredQuantities(language: Language): Set<String> = when (language) {
-        Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE, Language.JAPANESE,
-        Language.KOREAN, Language.VIETNAMESE -> setOf("other")
+        Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.TRADITIONAL_CHINESE_TAIWAN, Language.CLASSICAL_CHINESE, Language.JAPANESE,
+        Language.KOREAN, Language.VIETNAMESE, Language.INDONESIAN -> setOf("other")
         Language.RUSSIAN, Language.POLISH -> setOf("one", "few", "many", "other")
         else -> setOf("one", "other")
     }

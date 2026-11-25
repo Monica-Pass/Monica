@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_block_api_key">API Key</string>
+    <string name="content_block_api_token">API 權杖</string>
+    <string name="content_block_ssh">SSH 金鑰</string>
+    <string name="content_block_gpg">GPG 金鑰</string>
+    <string name="content_block_qr">QR 碼</string>
+    <string name="content_block_key">金鑰</string>
+    <string name="content_block_token">權杖</string>
+    <string name="content_block_provider">服務商</string>
+    <string name="content_block_url">API 端點</string>
+    <string name="content_block_algorithm">演演算法</string>
+    <string name="content_block_public">公鑰</string>
+    <string name="content_block_private">私鑰</string>
+    <string name="content_block_fingerprint">指紋</string>
+    <string name="content_block_identity">身分／註解</string>
+    <string name="content_block_content">文字或連結</string>
+    <string name="content_block_import">從檔案匯入</string>
+    <string name="content_block_export">匯出至檔案</string>
+    <string name="content_block_unavailable">不支援的內容</string>
+    <string name="content_block_preserved">原始內容已保留，請使用相容版本編輯。</string>
+    <string name="content_block_save_error">無法儲存或讀取內容，請檢查檔案與大小（最大 256 KiB）。</string>
+    <string name="content_block_more">更多內容</string>
+    <string name="content_block_key_size">金鑰長度</string>
+    <string name="content_block_format">格式</string>
+    <string name="content_block_qr_error">內容過長，無法產生 QR 碼，仍可查看或複製完整內容。</string>
+</resources>

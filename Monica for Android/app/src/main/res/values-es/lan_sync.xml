@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Sincronización cancelada</string>
+    <string name="lan_completed">Ambos dispositivos terminaron de sincronizarse</string>
+    <string name="lan_confirming">Esperando que el otro dispositivo termine de aplicar los cambios…</string>
+    <string name="lan_conflicts">Los conflictos %1$d necesitan revisión en la gestión de bóvedas. Se conservan ambas versiones.</string>
+    <string name="lan_connect">Emparejar y sincronizar</string>
+    <string name="lan_connecting">Verificando el emparejamiento…</string>
+    <string name="lan_copy_link">Copiar enlace de emparejamiento</string>
+    <string name="lan_description">Sincroniza una bóveda entre teléfonos y computadoras en el mismo Wi-Fi. Busque un dispositivo e ingrese su código de emparejamiento o escanee su código QR.</string>
+    <string name="lan_different_vault">Estas son bóvedas diferentes. Seleccione la misma bóveda en ambos dispositivos o reciba esta bóveda como nueva.</string>
+    <string name="lan_discover">Encuentra dispositivos cercanos</string>
+    <string name="lan_discovering">Buscando dispositivos…</string>
+    <string name="lan_expired">El emparejamiento expiró. Permita que un dispositivo se conecte nuevamente para crear un nuevo código.</string>
+    <string name="lan_external_blobs">Esta bóveda hace referencia a archivos almacenados fuera de ella. Actualmente, la sincronización cercana requiere que todos los archivos adjuntos se almacenen dentro de la bóveda.</string>
+    <string name="lan_failed">La sincronización no finalizó</string>
+    <string name="lan_failed_hint">Verifique que ambos dispositivos aún estén conectados al mismo Wi-Fi, luego empareje nuevamente. Se conservan los cambios ya comprometidos.</string>
+    <string name="lan_host">Permitir que un dispositivo se conecte</string>
+    <string name="lan_imported">La bóveda recibida se ha agregado a la gestión de bóvedas.</string>
+    <string name="lan_invalid_code">El código de emparejamiento no es válido o ya no coincide. Obtenga un nuevo código del otro dispositivo.</string>
+    <string name="lan_invitation_hint">El emparejamiento caduca después de 10 minutos. Comparte este código o código QR solo con el dispositivo que deseas conectar.</string>
+    <string name="lan_manage">Administrar bóvedas</string>
+    <string name="lan_merging">Aplicando cambios a la bóveda…</string>
+    <string name="lan_new_vault_hint">Para la primera conexión, ingrese la contraseña del almacén de origen. La bóveda recibida se agrega por separado. Para sincronizaciones posteriores, seleccione la misma bóveda en ambos dispositivos.</string>
+    <string name="lan_no_devices">Aún no se encontraron dispositivos. En el otro dispositivo, elija \"Permitir que un dispositivo se conecte\". También puedes escanear o pegar su enlace de emparejamiento.</string>
+    <string name="lan_no_network">No se encontró ninguna dirección Wi-Fi local.</string>
+    <string name="lan_pairing_autofilled">Código de emparejamiento y enlace completados automáticamente. Toca Emparejar y sincronizar para continuar.</string>
+    <string name="lan_pairing_code">Código de emparejamiento</string>
+    <string name="lan_pairing_needs_vault_password">La información de emparejamiento se completa automáticamente. Ingrese la contraseña de la bóveda de origen para la primera transferencia, luego toque Emparejar y sincronizar.</string>
+    <string name="lan_paste_link">Enlace de emparejamiento</string>
+    <string name="lan_peer_failed">El otro dispositivo no pudo aplicar los cambios. Compruébalo y vuelve a intentarlo.</string>
+    <string name="lan_preparing">Preparando datos de bóveda cifrados…</string>
+    <string name="lan_receive_new">Recibir como una nueva bóveda</string>
+    <string name="lan_scan">Escanear código QR de emparejamiento</string>
+    <string name="lan_select_vault">Elija una bóveda</string>
+    <string name="lan_title">Sincronización cercana</string>
+    <string name="lan_transferring">Transfiriendo datos cifrados…</string>
+    <string name="lan_unavailable">La sincronización cercana no está disponible en esta compilación.</string>
+    <string name="lan_vault_failed">La bóveda no se pudo abrir ni fusionar. Verifique la contraseña de la bóveda y el almacenamiento disponible, luego vuelva a intentarlo.</string>
+    <string name="lan_vault_name">Nombre de la bóveda recibida</string>
+    <string name="lan_vault_password">Contraseña del almacén de origen</string>
+    <string name="lan_waiting">Esperando el otro dispositivo…</string>
+</resources>

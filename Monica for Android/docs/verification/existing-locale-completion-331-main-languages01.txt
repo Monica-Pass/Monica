@@ -1,0 +1,2205 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.AllLocalesInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=compiledSeparatorsAndAutoTypeTokensArePreservedInEveryLanguage
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=compiledSeparatorsAndAutoTypeTokensArePreservedInEveryLanguage
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=everyLanguageCanBeSelectedPersistedAndResolved
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everyLanguageCanBeSelectedPersistedAndResolved
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=androidCanReadAndFormatEveryStringInEveryLanguage
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=androidCanReadAndFormatEveryStringInEveryLanguage
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=russianPluralsFollowAndroidQuantityRules
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.AllLocalesInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=russianPluralsFollowAndroidQuantityRules
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: fr/autofill_save_review_title expected:<...ot de passe existant[ ]?> but was:<...ot de passe existant[ ]?>
+
+	at org.junit.Assert.assertEquals(Assert.java:117)
+
+	at takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest.everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss(ExistingLocaleAdditionsInstrumentedTest.kt:31)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss(takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest):
+
+org.junit.ComparisonFailure: fr/autofill_save_review_title expected:<...ot de passe existant[ ]?> but was:<...ot de passe existant[ ]?>
+
+	at org.junit.Assert.assertEquals(Assert.java:117)
+
+	at takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest.everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss(ExistingLocaleAdditionsInstrumentedTest.kt:31)
+
+
+
+INSTRUMENTATION_STATUS: test=everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.ExistingLocaleWarningsUiTest:
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[TRADITIONAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[TRADITIONAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[TRADITIONAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[TRADITIONAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[TRADITIONAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[TRADITIONAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CLASSICAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CLASSICAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CLASSICAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CLASSICAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CLASSICAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CLASSICAL_CHINESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[VIETNAMESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[VIETNAMESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[VIETNAMESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[VIETNAMESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[VIETNAMESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[VIETNAMESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[JAPANESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[JAPANESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[JAPANESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[JAPANESE]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[JAPANESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[JAPANESE]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[RUSSIAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[RUSSIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[RUSSIAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[RUSSIAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[RUSSIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[RUSSIAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[KOREAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[KOREAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[KOREAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[KOREAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[KOREAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[KOREAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[GERMAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[GERMAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[GERMAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[GERMAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[GERMAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[GERMAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[SPANISH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[SPANISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[SPANISH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[SPANISH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[SPANISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[SPANISH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[FRENCH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[FRENCH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[FRENCH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[FRENCH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[FRENCH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[FRENCH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[POLISH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[POLISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[POLISH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[POLISH]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[POLISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[POLISH]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[ITALIAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in deletionWarningPreservesTheKeepLocalChoiceAtLargeText[ITALIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+
+
+INSTRUMENTATION_STATUS: test=deletionWarningPreservesTheKeepLocalChoiceAtLargeText[ITALIAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[ITALIAN]
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.ExistingLocaleWarningsUiTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[ITALIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest):
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+INSTRUMENTATION_STATUS: test=rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[ITALIAN]
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=savedChoicesSurviveFreshSettingsAndStartupCacheReads
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=savedChoicesSurviveFreshSettingsAndStartupCacheReads
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=31
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=retainedRuntimeMessagesRefreshWithoutRecreatingTheResolver
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=31
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=retainedRuntimeMessagesRefreshWithoutRecreatingTheResolver
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=32
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=everyPackagedResourceMatchesTheCompleteSourceContractAndFormats
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=32
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=everyPackagedResourceMatchesTheCompleteSourceContractAndFormats
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=33
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=compiledPluralsAndTechnicalTokensRemainUsable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=33
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=compiledPluralsAndTechnicalTokensRemainUsable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=34
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=explicitChoicesAndLegacyIndonesianTagsResolveTheRightPack
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=34
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=34
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=explicitChoicesAndLegacyIndonesianTagsResolveTheRightPack
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 17.636
+
+There were 25 failures:
+
+1) everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss(takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest)
+
+org.junit.ComparisonFailure: fr/autofill_save_review_title expected:<...ot de passe existant[ ]?> but was:<...ot de passe existant[ ]?>
+
+	at org.junit.Assert.assertEquals(Assert.java:117)
+
+	at takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest.everyAddedTranslationIsSelectedAndCompiledWithoutFallbackOrEscapingLoss(ExistingLocaleAdditionsInstrumentedTest.kt:31)
+
+2) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+3) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+4) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[TRADITIONAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+5) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[TRADITIONAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+6) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[CLASSICAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+7) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[CLASSICAL_CHINESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+8) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[VIETNAMESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+9) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[VIETNAMESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+10) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[JAPANESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+11) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[JAPANESE](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+12) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[RUSSIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+13) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[RUSSIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+14) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[KOREAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+15) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[KOREAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+16) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[GERMAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+17) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[GERMAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+18) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[SPANISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+19) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[SPANISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+20) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[FRENCH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+21) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[FRENCH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+22) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[POLISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+23) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[POLISH](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+24) deletionWarningPreservesTheKeepLocalChoiceAtLargeText[ITALIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.deletionWarningPreservesTheKeepLocalChoiceAtLargeText(ExistingLocaleWarningsUiTest.kt:93)
+
+25) rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText[ITALIAN](takagi.ru.monica.localization.ExistingLocaleWarningsUiTest)
+
+java.lang.AssertionError: expected:<1.5> but was:<1.0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:577)
+
+	at org.junit.Assert.assertEquals(Assert.java:701)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.assertReadable(ExistingLocaleWarningsUiTest.kt:120)
+
+	at takagi.ru.monica.localization.ExistingLocaleWarningsUiTest.rootWarningCanBeReadAndCancelledWithoutAuthorizationAtLargeText(ExistingLocaleWarningsUiTest.kt:77)
+
+
+
+FAILURES!!!
+
+Tests run: 34,  Failures: 25
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

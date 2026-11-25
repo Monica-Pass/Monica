@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_face_rotate_left">Putar ke kiri 90°</string>
+    <string name="card_face_rotate_right">Putar ke kanan 90°</string>
+    <string name="card_face_crop_rotation_hint">Seret ke posisi, cubit untuk memperbesar, atau putar dan balik menggunakan kontrol.</string>
+    <string name="card_face_flip_horizontal">Balik secara horizontal</string>
+    <string name="card_face_flip_vertical">Balik secara vertikal</string>
+</resources>

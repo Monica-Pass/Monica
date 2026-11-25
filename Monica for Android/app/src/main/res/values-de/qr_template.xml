@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Benutzerdefinierte QR-Vorlage</string>
+    <string name="qr_template_error">Der Eintrag konnte nicht gelesen, die Vorlage nicht gespeichert oder der Code generiert werden. Überprüfen Sie, ob die Datenbank entsperrt ist und der Inhalt innerhalb der Grenzen liegt, und versuchen Sie es dann erneut.</string>
+    <string name="qr_template_field_error">Das Feld „%1$s“ fehlt, ist unlesbar oder mehrdeutig. Wählen Sie vor dem Generieren ein verfügbares Feld aus.</string>
+    <string name="qr_template_generate">QR-Code generieren</string>
+    <string name="qr_template_hint">Liest aktuelle Felder bei der Generierung. Speichert die Vorlage, keine aufgelöste Passwortkopie. Wi-Fi-Vorlagen maskieren eingefügte Werte automatisch.</string>
+    <string name="qr_template_insert">Feld einfügen</string>
+    <string name="qr_template_literal">Nur-Text</string>
+    <string name="qr_template_mode">Feldvorlage</string>
+    <string name="qr_template_wifi">WLAN-Voreinstellung</string>
+</resources>

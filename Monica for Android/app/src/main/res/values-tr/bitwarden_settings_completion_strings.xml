@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Güvenlik</string>
+    <string name="bitwarden_settings_queue_hint">Bekleyen değişiklikleri ve senkronizasyon sorunlarını görüntüleyin</string>
+    <string name="bitwarden_account_web_settings_hint">Ana şifrenizi, iki adımlı girişinizi ve web aboneliğinizi yönetin</string>
+    <string name="bitwarden_settings_select_account">Cari hesap olarak ayarla</string>
+    <string name="bitwarden_settings_account_management">Hesap yönetimi</string>
+    <string name="bitwarden_queue_help">Senkronizasyonu bekleyen yerel değişiklikleri ve en son denemenin sonuçlarını gösterir. Boş bir liste sunucunun güncel olduğunu doğrulamaz.</string>
+    <string name="bitwarden_queue_empty_local">Senkronizasyonu bekleyen yerel değişiklik yok.</string>
+    <string name="bitwarden_queue_locked">Bekleyen öğeleri görüntülemek için bu hesabın kilidini açın.</string>
+    <string name="bitwarden_queue_loading_error">Bekleyen öğeler okunamadı. Tekrar denemek için bu sayfayı yeniden açın.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Sunucu onayı bekleniyor</string>
+    <string name="bitwarden_queue_idle">Senkronizasyon görevi çalışmıyor</string>
+</resources>

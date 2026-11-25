@@ -210,6 +210,10 @@ class WebDavMdbxFileSource internal constructor(
         val parentPath = WebDavKeePassFileSource.parentPathOf(normalizedPath, strings = strings)
         if (parentPath.isNotBlank()) ensureDirectoryPathExists(parentPath)
         val targetUrl = WebDavKeePassFileSource.buildRemoteUrl(normalizedServerUrl, normalizedPath)
+        // Some providers (including Jianguoyun) ignore conditional PUT headers.
+        // Keep the preflight to protect known immutable content / stale versions;
+        // headers still protect the race on providers that implement them. This
+        // cannot promise atomic conditional replacement on an incompatible server.
         val existing = statPath(normalizedPath)
         if (mode == MdbxRemoteWriteMode.CREATE_ONLY && existing != null) {
             if (isSameImmutableContent(normalizedPath, existing, source)) return@withContext existing
@@ -222,7 +226,8 @@ class WebDavMdbxFileSource internal constructor(
                 throw KeePassSourceChangedException(strings.get(R.string.cloud_message_remote_changed))
             }
         }
-        try {
+        // A postflight can fail after a durable upload and falsely report failure.
+        val etag = try {
             conditionalWriter.write(targetUrl, source, mode, expectedVersion)
         } catch (error: WebDavPreconditionException) {
             if (mode == MdbxRemoteWriteMode.CREATE_ONLY) {
@@ -234,10 +239,11 @@ class WebDavMdbxFileSource internal constructor(
             }
             throw IOException(strings.get(R.string.cloud_message_remote_changed), error)
         }
-        statPath(normalizedPath) ?: FileSourceEntry(
+        FileSourceEntry(
             name = normalizedPath.substringAfterLast('/'),
             path = normalizedPath,
             isDirectory = false,
+            versionToken = etag,
             sizeBytes = source.length()
         )
     }

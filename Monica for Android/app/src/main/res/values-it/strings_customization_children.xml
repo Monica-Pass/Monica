@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">Rimuovere tutti i campi preimpostati? Le voci salvate esistenti manterranno i propri campi.</string>
+    <string name="customization_drag_handle">Riordina %1$s</string>
+    <string name="customization_filters_navigation">Filtri e navigazione</string>
+    <string name="customization_live_preview">"Anteprima in diretta"</string>
+</resources>

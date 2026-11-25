@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_chinese_expand">Perluas opsi bahasa Mandarin</string>
+    <string name="language_chinese_collapse">Ciutkan opsi berbahasa Mandarin</string>
+</resources>

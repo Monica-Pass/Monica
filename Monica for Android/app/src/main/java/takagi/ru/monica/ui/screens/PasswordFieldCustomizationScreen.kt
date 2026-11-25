@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.ui.components.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,7 +17,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.contentDescription
@@ -317,7 +320,7 @@ private fun PresetOptionRow(title: String, description: String, checked: Boolean
     val shape = settingsSectionItemShape(index, 2)
     Surface(modifier = Modifier.fillMaxWidth().clip(shape)
         .semantics { contentDescription = "$title. $description" }
-        .toggleable(checked, role = Role.Switch, onValueChange = onChange),
+        .hapticSwitchToggleable(checked, role = Role.Switch, onValueChange = onChange),
         shape = shape, color = MaterialTheme.colorScheme.surfaceContainerHigh) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {

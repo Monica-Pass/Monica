@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_unavailable">Kunci pribadi hilang atau tidak dapat dibaca. Impor ulang cadangan yang berisi kunci pribadi, atau periksa perangkat asli. Data lain dan cadangan jarak jauh disimpan.</string>
+    <string name="backup_passkey_device_bound">Kunci sandi ini menggunakan kunci Keystore Android yang terikat perangkat dan tidak dapat diekspor. Ini masih dapat berfungsi pada perangkat asli, tetapi tidak dapat disertakan dalam cadangan portabel.</string>
+    <string name="backup_passkey_unreadable">Kunci pribadi yang dilindungi tidak dapat dibaca. Buka kunci Monica dan coba lagi; jika ini terus berlanjut, periksa perangkat asli atau cadangan yang berisi kunci pribadi.</string>
+</resources>

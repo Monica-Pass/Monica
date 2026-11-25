@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_limit">Kayıt başına 64 MiB\'a kadar yeni veya taşınmış dosya ve simge başına 128 ek.</string>
+    <string name="native_token_assets_error">Her dosya okunamadı veya kaydedilemedi. Orijinal içeriğiniz tutuldu. Dosya erişimini ve boyutunu kontrol edip yeniden deneyin.</string>
+    <string name="native_token_backup_needs_files">Bu veritabanı, dosyalar içeren API belirteçlerini içerir. Tam bir yedeği dışa aktarmak için görüntüleri ve ekleri ekleyin.</string>
+    <string name="native_token_backup_limit">Bir ZIP yedeklemesindeki yerel API belirteç dosyalarının toplamı 64 MiB veya daha az olmalıdır. Daha büyük kasalar için yerel veritabanı yedeklemesini kullanın.</string>
+    <string name="native_token_kdbx_files_unsupported">Dosyalara sahip API belirteçleri, şifrelenmiş bir Monica ZIP veya yerel veritabanı yedeklemesi gerektirir. KDBX dışa aktarma, dosyaları olmayan API belirteçlerini destekler.</string>
+</resources>

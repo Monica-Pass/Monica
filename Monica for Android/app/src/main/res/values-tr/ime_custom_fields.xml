@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_custom_field_unavailable">Bu alan kullanılamıyor. Girişi yeniden açın veya kasanın kilidini açın ve tekrar deneyin.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_copy_status">"Copia"</string>
+    <string name="live_update_seconds">"%1$ds"</string>
+    <string name="live_update_smart_copy_channel">Copia sequenziale delle credenziali</string>
+    <string name="live_update_unlock_to_copy">Sblocca il tuo dispositivo per copiare</string>
+    <string name="live_update_unlock_to_view">Sblocca per visualizzare e continuare</string>
+    <string name="permission_live_updates_description">Mostra i conti alla rovescia OTP e la prossima credenziale da copiare</string>
+    <string name="permission_live_updates_name">Aggiornamenti in tempo reale</string>
+</resources>

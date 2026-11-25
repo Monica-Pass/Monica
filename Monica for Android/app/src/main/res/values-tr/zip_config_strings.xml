@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Uygulama ayarlarını, ortak hesapları, otomatik doldurma kurallarını, güvenlik sorularını ve WebDAV/Bitwarden yapılandırmasını içerir. Şifreleme gerekli.</string>
+    <string name="zip_config_encryption_required">ZIP yedeklemesini, Monica yapılandırmasını içerecek şekilde şifreleyin.</string>
+    <string name="zip_config_backup_failed">Seçilen Monica yapılandırmasının tümü yedeklenemedi. Hiçbir yedekleme dışa aktarılmadı.</string>
+    <string name="zip_restore_config">Monica yapılandırmasını geri yükle</string>
+    <string name="zip_restore_config_hint">Yedeklemede mevcutsa yapılandırmayı da geri yükleyin. Yerel ayarları korumak için işaretlenmemiş bırakın. Mevcut WebDAV bağlantıları korunur; Bitwarden kasaları yeniden doğrulama gerektiriyor.</string>
+</resources>

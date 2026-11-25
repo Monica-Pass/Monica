@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">원래 KeePass 인증자 항목을 고유하게 식별할 수 없습니다. 데이터베이스를 새로 고치고 다시 시도하십시오.</string>
+</resources>

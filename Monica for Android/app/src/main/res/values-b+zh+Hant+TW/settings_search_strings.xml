@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_search_result_count">%1$d 項設定</string>
+    <string name="settings_search_no_results">找不到設定項目</string>
+</resources>

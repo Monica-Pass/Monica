@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">摹卡片</string>
+    <string name="embedded_copy_document">摹证件</string>
+    <string name="embedded_copy_failed">内容未摹全</string>
+    <string name="embedded_copy_failed_message">未能完整摹 %1$s。来源与草稿皆留。请确认来源库已启封、附件可用，再试。</string>
+    <string name="embedded_copy_independent">独立副本 · %1$d 个附件</string>
+    <string name="embedded_copy_note">摹简牍</string>
+    <string name="embedded_copy_working">摹完整内容中…</string>
+    <string name="password_content_document">身份证件</string>
+    <string name="password_content_document_description">身份栏、卡面、照片与附件</string>
+</resources>

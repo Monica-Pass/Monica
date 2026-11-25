@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Cancellazione incompleta</string>
+    <string name="batch_delete_interrupted_count">Interrotto dopo l\'elaborazione di %1$d di articoli %2$d. Controllare gli elementi rimanenti prima di riprovare.</string>
+</resources>

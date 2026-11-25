@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Wiederherstellungsschutz</string>
+    <string name="recovery_protection_summary">Wiederherstellung mit dem ursprünglichen Masterpasswort prüfen</string>
+    <string name="recovery_protection_verified">In dieser Sitzung geprüft: %1$s</string>
+    <string name="recovery_protection_not_ready">Der Wiederherstellungsschutz konnte nicht bestätigt werden. Daten bleiben erhalten. Erneut versuchen oder verschlüsselt sichern.</string>
+    <string name="recovery_protection_needs_password">Masterpasswort eingeben, um die Wiederherstellung vorzubereiten und zu prüfen</string>
+    <string name="recovery_protection_explanation">Prüft, ob das ursprüngliche Masterpasswort die unabhängigen Wiederherstellungsdaten öffnen kann. Tresor und Geräteschlüssel werden nicht ersetzt. Bei intakten älteren Installationen können Wiederherstellungsdaten vorbereitet werden.</string>
+    <string name="recovery_protection_limits">Bewahren Sie eine unabhängige verschlüsselte Sicherung auf. Die Prüfung gilt nur für die aktuellen Daten und diese Sitzung; sie garantiert weder künftige Dateiintegrität noch die Wiederherstellung hardwaregebundener Zugangsdaten. Nach Sperren oder Änderungen erneut prüfen.</string>
+    <string name="recovery_protection_verify">Wiederherstellung prüfen</string>
+    <string name="recovery_protection_checking">Wiederherstellung wird geprüft…</string>
+    <string name="recovery_material_available">Wiederherstellungsdaten gefunden. Das ursprüngliche Masterpasswort muss noch geprüft werden.</string>
+    <string name="recovery_material_missing">Keine unabhängigen Wiederherstellungsdaten gefunden. Ursprüngliche Schlüsselumgebung wiederherstellen oder eine verschlüsselte Sicherung in einer anderen Installation prüfen.</string>
+    <string name="recovery_material_reenroll">Nach Änderung der Zugangsdaten ist eine neue Vorbereitung erforderlich. Zuerst normalen Zugriff wiederherstellen, dann mit dem aktuellen Masterpasswort prüfen.</string>
+    <string name="recovery_material_revoked">Diese Wiederherstellungsdaten wurden ausdrücklich widerrufen. Originaldateien behalten.</string>
+    <string name="recovery_material_unsupported">Dieses Wiederherstellungsformat wird nicht unterstützt. Dateien behalten und eine kompatible Monica-Version verwenden.</string>
+    <string name="recovery_material_invalid">Wiederherstellungsdaten sind unvollständig oder ungültig. Originale behalten; nicht durch leere Dateien oder Daten eines anderen Tresors ersetzen.</string>
+    <string name="recovery_material_unreadable">Wiederherstellungsdaten nicht lesbar. Dateien behalten, Gerät entsperren und erneut versuchen.</string>
+    <string name="recovery_material_unchecked">Wiederherstellungsdaten noch nicht geprüft. Nach Entsperren des Geräts und Abschluss des laufenden Vorgangs erneut versuchen.</string>
+    <string name="secure_startup_key_missing">Der aktuelle Systemschlüsseldienst findet den ursprünglichen Schlüssel nicht. Dies beweist keine dauerhafte Löschung.</string>
+    <string name="secure_startup_wait">Das System ist noch nicht bereit oder ein sicherer Vorgang läuft. Gerät entsperren und später erneut versuchen.</string>
+    <string name="secure_startup_inconsistent">Verschlüsselte Einstellungen und Wiederherstellungszustand stimmen nicht überein. Originaldateien behalten; keine Wiederherstellungsmarkierungen entfernen, um die Prüfung zu umgehen.</string>
+    <string name="secure_startup_environment_omk">Trat dies nach Änderungen an OMK oder einem Schlüsselmodul auf, stellen Sie die Schlüsselumgebung der Tresorerstellung wieder her. Eine neu hinzugefügte Monica-Zuordnung zu entfernen kann helfen, passt aber nicht für jeden Tresor. Konfiguration und Schlüssel behalten; nicht versuchsweise Module neu installieren oder Seeds zurücksetzen.</string>
+</resources>

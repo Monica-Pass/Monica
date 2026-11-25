@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">デフォルトのパスワード マネージャーを設定するには、Android 14 以降が必要です。</string>
+    <string name="privilege_method">認可方法</string>
+    <string name="privilege_recovery_title">強化された回復 · オプション</string>
+    <string name="privilege_root_confirm_body">すでに root 化された端末と、Root 管理アプリでの許可が必要です。Monica は、ユーザー補助サービスの復旧強化と既定のパスワードマネージャーに必要なシステム設定にのみ Root を使用します。保管庫のロックを解除したり、他のアプリのデータを読んだりすることはありません。\n\n復旧強化は、すでに有効な Monica のユーザー補助サービスだけを再接続します。有効にすると、アプリや端末の再起動後も動作し、入力が一時的に中断される場合があります。\n\n今後の使用を停止するには、ここで Root を無効にしてください。システムの許可を取り消すには、Root 管理アプリから Monica を削除してください。Shizuku の代わりに Root を自動要求することはありません。</string>
+    <string name="privilege_root_confirm_title">Monica が Root を使用することを許可しますか?</string>
+    <string name="privilege_root_denied">Root アクセスが拒否されました。 Root マネージャーで Monica を許可し、再試行してください。</string>
+    <string name="privilege_root_disable">Monica で Root を無効にします</string>
+    <string name="privilege_root_grant">Root を承認します</string>
+    <string name="privilege_root_hint">このデバイスの Root アクセスを直接使用します</string>
+    <string name="privilege_root_not_authorized">Root は許可されていません。 「Rootを承認」をタップして続行します。</string>
+    <string name="privilege_root_ready">Root がシステム設定で有効になりました</string>
+    <string name="privilege_root_requesting">Root 承認を待っています…</string>
+    <string name="privilege_root_timeout">Root 認証またはコマンドがタイムアウトしました。 Root マネージャーを確認して、再試行してください。</string>
+    <string name="privilege_root_unavailable">使用可能な su コマンドが見つかりません。このデバイスは最初に root 化する必要があります。</string>
+    <string name="privilege_shizuku_hint">実行中の Shizuku サービスを通じて認証します</string>
+</resources>

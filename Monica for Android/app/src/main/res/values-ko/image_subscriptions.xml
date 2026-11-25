@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">구독 추가</string>
+    <string name="image_sources_cards">카드 아트워크</string>
+    <string name="image_sources_choose">구독 중에서 선택하세요</string>
+    <string name="image_sources_count">%1$d 이미지</string>
+    <string name="image_sources_empty">첫 번째 이미지 소스 추가</string>
+    <string name="image_sources_error">로드하거나 저장할 수 없습니다. 소스, 형식, 연결을 확인한 후 다시 시도하세요. 기존 구독 및 항목 이미지는 유지됩니다.</string>
+    <string name="image_sources_formats">HTTPS JSON 이미지 팩 또는 PNG, JPEG 및 WebP 이미지 링크.</string>
+    <string name="image_sources_icons">아이콘</string>
+    <string name="image_sources_name">이름(선택 사항)</string>
+    <string name="image_sources_no_results">일치하는 이미지가 없습니다.</string>
+    <string name="image_sources_options">구독 옵션</string>
+    <string name="image_sources_refresh">새로 고침</string>
+    <string name="image_sources_remove">구독 취소</string>
+    <string name="image_sources_remove_hint">이 구독을 제거하시겠습니까? 항목에 이미 사용된 이미지는 유지됩니다.</string>
+    <string name="image_sources_retry">다시 시도</string>
+    <string name="image_sources_search">이미지 검색</string>
+    <string name="image_sources_settings_hint">아이콘 팩 및 카드 아트워크 소스 관리</string>
+    <string name="image_sources_title">이미지 구독</string>
+    <string name="image_sources_url">구독 또는 이미지 URL</string>
+    <string name="image_sources_use_hint">사용자 정의 아이콘이나 카드 아트웍 편집기에서 이미지를 선택하세요.</string>
+</resources>

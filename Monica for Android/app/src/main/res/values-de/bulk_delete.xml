@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">Löschung unvollständig</string>
+    <string name="batch_delete_interrupted_count">Unterbrochen nach der Verarbeitung von %1$d von %2$d-Elementen. Überprüfen Sie die verbleibenden Elemente, bevor Sie es erneut versuchen.</string>
+</resources>

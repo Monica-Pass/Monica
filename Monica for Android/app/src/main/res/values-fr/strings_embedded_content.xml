@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Copier la carte</string>
+    <string name="embedded_copy_document">Copier le document</string>
+    <string name="embedded_copy_failed">La copie du contenu est incomplète</string>
+    <string name="embedded_copy_failed_message">%1$s n\'a pas pu être copié complètement. Votre source et votre brouillon sont conservés. Vérifiez que la base de données source est déverrouillée et que les pièces jointes sont disponibles, puis réessayez.</string>
+    <string name="embedded_copy_independent">Copie indépendante · Pièces jointes %1$d</string>
+    <string name="embedded_copy_note">Copier la note</string>
+    <string name="embedded_copy_working">Copie du contenu complet…</string>
+    <string name="password_content_document">Pièce d\'identité</string>
+    <string name="password_content_document_description">Champs d\'identité, visage de la carte, photos et pièces jointes</string>
+</resources>

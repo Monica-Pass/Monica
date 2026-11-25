@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Modèle QR personnalisé</string>
+    <string name="qr_template_error">Impossible de lire l\'entrée, d\'enregistrer le modèle ou de générer le code. Vérifiez que la base de données est déverrouillée et que le contenu est dans les limites, puis réessayez.</string>
+    <string name="qr_template_field_error">Le champ « %1$s » est manquant, illisible ou ambigu. Sélectionnez un champ disponible avant de générer.</string>
+    <string name="qr_template_generate">Générer le code QR</string>
+    <string name="qr_template_hint">Lit les champs actuels une fois générés. Enregistre le modèle, pas une copie de mot de passe résolue. Les modèles Wi-Fi échappent automatiquement aux valeurs insérées.</string>
+    <string name="qr_template_insert">Insérer un champ</string>
+    <string name="qr_template_literal">Texte brut</string>
+    <string name="qr_template_mode">Modèle de champ</string>
+    <string name="qr_template_wifi">Préréglage Wi-Fi</string>
+</resources>

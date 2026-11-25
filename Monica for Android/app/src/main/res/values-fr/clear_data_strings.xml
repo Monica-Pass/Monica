@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Compensation des cartes bancaires…</string>
+    <string name="clear_data_completed">Effacement terminé</string>
+    <string name="clear_data_completed_hint">Les données sélectionnées ont été effacées.</string>
+    <string name="clear_data_count">Entrées %1$d / %2$d effacées</string>
+    <string name="clear_data_documents">Effacement des documents…</string>
+    <string name="clear_data_failed">Impossible d\'effacer toutes les données sélectionnées</string>
+    <string name="clear_data_failed_hint">Effacement arrêté. Les entrées déjà effacées ne seront pas restaurées. Vérifiez votre connexion à la base de données et réessayez.</string>
+    <string name="clear_data_generator_history">Effacement de l\'historique de génération de mots de passe…</string>
+    <string name="clear_data_notes">Effacement des notes…</string>
+    <string name="clear_data_passwords">Effacement des mots de passe…</string>
+    <string name="clear_data_preparing">Comptage des entrées sélectionnées…</string>
+    <string name="clear_data_totp">Suppression des authentificateurs…</string>
+    <string name="clear_data_verifying">Vérification…</string>
+    <string name="clear_data_wait">Veuillez attendre la fin de cette opération.</string>
+</resources>

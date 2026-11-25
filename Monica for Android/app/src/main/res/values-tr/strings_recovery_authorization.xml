@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Güvenlik sorularını yanıtlayın, ardından cihazınızın PIN\'ini, desenini veya şifresini onaylayın. Cevaplar tek başına ana şifreyi sıfırlayamaz.</string>
+    <string name="recovery_device_title">Cihaz kimlik bilgilerini onaylayın</string>
+    <string name="recovery_device_unavailable">Bu cihaz, kurtarma için kilit ekranı kimlik bilgilerini doğrulayamıyor. Orijinal ana şifrenizi veya şifrelenmiş bir yedeklemeyi kullanın.</string>
+    <string name="recovery_authorization_expired">Kurtarma onayı iptal edildi veya süresi doldu. Tekrar başla.</string>
+    <string name="recovery_attempts_limited">Çok fazla deneme. Sınır, bu sayfadan ayrıldıktan veya yeniden başlattıktan sonra da kalır. Daha sonra tekrar deneyin.</string>
+</resources>

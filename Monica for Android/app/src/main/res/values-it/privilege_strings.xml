@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">L\'impostazione del gestore password predefinito richiede Android 14 o versione successiva.</string>
+    <string name="privilege_method">Metodo di autorizzazione</string>
+    <string name="privilege_recovery_title">Ripristino avanzato · Opzionale</string>
+    <string name="privilege_root_confirm_body">Ciò richiede un dispositivo già rootato e l\'approvazione nel suo gestore Root. Monica utilizza Root solo per le impostazioni di sistema necessarie per il ripristino avanzato dell\'accessibilità e il gestore password predefinito. Non sblocca il tuo vault né legge altri dati dell\'app.\n\nIl ripristino avanzato riconnette solo un servizio di accessibilità Monica già abilitato. Una volta abilitato, può continuare dopo il riavvio di un\'app o di un dispositivo e potrebbe interrompere brevemente il riempimento.\n\nDisabilita Root qui per interrompere l\'utilizzo futuro. Per revocare l\'autorizzazione del sistema, rimuovere Monica dal gestore Root. Root non viene mai richiesto come fallback per Shizuku.</string>
+    <string name="privilege_root_confirm_title">Consentire a Monica di utilizzare Root?</string>
+    <string name="privilege_root_denied">Root accesso negato. Consenti Monica nel tuo gestore Root e riprova.</string>
+    <string name="privilege_root_disable">Disabilita Root in Monica</string>
+    <string name="privilege_root_grant">Autorizza Root</string>
+    <string name="privilege_root_hint">Utilizza direttamente l\'accesso Root di questo dispositivo</string>
+    <string name="privilege_root_not_authorized">Root non è autorizzato. Tocca Autorizza Root per continuare.</string>
+    <string name="privilege_root_ready">Root abilitato per le impostazioni di sistema</string>
+    <string name="privilege_root_requesting">In attesa dell\'autorizzazione Root…</string>
+    <string name="privilege_root_timeout">Root autorizzazione o comando scaduto. Controlla il tuo gestore Root e riprova.</string>
+    <string name="privilege_root_unavailable">Nessun comando su utilizzabile trovato. Questo dispositivo deve prima essere rootato.</string>
+    <string name="privilege_shizuku_hint">Autorizzare tramite un servizio Shizuku in esecuzione</string>
+</resources>

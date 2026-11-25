@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">복구 보호</string>
+    <string name="recovery_protection_summary">기존 마스터 비밀번호로 복구 가능 여부 확인</string>
+    <string name="recovery_protection_verified">이번 세션에서 확인됨: %1$s</string>
+    <string name="recovery_protection_not_ready">복구 보호를 확인하지 못했습니다. 기존 데이터는 유지됩니다. 다시 시도하거나 암호화 백업을 만드세요.</string>
+    <string name="recovery_protection_needs_password">마스터 비밀번호로 복구 보호 준비 및 확인</string>
+    <string name="recovery_protection_explanation">기존 마스터 비밀번호로 독립 복구 자료를 열 수 있는지 확인합니다. 보관함이나 기기 키를 교체하지 않습니다. 정상적인 이전 설치에서는 복구 자료를 준비할 수 있습니다.</string>
+    <string name="recovery_protection_limits">독립 암호화 백업을 보관하세요. 확인은 현재 자료와 세션에만 적용되며 향후 파일 손상이나 하드웨어에 연결된 자격 증명의 복구를 보장하지 않습니다. 잠금 또는 자료 변경 후 다시 확인해야 합니다.</string>
+    <string name="recovery_protection_verify">복구 보호 확인</string>
+    <string name="recovery_protection_checking">복구 보호 확인 중…</string>
+    <string name="recovery_material_available">복구 자료를 찾았습니다. 복구하려면 기존 마스터 비밀번호로 확인해야 합니다.</string>
+    <string name="recovery_material_missing">독립 복구 자료가 없습니다. 원래 키 환경을 복원하거나 다른 설치에서 암호화 백업을 확인하세요.</string>
+    <string name="recovery_material_reenroll">자격 증명 변경 후 복구 보호를 다시 준비해야 합니다. 정상 접근을 복원한 후 현재 마스터 비밀번호로 확인하세요.</string>
+    <string name="recovery_material_revoked">이 복구 자료는 명시적으로 폐기되어 사용할 수 없습니다. 원본 파일을 보관하세요.</string>
+    <string name="recovery_material_unsupported">지원되지 않는 복구 형식입니다. 파일을 보관하고 호환되는 Monica 버전을 사용하세요.</string>
+    <string name="recovery_material_invalid">복구 자료가 불완전하거나 잘못되었습니다. 원본을 보관하고 빈 파일이나 다른 보관함의 자료로 교체하지 마세요.</string>
+    <string name="recovery_material_unreadable">복구 자료를 읽을 수 없습니다. 파일을 보관하고 기기 잠금을 해제한 후 다시 시도하세요.</string>
+    <string name="recovery_material_unchecked">복구 자료를 아직 확인하지 않았습니다. 기기를 해제하고 현재 작업이 끝난 뒤 다시 시도하세요.</string>
+    <string name="secure_startup_key_missing">현재 시스템 키 서비스에서 원래 키를 찾지 못했습니다. 이것만으로 키가 영구 삭제되었다고 판단할 수 없습니다.</string>
+    <string name="secure_startup_wait">시스템이 준비되지 않았거나 보안 작업이 끝나지 않았습니다. 기기를 해제하고 나중에 다시 시도하세요.</string>
+    <string name="secure_startup_inconsistent">암호화 설정과 복구 상태가 다릅니다. 원본 파일을 보관하고 확인을 우회하려고 복구 표시를 삭제하지 마세요.</string>
+    <string name="secure_startup_environment_omk">OMK 등 키 모듈을 변경한 후 발생했다면 보관함 생성 당시의 키 환경을 복원하세요. Monica를 새로 적용 범위에 추가했다면 해제가 도움이 될 수 있지만 모든 보관함에 맞는 방법은 아닙니다. 설정과 키를 보관하고 모듈 재설치나 시드 초기화로 시험하지 마세요.</string>
+</resources>

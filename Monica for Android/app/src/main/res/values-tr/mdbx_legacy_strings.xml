@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 artık desteklenmiyor</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Kullanılamıyor</string>
+    <string name="mdbx_legacy_unavailable_description">Bu veritabanı kullanılamıyor. Kullanmaya devam etmek için MDBX2\'ye yükseltin. Yükseltme orijinal dosyayı korur.</string>
+    <string name="mdbx_legacy_creation_disabled">Yeni veritabanları MDBX2\'yi kullanıyor. MDBX1 dosyaları yalnızca yükseltme amacıyla açılabilir.</string>
+    <string name="mdbx_legacy_local_copy_required">Yerel MDBX1 kopyası okunamıyor. Yükseltmek için orijinal MDBX1 dosyasını yeniden açın. Orijinal veritabanı değiştirilmedi.</string>
+    <string name="mdbx_legacy_remote_copy_warning">Yükseltme, bu cihazda kayıtlı kopyayı yeni bir yerel MDBX2 veritabanına dönüştürür. İndirilmemiş uzaktan değişiklikler dahil değildir. Orijinal uzak dosya ve yerel kopya korunur. Yeni veritabanı için senkronizasyonu ayrı olarak yapılandırın.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (yükseltme)</string>
+    <string name="mdbx_legacy_upgrade_action">MDBX2\'ye yükseltme</string>
+</resources>

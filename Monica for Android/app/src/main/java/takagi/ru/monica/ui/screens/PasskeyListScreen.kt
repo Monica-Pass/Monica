@@ -2095,74 +2095,14 @@ private fun PasskeySelectionActionBar(
     onMoveToCategory: () -> Unit,
     onDelete: () -> Unit
 ) {
-    Surface(
+    takagi.ru.monica.ui.common.selection.SelectionActionBar(
         modifier = modifier,
-        shape = RoundedCornerShape(28.dp),
-        tonalElevation = 3.dp,
-        shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.surfaceContainerHighest,
-        contentColor = MaterialTheme.colorScheme.onSurface
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Surface(
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Text(
-                    text = selectedCount.toString(),
-                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            PasskeyActionIcon(
-                icon = Icons.Default.CheckCircle,
-                contentDescription = stringResource(id = R.string.select_all),
-                onClick = onSelectAll
-            )
-
-            PasskeyActionIcon(
-                icon = Icons.Default.Folder,
-                contentDescription = stringResource(id = R.string.move_to_category),
-                onClick = onMoveToCategory
-            )
-
-            PasskeyActionIcon(
-                icon = Icons.Default.Delete,
-                contentDescription = stringResource(id = R.string.delete),
-                onClick = onDelete
-            )
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            PasskeyActionIcon(
-                icon = Icons.Default.Close,
-                contentDescription = stringResource(id = R.string.close),
-                onClick = onExit
-            )
-        }
-    }
-}
-
-@Composable
-private fun PasskeyActionIcon(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
-    IconButton(
-        onClick = onClick,
-        modifier = Modifier.size(40.dp)
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
+        selectedCount = selectedCount,
+        onExit = onExit,
+        onSelectAll = onSelectAll,
+        onMoveToCategory = onMoveToCategory,
+        onDelete = onDelete,
+    )
 }
 
 /**

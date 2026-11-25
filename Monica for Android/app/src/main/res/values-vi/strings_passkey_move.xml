@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">Chế độ lưu trữ hoặc khóa riêng không đáp ứng các yêu cầu di chuyển Bitwarden. Mở khóa Monica và thử lại hoặc chọn một kho tiền khác. Không thể xuất các khóa liên kết với thiết bị; giữ chúng trên thiết bị gốc hoặc đăng ký passkey mới với dịch vụ.</string>
+    <string name="passkey_move_bound_reason">passkey này được liên kết với một mục nhập mật khẩu và không thể di chuyển riêng lẻ. Trước tiên, hãy di chuyển mục nhập mật khẩu được liên kết hoặc hủy liên kết passkey.</string>
+    <string name="passkey_move_cleanup_reason">Đích đã được lưu nhưng quá trình dọn dẹp nguồn chưa hoàn tất. Bản sao có thể vẫn còn trong cả hai hầm. Kiểm tra đích và kho nguồn hoặc trạng thái đồng bộ hóa trước khi tiếp tục; đừng lặp lại hành động đó một cách mù quáng.</string>
+    <string name="passkey_move_conflict_reason">Cơ sở dữ liệu KeePass đích đã chứa cùng thông tin xác thực passkey. Không có gì bị ghi đè. Kiểm tra mục hiện có hoặc chọn cơ sở dữ liệu khác.</string>
+    <string name="passkey_move_reference_reason">Mục này chỉ mang tính tham khảo và không có khóa riêng có thể được di chuyển riêng. Sử dụng ứng dụng gốc hoặc vault chứa passkey thực tế.</string>
+    <string name="passkey_move_result_summary">%1$d đã hoàn thành; cần chú ý %2$d</string>
+    <string name="passkey_move_result_title">Di chuyển kết quả</string>
+    <string name="passkey_move_success_count">Đã di chuyển các mục %1$d</string>
+    <string name="passkey_move_unnamed_account">Tài khoản chưa được đặt tên</string>
+    <string name="passkey_move_update_reason">Quá trình di chuyển không hoàn tất và không thể xác định được nguyên nhân chính xác. Kiểm tra xem kho nguồn và kho đích có được mở khóa và có thể ghi được không, có đủ dung lượng trống hay không. Kiểm tra cả hai hầm trước khi thử lại; không xóa nguồn.</string>
+</resources>

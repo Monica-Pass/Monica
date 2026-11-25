@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Les données ont changé ou la vérification a échoué. La source est conservée. Actualisez les deux volets et vérifiez la destination avant de réessayer.</string>
     <string name="manager_failure_locked">Base verrouillée ou fichier original indisponible. Ouvrez-la dans les paramètres puis actualisez ce volet.</string>
     <string name="manager_failure_general">Opération incomplète. Vérifiez les deux volets et les détails : la destination peut contenir des copies partielles.</string>
+    <string name="manager_clear_selection">Effacer la sélection</string>
+    <string name="manager_copy_left">← Copier</string>
+    <string name="manager_copy_right">Copier →</string>
+    <string name="manager_focused_location">Actif : %1$s · %2$s</string>
+    <string name="manager_focused_selection">Actif : %1$s · %2$d sélectionné</string>
+    <string name="manager_history_back">Retour</string>
+    <string name="manager_history_forward">Suivant</string>
+    <string name="manager_left_pane">Volet gauche</string>
+    <string name="manager_move_left">← Déplacer</string>
+    <string name="manager_move_right">Déplacer →</string>
+    <string name="manager_new_folder_short">Nouveau dossier</string>
+    <string name="manager_open_item">Ouvrir</string>
+    <string name="manager_parent">Haut</string>
+    <string name="manager_right_pane">Volet droit</string>
+    <string name="manager_switch_pane">Volet de commutation</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Karten &amp; Geldbörse</string>
+    <string name="customization_group_fields_icons">Felder &amp;-Symbole</string>
+    <string name="customization_group_library">Bibliothek &amp;-Listen</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Keine Aktion erforderlich</string>
+    <string name="permission_action_request">Bitte um Erlaubnis</string>
+    <string name="permission_help_actions">Mit „Berechtigung anfordern“ bitten Sie Android um Zugriff. Mit „Einstellungen öffnen“ verwalten Sie Dienste und bereits erteilte Berechtigungen.\n\nEinträge mit „Keine Aktion erforderlich“ oder „Nicht verfügbar“ haben keine Aktionsschaltfläche. Aktivieren Sie nur, was Sie benötigen.\n\nNach der Rückkehr aus den Systemeinstellungen wird der Status aktualisiert. Mit „Status aktualisieren“ können Sie ihn erneut prüfen.</string>
+    <string name="permission_refresh_status">Status aktualisieren</string>
+    <string name="permission_summary_granted">%1$d-Berechtigungen erteilt</string>
+    <string name="permission_summary_hint">Aktivieren Sie nur die Berechtigungen, die für die von Ihnen verwendeten Funktionen erforderlich sind. Einige werden automatisch von Android gewährt.</string>
+    <string name="permission_summary_title">Berechtigungen zu Ihren Bedingungen</string>
+</resources>

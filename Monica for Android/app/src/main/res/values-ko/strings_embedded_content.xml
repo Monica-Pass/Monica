@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">복사카드</string>
+    <string name="embedded_copy_document">문서 복사</string>
+    <string name="embedded_copy_failed">콘텐츠 사본이 불완전합니다.</string>
+    <string name="embedded_copy_failed_message">%1$s를 완전히 복사할 수 없습니다. 귀하의 소스와 초안은 유지됩니다. 소스 데이터베이스가 잠금 해제되어 있고 첨부 파일을 사용할 수 있는지 확인한 후 다시 시도하세요.</string>
+    <string name="embedded_copy_independent">독립 사본 · %1$d 첨부 파일</string>
+    <string name="embedded_copy_note">메모 복사</string>
+    <string name="embedded_copy_working">전체 콘텐츠를 복사하는 중…</string>
+    <string name="password_content_document">신분증</string>
+    <string name="password_content_document_description">신원 필드, 카드 앞면, 사진 및 첨부 파일</string>
+</resources>

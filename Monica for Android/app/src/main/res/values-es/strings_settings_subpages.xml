@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Tarjetas &amp; billetera</string>
+    <string name="customization_group_fields_icons">Campos Iconos &amp;</string>
+    <string name="customization_group_library">Listas de biblioteca &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">No se necesita ninguna acción</string>
+    <string name="permission_action_request">Solicitar permiso</string>
+    <string name="permission_help_actions">Utilice Solicitar permiso para solicitar acceso a Android, o Abrir configuración para administrar servicios y permisos otorgados.\n\nLos elementos marcados como No se necesita acción o No disponible no tienen botón de acción. Habilite solo lo que necesite.\n\nLos estados se actualizan cuando regresa de la configuración del sistema. También puedes tocar Actualizar estado para verificar nuevamente.</string>
+    <string name="permission_refresh_status">Estado de actualización</string>
+    <string name="permission_summary_granted">Permisos %1$d concedidos</string>
+    <string name="permission_summary_hint">Habilite solo los permisos necesarios para las funciones que utiliza. Algunos se conceden automáticamente mediante Android.</string>
+    <string name="permission_summary_title">Permisos según tus términos</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">答對安全問題後，還需確認裝置的 PIN、圖形或螢幕鎖定密碼。安全問題本身無法重設主密碼。</string>
+    <string name="recovery_device_title">確認裝置鎖定憑證</string>
+    <string name="recovery_device_unavailable">此裝置無法完成找回所需的螢幕鎖定憑證確認。請使用原主密碼或加密備份。</string>
+    <string name="recovery_authorization_expired">找回確認已取消或過期，請重新開始。</string>
+    <string name="recovery_attempts_limited">嘗試次數過多。離開頁面或重新啟動後限制仍保留，請稍後再試。</string>
+</resources>

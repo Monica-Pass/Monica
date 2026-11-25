@@ -1,0 +1,305 @@
+{
+  "version": "1.0.331",
+  "environment": "MuMu API35 x86_64 synthetic secondary user",
+  "provider": "Jianguoyun",
+  "editions": {
+    "main": {
+      "releaseApkBeforeAfter": [
+        {
+          "sha256": "9d71d927bfc46bb33bc96be19b4a3517b21533a5c41d2fdef707b96fd9519075",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189main33120261125' versionCode='12' versionName='1.0.331-26112512-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        },
+        {
+          "sha256": "712f73feaba9a653d7952e92e8971be9ece3cbbe8c6e74ecdcf04521f88caebf",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189main33120261125' versionCode='12' versionName='1.0.331-26112612-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        }
+      ],
+      "unit": {
+        "tests": 61,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "device": {
+        "completedMethodPasses": 34,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest,takagi.ru.monica.repository.MdbxPasswordEditorInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxAutofillLocalArchiveInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest,takagi.ru.monica.repository.Mdbx2SyncDependencyInstrumentedTest,takagi.ru.monica.ui.MdbxOrdinaryEditorUiTest",
+        "tests": 34,
+        "failures": 0,
+        "success": true,
+        "seconds": 68.11032979999436
+      },
+      "realCloud": {
+        "provider": "Jianguoyun",
+        "edition": "main",
+        "selector": "takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentSaveAuthenticatesIndependentlyAndLeavesWebDavEditPending,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#savingToMdbxReturnsTheNewNativeObjectDespiteSameTitleAndAccount,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentUpdatePreservesNativeIdAndFutureFields",
+        "success": true,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 243.16686909999407
+      },
+      "retainedRelease": {
+        "edition": "main",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "52661",
+          "53481",
+          "55151"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/issue189-main-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "nativeRelease": {
+        "edition": "main",
+        "passed": true,
+        "retainedOldNativeRead": true,
+        "nativeEditSaved": true,
+        "coldNativeRead": true,
+        "coldPids": [
+          "56101",
+          "56708"
+        ],
+        "viaRealReleaseUi": true
+      },
+      "builds": {
+        "main-fix03": {
+          "seconds": 201.16222880000714,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "1a27e7da6fbe292735722edc3e3763b45f0de608517c7ca53f058f69f084abcb"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "a16fa25fb5d3894310ad6b79bcad98bc94bef9feda7ffad8b4cc11fe02968f89"
+            }
+          ]
+        },
+        "main-release-final02": {
+          "seconds": 495.45701500000723,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "712f73feaba9a653d7952e92e8971be9ece3cbbe8c6e74ecdcf04521f88caebf"
+            }
+          ]
+        }
+      }
+    },
+    "fd": {
+      "releaseApkBeforeAfter": [
+        {
+          "sha256": "f1e250c8fd1638c0de7c9c582de6e97b89f86615b01320bb931bb1359d5bc7ad",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189fd33120261125' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        },
+        {
+          "sha256": "b76ef7ceb0fbc6fc80219524e6a656eaada102f8c50329d9df4073999da87494",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189fd33120261125' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        }
+      ],
+      "unit": {
+        "tests": 61,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "device": {
+        "completedMethodPasses": 34,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest,takagi.ru.monica.repository.MdbxPasswordEditorInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxAutofillLocalArchiveInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest,takagi.ru.monica.repository.Mdbx2SyncDependencyInstrumentedTest,takagi.ru.monica.ui.MdbxOrdinaryEditorUiTest",
+        "tests": 34,
+        "failures": 0,
+        "success": true,
+        "seconds": 48.98777210000844
+      },
+      "realCloud": {
+        "provider": "Jianguoyun",
+        "edition": "fd",
+        "selector": "takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentSaveAuthenticatesIndependentlyAndLeavesWebDavEditPending,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#savingToMdbxReturnsTheNewNativeObjectDespiteSameTitleAndAccount,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentUpdatePreservesNativeIdAndFutureFields",
+        "success": true,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 224.1102733000007
+      },
+      "retainedRelease": {
+        "edition": "fd",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "57084",
+          "57879",
+          "59520"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/issue189-fd-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "nativeRelease": {
+        "edition": "fd",
+        "passed": true,
+        "retainedOldNativeRead": true,
+        "nativeEditSaved": true,
+        "coldNativeRead": true,
+        "coldPids": [
+          "60465",
+          "61053"
+        ],
+        "viaRealReleaseUi": true
+      },
+      "builds": {
+        "fd-fix03": {
+          "seconds": 200.75943520000146,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "04e63bdd058a77f485584391fb5de7a1be3763eebc2de6deabe3ee30b5b575ff"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "7eb01cdb70ab2af9a451b4a0c6e8f99a933126f94a367ef5acd064b40a26f432"
+            }
+          ]
+        },
+        "fd-release-final02": {
+          "seconds": 415.90635279999697,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "b76ef7ceb0fbc6fc80219524e6a656eaada102f8c50329d9df4073999da87494"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "cleanup": {
+    "originalUserRestored": 0,
+    "ownedUserRemoved": 18,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12,
+      16
+    ],
+    "originalMonicaPackageUnchanged": true,
+    "ownedPackagesRemoved": [
+      {
+        "package": "takagi.ru.monica.mdbxwebdavmain33120261125.localedebug",
+        "uninstalled": true
+      },
+      {
+        "package": "takagi.ru.monica.mdbxwebdavmain33120261125.localedebug.test",
+        "uninstalled": true
+      },
+      {
+        "package": "takagi.ru.monica.mdbxwebdavfd33120261125.localedebug",
+        "uninstalled": true
+      },
+      {
+        "package": "takagi.ru.monica.mdbxwebdavfd33120261125.localedebug.test",
+        "uninstalled": true
+      },
+      {
+        "package": "takagi.ru.monica.issue189main33120261125",
+        "uninstalled": true
+      },
+      {
+        "package": "takagi.ru.monica.issue189fd33120261125",
+        "uninstalled": true
+      }
+    ],
+    "mumuKeptRunning": true,
+    "mumuPid": 51792,
+    "remote": {
+      "status": 207,
+      "syntheticContentsRemoved": true,
+      "remainingChildren": 0,
+      "emptyCollection": "monica331-add893d9",
+      "topLevelDeleteStatus": 403,
+      "topLevelDeleteReason": "OperationNotAllowed"
+    },
+    "privateFilesRemoved": [
+      "webdav.json",
+      "device-config-name.txt",
+      "cloud-owned-list.xml",
+      "root-collections.json",
+      "root-list.xml"
+    ],
+    "credentialAudit": {
+      "scannedTextFiles": 1043,
+      "credentialMatches": 0,
+      "sourceAndRawEvidenceChecked": true
+    },
+    "ownedAdbStopped": 15087
+  },
+  "status": "complete",
+  "finalChecks": {
+    "main": {
+      "diffCheck": true,
+      "evidenceFiles": 18,
+      "frozenSourceUnchanged": true
+    },
+    "fd": {
+      "diffCheck": true,
+      "evidenceFiles": 18,
+      "frozenSourceUnchanged": true
+    }
+  },
+  "releaseNotes": {
+    "main": true,
+    "fd": true,
+    "rootAndNext": true,
+    "uniqueBilingualEntry": true
+  },
+  "gitActions": {
+    "committed": false,
+    "pushed": false,
+    "published": false,
+    "apkDelivered": false
+  }
+}

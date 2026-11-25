@@ -18,6 +18,7 @@ import app.keemobile.kotpass.xml.DefaultXmlContentParser
 import app.keemobile.kotpass.xml.XmlContentParser
 import okio.Buffer
 import okio.ByteString.Companion.toByteString
+import okio.ForwardingSource
 import okio.Source
 import okio.buffer
 import okio.gzip
@@ -30,8 +31,10 @@ fun KeePassDatabase.Companion.decode(
     validateHashes: Boolean = true,
     contentParser: XmlContentParser = DefaultXmlContentParser,
     cipherProviders: List<CipherProvider> = BaseCiphers.entries,
-    untitledLabel: String = Defaults.UntitledLabel
+    untitledLabel: String = Defaults.UntitledLabel,
+    maxDecompressedBytes: Long = Long.MAX_VALUE
 ): KeePassDatabase {
+    require(maxDecompressedBytes >= 0) { "Decompressed content limit must not be negative." }
     val headerBuffer = Buffer()
 
     inputStream.source().teeBufferStream(headerBuffer).use { source ->
@@ -55,6 +58,7 @@ fun KeePassDatabase.Companion.decode(
                     EncryptionSaltGenerator.create(innerRandomStreamId, innerRandomStreamKey)
                 }
                 val content = decryptRawContent(header, source, transformedKey, cipherProviders)
+                    .limitDecompressedContent(maxDecompressedBytes)
                     .buffer()
                     .inputStream()
                     .use {
@@ -94,6 +98,7 @@ fun KeePassDatabase.Companion.decode(
                 }
 
                 decryptRawContent(header, source, transformedKey, cipherProviders)
+                    .limitDecompressedContent(maxDecompressedBytes)
                     .buffer()
                     .use { rawContentBuffer ->
                         val innerHeader = DatabaseInnerHeader.readFrom(rawContentBuffer)
@@ -117,6 +122,28 @@ fun KeePassDatabase.Companion.decode(
                         KeePassDatabase.Ver4x(credentials, header, content, innerHeader)
                     }
             }
+        }
+    }
+}
+
+/** Opt-in bound before buffering, including KDBX 4 inner-header binary payloads. */
+private fun Source.limitDecompressedContent(limit: Long): Source {
+    if (limit == Long.MAX_VALUE) return this
+    return object : ForwardingSource(this) {
+        private var remaining = limit
+        override fun read(sink: Buffer, byteCount: Long): Long {
+            require(byteCount >= 0)
+            if (byteCount == 0L) return 0
+            if (remaining == 0L) {
+                // Probe EOF without forwarding an excess plaintext byte to the caller.
+                val probe = Buffer()
+                val extra = try { super.read(probe, 1) } finally { probe.clear() }
+                if (extra < 0) return -1
+                throw FormatError.InvalidContent("Decompressed database content exceeds the configured limit.")
+            }
+            val read = super.read(sink, minOf(byteCount, remaining))
+            if (read > 0) remaining -= read
+            return read
         }
     }
 }

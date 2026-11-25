@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Mẫu QR tùy chỉnh</string>
+    <string name="qr_template_error">Không thể đọc mục nhập, lưu mẫu hoặc tạo mã. Hãy kiểm tra xem cơ sở dữ liệu đã được mở khóa chưa và nội dung có nằm trong giới hạn hay không, sau đó thử lại.</string>
+    <string name="qr_template_field_error">Trường “%1$s” bị thiếu, không thể đọc được hoặc không rõ ràng. Chọn một trường có sẵn trước khi tạo.</string>
+    <string name="qr_template_generate">Tạo mã QR</string>
+    <string name="qr_template_hint">Đọc các trường hiện tại khi được tạo. Lưu mẫu chứ không phải bản sao mật khẩu đã được giải quyết. Mẫu Wi-Fi tự động thoát khỏi các giá trị được chèn.</string>
+    <string name="qr_template_insert">Chèn trường</string>
+    <string name="qr_template_literal">Văn bản thuần</string>
+    <string name="qr_template_mode">Mẫu trường</string>
+    <string name="qr_template_wifi">Cài đặt sẵn Wi-Fi</string>
+</resources>

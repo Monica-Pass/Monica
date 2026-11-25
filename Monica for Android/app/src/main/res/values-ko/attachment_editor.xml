@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">아직 첨부파일이 없습니다.</string>
+    <string name="attachment_editor_hint">파일, 이미지 또는 문서 선택</string>
+    <string name="attachment_editor_working">일하는 중…</string>
+</resources>

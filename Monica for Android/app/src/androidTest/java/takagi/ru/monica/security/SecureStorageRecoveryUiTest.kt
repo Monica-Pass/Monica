@@ -33,6 +33,32 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 class SecureStorageRecoveryUiTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun missingMaterialShowsSpecificGuidanceWithoutRecoveryAction() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        compose.setContent {
+            MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, failureReason = "MISSING_MASTER_KEY",
+                recoveryMaterial = RecoveryMaterialState.MISSING) }
+        }
+        compose.onNodeWithTag("secure_startup_recover").assertDoesNotExist()
+        compose.onNodeWithTag("secure_startup_material").performScrollTo()
+            .assertTextEquals(context.getString(takagi.ru.monica.R.string.recovery_material_missing))
+        compose.onNodeWithTag("secure_startup_reason").performScrollTo()
+            .assertTextEquals(context.getString(takagi.ru.monica.R.string.secure_startup_key_missing))
+        compose.onNodeWithTag("secure_startup_retry").assertIsDisplayed()
+    }
+
+    @Test fun timeoutDoesNotClaimMaterialOrKeyWasDeleted() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        compose.setContent {
+            MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, failureReason = "SECURE_OPERATION_TIMEOUT") }
+        }
+        compose.onNodeWithTag("secure_startup_reason").performScrollTo()
+            .assertTextEquals(context.getString(takagi.ru.monica.R.string.secure_startup_wait))
+        compose.onNodeWithTag("secure_startup_material").performScrollTo()
+            .assertTextEquals(context.getString(takagi.ru.monica.R.string.recovery_material_unchecked))
+        compose.onNodeWithTag("secure_startup_recover").assertDoesNotExist()
+    }
+
     @Test fun passwordRecoveryHandlesFailureWithoutExposingPasswordOrRunningAutomatically() {
         var calls = 0
         compose.setContent {

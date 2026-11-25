@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_copy_status">Kopieren</string>
+    <string name="live_update_seconds">%1$ds</string>
+    <string name="live_update_smart_copy_channel">Sequentielle Kopie der Anmeldeinformationen</string>
+    <string name="live_update_unlock_to_copy">Entsperren Sie Ihr Gerät zum Kopieren</string>
+    <string name="live_update_unlock_to_view">Zum Anzeigen und Fortfahren entsperren</string>
+    <string name="permission_live_updates_description">Zeigt OTP-Countdowns und die nächsten zu kopierenden Anmeldeinformationen an</string>
+    <string name="permission_live_updates_name">Live-Updates</string>
+</resources>

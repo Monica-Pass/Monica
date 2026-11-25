@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Foldery Bitwarden pozostają na tym samym koncie. Kopiowanie folderów z załącznikami, passkeys lub wpisami organizacji nie jest jeszcze obsługiwane.</string>
+    <string name="external_folder_choose_destination">Wybierz docelową bazę danych i folder</string>
+    <string name="external_folder_copy_hint">Skopiuj folder i jego zawartość; zachowaj oryginał.</string>
+    <string name="external_folder_move_hint">Przenieś folder i jego zawartość. Oryginał zostanie usunięty dopiero po zapisaniu miejsca docelowego.</string>
+    <string name="external_folder_root">Poziom główny bazy</string>
+</resources>

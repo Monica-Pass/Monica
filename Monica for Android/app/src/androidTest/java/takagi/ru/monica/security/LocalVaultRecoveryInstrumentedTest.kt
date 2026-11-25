@@ -19,6 +19,19 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
 class LocalVaultRecoveryInstrumentedTest {
+    @Test fun missingPasswordWrapperMustNotOfferImpossibleRecovery() {
+        Fixture().use { f ->
+            f.enroll()
+            val doc = org.json.JSONObject(f.envelope.readText())
+            doc.remove("key")
+            f.envelope.writeText(doc.toString())
+            val preserved = f.envelope.readBytes()
+            assertFalse("A recovery file without its password wrapper cannot be offered", f.recovery.available())
+            assertArrayEquals(preserved, f.envelope.readBytes())
+            assertNull(f.recovery.activeStore())
+        }
+    }
+
     private class Fixture : AutoCloseable {
         val base = InstrumentationRegistry.getInstrumentation().targetContext
         val prefix = "local-recovery-test-${UUID.randomUUID()}-"

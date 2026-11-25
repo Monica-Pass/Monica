@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateContentSize
@@ -38,6 +40,8 @@ fun ExtensionsScreen(
     onNavigateToQuickSetup: () -> Unit = {},
     isPlusActivated: Boolean = false,
     hapticFeedbackEnabled: Boolean = true,
+    hapticFeedbackStrength: Int = 1,
+    onHapticStrengthChange: (Int) -> Unit = {},
     onHapticFeedbackChange: (Boolean) -> Unit = {},
     validatorVibrationEnabled: Boolean = false,
     onValidatorVibrationChange: (Boolean) -> Unit = {},
@@ -267,6 +271,11 @@ fun ExtensionsScreen(
                     setting = Setting.HAPTIC_FEEDBACK,
                     checked = hapticFeedbackEnabled,
                     onCheckedChange = onHapticFeedbackChange
+                )
+                takagi.ru.monica.ui.components.HapticStrengthControl(
+                    enabled = hapticFeedbackEnabled,
+                    strength = hapticFeedbackStrength,
+                    onStrengthChange = onHapticStrengthChange,
                 )
             }
 

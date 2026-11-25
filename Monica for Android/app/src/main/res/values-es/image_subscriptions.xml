@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Agregar suscripción</string>
+    <string name="image_sources_cards">Diseño de tarjeta</string>
+    <string name="image_sources_choose">Elija entre suscripciones</string>
+    <string name="image_sources_count">Imágenes %1$d</string>
+    <string name="image_sources_empty">Agrega tu primera fuente de imagen</string>
+    <string name="image_sources_error">No se puede cargar ni guardar. Verifique la fuente, el formato y la conexión, luego vuelva a intentarlo. Se conservan las suscripciones existentes y las imágenes de artículos.</string>
+    <string name="image_sources_formats">HTTPS JSON paquetes de imágenes o enlaces de imágenes PNG, JPEG y WebP.</string>
+    <string name="image_sources_icons">Iconos</string>
+    <string name="image_sources_name">Nombre (opcional)</string>
+    <string name="image_sources_no_results">No hay imágenes coincidentes</string>
+    <string name="image_sources_options">Opciones de suscripción</string>
+    <string name="image_sources_refresh">Actualizar</string>
+    <string name="image_sources_remove">Darse de baja</string>
+    <string name="image_sources_remove_hint">¿Eliminar esta suscripción? Se conservarán las imágenes ya utilizadas por sus artículos.</string>
+    <string name="image_sources_retry">Reintentar</string>
+    <string name="image_sources_search">Buscar imágenes</string>
+    <string name="image_sources_settings_hint">Administrar paquetes de íconos y fuentes de ilustraciones de tarjetas</string>
+    <string name="image_sources_title">Suscripciones de imágenes</string>
+    <string name="image_sources_url">Suscripción o imagen URL</string>
+    <string name="image_sources_use_hint">Elija imágenes desde el ícono personalizado o el editor de ilustraciones de tarjetas.</string>
+</resources>

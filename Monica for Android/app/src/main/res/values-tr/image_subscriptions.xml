@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_title">Resim abonelikleri</string>
+    <string name="image_sources_icons">Simgeler</string>
+    <string name="image_sources_cards">Kart resmi</string>
+    <string name="image_sources_add">Abonelik ekle</string>
+    <string name="image_sources_refresh">Yenile</string>
+    <string name="image_sources_remove">Abonelikten çık</string>
+    <string name="image_sources_remove_hint">Bu abonelik kaldırılsın mı? Öğeleriniz tarafından halihazırda kullanılan resimler saklanacaktır.</string>
+    <string name="image_sources_name">Ad (isteğe bağlı)</string>
+    <string name="image_sources_url">Abonelik veya resim URL</string>
+    <string name="image_sources_formats">HTTPS JSON görüntü paketleri veya PNG, JPEG ve WebP görüntü bağlantıları.</string>
+    <string name="image_sources_empty">İlk resim kaynağınızı ekleyin</string>
+    <string name="image_sources_count">%1$d resimler</string>
+    <string name="image_sources_error">Yüklenemiyor veya kaydedilemiyor. Kaynağı, biçimi ve bağlantıyı kontrol edip yeniden deneyin. Mevcut abonelikler ve öğe görselleri korunur.</string>
+    <string name="image_sources_search">Görsellerde ara</string>
+    <string name="image_sources_retry">Tekrar dene</string>
+    <string name="image_sources_options">Abonelik seçenekleri</string>
+    <string name="image_sources_no_results">Eşleşen resim yok</string>
+    <string name="image_sources_use_hint">Özel simgeden veya kart resmi düzenleyicisinden görüntüleri seçin.</string>
+    <string name="image_sources_choose">Abonelikler arasından seçim yapın</string>
+    <string name="image_sources_settings_hint">Simge paketlerini ve kart çizimi kaynaklarını yönetin</string>
+</resources>

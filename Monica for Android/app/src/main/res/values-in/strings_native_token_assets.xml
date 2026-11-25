@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_limit">Hingga 64 MiB file baru atau yang dipindahkan per penyimpanan, dan 128 lampiran per token.</string>
+    <string name="native_token_assets_error">Tidak dapat membaca atau menyimpan setiap file. Konten asli Anda telah disimpan. Periksa akses dan ukuran file, lalu coba lagi.</string>
+    <string name="native_token_backup_needs_files">Basis data ini berisi token API dengan file. Sertakan gambar dan lampiran untuk mengekspor cadangan lengkap.</string>
+    <string name="native_token_backup_limit">File token API asli dalam satu cadangan ZIP harus berjumlah 64 MiB atau kurang. Gunakan cadangan database asli untuk brankas yang lebih besar.</string>
+    <string name="native_token_kdbx_files_unsupported">Token API dengan file memerlukan Monica ZIP terenkripsi atau cadangan database asli. Ekspor KDBX mendukung token API tanpa file.</string>
+</resources>

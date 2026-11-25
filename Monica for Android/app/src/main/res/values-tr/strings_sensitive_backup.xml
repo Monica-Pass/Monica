@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">“%1$s” içindeki hassas veriler okunamadığı için yedekleme tamamlanamadı. Orijinal veriler korundu.</string>
+</resources>

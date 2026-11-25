@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_mdbx">MDBX</string>
+    <string name="autofill_v2_default_mdbx_title">預設 MDBX 資料庫</string>
+    <string name="autofill_v2_default_mdbx_desc">將預設建議和清單項目限制在一個 MDBX 資料庫中。</string>
+</resources>

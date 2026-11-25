@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Добавить подписку</string>
+    <string name="image_sources_cards">Обложка карты</string>
+    <string name="image_sources_choose">Выберите одну из подписок</string>
+    <string name="image_sources_count">%1$d изображения</string>
+    <string name="image_sources_empty">Добавьте свой первый источник изображения</string>
+    <string name="image_sources_error">Невозможно загрузить или сохранить. Проверьте источник, формат и соединение, затем повторите попытку. Существующие подписки и изображения предметов сохраняются.</string>
+    <string name="image_sources_formats">HTTPS JSON пакеты изображений или ссылки на изображения PNG, JPEG и WebP.</string>
+    <string name="image_sources_icons">Значки</string>
+    <string name="image_sources_name">Имя (необязательно)</string>
+    <string name="image_sources_no_results">Нет подходящих изображений</string>
+    <string name="image_sources_options">Варианты подписки</string>
+    <string name="image_sources_refresh">Обновить</string>
+    <string name="image_sources_remove">Отменить подписку</string>
+    <string name="image_sources_remove_hint">Удалить эту подписку? Изображения, уже использованные в ваших товарах, будут сохранены.</string>
+    <string name="image_sources_retry">Повторить</string>
+    <string name="image_sources_search">Поиск изображений</string>
+    <string name="image_sources_settings_hint">Управление пакетами значков и источниками иллюстраций карточек.</string>
+    <string name="image_sources_title">Подписка на изображения</string>
+    <string name="image_sources_url">Подписка или изображение URL</string>
+    <string name="image_sources_use_hint">Выбирайте изображения в редакторе пользовательских значков или карточек.</string>
+</resources>

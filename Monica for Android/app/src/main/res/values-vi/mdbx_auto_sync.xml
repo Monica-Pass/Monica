@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Tải lên khi lưu; kiểm tra cập nhật trong khi được mở khóa ở nền trước</string>
+    <string name="mdbx_auto_sync_manual_hint">Tắt · Đồng bộ hóa thủ công khi cần</string>
+    <string name="mdbx_auto_sync_title">Đồng bộ tự động</string>
+</resources>

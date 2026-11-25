@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">自動檢查更新</string>
+    <string name="update_auto_check_summary">解鎖後每天最多檢查一次，可隨時關閉</string>
+    <string name="update_now">立即更新</string>
+    <string name="update_skip_version">略過此版本</string>
+    <string name="update_view_details">查看詳情</string>
+    <string name="update_later">稍後</string>
+    <string name="update_whats_new">更新內容</string>
+    <string name="update_open_fdroid">前往 F-Droid</string>
+    <string name="update_fdroid_source">透過 F-Droid 官方軟體庫檢查及安裝更新。</string>
+    <string name="update_notes_unavailable">目前沒有更新說明，可查看詳情。</string>
+    <string name="update_notes_truncated">說明較長，請查看詳情以閱讀完整內容。</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_live_preview">Pratinjau langsung</string>
+    <string name="customization_filters_navigation">Filter dan navigasi</string>
+    <string name="customization_drag_handle">Susun ulang %1$s</string>
+    <string name="customization_clear_presets_message">Hapus semua kolom preset? Entri tersimpan yang ada akan mempertahankan bidangnya.</string>
+</resources>

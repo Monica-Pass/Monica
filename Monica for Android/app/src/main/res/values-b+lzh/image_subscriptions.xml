@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">增订阅</string>
+    <string name="image_sources_cards">卡面</string>
+    <string name="image_sources_choose">自订阅择取</string>
+    <string name="image_sources_count">%1$d 幅图像</string>
+    <string name="image_sources_empty">请增首个图像源</string>
+    <string name="image_sources_error">未能加载或保存。请查来源、格式与连接后重试。既有订阅及项目图像皆留。</string>
+    <string name="image_sources_formats">HTTPS JSON 图像包，或 PNG、JPEG、WebP 图像链接。</string>
+    <string name="image_sources_icons">图标</string>
+    <string name="image_sources_name">名称（可不填）</string>
+    <string name="image_sources_no_results">无相合图像</string>
+    <string name="image_sources_options">订阅选项</string>
+    <string name="image_sources_refresh">刷新</string>
+    <string name="image_sources_remove">退订</string>
+    <string name="image_sources_remove_hint">果欲移除此订阅乎？项目已用之图像皆留。</string>
+    <string name="image_sources_retry">重试</string>
+    <string name="image_sources_search">寻图像</string>
+    <string name="image_sources_settings_hint">管理图标包及卡面来源</string>
+    <string name="image_sources_title">图像订阅</string>
+    <string name="image_sources_url">订阅或图像 URL</string>
+    <string name="image_sources_use_hint">可于自定图标或卡面编辑器中择图。</string>
+</resources>

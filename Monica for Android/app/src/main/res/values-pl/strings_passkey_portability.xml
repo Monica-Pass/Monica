@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Korzystanie z różnych urządzeń</string>
+    <string name="passkey_portability_algorithm_hint">Miejsce docelowe musi obsługiwać ten sam algorytm klucza. Bieżący transfer Bitwarden obsługuje tylko ES256.</string>
+    <string name="passkey_portability_backup_hint">To dane uwierzytelniające zostały oznaczone jako nieodpowiednie do tworzenia kopii zapasowych. Tylko miejsce docelowe, które zachowuje tę właściwość, może z niej korzystać; konwersja do Bitwarden lub wymiana danych uwierzytelniających jest zablokowana.</string>
+    <string name="passkey_portability_checking">Sprawdzam…</string>
+    <string name="passkey_portability_counter_hint">To uwierzytelnienie ma niezerową historię licznika podpisów. Monica wykorzystuje liczniki zerowe; korzystanie z różnych urządzeń może zostać odrzucone przez stronę internetową, która sprawdza wcześniejsze liczniki.</string>
+    <string name="passkey_portability_exportable">Klucz można wyeksportować</string>
+    <string name="passkey_portability_exportable_hint">Klucz można wyeksportować w obsługiwanym zaszyfrowanym formacie. Miejsce docelowe musi zachować swój identyfikator, klucz i właściwości rejestracyjne; Zgodność witryny internetowej nadal zależy od klienta docelowego.</string>
+    <string name="passkey_portability_invalid">Sprzeczne metadane</string>
+    <string name="passkey_portability_invalid_hint">Konflikt właściwości kopii zapasowej. Podpisywanie nie może po cichu zmieniać zarejestrowanych właściwości; zachowaj dane źródłowe na potrzeby odzyskiwania.</string>
+    <string name="passkey_portability_key_unavailable">Klucz niedostępny</string>
+    <string name="passkey_portability_local_hint">Klucz prywatny jest powiązany z tym urządzeniem i nie można go wyeksportować. Samo skopiowanie bazy danych nie umożliwi zalogowania się na innym urządzeniu.</string>
+    <string name="passkey_portability_local_only">Tylko lokalnie</string>
+    <string name="passkey_portability_missing_hint">Na tym urządzeniu nie znaleziono użytecznego klucza prywatnego. Tylko za pomocą tego rekordu nie można zalogować się tutaj ani na innym urządzeniu.</string>
+    <string name="passkey_portability_restricted">Transfer ograniczony</string>
+    <string name="passkey_portability_unknown">Nie zweryfikowano</string>
+    <string name="passkey_portability_unknown_hint">Nie można było sprawdzić możliwości klucza. Odblokuj źródłową bazę danych i spróbuj ponownie.</string>
+</resources>

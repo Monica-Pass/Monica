@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">未能读存全部文件。原内容皆留。请查文件权限与大小后重试。</string>
+    <string name="native_token_assets_limit">每次保存新增或迁入文件至多 64 MiB，每枚令牌至多 128 个附件。</string>
+    <string name="native_token_backup_limit">单个 ZIP 备份中，原生 API 令牌文件总量不得逾 64 MiB。更大密府请用原生数据库备份。</string>
+    <string name="native_token_backup_needs_files">此库含带文件之 API 令牌。请包含图像与附件，乃可导出完整备份。</string>
+    <string name="native_token_kdbx_files_unsupported">带文件之 API 令牌须用加密 Monica ZIP 或原生数据库备份。KDBX 导出仅支持不带文件之 API 令牌。</string>
+</resources>

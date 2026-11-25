@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
@@ -112,7 +114,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -2883,7 +2885,7 @@ private fun NativeSearchSwitch(label: String, checked: Boolean, onCheckedChange:
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onCheckedChange(!checked) },
+            .clickable(onClick = switchClick(checked, onCheckedChange = onCheckedChange)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(label, modifier = Modifier.weight(1f))
@@ -2995,7 +2997,7 @@ private fun NativeCreateGroupDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { expires = !expires },
+                        .clickable(onClick = switchClick(expires) { expires = it }),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(Modifier.weight(1f)) {
@@ -3486,7 +3488,7 @@ private fun NativeGroupPropertiesDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { expires = !expires },
+                        .clickable(onClick = switchClick(expires) { expires = it }),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(Modifier.weight(1f)) {

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">Ten passkey wykorzystuje klucz Android Keystore powiązany z urządzeniem, którego nie można wyeksportować. Może nadal działać na oryginalnym urządzeniu, ale nie można go uwzględnić w przenośnej kopii zapasowej.</string>
+    <string name="backup_passkey_unavailable">Brakuje klucza prywatnego lub jest on nieczytelny. Zaimportuj ponownie kopię zapasową zawierającą klucz prywatny lub sprawdź oryginalne urządzenie. Pozostałe dane i zdalna kopia zapasowa zostały zachowane.</string>
+    <string name="backup_passkey_unreadable">Nie można odczytać chronionego klucza prywatnego. Odblokuj Monica i spróbuj ponownie; jeśli to się powtórzy, sprawdź oryginalne urządzenie lub kopię zapasową zawierającą klucz prywatny.</string>
+</resources>

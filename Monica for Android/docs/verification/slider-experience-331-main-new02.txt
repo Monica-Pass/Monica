@@ -1,0 +1,217 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=wheelFramesFollowDragAndReducedMotionKeepsFixedThumb
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=wheelFramesFollowDragAndReducedMotionKeepsFixedThumb
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=externalUpdatesAndDisabledOrMutedControlsRemainSilent
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=externalUpdatesAndDisabledOrMutedControlsRemainSilent
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=accessibilityAndRtlRetainRangeDirectionAndTouchTarget
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Actual height is 38.28571.dp, expected at least 48.0.dp (tolerance: 0.5.dp)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU(BoundsAssertions.kt:342)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU$default(BoundsAssertions.kt:339)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast_3ABfNKs$lambda$0(BoundsAssertions.kt:98)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.withUnclippedBoundsInRoot(BoundsAssertions.kt:266)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast-3ABfNKs(BoundsAssertions.kt:98)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.accessibilityAndRtlRetainRangeDirectionAndTouchTarget(MonicaSliderInstrumentedTest.kt:110)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in accessibilityAndRtlRetainRangeDirectionAndTouchTarget(takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest):
+
+java.lang.AssertionError: Actual height is 38.28571.dp, expected at least 48.0.dp (tolerance: 0.5.dp)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU(BoundsAssertions.kt:342)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU$default(BoundsAssertions.kt:339)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast_3ABfNKs$lambda$0(BoundsAssertions.kt:98)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.withUnclippedBoundsInRoot(BoundsAssertions.kt:266)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast-3ABfNKs(BoundsAssertions.kt:98)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.accessibilityAndRtlRetainRangeDirectionAndTouchTarget(MonicaSliderInstrumentedTest.kt:110)
+
+
+
+INSTRUMENTATION_STATUS: test=accessibilityAndRtlRetainRangeDirectionAndTouchTarget
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=dragTicksInBothDirectionsAndCommitsOnlyOnRelease
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=dragTicksInBothDirectionsAndCommitsOnlyOnRelease
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=dpiSheetRetainsDraftUntilReleaseAndResetStillWorks
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=5
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=dpiSheetRetainsDraftUntilReleaseAndResetStillWorks
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 4.925
+
+There was 1 failure:
+
+1) accessibilityAndRtlRetainRangeDirectionAndTouchTarget(takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest)
+
+java.lang.AssertionError: Actual height is 38.28571.dp, expected at least 48.0.dp (tolerance: 0.5.dp)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU(BoundsAssertions.kt:342)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU$default(BoundsAssertions.kt:339)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast_3ABfNKs$lambda$0(BoundsAssertions.kt:98)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.withUnclippedBoundsInRoot(BoundsAssertions.kt:266)
+
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast-3ABfNKs(BoundsAssertions.kt:98)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.accessibilityAndRtlRetainRangeDirectionAndTouchTarget(MonicaSliderInstrumentedTest.kt:110)
+
+
+
+FAILURES!!!
+
+Tests run: 5,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

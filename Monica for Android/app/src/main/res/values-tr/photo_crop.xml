@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_crop_title">Fotoğrafı kırp</string>
+    <string name="photo_crop_skip">Kırpmayı atla</string>
+    <string name="photo_crop_continue">Kırp ve devam et</string>
+    <string name="card_face_crop_apply">Sanat eseri kullanın</string>
+</resources>

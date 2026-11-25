@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_add_login">Tambahkan login</string>
+    <string name="mdbx_native_username">Nama pengguna</string>
+    <string name="mdbx_native_password">Kata sandi</string>
+    <string name="mdbx_native_website">Situs web</string>
+    <string name="mdbx_native_notes">Catatan</string>
+    <string name="mdbx_native_json_description">Jenis entri lainnya diedit sebagai JSON. Pertahankan bidang dan skema aslinya.</string>
+    <string name="mdbx_native_add_attachment">Tambahkan lampiran</string>
+    <string name="mdbx_native_attachment_limits">Hingga 16 lampiran; total unggahan baru paling banyak 16 MiB. Teks dan gambar dapat dipratinjau di memori.</string>
+    <string name="mdbx_native_attachment_failed">Tidak dapat membaca lampiran ini atau pemeriksaan integritasnya gagal.</string>
+    <string name="mdbx_native_attachment_verified">Integritas lampiran diverifikasi</string>
+    <string name="mdbx_native_attachment_no_preview">Jenis file ini tidak memiliki pratinjau dalam aplikasi. Mengekspor lampiran yang didekripsi tidak tersedia dalam mode perlindungan ini.</string>
+    <string name="mdbx_native_delete_confirm">Hapus entri ini dan lampirannya?</string>
+    <string name="mdbx_native_editable">Perubahan ditulis langsung ke database terenkripsi ini.</string>
+    <string name="mdbx_native_app_locked">Buka kunci Monica melalui alur aplikasi normal untuk melanjutkan.</string>
+    <string name="mdbx_client_mode_unsupported_title">Glitter belum didukung</string>
+    <string name="mdbx_client_mode_unsupported">Klien Android belum mendukung Glitter. Pilih Sky, Multi, atau Power. Berkas dan catatan basis data yang ada tetap dipertahankan tanpa penurunan versi atau konversi otomatis. Gunakan klien yang mendukung Glitter untuk mengaksesnya.</string>
+</resources>

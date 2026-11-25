@@ -175,6 +175,10 @@ class MdbxViewModel(
     private val backgroundOnly: Boolean = false
 ) : AndroidViewModel(application) {
 
+    suspend fun reorderDatabaseDisplay(ids: List<Long>) = withContext(Dispatchers.IO) {
+        databaseDao.reorderDisplay(ids)
+    }
+
     private val context: Context get() = getApplication()
     private val strings = StringResolver { id, arguments ->
         val localizedContext = LocaleHelper.setLocale(context, StartupLanguageCache.read(context))

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">新しいエントリとして保存</string>
+    <string name="autofill_save_local_source">ローカル</string>
+    <string name="autofill_save_review_description">保存する前にエントリを選択して確認します。既存のフォルダー、メモ、その他のアカウントは保持されます。</string>
+    <string name="autofill_save_review_title">既存のパスワードを更新しますか?</string>
+</resources>

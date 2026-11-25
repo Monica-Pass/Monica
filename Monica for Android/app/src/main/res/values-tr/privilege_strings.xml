@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="privilege_method">Yetkilendirme yöntemi</string>
+    <string name="privilege_root_hint">Bu cihazın Kök erişimini doğrudan kullanın</string>
+    <string name="privilege_shizuku_hint">Çalışan bir Shizuku hizmeti aracılığıyla yetkilendirin</string>
+    <string name="privilege_root_requesting">Kök yetkilendirmesi bekleniyor…</string>
+    <string name="privilege_root_denied">Kök erişimi reddedildi. Kök yöneticinizde Monica\'ya izin verin ve yeniden deneyin.</string>
+    <string name="privilege_root_unavailable">Kullanılabilir su komutu bulunamadı. Öncelikle bu cihazın rootlanması gerekiyor.</string>
+    <string name="privilege_root_timeout">Kök yetkilendirme veya komut zaman aşımına uğradı. Kök yöneticinizi kontrol edin ve yeniden deneyin.</string>
+    <string name="privilege_root_ready">Sistem ayarları için kök etkin</string>
+    <string name="privilege_root_not_authorized">Kök yetkisi yok. Devam etmek için Kök Yetkilendir\'e dokunun.</string>
+    <string name="privilege_root_grant">Kök Yetkilendir</string>
+    <string name="privilege_root_disable">Monica\'da Kökü Devre Dışı Bırak</string>
+    <string name="privilege_root_confirm_title">Monica\'nın Kök kullanmasına izin verilsin mi?</string>
+    <string name="privilege_root_confirm_body">Bu, halihazırda köklenmiş bir cihaz ve Kök yöneticisinde onay gerektirir. Monica, yalnızca gelişmiş erişilebilirlik kurtarma ve varsayılan parola yöneticisinin ihtiyaç duyduğu sistem ayarları için Kök\'ü kullanır. Kasanızın kilidini açmaz veya diğer uygulama verilerini okumaz.\n\nGelişmiş kurtarma yalnızca önceden etkinleştirilmiş bir Monica erişilebilirlik hizmetine yeniden bağlanır. Etkinleştirildiğinde, bir uygulama veya cihaz yeniden başlatıldıktan sonra devam edebilir ve doldurmayı kısa süreliğine kesintiye uğratabilir.\n\nGelecekteki kullanımı durdurmak için burayı devre dışı bırakın. Sistem yetkilendirmesini iptal etmek için Monica\'yu Kök yöneticinizden kaldırın. Kök asla Shizuku için bir geri dönüş olarak talep edilmez.</string>
+    <string name="privilege_recovery_title">Gelişmiş kurtarma · İsteğe bağlı</string>
+    <string name="privilege_default_requires_android14">Varsayılan şifre yöneticisinin ayarlanması Android 14 veya üzerini gerektirir.</string>
+</resources>

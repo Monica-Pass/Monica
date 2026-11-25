@@ -1,0 +1,46 @@
+{
+  "signatures": [
+    {
+      "edition": "main",
+      "stage": "before",
+      "apkSha256": "1cee797a1180b39fa893a630e01117d353fa90665777f6f0dbaef9fc04a45ae8",
+      "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "dec81e5b35107cc5c4eefae8359cbf311f4e0dcb8a5bc6c92ac59927f6d99615"
+    },
+    {
+      "edition": "main",
+      "stage": "fixed",
+      "apkSha256": "2dc0a7c7159d9c7efd8a9e097fbd3f552d75a48620cc86bbf3bdc74f6580b725",
+      "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "5209045262479bd7f3d326bd1d88eed15bcddd7f68a373e9fb6f0243454ed4e8"
+    }
+  ],
+  "upgrade": {
+    "edition": "main",
+    "originalPassword": true,
+    "wrongPasswordRejected": true,
+    "oldRecordReadable": true,
+    "newRecordWrittenAndColdReadable": true,
+    "coldPids": [
+      "10726",
+      "11546",
+      "13246"
+    ],
+    "passed": true,
+    "backupTimeoutMinutes": 5,
+    "immediateRestoredAndLoginVerified": true,
+    "backupRestoration": {
+      "items": 1,
+      "encryptedOldBackup": true,
+      "source": "Documents/issue189-main-old331.enc.zip",
+      "restoredRecordRead": true,
+      "newRecordRetained": true
+    }
+  }
+}

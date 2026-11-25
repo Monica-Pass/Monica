@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_method">授權方式</string>
+    <string name="privilege_root_hint">直接使用設備的 Root 權限</string>
+    <string name="privilege_shizuku_hint">通過已運行的 Shizuku 授權</string>
+    <string name="privilege_root_requesting">正在等待 Root 授權…</string>
+    <string name="privilege_root_denied">未獲得 Root 權限，請在 Root 管理器中允許 Monica 後重試。</string>
+    <string name="privilege_root_unavailable">未找到可用的 su 命令，請確認設備已獲得 Root。</string>
+    <string name="privilege_root_timeout">Root 授權或命令已超時，請檢查 Root 管理器後重試。</string>
+    <string name="privilege_root_ready">已啟用 Root 系統設定授權</string>
+    <string name="privilege_root_not_authorized">尚未獲得 Root 授權，請點選「授權 Root」後繼續。</string>
+    <string name="privilege_root_grant">授權 Root</string>
+    <string name="privilege_root_disable">在 Monica 中停用 Root</string>
+    <string name="privilege_root_confirm_title">允許 Monica 使用 Root？</string>
+    <string name="privilege_root_confirm_body">設備需要已獲得 Root，並在 Root 管理器中允許 Monica。Root 僅用於增強無障礙恢復和預設密碼管理器所需的系統設定，不會解鎖密碼庫或讀取其他應用資料。\n\n增強恢復只重連已啟用的 Monica 無障礙服務；啟用後可在應用或設備重啟後繼續嘗試，可能短暫中斷填充。\n\n在此停用 Root 可停止後續使用；如需撤銷系統授權，請在 Root 管理器中移除 Monica。Shizuku 失敗時不會自動請求 Root。</string>
+    <string name="privilege_recovery_title">增強恢復 · 可選</string>
+    <string name="privilege_default_requires_android14">設定預設密碼管理器需要 Android 14 或更新版本。</string>
+</resources>

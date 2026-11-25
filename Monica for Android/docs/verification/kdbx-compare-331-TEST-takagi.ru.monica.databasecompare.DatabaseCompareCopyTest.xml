@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-23T13:37:16.872Z" hostname="JOYIN" time="0.035">
+  <properties/>
+  <testcase name="refusesOverLimitBeforeWritingExcessBytes" classname="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" time="0.016"/>
+  <testcase name="cancellationStopsBeforeAnotherOutputChunk" classname="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" time="0.0"/>
+  <testcase name="recognizesZeroLengthWithoutReadingPastLimit" classname="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" time="0.005"/>
+  <testcase name="authenticatesAllBytesIncludingChunkBoundaries" classname="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" time="0.004"/>
+  <testcase name="cleanupAcceptsOnlyOurOutputPrefix" classname="takagi.ru.monica.databasecompare.DatabaseCompareCopyTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

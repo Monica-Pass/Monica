@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">Việc đặt trình quản lý mật khẩu mặc định yêu cầu Android 14 trở lên.</string>
+    <string name="privilege_method">Phương thức ủy quyền</string>
+    <string name="privilege_recovery_title">Phục hồi nâng cao · Tùy chọn</string>
+    <string name="privilege_root_confirm_body">Tính năng này yêu cầu thiết bị đã được root và có sự chấp thuận trong trình quản lý Root. Monica chỉ dùng Root để thay đổi cài đặt hệ thống cần cho việc khôi phục dịch vụ trợ năng nâng cao và trình quản lý mật khẩu mặc định. Tính năng này không mở khóa kho của bạn hay đọc dữ liệu của ứng dụng khác.\n\nKhôi phục nâng cao chỉ kết nối lại dịch vụ trợ năng Monica đã được bật. Sau khi bật, tính năng có thể tiếp tục hoạt động sau khi khởi động lại ứng dụng hoặc thiết bị và có thể làm gián đoạn việc điền trong chốc lát.\n\nTắt Root tại đây để ngừng sử dụng sau này. Để thu hồi quyền hệ thống, hãy xóa Monica khỏi trình quản lý Root. Monica không bao giờ yêu cầu Root để thay thế khi Shizuku không khả dụng.</string>
+    <string name="privilege_root_confirm_title">Cho phép Monica sử dụng Root?</string>
+    <string name="privilege_root_denied">Quyền truy cập Root bị từ chối. Cho phép Monica trong trình quản lý Root của bạn và thử lại.</string>
+    <string name="privilege_root_disable">Tắt Root trong Monica</string>
+    <string name="privilege_root_grant">Ủy quyền cho Root</string>
+    <string name="privilege_root_hint">Sử dụng quyền truy cập Root của thiết bị này trực tiếp</string>
+    <string name="privilege_root_not_authorized">Root không được ủy quyền. Nhấn vào Ủy quyền Root để tiếp tục.</string>
+    <string name="privilege_root_ready">Root được bật cho cài đặt hệ thống</string>
+    <string name="privilege_root_requesting">Đang chờ ủy quyền Root…</string>
+    <string name="privilege_root_timeout">Ủy quyền hoặc lệnh Root đã hết thời gian chờ. Hãy kiểm tra trình quản lý Root của bạn và thử lại.</string>
+    <string name="privilege_root_unavailable">Không tìm thấy lệnh su nào có thể sử dụng được. Thiết bị này cần phải được root trước.</string>
+    <string name="privilege_shizuku_hint">Ủy quyền thông qua dịch vụ Shizuku đang chạy</string>
+</resources>

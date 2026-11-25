@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">카드즈 &amp; 지갑</string>
+    <string name="customization_group_fields_icons">필드 &amp; 아이콘</string>
+    <string name="customization_group_library">라이브러리 &amp; 목록</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">조치가 필요하지 않습니다.</string>
+    <string name="permission_action_request">권한 요청</string>
+    <string name="permission_help_actions">요청 권한을 사용하여 Android에 액세스를 요청하거나 설정 열기를 사용하여 서비스 및 부여된 권한을 관리합니다. \n\n필요한 작업 없음 또는 사용할 수 없음으로 표시된 항목에는 작업 버튼이 없습니다. 필요한 것만 활성화하세요.\n\n상태는 시스템 설정에서 돌아올 때 새로 고쳐집니다. 상태 새로고침을 눌러 다시 확인할 수도 있습니다.</string>
+    <string name="permission_refresh_status">새로 고침 상태</string>
+    <string name="permission_summary_granted">%1$d 권한이 부여됨</string>
+    <string name="permission_summary_hint">사용하는 기능에 필요한 권한만 활성화하십시오. 일부는 Android에 의해 자동으로 부여됩니다.</string>
+    <string name="permission_summary_title">귀하의 조건에 대한 권한</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Porta carte &amp;</string>
+    <string name="customization_group_fields_icons">Icone dei campi &amp;</string>
+    <string name="customization_group_library">Elenchi libreria &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Nessuna azione necessaria</string>
+    <string name="permission_action_request">Richiedi il permesso</string>
+    <string name="permission_help_actions">Utilizzare Richiedi autorizzazione per chiedere l\'accesso a Android oppure Apri impostazioni per gestire i servizi e le autorizzazioni concesse.\n\nGli elementi contrassegnati come Nessuna azione necessaria o Non disponibile non hanno alcun pulsante di azione. Abilita solo ciò di cui hai bisogno.\n\nGli stati si aggiornano quando torni dalle impostazioni di sistema. Puoi anche toccare Aggiorna stato per controllare di nuovo.</string>
+    <string name="permission_refresh_status">Aggiorna stato</string>
+    <string name="permission_summary_granted">%1$d autorizzazioni concesse</string>
+    <string name="permission_summary_hint">Abilita solo le autorizzazioni necessarie per le funzionalità che utilizzi. Alcuni vengono concessi automaticamente da Android.</string>
+    <string name="permission_summary_title">Autorizzazioni alle tue condizioni</string>
+</resources>

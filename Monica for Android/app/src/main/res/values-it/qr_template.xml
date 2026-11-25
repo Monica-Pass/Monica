@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Modello QR personalizzato</string>
+    <string name="qr_template_error">Impossibile leggere la voce, salvare il modello o generare il codice. Verifica che il database sia sbloccato e che il contenuto rientri nei limiti, quindi riprova.</string>
+    <string name="qr_template_field_error">Il campo “%1$s” è mancante, illeggibile o ambiguo. Seleziona un campo disponibile prima di generare.</string>
+    <string name="qr_template_generate">Genera il codice QR</string>
+    <string name="qr_template_hint">Legge i campi correnti quando generati. Salva il modello, non una copia della password risolta. I modelli Wi-Fi sfuggono automaticamente ai valori inseriti.</string>
+    <string name="qr_template_insert">Inserisci campo</string>
+    <string name="qr_template_literal">"Testo normale"</string>
+    <string name="qr_template_mode">Modello di campo</string>
+    <string name="qr_template_wifi">Preimpostazione Wi-Fi</string>
+</resources>

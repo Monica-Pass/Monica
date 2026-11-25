@@ -1,0 +1,149 @@
+{
+  "edition": "main",
+  "build": {
+    "edition": "main",
+    "mode": "debug",
+    "package": "takagi.ru.monica.selectioncontrastmain33120261125.localedebug",
+    "exit": 0,
+    "seconds": 82.11679699999513,
+    "command": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "--stacktrace",
+      "-Dorg.gradle.jvmargs=-Xmx4g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PincludeX86TestAbi",
+      "-PdailySeq=99",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261125-selection-contrast\\main-isolation.gradle",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "sourceUnchanged": true,
+    "apks": [
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261125-selection-contrast\\raw\\main02\\app.apk",
+        "sha256": "32a8c6e2f8478667682ddd3d5a1d8249c5e259bba86245e47c7c4dddbdb3025c"
+      },
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261125-selection-contrast\\raw\\main02\\test.apk",
+        "sha256": "89afd9a880ef1d8ceb9f6ef371d6cf4b842f86cea852ac39740ae158412ed698"
+      }
+    ]
+  },
+  "device": {
+    "ui01": {
+      "completedMethodPasses": 4,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.ui.common.selection.SelectionActionBarInstrumentedTest",
+      "tests": 4,
+      "failures": 0,
+      "success": true,
+      "seconds": 10.351185399995302,
+      "runnerSeconds": 6.934
+    },
+    "regression01": {
+      "completedMethodPasses": 6,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.ui.password.MultiPasswordProjectSelectionTest,takagi.ru.monica.ui.cardwallet.WalletSelectionSectionTest,takagi.ru.monica.ui.TrashNavigationTest#returnFabAndSharedSelectionActionsWorkOnThePasswordPage",
+      "tests": 6,
+      "failures": 0,
+      "success": true,
+      "seconds": 10.529212000008556,
+      "runnerSeconds": 8.009
+    },
+    "ui02": {
+      "completedMethodPasses": 4,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.ui.common.selection.SelectionActionBarInstrumentedTest",
+      "tests": 4,
+      "failures": 0,
+      "success": true,
+      "seconds": 9.263904799998272,
+      "runnerSeconds": 6.599
+    },
+    "regression02": {
+      "completedMethodPasses": 6,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.ui.password.MultiPasswordProjectSelectionTest,takagi.ru.monica.ui.cardwallet.WalletSelectionSectionTest,takagi.ru.monica.ui.TrashNavigationTest#returnFabAndSharedSelectionActionsWorkOnThePasswordPage",
+      "tests": 6,
+      "failures": 0,
+      "success": true,
+      "seconds": 10.651564399988274,
+      "runnerSeconds": 8.119
+    }
+  },
+  "contrast": {
+    "paletteAndModeCombinations": 36,
+    "minimumOrdinaryIcon": 4.869339395837856,
+    "minimumDeleteIcon": 4.848136275216825
+  },
+  "source": {
+    "app/src/main/java/takagi/ru/monica/ui/screens/NoteListControls.kt": "c2db502799c4a3f7d1f2bc5e45434800002c38a93192a8b33c9b234147e5bbba",
+    "app/src/main/java/takagi/ru/monica/ui/screens/PasskeyListScreen.kt": "6fabff5a95ed9e4dc5927dc3f5848b4c9038d52f1634efed64f0506343e0f5f0",
+    "app/src/main/java/takagi/ru/monica/ui/common/selection/SelectionActionBar.kt": "7d06805e19e25436c3830f84a0cbd2cdb8ee76c8fcedb8d1b275bda647e9726f",
+    "app/src/androidTest/java/takagi/ru/monica/ui/common/selection/SelectionActionBarInstrumentedTest.kt": "4209a7f23073c7e943b33ebd475f0b1c951314af26bf8d059642f2724e893191"
+  },
+  "installed": {
+    "edition": "main",
+    "captured": [
+      "selection-black_mamba-false.png",
+      "selection-black_mamba-true.png",
+      "selection-contrast.txt",
+      "selection-custom-false.png",
+      "selection-custom-true.png",
+      "selection-default-false.png",
+      "selection-default-true.png",
+      "selection-narrow-rtl-large.png",
+      "selection-oled.png",
+      "trash-selection-dark-pressed.png",
+      "trash-selection-light.png"
+    ],
+    "installed": [
+      {
+        "package": "takagi.ru.monica.selectioncontrastmain33120261125.localedebug",
+        "sha256": "32a8c6e2f8478667682ddd3d5a1d8249c5e259bba86245e47c7c4dddbdb3025c"
+      },
+      {
+        "package": "takagi.ru.monica.selectioncontrastmain33120261125.localedebug.test",
+        "sha256": "89afd9a880ef1d8ceb9f6ef371d6cf4b842f86cea852ac39740ae158412ed698"
+      }
+    ],
+    "abis": [
+      "x86_64"
+    ]
+  },
+  "checks": {
+    "metadata": 0,
+    "metadata-tests": 0
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 15,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.selectioncontrastmain33120261125.localedebug",
+      "takagi.ru.monica.selectioncontrastmain33120261125.localedebug.test",
+      "takagi.ru.monica.selectioncontrastfd33120261125.localedebug",
+      "takagi.ru.monica.selectioncontrastfd33120261125.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15085
+  }
+}

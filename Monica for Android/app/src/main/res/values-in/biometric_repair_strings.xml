@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_repair_title">Perbaiki buka kunci biometrik</string>
+    <string name="biometric_repair_summary">Pasang kembali perangkat ini jika pembukaan kunci biometrik masih gagal setelah pembukaan kunci dengan kata sandi</string>
+    <string name="biometric_repair_explanation">Masukkan kata sandi utama asli Anda untuk mengikat ulang perangkat ini. Gudang Anda, perlindungan kata sandi, dan materi pemulihan sebelumnya akan disimpan. Ini tidak mengaktifkan buka kunci biometrik.</string>
+    <string name="biometric_repair_confirm">Konfirmasi perbaikan</string>
+    <string name="biometric_repair_working">Memverifikasi dan memperbaiki…</string>
+    <string name="biometric_repair_success">Pengikatan pembuka kunci telah diperbaiki. Gudang Anda dan materi pemulihan sebelumnya disimpan. Anda sekarang dapat mengaktifkan buka kunci biometrik jika tersedia.</string>
+    <string name="biometric_repair_failed">Perbaikan tidak dapat dikonfirmasi. Gudang Anda dan materi pemulihan sebelumnya disimpan. Buka kunci dengan kata sandi utama Anda dan coba lagi nanti.</string>
+    <string name="biometric_repair_device_auth">Buka kunci perangkat dengan kunci layarnya, lalu coba lagi. Persyaratan otentikasi yang ada akan dipertahankan.</string>
+    <string name="biometric_requires_password_reentry">Buka kunci dengan kata sandi utama Anda. Jika buka kunci biometrik masih gagal, buka Pengaturan → Kata sandi utama dan penguncian → Perbaiki buka kunci biometrik.</string>
+</resources>

@@ -18,6 +18,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.security.KeyStore
 import java.util.UUID
+import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -100,7 +101,8 @@ class ManagedPasswordLoginUiTest {
         compose.onNode(hasSetTextAction()).performImeAction()
         compose.onNodeWithText(label(R.string.confirm)).assertIsDisplayed()
         compose.runOnIdle { lifecycle.registry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE) }
-        compose.onNode(hasSetTextAction()).assertDoesNotExist()
+        compose.onNodeWithTag("auth_master_password_field").assertIsDisplayed().assertIsNotEnabled()
+        assertEquals("", compose.onNodeWithTag("auth_master_password_field").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.EditableText].text)
         compose.runOnIdle { lifecycle.registry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME) }
         compose.onNodeWithText(label(R.string.set_up_password)).assertIsDisplayed().assertIsNotEnabled()
         assertFalse(manager.isMasterPasswordSet())
@@ -157,6 +159,38 @@ class ManagedPasswordLoginUiTest {
         compose.onAllNodes(hasSetTextAction()).assertCountEquals(0)
         assertTrue(f.manager().verifyMasterPassword(PASSWORD))
         assertFalse(f.manager().verifyMasterPassword("SyntheticNotSubmitted327!"))
+    }
+
+    @Test fun busyVerificationKeepsEmptyDisabledFieldAtTheSameHeight() {
+        val f = Fixture().also { fixture = it }
+        val manager = f.manager()
+        assertTrue(manager.setMasterPassword(PASSWORD))
+        SecurityManager.clearRuntimeUnlockCache()
+        show(manager)
+        compose.onNode(hasSetTextAction()).performTextInput(PASSWORD)
+        val height = compose.onNodeWithTag("auth_master_password_field").fetchSemanticsNode().boundsInRoot.height
+        val entered = java.util.concurrent.CountDownLatch(1)
+        val release = java.util.concurrent.CountDownLatch(1)
+        val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO)
+        val blocker = scope.launch {
+            takagi.ru.monica.security.BoundedSecureDataRead.readChecked(isCurrent = { true }) {
+                entered.countDown()
+                check(release.await(10, java.util.concurrent.TimeUnit.SECONDS))
+                true
+            }
+        }
+        try {
+            assertTrue(entered.await(5, java.util.concurrent.TimeUnit.SECONDS))
+            compose.onNode(hasSetTextAction()).performImeAction()
+            val field = compose.onNodeWithTag("auth_master_password_field").assertIsDisplayed().assertIsNotEnabled()
+            assertEquals(height, field.fetchSemanticsNode().boundsInRoot.height, 1f)
+            assertEquals("", field.fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.EditableText].text)
+            assertEquals(0, successes)
+        } finally {
+            release.countDown()
+            kotlinx.coroutines.runBlocking { blocker.join() }
+        }
+        compose.waitUntil(20_000) { successes == 1 }
     }
 
     private fun show(manager: SecurityManager, firstTime: Boolean = false, lifecycle: LifecycleOwner? = null) {

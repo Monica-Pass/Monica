@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Recovery protection</string>
+    <string name="recovery_protection_summary">Verify recovery using your original master password</string>
+    <string name="recovery_protection_verified">Verified in this session at %1$s</string>
+    <string name="recovery_protection_not_ready">Recovery protection could not be verified. Existing data was kept. Retry or make an encrypted backup.</string>
+    <string name="recovery_protection_needs_password">Enter your master password to prepare and verify recovery</string>
+    <string name="recovery_protection_explanation">Verify that your original master password can open the independent recovery material. This does not replace your vault or device keys. A healthy older installation may prepare recovery material during verification.</string>
+    <string name="recovery_protection_limits">Keep an independent encrypted backup. Verification applies to the current material and session; it does not guarantee future file integrity or recovery of hardware-bound credentials. Locking or changing the material requires verification again.</string>
+    <string name="recovery_protection_verify">Verify recovery protection</string>
+    <string name="recovery_protection_checking">Verifying recovery protection…</string>
+    <string name="recovery_material_available">Recovery material was found. Recovery still requires verification with the original master password.</string>
+    <string name="recovery_material_missing">No independent recovery material was found. Restore the original key environment or verify an encrypted backup in another installation.</string>
+    <string name="recovery_material_reenroll">Recovery must be prepared again after a credential change. Restore normal access, then verify with your current master password.</string>
+    <string name="recovery_material_revoked">This recovery material was explicitly revoked and cannot be used. Keep the original files.</string>
+    <string name="recovery_material_unsupported">This recovery format is not supported by this version. Keep the files and use a compatible Monica version.</string>
+    <string name="recovery_material_invalid">Recovery material is incomplete or invalid. Keep the original files; do not replace them with an empty file or another vault’s material.</string>
+    <string name="recovery_material_unreadable">Recovery material could not be read. Keep the files, unlock the device and retry.</string>
+    <string name="recovery_material_unchecked">Recovery material has not been checked. Retry after the device is unlocked and the current operation has finished.</string>
+    <string name="secure_startup_key_missing">The current system key service cannot find the original key. This alone does not prove the key was permanently deleted.</string>
+    <string name="secure_startup_wait">The system is not ready or a secure operation has not finished. Unlock the device and retry later.</string>
+    <string name="secure_startup_inconsistent">The encrypted settings and recovery state do not match. Keep the original files; do not remove recovery markers to bypass this check.</string>
+    <string name="secure_startup_environment_omk">If this started after changing OMK or another key module, restore the key environment used to create this vault. Removing Monica from a newly added scope may help; it is not correct for every vault. Preserve the module configuration and keys. Do not reinstall modules or reset their seed to experiment.</string>
+</resources>

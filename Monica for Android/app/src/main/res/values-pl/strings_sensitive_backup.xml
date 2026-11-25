@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Nie udało się ukończyć kopii zapasowej, ponieważ nie można odczytać poufnych danych wpisu „%1$s”. Oryginalne dane zostały zachowane.</string>
+</resources>

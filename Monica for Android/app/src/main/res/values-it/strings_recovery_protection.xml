@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Protezione del recupero</string>
+    <string name="recovery_protection_summary">Verifica il recupero con la password principale originale</string>
+    <string name="recovery_protection_verified">Verificata in questa sessione: %1$s</string>
+    <string name="recovery_protection_not_ready">Impossibile verificare la protezione. I dati sono conservati. Riprova o crea un backup cifrato.</string>
+    <string name="recovery_protection_needs_password">Inserisci la password principale per preparare e verificare il recupero</string>
+    <string name="recovery_protection_explanation">Verifica che la password principale originale apra il materiale di recupero indipendente. Non sostituisce archivio o chiavi del dispositivo. Una vecchia installazione integra può preparare il materiale.</string>
+    <string name="recovery_protection_limits">Conserva un backup cifrato indipendente. La verifica riguarda solo materiale e sessione attuali; non garantisce integrità futura o recupero delle credenziali legate all’hardware. Ripeti dopo blocco o modifiche.</string>
+    <string name="recovery_protection_verify">Verifica recupero</string>
+    <string name="recovery_protection_checking">Verifica del recupero…</string>
+    <string name="recovery_material_available">Materiale di recupero trovato. È ancora necessaria la verifica della password principale originale.</string>
+    <string name="recovery_material_missing">Materiale indipendente non trovato. Ripristina l’ambiente delle chiavi originale o verifica un backup cifrato in un’altra installazione.</string>
+    <string name="recovery_material_reenroll">Dopo una modifica delle credenziali occorre preparare nuovamente il recupero. Ripristina l’accesso e verifica con la password principale attuale.</string>
+    <string name="recovery_material_revoked">Questo materiale è stato esplicitamente revocato. Conserva i file originali.</string>
+    <string name="recovery_material_unsupported">Formato di recupero non supportato. Conserva i file e usa una versione compatibile di Monica.</string>
+    <string name="recovery_material_invalid">Materiale di recupero incompleto o non valido. Conserva gli originali; non sostituirli con file vuoti o di un altro archivio.</string>
+    <string name="recovery_material_unreadable">Impossibile leggere il materiale. Conserva i file, sblocca il dispositivo e riprova.</string>
+    <string name="recovery_material_unchecked">Materiale non ancora controllato. Riprova dopo lo sblocco e la conclusione dell’operazione corrente.</string>
+    <string name="secure_startup_key_missing">Il servizio di chiavi attuale non trova la chiave originale. Questo non prova una cancellazione definitiva.</string>
+    <string name="secure_startup_wait">Il sistema non è pronto o un’operazione sicura è in corso. Sblocca il dispositivo e riprova più tardi.</string>
+    <string name="secure_startup_inconsistent">Impostazioni cifrate e stato di recupero non corrispondono. Conserva gli originali; non rimuovere i marcatori per aggirare il controllo.</string>
+    <string name="secure_startup_environment_omk">Se accade dopo modifiche a OMK o ad altri moduli di chiavi, ripristina l’ambiente usato per creare l’archivio. Rimuovere Monica da un ambito appena aggiunto può aiutare, ma non vale per tutti gli archivi. Conserva configurazione e chiavi; non reinstallare moduli o azzerare il seed per tentativi.</string>
+</resources>

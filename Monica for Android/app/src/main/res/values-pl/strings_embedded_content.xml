@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Skopiuj kartę</string>
+    <string name="embedded_copy_document">Skopiuj dokument</string>
+    <string name="embedded_copy_failed">Kopia zawartości jest niekompletna</string>
+    <string name="embedded_copy_failed_message">%1$s nie mogło zostać całkowicie skopiowane. Twoje źródło i wersja robocza zostaną zachowane. Sprawdź, czy źródłowa baza danych jest odblokowana i czy są dostępne załączniki, a następnie spróbuj ponownie.</string>
+    <string name="embedded_copy_independent">Niezależna kopia · Załączniki %1$d</string>
+    <string name="embedded_copy_note">Skopiuj notatkę</string>
+    <string name="embedded_copy_working">Kopiowanie całej zawartości…</string>
+    <string name="password_content_document">Dokument tożsamości</string>
+    <string name="password_content_document_description">Pola tożsamości, awers karty, zdjęcia i załączniki</string>
+</resources>

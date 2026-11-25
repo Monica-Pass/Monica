@@ -1,0 +1,82 @@
+{
+  "build": "main-final07",
+  "buildSeconds": 47.06008670000301,
+  "deviceRun": "main-polished06",
+  "frozenSourceFiles": 5999,
+  "sourceMatchesBuild": true,
+  "jvm": {
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "deviceMethods": 38,
+  "deviceFailures": 0,
+  "deviceDriverSeconds": 31.061652999997023,
+  "deviceRunnerSeconds": 27.836,
+  "apks": [
+    {
+      "kind": "app",
+      "sha256": "5776775594402edc31c497f5c3b7aa835e08cca7b053e936bddb083047cf3d4d",
+      "abis": [
+        "x86_64"
+      ]
+    },
+    {
+      "kind": "test",
+      "sha256": "93cb605a62125ed605824033906fa747bc8f84a61c91568a8f2957cfadd3a441",
+      "abis": []
+    }
+  ],
+  "date": "2026-11-25",
+  "edition": "main",
+  "version": "1.0.331",
+  "released": false,
+  "languages": [
+    "id-ID",
+    "tr-TR"
+  ],
+  "resourcesPerLanguage": 7351,
+  "xmlFilesPerLanguage": 130,
+  "formattedStringsPerLanguage": 846,
+  "environment": "MuMu Android 15 / API 35 / x86_64 / Debug / synthetic secondary user / fixed portrait",
+  "sharedPaths": {
+    "compared": 276,
+    "byteIdentical": 266,
+    "different": [
+      "app/build.gradle",
+      "app/src/androidTest/assets/idtr-INDONESIAN-resource-contract.json",
+      "app/src/androidTest/assets/idtr-TURKISH-resource-contract.json",
+      "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+      "app/src/main/res/values-in/credential_exchange.xml",
+      "app/src/main/res/values-in/mdbx_manager_strings.xml",
+      "app/src/main/res/values-in/quick_setup_strings.xml",
+      "app/src/main/res/values-tr/credential_exchange.xml",
+      "app/src/main/res/values-tr/mdbx_manager_strings.xml",
+      "app/src/main/res/values-tr/quick_setup_strings.xml"
+    ]
+  },
+  "cleanup": {
+    "ownedUserRemoved": 10,
+    "remainingUsers": [
+      0
+    ],
+    "restoredCurrentUser": 0,
+    "ownerPackageListUnchangedDuringCleanup": true,
+    "ownerFontScale": "1.0",
+    "fixedToUserRotationRestored": "default",
+    "userRotationBeforeSwitch": "lock 0",
+    "ownedPackagesAbsentIncludingUninstalled": true,
+    "ownedEmulatorStopped": 2,
+    "ownedAdbServerStopped": 15075,
+    "emulatorConfigurationAndDataDiskPreserved": true,
+    "otherTaskOwnerStoreDisablePreserved": true
+  },
+  "limitations": [
+    "No native-speaker full proofreading",
+    "No full Activity navigation or all pages",
+    "No physical device, OEM, R8 or Release upgrade test",
+    "Recovery dialog screenshot is protected; semantics and cancellation assertions only",
+    "ActivityScenario orientation race remains outside fixed-portrait test environment"
+  ]
+}

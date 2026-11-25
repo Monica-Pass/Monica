@@ -1,0 +1,450 @@
+{
+  "scope": "Legacy three-account ZIP restore, detail, edit, local transactional persistence and retained-data upgrade",
+  "device": {
+    "emulator": "Existing MuMu instance 0",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticOnly": true
+  },
+  "userClarification": "The fourth account was manually added by the user; normal restore contains three.",
+  "editions": {
+    "main": {
+      "debug": {
+        "edition": "main",
+        "mode": "verify",
+        "package": "takagi.ru.monica.zipaccountsmain33120261125.localedebug",
+        "exit": 0,
+        "seconds": 201.17647049999505,
+        "sourceUnchanged": true,
+        "apks": [
+          {
+            "path": "app.apk",
+            "sha256": "5a4e46b15a2caa06587e9f4395ffe0f33d757a2172dc2450f0814a87959f7f15"
+          },
+          {
+            "path": "test.apk",
+            "sha256": "091c96556fd9d83e0520792b8540b321eef4fdd6fbf239b53fce7a0a60b87945"
+          }
+        ]
+      },
+      "release": {
+        "edition": "main",
+        "mode": "release",
+        "package": "takagi.ru.monica.issue189main33120261125",
+        "exit": 0,
+        "seconds": 514.0253654999979,
+        "sourceUnchanged": true,
+        "apks": [
+          {
+            "path": "app.apk",
+            "sha256": "9d71d927bfc46bb33bc96be19b4a3517b21533a5c41d2fdef707b96fd9519075"
+          }
+        ]
+      },
+      "jvm": 27,
+      "deviceMethods": 46,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 19,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest",
+          "tests": 19,
+          "failures": 0,
+          "success": true,
+          "seconds": 5.750853900011862
+        },
+        {
+          "completedMethodPasses": 25,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#localAccountsKeepEncryptedRowsAndStableIdentityAcrossEditDeleteAndReorder,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#keepassAccountsKeepAllPasswordsAndMetadataInNativeStorage,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#bitwardenFreshDownloadPreservesEachAccountPasswordAndGroup,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#failedSecondDestinationRollsBackEditsAndKeepsOriginalRows,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#multipleFoldersKeepCompleteIndependentCopies,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyThreeAccountsShowSeparatelyAndSaveWithoutLosingRows,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyThreeAccountsRemainEditableAtLargeFont,takagi.ru.monica.ui.ProjectCredentialEditorTest#urlRulesMoveWithRowsAndReopenAfterSaving,takagi.ru.monica.ui.ProjectCredentialEditorTest#singleCredentialNoteSavesReopensAndClearsWithoutPageNotes,takagi.ru.monica.ui.ProjectCredentialEditorTest#localPrimaryPasswordsSaveReopenAndEditSecondWithoutOtp,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataSavesUnchangedThenEditsAndReopens,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataRetainsLegacyOtpOnlyOnFirstRow,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataRetainsLegacyOtpOnlyOnSecondRow,takagi.ru.monica.ui.ProjectCredentialEditorTest#conflictingMetadataCopiesBlockSaveAndKeepOriginalRows,takagi.ru.monica.ui.ProjectCredentialEditorTest#localPrimaryPasswordsWithMetadataSaveReopenAndEditSecondWithoutOtp,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyLocalProjectWithoutMetadataSavesWithoutEdits,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyV1LocalProjectWithoutOptionalMetadataSavesWithoutEdits,takagi.ru.monica.ui.ProjectCredentialEditorTest#deletingStoredAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords,takagi.ru.monica.ui.ProjectCredentialEditorTest#deletingVirtualAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords,takagi.ru.monica.ui.ProjectCredentialEditorTest#primaryAddPasswordExpandsOverAnimationFrames,takagi.ru.monica.ui.ProjectCredentialEditorTest#addAccountWithTwoPasswordsAndEditFromItsOwnRowKeepsPrimaryAccount,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacySingleAccountUsesConnectedAuthenticatorWithoutRepeatingIdentity,takagi.ru.monica.ui.ProjectCredentialEditorTest#passwordDeleteSharesStrengthRowAndSurvivesDisabledAnalysis,takagi.ru.monica.ui.ProjectCredentialEditorTest#credentialNotesConnectAndHideEmptyContentAtLargeFont,takagi.ru.monica.ui.ProjectCredentialEditorTest#sanitizedMetadataStillDisplaysEveryResolvedPassword",
+          "tests": 25,
+          "failures": 0,
+          "success": true,
+          "seconds": 72.94676390000677
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.credentialexchange.LegacyProjectZipRestoreTest#overwriteLegacyZipTwiceThenSaveAndExportKeepsThreeAccounts",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 5.747614499996416
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.credentialexchange.LegacyProjectZipRestoreTest#newProcessReadsTheSavedAccountsAndRetainsIds",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.385949799994705
+        }
+      ],
+      "releaseUpgrade": {
+        "edition": "main",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "30256",
+          "31092",
+          "32761"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/issue189-main-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "apkChecks": [
+        {
+          "path": "main-release-fixed01/app.apk",
+          "sha256": "2dc0a7c7159d9c7efd8a9e097fbd3f552d75a48620cc86bbf3bdc74f6580b725",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189main33120261125' versionCode='12' versionName='1.0.331-26112512-96' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        },
+        {
+          "path": "main-release-final02/app.apk",
+          "sha256": "9d71d927bfc46bb33bc96be19b4a3517b21533a5c41d2fdef707b96fd9519075",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189main33120261125' versionCode='12' versionName='1.0.331-26112512-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        }
+      ]
+    },
+    "fd": {
+      "debug": {
+        "edition": "fd",
+        "mode": "verify",
+        "package": "takagi.ru.monica.zipaccountsfd33120261125.localedebug",
+        "exit": 0,
+        "seconds": 224.97662960000162,
+        "sourceUnchanged": true,
+        "apks": [
+          {
+            "path": "app.apk",
+            "sha256": "975eb1c7e1cc0a633ef065e12d03815585e332b16a9fdc45cae2b519c588ef5b"
+          },
+          {
+            "path": "test.apk",
+            "sha256": "d58874730b444cc3ac76c998e11c8ba34bb386f2697566dd17e22866422781f8"
+          }
+        ]
+      },
+      "release": {
+        "edition": "fd",
+        "mode": "release",
+        "package": "takagi.ru.monica.issue189fd33120261125",
+        "exit": 0,
+        "seconds": 463.4403098999901,
+        "sourceUnchanged": true,
+        "apks": [
+          {
+            "path": "app.apk",
+            "sha256": "f1e250c8fd1638c0de7c9c582de6e97b89f86615b01320bb931bb1359d5bc7ad"
+          }
+        ]
+      },
+      "jvm": 27,
+      "deviceMethods": 46,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 44,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#localAccountsKeepEncryptedRowsAndStableIdentityAcrossEditDeleteAndReorder,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#keepassAccountsKeepAllPasswordsAndMetadataInNativeStorage,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#bitwardenFreshDownloadPreservesEachAccountPasswordAndGroup,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#failedSecondDestinationRollsBackEditsAndKeepsOriginalRows,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest#multipleFoldersKeepCompleteIndependentCopies,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyThreeAccountsShowSeparatelyAndSaveWithoutLosingRows,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyThreeAccountsRemainEditableAtLargeFont,takagi.ru.monica.ui.ProjectCredentialEditorTest#urlRulesMoveWithRowsAndReopenAfterSaving,takagi.ru.monica.ui.ProjectCredentialEditorTest#singleCredentialNoteSavesReopensAndClearsWithoutPageNotes,takagi.ru.monica.ui.ProjectCredentialEditorTest#localPrimaryPasswordsSaveReopenAndEditSecondWithoutOtp,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataSavesUnchangedThenEditsAndReopens,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataRetainsLegacyOtpOnlyOnFirstRow,takagi.ru.monica.ui.ProjectCredentialEditorTest#repeatedLocalMetadataRetainsLegacyOtpOnlyOnSecondRow,takagi.ru.monica.ui.ProjectCredentialEditorTest#conflictingMetadataCopiesBlockSaveAndKeepOriginalRows,takagi.ru.monica.ui.ProjectCredentialEditorTest#localPrimaryPasswordsWithMetadataSaveReopenAndEditSecondWithoutOtp,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyLocalProjectWithoutMetadataSavesWithoutEdits,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacyV1LocalProjectWithoutOptionalMetadataSavesWithoutEdits,takagi.ru.monica.ui.ProjectCredentialEditorTest#deletingStoredAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords,takagi.ru.monica.ui.ProjectCredentialEditorTest#deletingVirtualAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords,takagi.ru.monica.ui.ProjectCredentialEditorTest#primaryAddPasswordExpandsOverAnimationFrames,takagi.ru.monica.ui.ProjectCredentialEditorTest#addAccountWithTwoPasswordsAndEditFromItsOwnRowKeepsPrimaryAccount,takagi.ru.monica.ui.ProjectCredentialEditorTest#legacySingleAccountUsesConnectedAuthenticatorWithoutRepeatingIdentity,takagi.ru.monica.ui.ProjectCredentialEditorTest#passwordDeleteSharesStrengthRowAndSurvivesDisabledAnalysis,takagi.ru.monica.ui.ProjectCredentialEditorTest#credentialNotesConnectAndHideEmptyContentAtLargeFont,takagi.ru.monica.ui.ProjectCredentialEditorTest#sanitizedMetadataStillDisplaysEveryResolvedPassword",
+          "tests": 44,
+          "failures": 0,
+          "success": true,
+          "seconds": 90.74133580000489
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.credentialexchange.LegacyProjectZipRestoreTest#overwriteLegacyZipTwiceThenSaveAndExportKeepsThreeAccounts",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 5.09960940000019
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.credentialexchange.LegacyProjectZipRestoreTest#newProcessReadsTheSavedAccountsAndRetainsIds",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 3.330942900007358
+        }
+      ],
+      "releaseUpgrade": {
+        "edition": "fd",
+        "originalPassword": true,
+        "wrongPasswordRejected": true,
+        "oldRecordReadable": true,
+        "newRecordWrittenAndColdReadable": true,
+        "coldPids": [
+          "33735",
+          "34555",
+          "36187"
+        ],
+        "passed": true,
+        "backupTimeoutMinutes": 5,
+        "immediateRestoredAndLoginVerified": true,
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/issue189-fd-old331.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "apkChecks": [
+        {
+          "path": "fd-release-fixed01/app.apk",
+          "sha256": "35a2e394df039593742cb94acb8c4e01284e4dcc75a0de86d0abca68ed8a397a",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189fd33120261125' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        },
+        {
+          "path": "fd-release-final02/app.apk",
+          "sha256": "f1e250c8fd1638c0de7c9c582de6e97b89f86615b01320bb931bb1359d5bc7ad",
+          "signer": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "package": "package: name='takagi.ru.monica.issue189fd33120261125' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abis": [
+            "x86_64"
+          ]
+        }
+      ]
+    }
+  },
+  "sharedSources": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/ProjectCredentialGroup.kt",
+      "sha256": "9a111f63e7561c695e7fe1277806178665881bbfb456f6eb73fe4fd2b3289b52"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordDetailScreen.kt",
+      "sha256": "46b1022e06de6ea80b74693dc8c4c8135d41476de773a577afd4a9f69eadeb3b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+      "sha256": "33367eb775bd68fff41e4e64310921c686135a871f66953a7ae1240a42e5240f"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/data/model/LegacyProjectAccountsTest.kt",
+      "sha256": "8f9ba989db4f755811bf1931adaba010049f4e34a435e163dc576e82d976c4b0"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/ProjectCredentialEditorTest.kt",
+      "sha256": "7a26d1ed3bdd5aa62737c769463d975aaf63c94062473f255df8e42f5cfb5c34"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/credentialexchange/LegacyProjectZipRestoreTest.kt",
+      "sha256": "613eb08fb7f22a0d42e0a63a7c4a5b791fc80263c8f463bce15513bca5aaf961"
+    },
+    {
+      "path": "app/src/androidTest/assets/legacy-three-accounts.json",
+      "sha256": "e32859ec0a580623ffda3f83a006d858ed07ce80522115c7cbc39536acb5dbf0"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt",
+      "sha256": "3b6523ca2bc92961f8670601695e3960154d10b165dcdb406592689de0da05e8"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/credentialexchange/LocalCredentialCreateAtomicityTest.kt",
+      "sha256": "1abef0f4c2725116d2910c5a6273aa2fb2449e35a2c27d702ac8e0d06c844fb2"
+    }
+  ],
+  "limitations": [
+    "No user database or physical OEM device was tested.",
+    "No real remote WebDAV server was contacted.",
+    "Release uses isolated application IDs and the existing local test signing key, not the production signing key.",
+    "Two exploratory MDBX storage tests remain failing and are not counted as passed.",
+    "Nine pre-existing source-string guard failures were reproduced against pre-change source."
+  ],
+  "extensionReturn": {
+    "numTotalTestSuites": 1,
+    "numPassedTestSuites": 1,
+    "numFailedTestSuites": 0,
+    "numPendingTestSuites": 0,
+    "numTotalTests": 2,
+    "numPassedTests": 2,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numTodoTests": 0,
+    "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+    },
+    "startTime": 1795618021865,
+    "success": true,
+    "testResults": [
+      {
+        "assertionResults": [
+          {
+            "ancestorTitles": [],
+            "fullName": "main: Android restored, saved, encrypted ZIP returns three intact accounts",
+            "status": "passed",
+            "title": "main: Android restored, saved, encrypted ZIP returns three intact accounts",
+            "duration": 86.35459999999989,
+            "failureMessages": [],
+            "meta": {},
+            "tags": []
+          },
+          {
+            "ancestorTitles": [],
+            "fullName": "fd: Android restored, saved, encrypted ZIP returns three intact accounts",
+            "status": "passed",
+            "title": "fd: Android restored, saved, encrypted ZIP returns three intact accounts",
+            "duration": 64.18460000000005,
+            "failureMessages": [],
+            "meta": {},
+            "tags": []
+          }
+        ],
+        "startTime": 1795618022782,
+        "endTime": 1795618022933.1846,
+        "status": "passed",
+        "message": "",
+        "name": "legacy-account-return.interop.ts"
+      }
+    ]
+  },
+  "sourceAudit": {
+    "main": {
+      "finalDebugSourceStillMatches": true,
+      "sharedFiles": 9
+    },
+    "fd": {
+      "finalDebugSourceStillMatches": true,
+      "sharedFiles": 9
+    }
+  },
+  "releaseSourceAudit": {
+    "main": {
+      "sourceFrozen": true,
+      "r8MappingBytes": 389261817
+    },
+    "fd": {
+      "sourceFrozen": true,
+      "r8MappingBytes": 353470410
+    }
+  },
+  "oldReleaseModelProof": {
+    "main": {
+      "oldReleaseModelSha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+      "beforeSha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+      "same": true
+    },
+    "fd": {
+      "oldReleaseModelSha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+      "beforeSha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+      "same": true
+    }
+  },
+  "localFaultProof": [
+    {
+      "edition": "main",
+      "threeLocalFaultRegressionsPresent": true
+    },
+    {
+      "edition": "fd",
+      "threeLocalFaultRegressionsPresent": true
+    }
+  ],
+  "extensionArchiveHashes": {
+    "main": {
+      "archiveSha256": "6a70dc46bb3e6742e7d61a18f24c0b1bee24baba899d8becd005f519a7448c7a",
+      "bytes": 2334
+    },
+    "fd": {
+      "archiveSha256": "910cc1830738bc36e4f9f45007ea70d7b84bfb0a0c516c7f2a29ab1ee52d9da2",
+      "bytes": 2330
+    }
+  },
+  "existingGuardFailureComparison": {
+    "exit": 1,
+    "failedMethods": [
+      "mdbxDatabaseViewsExposePathNavigationAndSyncAction",
+      "webDavBackupScreenManualCreateSharesCoordinatorQueue",
+      "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages",
+      "addPasswordAuthenticatorKeyFieldHasInlineScanAction",
+      "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync",
+      "deletingPasswordBoundAuthenticatorWarnsAndStillDeletesPersistedTotp",
+      "webDavBackupsUseMonicaLocalContentScope",
+      "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache",
+      "normalPasswordPageRunsBatchDeleteThroughQuickStatusBar"
+    ],
+    "currentFailedMethods": [
+      "mdbxDatabaseViewsExposePathNavigationAndSyncAction",
+      "webDavBackupScreenManualCreateSharesCoordinatorQueue",
+      "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages",
+      "addPasswordAuthenticatorKeyFieldHasInlineScanAction",
+      "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync",
+      "deletingPasswordBoundAuthenticatorWarnsAndStillDeletesPersistedTotp",
+      "webDavBackupsUseMonicaLocalContentScope",
+      "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache",
+      "normalPasswordPageRunsBatchDeleteThroughQuickStatusBar"
+    ],
+    "sameFailures": true,
+    "scope": "Actual current AGP compiled class against pre-change source copies"
+  },
+  "cleanup": {
+    "removedOwnedUser": 17,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12,
+      16
+    ],
+    "removedOwnedPackages": [
+      "takagi.ru.monica.zipaccountsmain33120261125.localedebug",
+      "takagi.ru.monica.zipaccountsmain33120261125.localedebug.test",
+      "takagi.ru.monica.zipaccountsfd33120261125.localedebug",
+      "takagi.ru.monica.zipaccountsfd33120261125.localedebug.test",
+      "takagi.ru.monica.issue189main33120261125",
+      "takagi.ru.monica.issue189fd33120261125"
+    ],
+    "originalUserRestored": true,
+    "originalAppIdentityPreserved": true,
+    "densityPreserved": true,
+    "mumuRemainsRunning": true,
+    "mumuPid": 51792,
+    "cleanupRetry": "First immediate remove-user failed after switch; confirmed current user0 and stopped user17, then removal succeeded. Original command log preserved."
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">Le mode de stockage ou la clé privée ne répond pas aux exigences de migration Bitwarden. Déverrouillez Monica et réessayez, ou choisissez un autre coffre-fort. Les clés liées à l\'appareil ne peuvent pas être exportées ; conservez-les sur l\'appareil d\'origine ou enregistrez un nouveau passkey auprès du service.</string>
+    <string name="passkey_move_bound_reason">Ce passkey est lié à une entrée de mot de passe et ne peut pas être déplacé séparément. Déplacez l\'entrée du mot de passe liée ou dissociez d\'abord le passkey.</string>
+    <string name="passkey_move_cleanup_reason">La destination a été enregistrée, mais le nettoyage de la source n\'a pas été terminé. Les copies peuvent rester dans les deux coffres-forts. Vérifiez la destination et le coffre-fort source ou l\'état de synchronisation avant de continuer ; ne répétez pas le mouvement aveuglément.</string>
+    <string name="passkey_move_conflict_reason">La base de données KeePass cible contient déjà les mêmes informations d\'identification passkey. Rien n\'a été écrasé. Vérifiez l\'entrée existante ou choisissez une autre base de données.</string>
+    <string name="passkey_move_reference_reason">Cet élément n\'est qu\'une référence et n\'a pas de clé privée pouvant être déplacée séparément. Utilisez l\'application ou le coffre-fort d\'origine contenant le passkey réel.</string>
+    <string name="passkey_move_result_summary">%1$d terminé ; a besoin d\'attention %2$d</string>
+    <string name="passkey_move_result_title">Résultat du déplacement</string>
+    <string name="passkey_move_success_count">Éléments %1$d déplacés</string>
+    <string name="passkey_move_unnamed_account">Compte sans nom</string>
+    <string name="passkey_move_update_reason">Le déménagement n\'a pas été terminé et la cause exacte n\'a pas pu être déterminée. Vérifiez que les coffres source et de destination sont déverrouillés et accessibles en écriture, avec suffisamment d\'espace libre. Inspectez les deux coffres-forts avant de réessayer ; ne supprimez pas la source.</string>
+</resources>

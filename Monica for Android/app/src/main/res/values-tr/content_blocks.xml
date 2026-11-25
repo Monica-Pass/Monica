@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_block_api_key">API Anahtarı</string>
+    <string name="content_block_api_token">API jetonu</string>
+    <string name="content_block_ssh">SSH tuşu</string>
+    <string name="content_block_gpg">GPG tuşu</string>
+    <string name="content_block_qr">QR kodu</string>
+    <string name="content_block_key">Anahtar</string>
+    <string name="content_block_token">Belirteç</string>
+    <string name="content_block_provider">Sağlayıcı</string>
+    <string name="content_block_url">API uç noktası</string>
+    <string name="content_block_algorithm">Algoritma</string>
+    <string name="content_block_public">Genel anahtar</string>
+    <string name="content_block_private">Özel anahtar</string>
+    <string name="content_block_fingerprint">Parmak İzi</string>
+    <string name="content_block_identity">Kimlik / yorum</string>
+    <string name="content_block_content">Metin veya bağlantı</string>
+    <string name="content_block_import">Dosyadan içe aktar</string>
+    <string name="content_block_export">Dosyaya aktar</string>
+    <string name="content_block_unavailable">Desteklenmeyen içerik</string>
+    <string name="content_block_preserved">Orijinal içerik korundu. Düzenlemek için uyumlu bir sürümle açın.</string>
+    <string name="content_block_save_error">Bu içerik kaydedilemedi veya okunamadı. Dosyayı ve boyutunu kontrol edin (maksimum 256 KiB).</string>
+    <string name="content_block_more">Daha fazla içerik</string>
+    <string name="content_block_key_size">Anahtar boyutu</string>
+    <string name="content_block_format">Biçimi</string>
+    <string name="content_block_qr_error">Bu içerik bir QR kodu için çok uzun. Yine de tam değeri görüntüleyebilir veya kopyalayabilirsiniz.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">HyperOS uyumluluğu</string>
+    <string name="hyperos_compatibility_subtitle">Şifre anahtarları, kaydetme istemleri ve uygulama içi animasyonlar</string>
+    <string name="hyperos_compatibility_shared_settings_note">Bu seçenekler değerlerini genel ayarlarla paylaşır. Azaltılmış hareket, Monica içindeki animasyonları etkiler.</string>
+</resources>

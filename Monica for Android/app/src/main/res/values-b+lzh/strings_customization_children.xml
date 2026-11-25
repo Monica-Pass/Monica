@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">果欲移除全部预设栏乎？已存项目仍保留原栏。</string>
+    <string name="customization_drag_handle">调整 %1$s 次序</string>
+    <string name="customization_filters_navigation">筛选与导航</string>
+    <string name="customization_live_preview">即时预览</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">Sistem dosyası seçici gerekli okuma/yazma erişimini vermedi. Cihazın ana deposunda veya başka bir yazılabilir konumda İndir\'i seçin. Seçici boş bir dosya oluşturmuş olabilir; geçerli bir yedekleme değil ve dosya yöneticinizden silinebilir.</string>
+</resources>

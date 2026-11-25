@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mdbx_native_add_login">Giriş ekle</string>
+    <string name="mdbx_native_username">Kullanıcı adı</string>
+    <string name="mdbx_native_password">Şifre</string>
+    <string name="mdbx_native_website">Web sitesi</string>
+    <string name="mdbx_native_notes">Notlar</string>
+    <string name="mdbx_native_json_description">Diğer giriş türleri JSON olarak düzenlenir. Orijinal alanlarını ve şemalarını koruyun.</string>
+    <string name="mdbx_native_add_attachment">Ek ekle</string>
+    <string name="mdbx_native_attachment_limits">16 adede kadar ek; yeni yüklemelerin toplamı en fazla 16 MiB. Metin ve resimler bellekte önizlenebilir.</string>
+    <string name="mdbx_native_attachment_failed">Bu ek okunamıyor veya bütünlük kontrolü başarısız oldu.</string>
+    <string name="mdbx_native_attachment_verified">Ek bütünlüğü doğrulandı</string>
+    <string name="mdbx_native_attachment_no_preview">Bu dosya türünün uygulama içi önizlemesi yoktur. Şifresi çözülmüş eklerin dışa aktarılması bu koruma modunda kullanılamaz.</string>
+    <string name="mdbx_native_delete_confirm">Bu giriş ve ekleri silinsin mi?</string>
+    <string name="mdbx_native_editable">Değişiklikler doğrudan bu şifrelenmiş veritabanına yazılır.</string>
+    <string name="mdbx_native_app_locked">Devam etmek için normal uygulama akışı aracılığıyla Monica\'nın kilidini açın.</string>
+    <string name="mdbx_client_mode_unsupported_title">Parıltı henüz desteklenmiyor</string>
+    <string name="mdbx_client_mode_unsupported">Android istemcisi henüz Glitter\'ı desteklemiyor. Sky, Multi veya Power\'ı seçin. Mevcut veritabanı dosyaları ve kayıtları, otomatik sürüm düşürme veya dönüştürme olmadan korunur. Bunlara erişmek için Glitter\'ı destekleyen bir istemci kullanın.</string>
+</resources>

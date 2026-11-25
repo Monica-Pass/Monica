@@ -1,131 +1,45 @@
 package takagi.ru.monica.ui.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PlusFeature
 
-/**
- * Plus功能展示卡片
- * 
- * @param feature Plus功能信息
- * @param isUnlocked 是否已解锁
- * @param modifier Modifier
- */
+/** Informational benefit row; entitlement remains owned by the settings state. */
 @Composable
 fun PlusFeatureCard(
     feature: PlusFeature,
     isUnlocked: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(24.dp)
 ) {
-    val title = stringResource(feature.titleRes)
-    val description = stringResource(feature.descriptionRes)
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(
-            containerColor = if (isUnlocked) {
-                MaterialTheme.colorScheme.primaryContainer
-            } else {
-                MaterialTheme.colorScheme.surfaceVariant
+    val state = stringResource(if (isUnlocked) R.string.plus_feature_unlocked else R.string.plus_feature_locked)
+    Surface(modifier = modifier.fillMaxWidth().testTag("plus_feature_${feature.id}")
+        .semantics(mergeDescendants = true) { stateDescription = state },
+        shape = shape, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Surface(shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+                Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) {
+                    Icon(feature.icon, null, Modifier.size(24.dp), MaterialTheme.colorScheme.onSecondaryContainer)
+                }
             }
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // 功能图标
-            Icon(
-                imageVector = feature.icon,
-                contentDescription = title,
-                modifier = Modifier.size(40.dp),
-                tint = if (isUnlocked) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                }
-            )
-            
-            Spacer(modifier = Modifier.width(16.dp))
-            
-            // 功能信息
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = if (isUnlocked) {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    }
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (isUnlocked) {
-                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-                    }
-                )
-            }
-            
-            Spacer(modifier = Modifier.width(8.dp))
-            
-            // 锁定/解锁状态
-            Surface(
-                shape = MaterialTheme.shapes.small,
-                color = if (isUnlocked) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.secondaryContainer
-                }
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = if (isUnlocked) Icons.Default.LockOpen else Icons.Default.Lock,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp),
-                        tint = if (isUnlocked) {
-                            MaterialTheme.colorScheme.onPrimary
-                        } else {
-                            MaterialTheme.colorScheme.onSecondaryContainer
-                        }
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = stringResource(
-                            if (isUnlocked) R.string.plus_feature_unlocked 
-                            else R.string.plus_feature_locked
-                        ),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = if (isUnlocked) {
-                            MaterialTheme.colorScheme.onPrimary
-                        } else {
-                            MaterialTheme.colorScheme.onSecondaryContainer
-                        }
-                    )
-                }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(stringResource(feature.titleRes), style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold)
+                Text(stringResource(feature.descriptionRes), style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -280,6 +281,16 @@ interface LocalMdbxDatabaseDao {
 
     @Update
     suspend fun updateDatabase(database: LocalMdbxDatabase)
+
+    @Query("UPDATE local_mdbx_databases SET sort_order = :order WHERE id = :id")
+    suspend fun updateDisplayOrder(id: Long, order: Int)
+
+    @Transaction
+    suspend fun reorderDisplay(ids: List<Long>) {
+        val current = getAllDatabasesSnapshot().map { it.id }
+        mergeDatabaseDisplayOrder(current, ids).forEachIndexed { index, id -> updateDisplayOrder(id, index) }
+    }
+
 
     @Delete
     suspend fun deleteDatabase(database: LocalMdbxDatabase)

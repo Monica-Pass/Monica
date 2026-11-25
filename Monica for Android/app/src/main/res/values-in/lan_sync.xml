@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_title">Sinkronisasi terdekat</string>
+    <string name="lan_description">Sinkronkan brankas antara ponsel dan komputer di Wi-Fi yang sama. Temukan perangkat dan masukkan kode penyandingannya, atau pindai kode QR-nya.</string>
+    <string name="lan_select_vault">Pilih brankas</string>
+    <string name="lan_receive_new">Terima sebagai brankas baru</string>
+    <string name="lan_new_vault_hint">Untuk koneksi pertama, masukkan kata sandi brankas sumber. Vault yang diterima ditambahkan secara terpisah. Untuk sinkronisasi nanti, pilih brankas yang sama di kedua perangkat.</string>
+    <string name="lan_vault_name">Nama brankas yang diterima</string>
+    <string name="lan_vault_password">Kata sandi brankas sumber</string>
+    <string name="lan_host">Izinkan perangkat terhubung</string>
+    <string name="lan_manage">Kelola brankas</string>
+    <string name="lan_invitation_hint">Masa berlaku penyandingan akan habis setelah 10 menit. Bagikan kode ini atau kode QR hanya dengan perangkat yang ingin Anda sambungkan.</string>
+    <string name="lan_pairing_code">Kode penyandingan</string>
+    <string name="lan_pairing_autofilled">Kode penyandingan dan tautan terisi secara otomatis. Ketuk Pasangkan dan sinkronkan untuk melanjutkan.</string>
+    <string name="lan_pairing_needs_vault_password">Informasi penyandingan terisi secara otomatis. Masukkan kata sandi brankas sumber untuk transfer pertama, lalu ketuk Pasangkan dan sinkronkan.</string>
+    <string name="lan_no_network">Tidak ada alamat Wi-Fi lokal yang ditemukan.</string>
+    <string name="lan_copy_link">Salin tautan penyandingan</string>
+    <string name="lan_discover">Temukan perangkat terdekat</string>
+    <string name="lan_discovering">Menemukan perangkat…</string>
+    <string name="lan_no_devices">Belum ada perangkat yang ditemukan. Di perangkat lain, pilih “Izinkan perangkat terhubung”. Anda juga dapat memindai atau menempelkan tautan pemasangannya.</string>
+    <string name="lan_paste_link">Tautan penyandingan</string>
+    <string name="lan_scan">Pindai kode QR yang memasangkan</string>
+    <string name="lan_connect">Pasangkan dan sinkronkan</string>
+    <string name="lan_preparing">Mempersiapkan data brankas terenkripsi…</string>
+    <string name="lan_waiting">Menunggu perangkat lainnya…</string>
+    <string name="lan_connecting">Memverifikasi penyandingan…</string>
+    <string name="lan_transferring">Mentransfer data terenkripsi…</string>
+    <string name="lan_merging">Menerapkan perubahan pada brankas…</string>
+    <string name="lan_confirming">Menunggu perangkat lain selesai menerapkan perubahan…</string>
+    <string name="lan_completed">Kedua perangkat selesai disinkronkan</string>
+    <string name="lan_cancelled">Sinkronisasi dibatalkan</string>
+    <string name="lan_failed">Sinkronisasi tidak selesai</string>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_conflicts">Konflik %1$d perlu ditinjau dalam manajemen brankas. Kedua versi tersebut dipertahankan.</string>
+    <string name="lan_imported">Vault yang diterima telah ditambahkan ke manajemen vault.</string>
+    <string name="lan_different_vault">Ini adalah brankas yang berbeda. Pilih brankas yang sama di kedua perangkat, atau terima brankas ini sebagai yang baru.</string>
+    <string name="lan_unavailable">Sinkronisasi terdekat tidak tersedia di build ini.</string>
+    <string name="lan_invalid_code">Kode penyandingan tidak valid atau tidak cocok lagi. Dapatkan kode baru dari perangkat lain.</string>
+    <string name="lan_expired">Penyandingan telah habis masa berlakunya. Izinkan perangkat terhubung kembali untuk membuat kode baru.</string>
+    <string name="lan_peer_failed">Perangkat lain tidak dapat menerapkan perubahan. Periksa dan coba lagi.</string>
+    <string name="lan_vault_failed">Gudang tidak dapat dibuka atau digabungkan. Periksa kata sandi brankas dan penyimpanan yang tersedia, lalu coba lagi.</string>
+    <string name="lan_failed_hint">Periksa apakah kedua perangkat masih terhubung ke Wi-Fi yang sama, lalu pasangkan kembali. Perubahan yang sudah dilakukan dipertahankan.</string>
+    <string name="lan_external_blobs">Vault ini mereferensikan file yang disimpan di luarnya. Sinkronisasi terdekat saat ini mengharuskan semua lampiran disimpan di dalam brankas.</string>
+</resources>

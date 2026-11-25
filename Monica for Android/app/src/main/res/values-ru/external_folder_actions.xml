@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">Удалить папку «%1$s» и ее содержимое? Пожалуйста, подтвердите, прежде чем продолжить.</string>
+    <string name="external_folder_delete_keep_items">Удалить папку «%1$s»? Элементы в нем будут храниться без этой папки.</string>
+</resources>

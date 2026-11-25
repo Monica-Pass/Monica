@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_completed">Temizleme tamamlandı</string>
+    <string name="clear_data_failed">Seçilen verilerin tümü temizlenemedi</string>
+    <string name="clear_data_preparing">Seçilen girişler sayılıyor…</string>
+    <string name="clear_data_passwords">Şifreler temizleniyor…</string>
+    <string name="clear_data_totp">Kimlik doğrulayıcılar temizleniyor…</string>
+    <string name="clear_data_notes">Notlar temizleniyor…</string>
+    <string name="clear_data_documents">Belgeler temizleniyor…</string>
+    <string name="clear_data_bank_cards">Banka kartları temizleniyor…</string>
+    <string name="clear_data_generator_history">Şifre oluşturma geçmişi temizleniyor…</string>
+    <string name="clear_data_count">%1$d / %2$d girişleri temizlendi</string>
+    <string name="clear_data_wait">Lütfen bu işlemin bitmesini bekleyin.</string>
+    <string name="clear_data_completed_hint">Seçilen veriler temizlendi.</string>
+    <string name="clear_data_failed_hint">Temizleme durduruldu. Zaten silinen girişler geri yüklenmeyecektir. Veritabanı bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="clear_data_verifying">Doğrulanıyor…</string>
+</resources>

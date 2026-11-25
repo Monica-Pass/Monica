@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Utilizzo tra dispositivi</string>
+    <string name="passkey_portability_algorithm_hint">La destinazione deve supportare lo stesso algoritmo di chiave. Il trasferimento Bitwarden corrente supporta solo ES256.</string>
+    <string name="passkey_portability_backup_hint">Questa credenziale è stata contrassegnata come non idonea al backup. Solo una destinazione che preserva quella proprietà può utilizzarla; la conversione in Bitwarden o lo scambio di credenziali è bloccato.</string>
+    <string name="passkey_portability_checking">Controllo…</string>
+    <string name="passkey_portability_counter_hint">Questa credenziale ha una cronologia del contatore di firme diversa da zero. Monica utilizza contatori zero; l\'utilizzo tra dispositivi può essere rifiutato da un sito Web che controlla i contatori precedenti.</string>
+    <string name="passkey_portability_exportable">La chiave può essere esportata</string>
+    <string name="passkey_portability_exportable_hint">La chiave può essere esportata in un formato crittografato supportato. La destinazione deve preservare le sue proprietà ID, chiave e registrazione; la compatibilità del sito web dipende ancora dal client di destinazione.</string>
+    <string name="passkey_portability_invalid">Metadati in conflitto</string>
+    <string name="passkey_portability_invalid_hint">Le proprietà del backup sono in conflitto. La firma non deve modificare silenziosamente le proprietà registrate; conservare le credenziali di origine per il ripristino.</string>
+    <string name="passkey_portability_key_unavailable">Chiave non disponibile</string>
+    <string name="passkey_portability_local_hint">La chiave privata è legata a questo dispositivo e non può essere esportata. La sola copia del database non consentirà l\'accesso su un altro dispositivo.</string>
+    <string name="passkey_portability_local_only">"Solo locale"</string>
+    <string name="passkey_portability_missing_hint">Su questo dispositivo non è stata trovata alcuna chiave privata utilizzabile. Questo record da solo non può accedere qui o su un altro dispositivo.</string>
+    <string name="passkey_portability_restricted">Trasferimento limitato</string>
+    <string name="passkey_portability_unknown">Non verificato</string>
+    <string name="passkey_portability_unknown_hint">Impossibile verificare la funzionalità della chiave. Sblocca il database di origine e riprova.</string>
+</resources>

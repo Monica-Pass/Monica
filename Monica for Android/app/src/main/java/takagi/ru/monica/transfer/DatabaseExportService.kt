@@ -200,7 +200,8 @@ class DatabaseExportService : Service() {
                 throw cancelled
             } catch (error: Exception) {
                 failure = error
-                message = if (DatabaseExportJobs.state.value?.kind == DataTaskKind.EXPORT)
+                message = if (DatabaseExportJobs.state.value?.kind == DataTaskKind.EXPORT ||
+                    error is takagi.ru.monica.utils.PortableSecretExportException)
                     databaseExportErrorMessage(this@DatabaseExportService, error)
                 else error.message ?: strings.get(R.string.import_data_unknown_error)
             } finally {

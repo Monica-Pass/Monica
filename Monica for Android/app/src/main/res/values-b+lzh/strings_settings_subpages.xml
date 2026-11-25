@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">卡片与卡包</string>
+    <string name="customization_group_fields_icons">栏与图标</string>
+    <string name="customization_group_library">资料库与列表</string>
+    <string name="permission_action_for">%1$s：%2$s</string>
+    <string name="permission_action_none">无须操作</string>
+    <string name="permission_action_request">请求权限</string>
+    <string name="permission_help_actions">点“请求权限”以向 Android 求访问之权，或点“开启设置”以管理服务及已授权限。\n\n标记“无须操作”或“不可用”者无操作按钮。请仅启所需。\n\n自系统设置返回，状态即刷新；亦可点“刷新状态”再查。</string>
+    <string name="permission_refresh_status">刷新状态</string>
+    <string name="permission_summary_granted">已授 %1$d 项权限</string>
+    <string name="permission_summary_hint">请仅授所用功能必需之权。部分权限由 Android 自动授予。</string>
+    <string name="permission_summary_title">权限由君定</string>
+</resources>

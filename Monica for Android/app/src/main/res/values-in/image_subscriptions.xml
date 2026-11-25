@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_title">Langganan gambar</string>
+    <string name="image_sources_icons">Ikon</string>
+    <string name="image_sources_cards">Karya seni kartu</string>
+    <string name="image_sources_add">Tambahkan langganan</string>
+    <string name="image_sources_refresh">Segarkan</string>
+    <string name="image_sources_remove">Berhenti berlangganan</string>
+    <string name="image_sources_remove_hint">Hapus langganan ini? Gambar yang sudah digunakan oleh item Anda akan disimpan.</string>
+    <string name="image_sources_name">Nama (opsional)</string>
+    <string name="image_sources_url">Langganan atau gambar URL</string>
+    <string name="image_sources_formats">Paket gambar HTTPS JSON atau tautan gambar PNG, JPEG, dan WebP.</string>
+    <string name="image_sources_empty">Tambahkan sumber gambar pertama Anda</string>
+    <string name="image_sources_count">gambar %1$d</string>
+    <string name="image_sources_error">Tidak dapat memuat atau menyimpan. Periksa sumber, format, dan koneksi, lalu coba lagi. Langganan dan gambar item yang ada dipertahankan.</string>
+    <string name="image_sources_search">Cari gambar</string>
+    <string name="image_sources_retry">Coba lagi</string>
+    <string name="image_sources_options">Opsi berlangganan</string>
+    <string name="image_sources_no_results">Tidak ada gambar yang cocok</string>
+    <string name="image_sources_use_hint">Pilih gambar dari ikon khusus atau editor karya seni kartu.</string>
+    <string name="image_sources_choose">Pilih dari langganan</string>
+    <string name="image_sources_settings_hint">Kelola paket ikon dan sumber karya seni kartu</string>
+</resources>

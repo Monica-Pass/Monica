@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_symbols">Rastgele semboller</string>
+    <string name="cg_random_username">Rastgele kullanıcı adı</string>
+    <string name="cg_email_alias">E-posta artı takma ad</string>
+    <string name="cg_username_title">Kullanıcı adı oluşturucu</string>
+    <string name="cg_valid_email">Geçerli bir e-posta adresi girin</string>
+    <string name="cg_invalid_options">Karakterleri seçin ve minimum toplamlarını uzunluk dahilinde tutun.</string>
+    <string name="cg_use">Kullan</string>
+    <string name="cg_saved_suggestions">Kaydedilen öneriler</string>
+    <string name="cg_length">Uzunluk</string>
+    <string name="cg_words">Kelimeler</string>
+    <string name="cg_minimum">Minimum sayım</string>
+    <string name="cg_decrease">Azal</string>
+    <string name="cg_increase">Artış</string>
+</resources>

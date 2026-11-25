@@ -68,7 +68,7 @@ import java.util.Base64
 import java.util.UUID
 
 /**
- * Opt-in UI acceptance on the newly owned toolchain user 13, never retained user 12.
+ * Opt-in UI acceptance on the owned form-pages user 11, never retained user 12.
  * Real production forms and VMs; no password reset, cache-key injection or production seam.
  * First-time fixture setup uses SecurityManager only after the exact owner marker and empty
  * protected tables are proven. This is API fixture setup, not a first-run registration UI test.
@@ -93,17 +93,17 @@ class ToolchainDatabaseLifecycleUiTest {
     private var fixtureHost: ComposeView? = null
 
     @Before fun requireOwnedDisposableUser() = runBlocking {
-        check(Process.myUid() / 100_000 == 13) { "Restricted to newly owned toolchain user 13" }
-        check(args.getString("toolchainDatabaseUiUser") == "13")
-        check(context.packageName in setOf("takagi.ru.monica.bwsync326", "takagi.ru.monica.bwsync326fd"))
+        check(Process.myUid() / 100_000 == 11) { "Restricted to owned form-pages user 11" }
+        check(args.getString("toolchainDatabaseUiUser") == "11")
+        check(context.packageName in setOf("takagi.ru.monica.formpagesmain33120261124", "takagi.ru.monica.formpagesfd33120261124"))
         check(args.getString("toolchainDatabaseUi") == "yes")
         val marker = File(context.filesDir, "toolchain-db-ui-owner.json")
         check(marker.isFile) { "Host must establish the new fixture ownership before running" }
         val owner = JSONObject(marker.readText())
-        check(owner.getString("name") == "Monica_Toolchain326_Ui_20261110")
+        check(owner.getString("name") == "Monica_Forms331_Continuation")
         check(owner.getInt("uid") == Process.myUid())
         check(owner.getString("package") == context.packageName)
-        check(owner.getString("task") == "20261109-android-toolchain")
+        check(owner.getString("task") == "20261123-keepass-form-pages")
         val expected = checkNotNull(args.getString("toolchainTargetApkSha256"))
         check(expected.matches(Regex("[0-9a-f]{64}")) && expected == sha(File(context.applicationInfo.sourceDir)))
         check(SecureStorageStartup.prepareWithRetry(context) is SecureStartupResult.Ready)
@@ -164,14 +164,13 @@ class ToolchainDatabaseLifecycleUiTest {
             val siblingBytes = siblingFile.readBytes()
             assertEquals(siblingName, readKeepass(siblingFile).content.meta.name)
             val targetName = "${prefix}_target"
-            val targetFile = File(context.filesDir, "keepass/$targetName.kdbx").also(ownedFiles::add)
-            check(!targetFile.exists())
+            var targetFile: File
             model.clearOperationState()
             compose.setContent {
                 if (show) FixtureTheme {
                     Text("Synthetic lifecycle fixture")
-                    if (form) CreateKeePassDatabaseBottomSheet(
-                        onDismiss = { form = false }, onGenerateKeyFile = { error("No key file in this fixture") },
+                    if (form) CreateKeePassDatabaseScreen(
+                        onDismiss = { form = false }, onGenerateKeyFile = { _, _ -> error("No key file in this fixture") },
                         onCreate = { name, secret, location, uri, keyUri, options, copyKey ->
                             check(name == targetName && location == KeePassStorageLocation.INTERNAL && uri == null && keyUri == null && !copyKey)
                             creates++
@@ -208,7 +207,7 @@ class ToolchainDatabaseLifecycleUiTest {
             Espresso.pressBack()
             compose.waitUntil(10_000) { !form }
             assertEquals(0, creates)
-            assertFalse(targetFile.exists())
+            assertTrue(dao.getAllDatabasesSync().none { it.name == targetName })
             assertEquals(listOf(sibling), dao.getAllDatabasesSync())
             assertArrayEquals(siblingBytes, siblingFile.readBytes())
 
@@ -220,7 +219,8 @@ class ToolchainDatabaseLifecycleUiTest {
             awaitKeepass(model)
             assertEquals(1, creates)
             val target = dao.getAllDatabasesSync().single { it.name == targetName }
-            assertEquals(targetFile.canonicalFile, keepassFile(target).canonicalFile)
+            targetFile = keepassFile(target).also(ownedFiles::add)
+            assertNotEquals(siblingFile.canonicalFile, targetFile.canonicalFile)
             assertEquals(targetName, readKeepass(targetFile).content.meta.name)
             val targetBytes = targetFile.readBytes()
             compose.runOnIdle { detail = target }
@@ -714,7 +714,7 @@ class ToolchainDatabaseLifecycleUiTest {
         }
         val sampleMatchers = when (step) {
             "kdbx-create-mismatch", "kdbx-create-ready" -> listOf(
-                "kdbx_create_action" to (hasText(label(R.string.create)) and hasAnyAncestor(isDialog())))
+                "kdbx_create_action" to (hasText(label(R.string.create)) and hasAnyAncestor(hasTestTag("keepass_create_form_actions"))))
             "kdbx-password-cancel" -> listOf(
                 "kdbx_verify_title" to (hasText(label(R.string.local_keepass_reverify_dialog_title)) and hasAnyAncestor(isDialog())))
             "kdbx-remove-confirmation" -> listOf(

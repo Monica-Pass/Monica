@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_selection_stack_title">Yığın · %1$s</string>
+    <string name="wallet_selection_unstacked">Bireysel kartlar</string>
+    <string name="wallet_selection_group_count">%1$d veya %2$d seçildi</string>
+    <string name="wallet_selection_visible_group_count">%1$d / %2$d görünür kartlar seçildi</string>
+    <string name="wallet_selection_collapse_stack">Yığını daralt</string>
+    <string name="wallet_selection_expand_stack">Yığını genişlet</string>
+</resources>

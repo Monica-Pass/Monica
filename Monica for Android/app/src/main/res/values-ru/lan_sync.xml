@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Синхронизация отменена</string>
+    <string name="lan_completed">Оба устройства завершили синхронизацию</string>
+    <string name="lan_confirming">Ожидание, пока другое устройство завершит применение изменений…</string>
+    <string name="lan_conflicts">Конфликты %1$d требуют проверки при управлении хранилищем. Обе версии сохранились.</string>
+    <string name="lan_connect">Сопряжение и синхронизация</string>
+    <string name="lan_connecting">Проверка сопряжения…</string>
+    <string name="lan_copy_link">Скопировать ссылку на сопряжение</string>
+    <string name="lan_description">Синхронизируйте хранилище между телефонами и компьютерами, подключенными к одной сети Wi-Fi. Найдите устройство и введите его код сопряжения или отсканируйте его код QR.</string>
+    <string name="lan_different_vault">Это разные хранилища. Выберите одно и то же хранилище на обоих устройствах или получите это хранилище как новое.</string>
+    <string name="lan_discover">Найти устройства поблизости</string>
+    <string name="lan_discovering">Поиск устройств…</string>
+    <string name="lan_expired">Срок действия соединения истек. Разрешите устройству снова подключиться, чтобы создать новый код.</string>
+    <string name="lan_external_blobs">Это хранилище ссылается на файлы, хранящиеся вне него. Для синхронизации с окружением в настоящее время требуется, чтобы все вложения хранились в хранилище.</string>
+    <string name="lan_failed">Синхронизация не завершена</string>
+    <string name="lan_failed_hint">Убедитесь, что оба устройства по-прежнему подключены к одной и той же сети Wi-Fi, затем снова выполните сопряжение. Уже внесенные изменения сохраняются.</string>
+    <string name="lan_host">Разрешить устройству подключаться</string>
+    <string name="lan_imported">Полученное хранилище добавлено в управление хранилищем.</string>
+    <string name="lan_invalid_code">Код сопряжения недействителен или больше не соответствует. Получите новый код с другого устройства.</string>
+    <string name="lan_invitation_hint">Срок действия соединения истекает через 10 минут. Делитесь этим кодом или кодом QR только с тем устройством, которое хотите подключить.</string>
+    <string name="lan_manage">Управление хранилищами</string>
+    <string name="lan_merging">Применение изменений к хранилищу…</string>
+    <string name="lan_new_vault_hint">Для первого подключения введите пароль исходного хранилища. Полученное хранилище добавляется отдельно. Для последующей синхронизации выберите одно и то же хранилище на обоих устройствах.</string>
+    <string name="lan_no_devices">Устройства пока не найдены. На другом устройстве выберите «Разрешить устройству подключаться». Вы также можете отсканировать или вставить ссылку на сопряжение.</string>
+    <string name="lan_no_network">Локальный адрес Wi-Fi не найден.</string>
+    <string name="lan_pairing_autofilled">Код сопряжения и ссылка заполняются автоматически. Нажмите «Подключиться и синхронизировать», чтобы продолжить.</string>
+    <string name="lan_pairing_code">Код сопряжения</string>
+    <string name="lan_pairing_needs_vault_password">Информация о сопряжении заполняется автоматически. Введите пароль исходного хранилища для первой передачи, затем нажмите «Подключить и синхронизировать».</string>
+    <string name="lan_paste_link">Ссылка на сопряжение</string>
+    <string name="lan_peer_failed">Другое устройство не смогло применить изменения. Проверьте это и повторите попытку.</string>
+    <string name="lan_preparing">Подготовка зашифрованных данных хранилища…</string>
+    <string name="lan_receive_new">Получить в новое хранилище</string>
+    <string name="lan_scan">Сканирование кода сопряжения QR</string>
+    <string name="lan_select_vault">Выберите хранилище</string>
+    <string name="lan_title">Синхронизация с окружением</string>
+    <string name="lan_transferring">Передача зашифрованных данных…</string>
+    <string name="lan_unavailable">Синхронизация с устройствами поблизости недоступна в этой сборке.</string>
+    <string name="lan_vault_failed">Не удалось открыть или объединить хранилище. Проверьте пароль хранилища и доступное пространство, затем повторите попытку.</string>
+    <string name="lan_vault_name">Имя полученного хранилища</string>
+    <string name="lan_vault_password">Пароль исходного хранилища</string>
+    <string name="lan_waiting">Ожидание другого устройства…</string>
+</resources>

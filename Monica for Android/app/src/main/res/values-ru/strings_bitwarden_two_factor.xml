@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_authenticator_search">Поиск по имени или учетной записи</string>
+    <string name="bitwarden_change_method">Изменить метод</string>
+    <string name="bitwarden_choose_method">Выберите метод подтверждения</string>
+    <string name="bitwarden_email_action_hint">Отправьте код, затем введите код, полученный по электронной почте.</string>
+    <string name="bitwarden_totp_action_hint">Выберите существующий аутентификатор в Monica или введите его текущий код.</string>
+    <string name="bitwarden_totp_generation_failed">Не удалось сгенерировать код. Проверьте этот аутентификатор или выберите другой пункт.</string>
+    <string name="bitwarden_totp_picker_hint">При выборе элемента заполняется его текущий код без отправки.</string>
+    <string name="bitwarden_two_factor_unsupported">Этот метод требует интерактивного процесса входа и не может быть дополнен кодом здесь. Выберите доступный аутентификатор, адрес электронной почты или метод YubiKey OTP. Если вашей организации требуется только SSO или ключ безопасности, используйте клиент, который поддерживает этот поток.</string>
+    <string name="bitwarden_two_factor_unsupported_short">Не поддерживается в этом клиенте</string>
+</resources>

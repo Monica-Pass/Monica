@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_two_factor_unsupported_short">Bu istemcide desteklenmiyor</string>
+    <string name="bitwarden_two_factor_unsupported">Bu yöntem etkileşimli bir oturum açma akışı gerektirir ve burada bir kodla tamamlanamaz. Kullanılabilir bir kimlik doğrulayıcı, e-posta veya YubiKey OTP yöntemini seçin. Kuruluşunuz yalnızca SSO veya güvenlik anahtarı gerektiriyorsa bu akışı destekleyen bir istemci kullanın.</string>
+    <string name="bitwarden_choose_method">Doğrulama yöntemini seçin</string>
+    <string name="bitwarden_change_method">Yöntemi değiştir</string>
+    <string name="bitwarden_email_action_hint">Bir kod gönderin, ardından e-postayla alınan kodu girin.</string>
+    <string name="bitwarden_totp_action_hint">Monica\'da mevcut bir kimlik doğrulayıcıyı seçin veya geçerli kodunu girin.</string>
+    <string name="bitwarden_authenticator_search">Ad veya hesap arayın</string>
+    <string name="bitwarden_totp_picker_hint">Bir öğe seçildiğinde mevcut kodu gönderilmeden doldurulur.</string>
+    <string name="bitwarden_totp_generation_failed">Bir kod oluşturulamadı. Bu kimlik doğrulayıcıyı kontrol edin veya başka bir öğe seçin.</string>
+</resources>

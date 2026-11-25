@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gpg_title">GPG tuşu</string>
+    <string name="gpg_entry_title">Başlık</string>
+    <string name="gpg_name">Ad</string>
+    <string name="gpg_email">E-posta (isteğe bağlı)</string>
+    <string name="gpg_error">Anahtar işlenemedi. Kimliği, anahtar dosyasını ve depolama erişimini kontrol edip yeniden deneyin.</string>
+    <string name="gpg_storage">Depolama konumları (%1$d)</string>
+    <string name="gpg_generate">Anahtar oluştur</string>
+    <string name="gpg_import">İçe aktarma anahtarı</string>
+    <string name="gpg_save">Kasaya kaydet</string>
+    <string name="gpg_no_expiry">Süresi asla dolmaz</string>
+    <string name="gpg_days">%1$d gün</string>
+    <string name="gpg_passphrase">Parola (isteğe bağlı)</string>
+    <string name="gpg_copy_fingerprint">Parmak izini kopyala</string>
+    <string name="gpg_copy_public">Genel anahtarı kopyala</string>
+    <string name="gpg_copy_private">Özel anahtarı kopyala</string>
+    <string name="gpg_export_public">Genel anahtarı dışa aktar</string>
+    <string name="gpg_export_private">Özel anahtarı dışa aktar</string>
+    <string name="gpg_show_private">Özel anahtarı göster</string>
+    <string name="gpg_hide_private">Özel anahtarı gizle</string>
+    <string name="gpg_add_title">Yeni GPG anahtarı</string>
+    <string name="gpg_edit_title">GPG anahtarını düzenle</string>
+    <string name="gpg_empty">Bir anahtar oluşturun veya içe aktarın</string>
+    <string name="gpg_ready">Anahtar eklendi</string>
+    <string name="gpg_options">Oluşturma seçenekleri</string>
+    <string name="gpg_expiry">Süresi doluyor</string>
+    <string name="gpg_actions">GPG temel eylemler</string>
+    <string name="gpg_export_pair">Anahtar çiftini dışa aktar</string>
+    <string name="gpg_create_entry">Yeni GPG girişi oluştur</string>
+    <string name="gpg_name_invalid">Bir ad girin (1-128 karakter, köşeli parantez veya satır sonu olmadan).</string>
+    <string name="gpg_email_invalid">Geçerli bir e-posta adresi girin veya bu alanı boş bırakın.</string>
+    <string name="gpg_generate_error">Anahtar oluşturulamadı. Lütfen tekrar deneyin.</string>
+    <string name="gpg_import_error">Anahtar içe aktarılamadı. Geçerli bir OpenPGP anahtar dosyası seçin (1 MB\'a kadar).</string>
+    <string name="gpg_load_error">Bu anahtar okunamadı. Kasayı kontrol ettikten sonra girişi yeniden açın.</string>
+    <string name="gpg_save_error">Anahtar kaydedilemedi. Seçilen kasanın yazılabilir olup olmadığını kontrol edin.</string>
+    <string name="gpg_export_error">Anahtar dışa aktarılamadı. Yazılabilir bir konum seçin ve yeniden deneyin.</string>
+</resources>

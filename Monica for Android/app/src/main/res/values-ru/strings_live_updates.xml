@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_copy_status">Копировать</string>
+    <string name="live_update_seconds">%1$dс</string>
+    <string name="live_update_smart_copy_channel">Последовательная копия учетных данных</string>
+    <string name="live_update_unlock_to_copy">Разблокируйте устройство, чтобы скопировать</string>
+    <string name="live_update_unlock_to_view">Разблокируйте, чтобы просмотреть и продолжить</string>
+    <string name="permission_live_updates_description">Показать обратный отсчет OTP и следующие учетные данные для копирования.</string>
+    <string name="permission_live_updates_name">Постоянные обновления</string>
+</resources>

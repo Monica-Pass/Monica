@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_icon_default">Varsayılan simge</string>
+    <string name="launcher_icon_blue_star">Grok botu</string>
+    <string name="launcher_icon_selection_description">Ana ekran simgenizi seçin. İstediğiniz zaman geri dönebilirsiniz.</string>
+    <string name="launcher_icon_refresh_hint">Başlatıcınızın simgeyi yenilemesi birkaç saniye sürebilir.</string>
+</resources>

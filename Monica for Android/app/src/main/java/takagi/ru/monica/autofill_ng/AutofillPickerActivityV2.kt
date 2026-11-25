@@ -1,5 +1,10 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.ui.components.MonicaSlider as Slider
+import takagi.ru.monica.ui.haptic.switchClick
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import takagi.ru.monica.security.launchWithSecureStorage
 import takagi.ru.monica.security.showSecureStorageBlocked
 
@@ -572,6 +577,10 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                 customNeutralColor = settings.customNeutralColor,
                 customNeutralVariantColor = settings.customNeutralVariantColor
             ) {
+                androidx.compose.runtime.CompositionLocalProvider(
+                    takagi.ru.monica.ui.LocalHapticFeedbackStrength provides settings.hapticFeedbackStrength,
+                    takagi.ru.monica.ui.LocalHapticFeedbackEnabled provides settings.hapticFeedbackEnabled,
+                ) {
                 AutofillPickerContent(
                     args = args,
                     repository = repository,
@@ -612,6 +621,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                         handleSmartCopy(password, usernameFirst, generation, securityManager)
                     },
                 )
+                }
             }
         }
     }
@@ -3389,6 +3399,9 @@ private fun AutofillPickerContent(
                     )
                     AddEditPasswordScreen(
                         viewModel = autofillPasswordViewModel,
+                        nativeEditorAuthorization = {
+                            isCurrentLoadScope() && authorizedForRead() && canPublishCredentials()
+                        },
                         localKeePassViewModel = autofillLocalKeePassViewModel,
                         passwordId = null,
                         initialDraft = AddEditPasswordInitialDraft(
@@ -4220,7 +4233,7 @@ private fun AutofillPasswordOptionSwitchRow(
             .fillMaxWidth()
             .heightIn(min = 42.dp)
             .clip(RoundedCornerShape(14.dp))
-            .clickable(enabled = enabled) { onCheckedChange(!checked) }
+            .clickable(enabled = enabled, onClick = switchClick(checked, enabled, onCheckedChange))
             .padding(start = 10.dp, end = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)

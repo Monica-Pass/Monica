@@ -1,0 +1,464 @@
+{
+  "version": "1.0.331",
+  "published": false,
+  "device": "MuMu Android 35 / x86_64",
+  "variant": "isolated Debug",
+  "editions": {
+    "main": {
+      "builds": [
+        {
+          "mode": "verify",
+          "exit": 0,
+          "seconds": 565.8165651000018,
+          "sourceUnchanged": true,
+          "label": "main01",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "7b3c08ab9dd8783d15d0ee43c656d7fd5e43e33ff3b244e8837db04047b2d07e"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "df49e5960b15e47dc625faed12fffeec6b7f63f21920e3d06c41fe2b0ed7ab55"
+            }
+          ]
+        },
+        {
+          "mode": "tests",
+          "exit": 0,
+          "seconds": 80.0914027000108,
+          "sourceUnchanged": true,
+          "label": "main02",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "7b3c08ab9dd8783d15d0ee43c656d7fd5e43e33ff3b244e8837db04047b2d07e"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "de973d421791a31adbbb69dc8cfff999000913bacba688fc9bd5e0b1d8bc942a"
+            }
+          ]
+        },
+        {
+          "mode": "tests",
+          "exit": 0,
+          "seconds": 56.244960099997115,
+          "sourceUnchanged": true,
+          "label": "main03",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "7b3c08ab9dd8783d15d0ee43c656d7fd5e43e33ff3b244e8837db04047b2d07e"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "76269f1aba4b4736b9c54a9cdddc1b999ecb5956d56a70eccca6551bcf3a3f70"
+            }
+          ]
+        }
+      ],
+      "unitTests": [
+        {
+          "suite": "takagi.ru.monica.ui.components.SliderTickGateTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "takagi.ru.monica.ui.haptic.InteractionHapticsTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "deviceRuns": [
+        {
+          "label": "main-new01",
+          "completedMethodPasses": 17,
+          "completedMethodFailures": 1,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 18,
+          "failures": 1,
+          "success": false,
+          "seconds": 15.499651299993275,
+          "runnerSeconds": 11.247
+        },
+        {
+          "label": "main-new02",
+          "completedMethodPasses": 18,
+          "completedMethodFailures": 1,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 19,
+          "failures": 1,
+          "success": false,
+          "seconds": 15.419581099995412,
+          "runnerSeconds": 12.03
+        },
+        {
+          "label": "main-new03",
+          "completedMethodPasses": 6,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest",
+          "tests": 6,
+          "failures": 0,
+          "success": true,
+          "seconds": 6.3203147999884095,
+          "runnerSeconds": 3.71
+        },
+        {
+          "label": "main-regression02",
+          "completedMethodPasses": 12,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage,takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest",
+          "tests": 12,
+          "failures": 0,
+          "success": true,
+          "seconds": 70.80354850000003,
+          "runnerSeconds": 68.153
+        }
+      ],
+      "uniquePassedDeviceMethods": [
+        "takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest#liveToggleControlsTouchAndAccessibilityKeyboardFeedback",
+        "takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest#numberSymbolAndActionKeysUseTheKeyboardWindow",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#draggingRetainsResultAndSliderPositionUntilRelease",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#invalidCharacterSelectionCannotApplyStaleResult",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#longPasswordAndLargeFontRemainUsableAndTemplatesShowPlaintext",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#longPasswordShrinksTextWithinFixedCard",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#passwordSuggestionsKeepHeightAtDoubleFontScale",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#pinAndPhraseSwitchAndLengthControlsRegenerate",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#usernameAndEmailAliasUseExplicitInput",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#usernameSuggestionsKeepHeightWhenScrolling",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#accessibilityAndRtlRetainRangeDirectionAndTouchTarget",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#dpiSheetRetainsDraftUntilReleaseAndResetStillWorks",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#dragTicksInBothDirectionsAndCommitsOnlyOnRelease",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#externalUpdatesAndDisabledOrMutedControlsRemainSilent",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#wheelFramesFollowDragAndReducedMotionKeepsFixedThumb",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#extensionPageSavesStrengthAndReturnsNormally",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#hostDisabledFeedbackIsEnabledForRequestAndRestored",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#narrowDarkLargeTextKeepsSliderAndTestReachable",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#systemOffExplainsWhyPreviewHasNoVibration",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#zeroDisablesAndSliderCanReenableWithSingleSelectedPreview",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#customizationFeedbackPreferenceAcknowledgesEnableAndSilencesDisable",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#disabledAndCancelledPressDoNotChangeOrVibrate",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#existingClickableRowAndActiveChildDoNotBubbleOrDoubleVibrate",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#extensionFeedbackPreferenceCanReenableFeedback",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#preferenceChangesApplyLiveAndDeclinedHostRequestIsNotRepeated",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#rowAndPassiveThumbShareOneInteraction",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#sharedSettingsRowsAndStandaloneSettingHaveSingleFeedback",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#touchAndAccessibilityToggleOnceWhileExternalUpdatesStaySilent",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage"
+      ],
+      "apk": {
+        "installed": [
+          {
+            "package": "takagi.ru.monica.hapticstrengthmain33120261125.localedebug",
+            "sha256": "7b3c08ab9dd8783d15d0ee43c656d7fd5e43e33ff3b244e8837db04047b2d07e"
+          },
+          {
+            "package": "takagi.ru.monica.hapticstrengthmain33120261125.localedebug.test",
+            "sha256": "76269f1aba4b4736b9c54a9cdddc1b999ecb5956d56a70eccca6551bcf3a3f70"
+          }
+        ],
+        "abis": [
+          "x86_64"
+        ],
+        "licenseAssets": {
+          "assets/licenses/ImageToolbox-Apache-2.0.txt": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+          "assets/licenses/ImageToolbox.txt": "0dbf8aa0e49988ce9dc7cef96ed3a4a6d59f773ba009e0ad3293cb37e32a884b"
+        },
+        "packageMetadata": "package: name='takagi.ru.monica.hapticstrengthmain33120261125.localedebug' versionCode='12' versionName='1.0.331-26112512-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      },
+      "sourceMatchesFinalBuildSnapshot": true,
+      "productionMatchesFirstFullBuild": true,
+      "changedAppSourceHashes": {
+        "app/src/androidTest/java/takagi/ru/monica/ui/haptic/HapticStrengthInstrumentedTest.kt": "75ebbb40cac619d55dbea6d401a174cad54a1c6ef3aacb0b393d1161dfd82b16",
+        "app/src/main/java/takagi/ru/monica/MainActivity.kt": "08fb7ddc9be4c7f4cc1b3ec3632c46714fcad75d3aedac31cf0d6f6ecce50f81",
+        "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "aa05888bb243382eee097cd41c82b21d682cc0c50fc64cca0547e9284c5aeb73",
+        "app/src/main/java/takagi/ru/monica/data/AppSettings.kt": "eb31f178d2a6ac0e75944fefd320e0b115aa750c2c2326cffebd10084861ca5b",
+        "app/src/main/java/takagi/ru/monica/ui/LocalSharedTransition.kt": "ee9e2f5a8f9968898593d18221c36433a44247c786b3692e9d04e0247b743ee8",
+        "app/src/main/java/takagi/ru/monica/ui/components/HapticStrengthControl.kt": "b68bcc77de6401a0331e7d08c7806631e80ea4b4790c5b5bd7e816b291d1d566",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "d78d8f179ba2778b32774fb4d50d3de3797c19da86d42ee4f1889616ab7755a2",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/InteractionHaptics.kt": "d673c4ddcf285d96f267037205e705aa1465a6dd4da032df9e8ca6e8f2cf6d36",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/SwitchHaptics.kt": "2239bc5e70553edcf61d13b1cf5ca1019a4a4632c91ad5911f1866fa799ac3e7",
+        "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "00d1faba7aa22b2a19c884c8d2bd75931ddd23f44c7c4a3a6b0484a8c4424b73",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt": "cf74c3823baea643de474566556c91fd3a9ff850ecc6808bbe3fec6b1452c005",
+        "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt": "16617ee3b4daf6c667554cfc600b03e2671b5326f06c342bc56c0e1c249f7dab",
+        "app/src/main/java/takagi/ru/monica/utils/SettingsManager.kt": "97db825dd8f4e5d041f647019aa6ca66e54225936bd63960969dc31f6117488d",
+        "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt": "9717e5538a00682ab6a16c4fe0d16c6270d60bdacda773db07c02ac395522a18",
+        "app/src/main/java/takagi/ru/monica/viewmodel/SettingsViewModel.kt": "9114eb0874e7bf4b6b635818659d8ba78a54672043525ea7fe579150c3cdb12d",
+        "app/src/main/res/values-b+lzh/haptic_strength_strings.xml": "d3f8276aab5c0a39b61362e68ceade45a1cb9846074c2f4568e46854525db999",
+        "app/src/main/res/values-b+zh+Hant+TW/haptic_strength_strings.xml": "9719916b0071454aaf52d9fb3b0526606be05f5f81473698758a6913535ed112",
+        "app/src/main/res/values-b+zh+Hant/haptic_strength_strings.xml": "26e04067db135b3bc9c77bb9f1ceb520ab4280080d6caf2cc46d419aa9b56eb5",
+        "app/src/main/res/values-de/haptic_strength_strings.xml": "9e6a403afebd6e03d710a3d89e6a37d6b5396566950615c73046a4504df6dc7d",
+        "app/src/main/res/values-es/haptic_strength_strings.xml": "81b89737724ed414950e37ccfc690da3e72f9805f22df10a26fdf63151544c21",
+        "app/src/main/res/values-fr/haptic_strength_strings.xml": "4d513d449136ed758cf218a110914f18204de5eba65df334ce2fcd90e123360f",
+        "app/src/main/res/values-in/haptic_strength_strings.xml": "194cb181c9ba0f12925844400d3aacb8a52b2c44475dc65c4605a938ea869f91",
+        "app/src/main/res/values-it/haptic_strength_strings.xml": "242c303c324374fe71504266ab2ce7cd6784fe535ce507a59191e3f4b3083946",
+        "app/src/main/res/values-ja/haptic_strength_strings.xml": "58c01d8b6cb6c0c5e71ad43b1202bf37483fcf7d65b1a3f46d0b5a8a5fe0a621",
+        "app/src/main/res/values-ko/haptic_strength_strings.xml": "89969c81851e5e712fde27d5bd065e92c2f51f0293b4b97adbb5c2005240dde9",
+        "app/src/main/res/values-pl/haptic_strength_strings.xml": "982ed3e560eaa043d7b77d66911d20771923509f952d31d18059ae85449ea097",
+        "app/src/main/res/values-pt-rBR/haptic_strength_strings.xml": "6f9bf508136f30c2285119ff67df4646d84bd4c1d3e5af7f3e0574b206c6a946",
+        "app/src/main/res/values-pt/haptic_strength_strings.xml": "9c5407e28a8418819449514f79757449185d67cfad013247158991a78542b28e",
+        "app/src/main/res/values-ru/haptic_strength_strings.xml": "f647d228834053a13e65ae92ce402ed5919973373b143fca7de1417ae338f076",
+        "app/src/main/res/values-tr/haptic_strength_strings.xml": "d28401c6dc0b3819465effd1f829f254c802103bf355d74f2d4fed41c9c21b77",
+        "app/src/main/res/values-vi/haptic_strength_strings.xml": "6bcb83aac166a689a78c45da1b471bdee6accb8a9320ef899f2a6b69b7958bd6",
+        "app/src/main/res/values-zh-rCN/haptic_strength_strings.xml": "ba93632ee6fa25443c4c3336725ae4ea4af31c1fa56dd2eaf45e702638f2f2e3",
+        "app/src/main/res/values-zh/haptic_strength_strings.xml": "ba93632ee6fa25443c4c3336725ae4ea4af31c1fa56dd2eaf45e702638f2f2e3",
+        "app/src/main/res/values/haptic_strength_strings.xml": "f135aed1bf038402571b913d8d03304ce457ba622453ad7e23f69288734c548b",
+        "app/src/test/java/takagi/ru/monica/ui/haptic/InteractionHapticsTest.kt": "0bee529cccbc230397296621728731a4f6cd712e6c73cbbea2fc800f5202e98f"
+      },
+      "resourceFiles": 19,
+      "resourceValues": 95
+    },
+    "fd": {
+      "builds": [
+        {
+          "mode": "verify",
+          "exit": 0,
+          "seconds": 555.5281932000071,
+          "sourceUnchanged": true,
+          "label": "fd01",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "4e9726d20cb2611b63d0ec82b5ad585db30158b375b27d8be4fb30540b853bd6"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "830811c550a21e2d802ffb5029f5723a7ad6680d6c413bf48c9aa3020b18eedc"
+            }
+          ]
+        },
+        {
+          "mode": "tests",
+          "exit": 0,
+          "seconds": 83.26511799999571,
+          "sourceUnchanged": true,
+          "label": "fd02",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "4e9726d20cb2611b63d0ec82b5ad585db30158b375b27d8be4fb30540b853bd6"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "e0c1fc7d2c93ad02fecc001dd7e14e9c5af7cc2dc9662bd34d57041f730f3e79"
+            }
+          ]
+        },
+        {
+          "mode": "tests",
+          "exit": 0,
+          "seconds": 57.82221589999972,
+          "sourceUnchanged": true,
+          "label": "fd03",
+          "apks": [
+            {
+              "name": "app.apk",
+              "sha256": "4e9726d20cb2611b63d0ec82b5ad585db30158b375b27d8be4fb30540b853bd6"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "129c8fd5a9b9dd82ff464fef81479401b0d6743a1c950b2338443900ae9d2be2"
+            }
+          ]
+        }
+      ],
+      "unitTests": [
+        {
+          "suite": "takagi.ru.monica.ui.components.SliderTickGateTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "takagi.ru.monica.ui.haptic.InteractionHapticsTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "deviceRuns": [
+        {
+          "label": "fd-new03",
+          "completedMethodPasses": 19,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 19,
+          "failures": 0,
+          "success": true,
+          "seconds": 13.808801199993468,
+          "runnerSeconds": 11.498
+        },
+        {
+          "label": "fd-regression03",
+          "completedMethodPasses": 12,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage,takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest",
+          "tests": 12,
+          "failures": 0,
+          "success": true,
+          "seconds": 67.51756249999744,
+          "runnerSeconds": 65.137
+        }
+      ],
+      "uniquePassedDeviceMethods": [
+        "takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest#liveToggleControlsTouchAndAccessibilityKeyboardFeedback",
+        "takagi.ru.monica.ime.ImeKeyHapticsInstrumentedTest#numberSymbolAndActionKeysUseTheKeyboardWindow",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#draggingRetainsResultAndSliderPositionUntilRelease",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#invalidCharacterSelectionCannotApplyStaleResult",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#longPasswordAndLargeFontRemainUsableAndTemplatesShowPlaintext",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#longPasswordShrinksTextWithinFixedCard",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#passwordSuggestionsKeepHeightAtDoubleFontScale",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#pinAndPhraseSwitchAndLengthControlsRegenerate",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#usernameAndEmailAliasUseExplicitInput",
+        "takagi.ru.monica.ui.CredentialGeneratorSheetTest#usernameSuggestionsKeepHeightWhenScrolling",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#accessibilityAndRtlRetainRangeDirectionAndTouchTarget",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#dpiSheetRetainsDraftUntilReleaseAndResetStillWorks",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#dragTicksInBothDirectionsAndCommitsOnlyOnRelease",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#externalUpdatesAndDisabledOrMutedControlsRemainSilent",
+        "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#wheelFramesFollowDragAndReducedMotionKeepsFixedThumb",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#extensionPageSavesStrengthAndReturnsNormally",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#hostDisabledFeedbackIsEnabledForRequestAndRestored",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#narrowDarkLargeTextKeepsSliderAndTestReachable",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#preferencesAndSettingsSnapshotKeepStrengthAndOldDefaults",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#systemOffExplainsWhyPreviewHasNoVibration",
+        "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest#zeroDisablesAndSliderCanReenableWithSingleSelectedPreview",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#customizationFeedbackPreferenceAcknowledgesEnableAndSilencesDisable",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#disabledAndCancelledPressDoNotChangeOrVibrate",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#existingClickableRowAndActiveChildDoNotBubbleOrDoubleVibrate",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#extensionFeedbackPreferenceCanReenableFeedback",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#preferenceChangesApplyLiveAndDeclinedHostRequestIsNotRepeated",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#rowAndPassiveThumbShareOneInteraction",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#sharedSettingsRowsAndStandaloneSettingHaveSingleFeedback",
+        "takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest#touchAndAccessibilityToggleOnceWhileExternalUpdatesStaySilent",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage"
+      ],
+      "apk": {
+        "installed": [
+          {
+            "package": "takagi.ru.monica.hapticstrengthfd33120261125.localedebug",
+            "sha256": "4e9726d20cb2611b63d0ec82b5ad585db30158b375b27d8be4fb30540b853bd6"
+          },
+          {
+            "package": "takagi.ru.monica.hapticstrengthfd33120261125.localedebug.test",
+            "sha256": "129c8fd5a9b9dd82ff464fef81479401b0d6743a1c950b2338443900ae9d2be2"
+          }
+        ],
+        "abis": [
+          "x86_64"
+        ],
+        "licenseAssets": {
+          "assets/licenses/ImageToolbox-Apache-2.0.txt": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+          "assets/licenses/ImageToolbox.txt": "0dbf8aa0e49988ce9dc7cef96ed3a4a6d59f773ba009e0ad3293cb37e32a884b"
+        },
+        "packageMetadata": "package: name='takagi.ru.monica.hapticstrengthfd33120261125.localedebug' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      },
+      "sourceMatchesFinalBuildSnapshot": true,
+      "productionMatchesFirstFullBuild": true,
+      "changedAppSourceHashes": {
+        "app/src/androidTest/java/takagi/ru/monica/ui/haptic/HapticStrengthInstrumentedTest.kt": "75ebbb40cac619d55dbea6d401a174cad54a1c6ef3aacb0b393d1161dfd82b16",
+        "app/src/main/java/takagi/ru/monica/MainActivity.kt": "171911d210e506ea40d65e5d6bcbfe81350bdbc71250ffde771821b0632aa280",
+        "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "aa05888bb243382eee097cd41c82b21d682cc0c50fc64cca0547e9284c5aeb73",
+        "app/src/main/java/takagi/ru/monica/data/AppSettings.kt": "eb31f178d2a6ac0e75944fefd320e0b115aa750c2c2326cffebd10084861ca5b",
+        "app/src/main/java/takagi/ru/monica/ui/LocalSharedTransition.kt": "ee9e2f5a8f9968898593d18221c36433a44247c786b3692e9d04e0247b743ee8",
+        "app/src/main/java/takagi/ru/monica/ui/components/HapticStrengthControl.kt": "b68bcc77de6401a0331e7d08c7806631e80ea4b4790c5b5bd7e816b291d1d566",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/HapticFeedbackHelper.kt": "d78d8f179ba2778b32774fb4d50d3de3797c19da86d42ee4f1889616ab7755a2",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/InteractionHaptics.kt": "d673c4ddcf285d96f267037205e705aa1465a6dd4da032df9e8ca6e8f2cf6d36",
+        "app/src/main/java/takagi/ru/monica/ui/haptic/SwitchHaptics.kt": "2239bc5e70553edcf61d13b1cf5ca1019a4a4632c91ad5911f1866fa799ac3e7",
+        "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "00d1faba7aa22b2a19c884c8d2bd75931ddd23f44c7c4a3a6b0484a8c4424b73",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt": "cf74c3823baea643de474566556c91fd3a9ff850ecc6808bbe3fec6b1452c005",
+        "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt": "1b98e025fc702f975941b228c431241cfe5f952f828a815e5425dcfd8bda6b58",
+        "app/src/main/java/takagi/ru/monica/utils/SettingsManager.kt": "97db825dd8f4e5d041f647019aa6ca66e54225936bd63960969dc31f6117488d",
+        "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt": "58f0345ad51186718798c53d7169e9c52127779712b7074fabb2e25ac73c3c26",
+        "app/src/main/java/takagi/ru/monica/viewmodel/SettingsViewModel.kt": "9114eb0874e7bf4b6b635818659d8ba78a54672043525ea7fe579150c3cdb12d",
+        "app/src/main/res/values-b+lzh/haptic_strength_strings.xml": "d3f8276aab5c0a39b61362e68ceade45a1cb9846074c2f4568e46854525db999",
+        "app/src/main/res/values-b+zh+Hant+TW/haptic_strength_strings.xml": "9719916b0071454aaf52d9fb3b0526606be05f5f81473698758a6913535ed112",
+        "app/src/main/res/values-b+zh+Hant/haptic_strength_strings.xml": "26e04067db135b3bc9c77bb9f1ceb520ab4280080d6caf2cc46d419aa9b56eb5",
+        "app/src/main/res/values-de/haptic_strength_strings.xml": "9e6a403afebd6e03d710a3d89e6a37d6b5396566950615c73046a4504df6dc7d",
+        "app/src/main/res/values-es/haptic_strength_strings.xml": "81b89737724ed414950e37ccfc690da3e72f9805f22df10a26fdf63151544c21",
+        "app/src/main/res/values-fr/haptic_strength_strings.xml": "4d513d449136ed758cf218a110914f18204de5eba65df334ce2fcd90e123360f",
+        "app/src/main/res/values-in/haptic_strength_strings.xml": "194cb181c9ba0f12925844400d3aacb8a52b2c44475dc65c4605a938ea869f91",
+        "app/src/main/res/values-it/haptic_strength_strings.xml": "242c303c324374fe71504266ab2ce7cd6784fe535ce507a59191e3f4b3083946",
+        "app/src/main/res/values-ja/haptic_strength_strings.xml": "58c01d8b6cb6c0c5e71ad43b1202bf37483fcf7d65b1a3f46d0b5a8a5fe0a621",
+        "app/src/main/res/values-ko/haptic_strength_strings.xml": "89969c81851e5e712fde27d5bd065e92c2f51f0293b4b97adbb5c2005240dde9",
+        "app/src/main/res/values-pl/haptic_strength_strings.xml": "982ed3e560eaa043d7b77d66911d20771923509f952d31d18059ae85449ea097",
+        "app/src/main/res/values-pt-rBR/haptic_strength_strings.xml": "6f9bf508136f30c2285119ff67df4646d84bd4c1d3e5af7f3e0574b206c6a946",
+        "app/src/main/res/values-pt/haptic_strength_strings.xml": "9c5407e28a8418819449514f79757449185d67cfad013247158991a78542b28e",
+        "app/src/main/res/values-ru/haptic_strength_strings.xml": "f647d228834053a13e65ae92ce402ed5919973373b143fca7de1417ae338f076",
+        "app/src/main/res/values-tr/haptic_strength_strings.xml": "d28401c6dc0b3819465effd1f829f254c802103bf355d74f2d4fed41c9c21b77",
+        "app/src/main/res/values-vi/haptic_strength_strings.xml": "6bcb83aac166a689a78c45da1b471bdee6accb8a9320ef899f2a6b69b7958bd6",
+        "app/src/main/res/values-zh-rCN/haptic_strength_strings.xml": "ba93632ee6fa25443c4c3336725ae4ea4af31c1fa56dd2eaf45e702638f2f2e3",
+        "app/src/main/res/values-zh/haptic_strength_strings.xml": "ba93632ee6fa25443c4c3336725ae4ea4af31c1fa56dd2eaf45e702638f2f2e3",
+        "app/src/main/res/values/haptic_strength_strings.xml": "f135aed1bf038402571b913d8d03304ce457ba622453ad7e23f69288734c548b",
+        "app/src/test/java/takagi/ru/monica/ui/haptic/InteractionHapticsTest.kt": "0bee529cccbc230397296621728731a4f6cd712e6c73cbbea2fc800f5202e98f"
+      },
+      "resourceFiles": 19,
+      "resourceValues": 95
+    }
+  },
+  "checks": {
+    "fd-metadata": {
+      "exit": 0
+    },
+    "fd-metadata-tests": {
+      "exit": 0
+    },
+    "main-diff-check": {
+      "exit": 0
+    },
+    "main-design-ignored": true,
+    "fd-diff-check": {
+      "exit": 0
+    },
+    "fd-design-ignored": true
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 14,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.hapticstrengthmain33120261125.localedebug",
+      "takagi.ru.monica.hapticstrengthmain33120261125.localedebug.test",
+      "takagi.ru.monica.hapticstrengthfd33120261125.localedebug",
+      "takagi.ru.monica.hapticstrengthfd33120261125.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15084
+  },
+  "scope": "Switch and slider feedback; no physical-motor or OEM acceptance claim.",
+  "sharedSources": {
+    "paths": 35,
+    "byteIdentical": 32,
+    "retainedPlatformDifferences": [
+      "app/src/main/java/takagi/ru/monica/MainActivity.kt",
+      "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt",
+      "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt"
+    ],
+    "taskSpecificEditsMatchInPlatformFiles": true
+  }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haptic_strength">Kekuatan getaran</string>
+    <string name="haptic_strength_description">0 = Nonaktif · 1 = Ringan · 2 = Kuat</string>
+    <string name="haptic_test">Uji getaran</string>
+    <string name="haptic_system_disabled">Aktifkan umpan balik sentuhan di pengaturan sistem untuk merasakan getaran.</string>
+    <string name="haptic_unavailable">Getaran tidak tersedia di perangkat ini atau ditolak oleh sistem.</string>
+</resources>

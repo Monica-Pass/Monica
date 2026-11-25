@@ -1,0 +1,971 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.DatabaseFormPagesTest:
+
+INSTRUMENTATION_STATUS: test=backAndLockRemoveDraftWithoutRetainingPasswords
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backAndLockRemoveDraftWithoutRetainingPasswords
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=wrongExternalPasswordStaysOnFormThenCorrectPasswordOpensOriginalFile
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=wrongExternalPasswordStaysOnFormThenCorrectPasswordOpensOriginalFile
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=keyFileOnlyCreationRequiresOriginalKeyAndKeepsNativeDefaults
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=keyFileOnlyCreationRequiresOriginalKeyAndKeepsNativeDefaults
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=createPageKeepsOriginalOptionsAndDoesNotSubmitInvalidPassword
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=createPageKeepsOriginalOptionsAndDoesNotSubmitInvalidPassword
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=distinctNamedDatabasesKeepOriginalBytesAndNativeMetadata
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=distinctNamedDatabasesKeepOriginalBytesAndNativeMetadata
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=keepassLongPressReordersWithoutOpeningAndSurvivesRoomReopen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=keepassLongPressReordersWithoutOpeningAndSurvivesRoomReopen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=mdbxLongPressReordersWithoutOpeningAndSurvivesRoomReopen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.DatabaseFormPagesTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=mdbxLongPressReordersWithoutOpeningAndSurvivesRoomReopen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest:
+
+INSTRUMENTATION_STATUS: test=existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=busyVerificationKeepsEmptyDisabledFieldAtTheSameHeight
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=busyVerificationKeepsEmptyDisabledFieldAtTheSameHeight
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.KeePassManagementUiTest:
+
+INSTRUMENTATION_STATUS: test=createFormPreservesValidationAndKeepsSubmitAboveRealKeyboard
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=createFormPreservesValidationAndKeepsSubmitAboveRealKeyboard
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=heldFeedbackStaysOnTheSharedRoundedTilesInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=heldFeedbackStaysOnTheSharedRoundedTilesInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=detailsKeepStorageActionsConflictsAndRemovalConfirmation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=detailsKeepStorageActionsConflictsAndRemovalConfirmation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=realSettingsSaveAndIntegrityInspectionRemainConnected
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=realSettingsSaveAndIntegrityInspectionRemainConnected
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=longListKeepsActionsReachableAndAlignedAtTwelveDp
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=longListKeepsActionsReachableAndAlignedAtTwelveDp
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=recoveryMenuHonorsVerificationAndBusyActions
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=recoveryMenuHonorsVerificationAndBusyActions
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=hubKeepsSourceCountsAndExistingGoogleDriveDiscoverable
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=hubKeepsSourceCountsAndExistingGoogleDriveDiscoverable
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=narrowLargeFontActionsFitGermanPolishAndClassicalChinese
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=narrowLargeFontActionsFitGermanPolishAndClassicalChinese
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nativeDetailRefreshesResolvedFieldsForTheSameUuidAtLargeFont
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeDetailRefreshesResolvedFieldsForTheSameUuidAtLargeFont
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=webDavConnectionStaysReachableAboveKeyboard
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=webDavConnectionStaysReachableAboveKeyboard
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=realManagerRoutesToLocalCreateAndBothCloudForms
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=realManagerRoutesToLocalCreateAndBothCloudForms
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=hotpBusyFailureAndReadOnlyKeepThePersistedCounterVisible
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=hotpBusyFailureAndReadOnlyKeepThePersistedCounterVisible
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=actualManagerRestoresScrolledSourceAfterNativeBrowser
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=26
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=actualManagerRestoresScrolledSourceAfterNativeBrowser
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nativeManagerSavesPropertiesAndAdvancesHotpThroughRealStorage
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.KeePassManagementUiTest
+
+INSTRUMENTATION_STATUS: current=27
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeManagerSavesPropertiesAndAdvancesHotpThroughRealStorage
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest:
+
+INSTRUMENTATION_STATUS: test=keepassRealCreateVerifyCancelAndRemovePreserveSiblingAndOriginalFile
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-create-mismatch.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-create-ready.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-created-detail.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-password-cancel.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-password-rejected.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-password-accepted.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-remove-confirmation.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-remove-cancelled.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_da8a05b9_a9b2_494f_957a_1f2cfacc658a/kdbx-sibling-after-removal.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=28
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=keepassRealCreateVerifyCancelAndRemovePreserveSiblingAndOriginalFile
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=mdbxRealCreateCancelAndDeletePreserveIndependentSibling
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-create-mismatch.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-create-ready.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-created-detail.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-delete-confirmation.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-delete-cancelled.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_af0947d9_3dd3_425b_85ff_27e29dd4fbc3/mdbx-after-target-deletion.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=29
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=mdbxRealCreateCancelAndDeletePreserveIndependentSibling
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=mdbxLocalOpenWrongPasswordCancelAndCorrectPreserveSourceAndSibling
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_66dcd046_6ccc_4d25_a6ec_727a78ed6720/mdbx-open-rejected.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_66dcd046_6ccc_4d25_a6ec_727a78ed6720/mdbx-open-cancel-ready.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: stream=TOOLCHAIN_UI_CAPTURE /data/user/11/takagi.ru.monica.formpagesmain33120261124/files/toolchain-db-ui/toolchain_ui_66dcd046_6ccc_4d25_a6ec_727a78ed6720/mdbx-open-accepted.json
+
+
+
+INSTRUMENTATION_STATUS_CODE: 2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.ToolchainDatabaseLifecycleUiTest
+
+INSTRUMENTATION_STATUS: current=30
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=30
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=mdbxLocalOpenWrongPasswordCancelAndCorrectPreserveSourceAndSibling
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 65.251
+
+
+
+OK (30 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

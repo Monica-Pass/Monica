@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Als neuen Eintrag speichern</string>
+    <string name="autofill_save_local_source">Lokal</string>
+    <string name="autofill_save_review_description">Wählen Sie einen Eintrag aus, um ihn vor dem Speichern zu überprüfen. Vorhandene Ordner, Notizen und andere Konten bleiben erhalten.</string>
+    <string name="autofill_save_review_title">Ein vorhandenes Passwort aktualisieren?</string>
+</resources>

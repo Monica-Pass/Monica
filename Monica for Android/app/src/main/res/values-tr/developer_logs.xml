@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="developer_logs_title">Teşhis günlükleri</string>
+    <string name="developer_logs_entry_description">Tam bir teşhis raporunu arayın, filtreleyin ve paylaşın</string>
+    <string name="developer_logs_search">Günlükleri, etiketleri veya istisnaları arayın</string>
+    <string name="developer_logs_source">Kaynak: %1$s</string>
+    <string name="developer_logs_hint">Sorunu yeniden oluşturup yenileyin. Hata düzeyindeki günlükler her zaman bir özelliğin başarısız olduğu anlamına gelmez.</string>
+    <string name="developer_logs_share_full">Günlüklerin tamamını paylaş</string>
+    <string name="developer_logs_result_count">%1$d / %2$d etkinlikleri · %3$s güncellendi</string>
+    <string name="developer_logs_no_matches">Eşleşen günlük yok. Başka bir anahtar kelime veya filtre deneyin.</string>
+    <string name="developer_logs_clear_confirmation">Tanılama günlüğü arabellekleri temizlensin mi? Kasa verileri ve ayarları saklanır. Mevcut ortam ayrıntıları ve yeni günlükler görünmeye devam edebilir.</string>
+    <string name="developer_logs_copy_event">Olayı kopyala</string>
+    <string name="developer_logs_preview_limit">Önizleme kısaltıldı. Metnin tamamını görüntülemek için etkinliği kopyalayın veya raporun tamamını paylaşın.</string>
+    <string name="developer_logs_expand">Günlük etkinliğini genişlet</string>
+    <string name="developer_logs_collapse">Günlük olayını daralt</string>
+    <string name="developer_logs_security">Güvenlik</string>
+    <string name="developer_verification_group">Doğrulama ve uyumluluk</string>
+    <string name="developer_forensics_group">Bitwarden senkronizasyon teşhisi</string>
+    <string name="developer_logs_copy_failed">Bu etkinlik kopyalanamıyor. Bunun yerine günlük dosyasının tamamını paylaşın.</string>
+</resources>

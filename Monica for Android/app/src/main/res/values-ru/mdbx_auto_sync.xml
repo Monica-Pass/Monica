@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Загрузка при сохранении; проверять обновления, когда они разблокированы, на переднем плане</string>
+    <string name="mdbx_auto_sync_manual_hint">Выкл · Синхронизировать вручную при необходимости</string>
+    <string name="mdbx_auto_sync_title">Автоматическая синхронизация</string>
+</resources>

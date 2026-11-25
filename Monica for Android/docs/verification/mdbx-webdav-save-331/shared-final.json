@@ -1,0 +1,80 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/repository/MdbxPasswordEditor.kt",
+    "main": "aef2d61e226f7fbb0a080d770424aa6632886a3a5a8c936b2d16f411a4281343",
+    "fd": "aef2d61e226f7fbb0a080d770424aa6632886a3a5a8c936b2d16f411a4281343",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt",
+    "main": "7446addb95b1c5f84dee2e69ee8b3db9a744243f01c43c120e2f3eab78a57a5d",
+    "fd": "7446addb95b1c5f84dee2e69ee8b3db9a744243f01c43c120e2f3eab78a57a5d",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+    "main": "b5a7c5704b535b0b879789361833bca5f8cd50c39898e2e6d6b3e4963caf2459",
+    "fd": "b5a7c5704b535b0b879789361833bca5f8cd50c39898e2e6d6b3e4963caf2459",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt",
+    "main": "a0fbece013129dbd4de7800512d3f5ac2c639e3c9f83a57c5526b0d166296d6e",
+    "fd": "a0fbece013129dbd4de7800512d3f5ac2c639e3c9f83a57c5526b0d166296d6e",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveTransparentActivity.kt",
+    "main": "32b9f8282f72f55aa0e3658a7e9d03324112828021bed1805715e3367b0cc492",
+    "fd": "32b9f8282f72f55aa0e3658a7e9d03324112828021bed1805715e3367b0cc492",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/webdav/WebDavConditionalWriter.kt",
+    "main": "81b80316c889bae55ad889145d89796bd37ec1d97070e9a62373d673dd3107ae",
+    "fd": "81b80316c889bae55ad889145d89796bd37ec1d97070e9a62373d673dd3107ae",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/utils/WebDavMdbxFileSource.kt",
+    "main": "14692ca5b332e215271ad63d28103224eab073877a78af3a013bf7fa5efef4cb",
+    "fd": "14692ca5b332e215271ad63d28103224eab073877a78af3a013bf7fa5efef4cb",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/webdav/MdbxWebDavRetry.kt",
+    "main": "c472e44f91cf4d57edb3bee6c01f94642c17b643fbe2ac7c058b881894493a31",
+    "fd": "c472e44f91cf4d57edb3bee6c01f94642c17b643fbe2ac7c058b881894493a31",
+    "equal": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/utils/WebDavMdbxRequestBudgetTest.kt",
+    "main": "c15b886e95fa1fe39a9d7bd1738769374f515c2c5dc9909380561f8b07d0175a",
+    "fd": "2e3f891e0d3a67e96eba409dcc8811bddae3b564c0d4c0d583c6b90453b1455f",
+    "equal": false
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/webdav/MdbxWebDavRetryTest.kt",
+    "main": "09855fc4529a6273ebdb42d066a4d2efa940616b5c03fe05085d453cbea5d23e",
+    "fd": "09855fc4529a6273ebdb42d066a4d2efa940616b5c03fe05085d453cbea5d23e",
+    "equal": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/MdbxWebDavSaveUiTest.kt",
+    "main": "09e4710d7c582e3259f6fce17c89bbeb7b1bad465af1fbeb872d69b212f0c47f",
+    "fd": "09e4710d7c582e3259f6fce17c89bbeb7b1bad465af1fbeb872d69b212f0c47f",
+    "equal": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPasswordSource.kt",
+    "main": "44b660ad10087477539eb754f7ec66a3ec6a75959749e121e42e7d5c0495cc28",
+    "fd": "44b660ad10087477539eb754f7ec66a3ec6a75959749e121e42e7d5c0495cc28",
+    "equal": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/MdbxWebDavCloudFixture.kt",
+    "main": "ad3bc5ca3b6a4a04464d9c67857bf7bd503c5e91d7aa849a46a4d430a97cb5e8",
+    "fd": "ad3bc5ca3b6a4a04464d9c67857bf7bd503c5e91d7aa849a46a4d430a97cb5e8",
+    "equal": true
+  }
+]

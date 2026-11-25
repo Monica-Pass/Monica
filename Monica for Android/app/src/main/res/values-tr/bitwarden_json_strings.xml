@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">Parolayla şifrelenmiş Bitwarden JSON</string>
+    <string name="bw_json_description">Oturum açma bilgileri, notlar, kartlar, kimlikler ve SSH anahtarları için standart veya parolayla şifrelenmiş JSON.</string>
+    <string name="bw_json_boundary">Yalnızca yerel kasaya aktarın. Yerel kasadan veya bir kişisel Bitwarden hesabından dışa aktarın. Ek dosyalar, Gönderme ve arşivlenme durumu dahil değildir. Desteklenmeyen içerik aktarımın tamamını engeller; rapor edilen her öğeyi inceleyin.</string>
+    <string name="bw_json_import_hint">Standart veya parolayla şifrelenmiş bir Bitwarden JSON dosyası seçin.</string>
+    <string name="bw_json_file_password">Dosya şifresi</string>
+    <string name="bw_json_check">Dosyayı kontrol et</string>
+    <string name="bw_json_review">JSON içe aktarmayı inceleyin</string>
+    <string name="bw_json_counts">%1$d öğeleri · %2$d klasörleri</string>
+    <string name="bw_json_blocked">Aktarımın tamamı engellendi. Tekrar denemeden önce aşağıdaki her öğeyi çözümleyin.</string>
+    <string name="bw_json_ready">Dosya içe aktarılabilir. Tüm öğeleri yerel kasaya eklemeyi onaylayın.</string>
+    <string name="bw_json_export_success">%1$d öğeleri ve %2$d klasörleri dışa aktarıldı. Ek dosyalar, Gönderme ve arşivlenme durumu dahil değildir.</string>
+    <string name="bw_json_reason_invalid">Geçersiz veya hasarlı veri</string>
+    <string name="bw_json_reason_unknown">Tanınmayan alan; onu koruyamıyorum</string>
+    <string name="bw_json_reason_type">Desteklenmeyen öğe türü</string>
+    <string name="bw_json_reason_value">Bu değer tamamen korunamıyor</string>
+    <string name="bw_json_reason_limit">Dosya veya işleme sınırı aşıldı</string>
+    <string name="bw_json_reason_organization">Organizasyon ve koleksiyon içeriği desteklenmiyor</string>
+    <string name="bw_json_reason_attachments">Ek dosyaları ayrı bir aktarım gerektirir</string>
+    <string name="bw_json_reason_archived">Arşivlenmiş durum bu formatta korunamaz</string>
+    <string name="bw_json_reason_destination">Bu kaynak veya hedef desteklenmiyor</string>
+    <string name="bw_json_reason_pending">Hesabı dışa aktarmadan önce bekleyen değişiklikleri tamamlayın</string>
+    <string name="bw_json_reason_unavailable">Gerekli kaynak verisi veya anahtarı mevcut değil</string>
+    <string name="bw_json_item">Öğe %1$d</string>
+    <string name="bw_json_plain_warning">Şifrelenmemiş JSON, okunabilir şifreler ve özel anahtarlar içerir. Dosyayı güvenli bir şekilde saklayın.</string>
+</resources>

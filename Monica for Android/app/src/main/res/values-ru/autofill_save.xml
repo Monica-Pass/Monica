@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Сохранить как новую запись.</string>
+    <string name="autofill_save_local_source">Локально</string>
+    <string name="autofill_save_review_description">Выберите запись, чтобы просмотреть ее перед сохранением. Существующие папки, заметки и другие учетные записи сохраняются.</string>
+    <string name="autofill_save_review_title">Обновить существующий пароль?</string>
+</resources>

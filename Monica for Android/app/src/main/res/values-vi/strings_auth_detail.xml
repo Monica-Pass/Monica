@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">Sao chép mã hiện tại</string>
+    <string name="auth_detail_copy_next">Sao chép Tiếp theo</string>
+    <string name="auth_detail_qr_current">Tạo mã QR (mã hiện tại)</string>
+    <string name="auth_detail_qr_migrate">Tạo mã QR (di chuyển)</string>
+</resources>

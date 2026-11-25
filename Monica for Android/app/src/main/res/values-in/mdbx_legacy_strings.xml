@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 tidak lagi didukung</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Tidak tersedia</string>
+    <string name="mdbx_legacy_unavailable_description">Basis data ini tidak tersedia. Tingkatkan ke MDBX2 untuk terus menggunakannya. Pemutakhiran mempertahankan file asli.</string>
+    <string name="mdbx_legacy_creation_disabled">Database baru menggunakan MDBX2. File MDBX1 hanya dapat dibuka untuk upgrade.</string>
+    <string name="mdbx_legacy_local_copy_required">Salinan MDBX1 lokal tidak dapat dibaca. Buka kembali file MDBX1 asli untuk memutakhirkannya. Basis data asli belum diubah.</string>
+    <string name="mdbx_legacy_remote_copy_warning">Pemutakhiran mengubah salinan yang disimpan di perangkat ini menjadi database MDBX2 lokal baru. Perubahan jarak jauh yang belum diunduh tidak disertakan. File jarak jauh asli dan salinan lokal dipertahankan. Konfigurasikan sinkronisasi secara terpisah untuk database baru.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (peningkatan)</string>
+    <string name="mdbx_legacy_upgrade_action">Tingkatkan ke MDBX2</string>
+</resources>

@@ -235,6 +235,7 @@ class SecurityManager private constructor(
                 val generation = runtimeKeyGeneration.incrementAndGet()
                 processCachedMdk = null
                 cachedCompatDataKey = null
+                LocalVaultRecovery.clearProtectionChecks()
                 dataReadGenerationState.value = generation
             }
             takagi.ru.monica.autofill_ng.auth.AutofillSessionGrants.clear()
@@ -365,6 +366,56 @@ class SecurityManager private constructor(
     }
 
     fun getLocalPasswordAlgorithm(): LocalPasswordAlgorithm = PasswordKdf.fromValues(sharedPreferences.all).algorithm
+
+    internal fun recoveryProtectionStatus(): RecoveryProtectionStatus =
+        localRecovery.protectionStatus(runtimeKeyGeneration.get())
+
+    /** Read-only optional check after accepted main login; never adds work to authentication. */
+    internal fun rehearseRecoveryProtection(password: String, generation: Long, ensureActive: () -> Unit): Boolean {
+        var mdk: ByteArray? = null
+        val epoch = passwordCredentialEpoch.get()
+        fun current() {
+            ensureActive()
+            check(isDataReadCurrent(generation) && passwordCredentialEpoch.get() == epoch)
+        }
+        return try {
+            current()
+            val original = sharedPreferences.all.toMap()
+            mdk = LocalPasswordCredentials.unwrap(password, original)
+            current()
+            localRecovery.verifyProtection(sharedPreferences, password, mdk, generation,
+                ensureCurrent = { current(); check(credentialsMatch(original)) },
+                publish = { action -> synchronized(runtimeKeyLock) { current(); action() } })
+        } catch (_: Exception) { false }
+        finally { mdk?.fill(0) }
+    }
+
+    /** Explicit settings check. Verifies a password but never stages or grants an unlock session. */
+    internal fun verifyRecoveryProtection(password: String, attempt: PasswordVerificationAttempt,
+        ensureActive: () -> Unit = {}): RecoveryProtectionCheck {
+        var mdk: ByteArray? = null
+        fun current() {
+            ensureActive()
+            check(attempt.isCurrent() && isDataReadCurrent(attempt.generation)) { "Recovery check was revoked" }
+        }
+        return try {
+            current()
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all.toMap()
+            if (!LocalPasswordCredentials.verify(password, original)) return RecoveryProtectionCheck.INVALID_PASSWORD
+            mdk = LocalPasswordCredentials.unwrap(password, original)
+            current()
+            // Enroll a healthy older installation through the existing credential transaction.
+            localRecovery.enrollMissingProtection(sharedPreferences, password, original,
+                beforeCommit = { synchronized(runtimeKeyLock) { current() } })
+            val verified = localRecovery.verifyProtection(sharedPreferences, password, mdk, attempt.generation,
+                ensureCurrent = { current(); check(credentialsMatch(original)) },
+                publish = { action -> synchronized(runtimeKeyLock) { current(); action() } })
+            current()
+            if (verified) RecoveryProtectionCheck.VERIFIED else RecoveryProtectionCheck.UNAVAILABLE
+        } catch (_: Exception) { RecoveryProtectionCheck.UNAVAILABLE }
+        finally { mdk?.fill(0) }
+    }
 
     private fun changeVerifiedPassword(
         currentPassword: String,
@@ -1622,16 +1673,19 @@ class SecurityManager private constructor(
     fun decryptData(encryptedData: String): String {
         PreparedSecureStore.unwrap(sharedPreferences)
         val generation = runtimeKeyGeneration.get()
+        // Detection and decoding must agree: whitespace around an explicit envelope is
+        // formatting, while whitespace in ordinary plaintext belongs to the value.
+        val payload = if (looksLikeMonicaCiphertext(encryptedData)) encryptedData.trim() else encryptedData
         try {
-            val result = decryptDataWithoutDiagnostic(encryptedData)
+            val result = decryptDataWithoutDiagnostic(payload)
             PreparedSecureStore.unwrap(sharedPreferences)
             check(runtimeKeyGeneration.get() == generation) { "Vault changed during data read" }
             return result
         } catch (error: Exception) {
             val format = when {
-                encryptedData.startsWith(DATA_PREFIX_MDK) -> RuntimeDiagnostics.DataFormat.MDK
-                encryptedData.startsWith(DATA_PREFIX_V2) -> RuntimeDiagnostics.DataFormat.V2
-                encryptedData.startsWith(DATA_PREFIX_COMPAT) -> RuntimeDiagnostics.DataFormat.C2
+                payload.startsWith(DATA_PREFIX_MDK) -> RuntimeDiagnostics.DataFormat.MDK
+                payload.startsWith(DATA_PREFIX_V2) -> RuntimeDiagnostics.DataFormat.V2
+                payload.startsWith(DATA_PREFIX_COMPAT) -> RuntimeDiagnostics.DataFormat.C2
                 else -> null
             }
             if (format != null) RuntimeDiagnostics.dataFailure(format, error)

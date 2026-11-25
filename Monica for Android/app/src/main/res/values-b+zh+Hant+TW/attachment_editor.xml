@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">暫無附件</string>
+    <string name="attachment_editor_hint">選擇檔案、圖片或文檔</string>
+    <string name="attachment_editor_working">正在處理…</string>
+</resources>

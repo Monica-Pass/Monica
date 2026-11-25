@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_compat_android_old">自動填入需要 Android 8.0 或更高版本</string>
+    <string name="autofill_compat_huawei">華為裝置在 Android 10 或更高版本上可能限制自動填入</string>
+    <string name="autofill_compat_xiaomi">小米裝置可能需要在 MIUI 安全中心授予自動填入權限</string>
+    <string name="autofill_compat_oppo">OPPO/Realme 裝置可能需要在權限設定中允許自動填入</string>
+    <string name="autofill_compat_vivo">Vivo 裝置可能需要在 i 管家中允許自動填入</string>
+    <string name="autofill_compat_android12_rom">部分 Android 12 ROM 可能因系統兼容性問題而無法穩定觸發自動填入</string>
+    <string name="autofill_compat_inline">此裝置不支援鍵盤內聯建議，將使用下拉菜單顯示自動填入建議。</string>
+    <string name="autofill_compat_emulator">模擬器中的自動填入功能可能不穩定</string>
+    <string name="autofill_compat_unsupported">此裝置不支援自動填入框架</string>
+    <string name="autofill_compat_check_failed">無法完成兼容性檢查</string>
+    <string name="autofill_check_manifest">請檢查 AndroidManifest.xml 中是否聲明瞭 MonicaAutofillServiceNg</string>
+    <string name="autofill_check_permission_manifest">服務必須聲明 BIND_AUTOFILL_SERVICE 權限和 autofill intent-filter</string>
+    <string name="autofill_check_enable_system">請在系統設定中選擇 Monica 作為自動填入服務</string>
+    <string name="autofill_check_path_system">設定 → 系統 → 語言和輸入法 → 自動填入服務</string>
+    <string name="autofill_check_path_xiaomi">小米：設定 → 更多設定 → 語言和輸入法 → 自動填入服務</string>
+    <string name="autofill_check_miui_permission">還需在 MIUI 安全中心授予相應權限</string>
+    <string name="autofill_check_path_huawei">華為：設定 → 系統和更新 → 語言和輸入法 → 自動填入服務</string>
+    <string name="autofill_check_path_oppo">OPPO/Realme：設定 → 其他設定 → 鍵盤與輸入法 → 自動填入服務</string>
+    <string name="autofill_check_path_vivo">Vivo：設定 → 更多設定 → 輸入法 → 自動填入服務</string>
+    <string name="autofill_check_path_samsung">三星：設定 → 常規管理 → 語言和輸入 → 自動填入服務</string>
+    <string name="autofill_check_enable_app">請在 Monica 設定中啟用自動填入</string>
+    <string name="autofill_check_app_permissions">請檢查 Monica 是否已獲得所需的應用程式權限</string>
+    <string name="autofill_check_issue_count">偵測到 %1$d 個兼容性問題，請查看下方詳情。</string>
+    <string name="autofill_check_xiaomi_permission">小米：安全中心 → 應用程式管理 → Monica → 權限管理 → 允許自動填入</string>
+    <string name="autofill_check_huawei_autostart">華為裝置可能需要在手機管家中允許 Monica 自啟動</string>
+    <string name="autofill_check_oppo_permission">OPPO/Realme：設定 → 應用程式管理 → Monica → 權限 → 允許自動填入</string>
+    <string name="autofill_check_vivo_permission">Vivo：i 管家 → 應用程式管理 → 權限管理 → Monica → 允許自動填入</string>
+    <string name="autofill_check_background">請解除 Monica 的省電限制，並允許自啟動和後臺執行</string>
+    <string name="autofill_check_trigger_manually">若仍不穩定，請在登入輸入框中手動觸發一次自動填入</string>
+    <string name="autofill_check_configured">服務設定正常；若仍有問題，請重啟 Monica。</string>
+    <string name="autofill_check_view_logs">可使用故障排查工具查看詳細記錄</string>
+    <string name="autofill_check_restart">完成上述更改後，請重啟 Monica</string>
+    <string name="autofill_check_recommendations_failed">無法產生建議，請聯繫支援人員。</string>
+    <string name="autofill_report_parsing">欄位解析</string>
+    <string name="autofill_report_matching">密碼匹配</string>
+    <string name="autofill_report_building">回應構建</string>
+    <string name="autofill_report_performance">效能</string>
+    <string name="autofill_report_parsing_failures">欄位解析失敗：%1$d 次</string>
+    <string name="autofill_report_matching_failures">未找到匹配密碼的請求：%1$d 次</string>
+    <string name="autofill_report_building_failures">回應構建失敗：%1$d 次</string>
+    <string name="autofill_report_slow">平均回應時間過長：%1$d ms</string>
+    <string name="autofill_report_improve_recognition">改進欄位辨識</string>
+    <string name="autofill_report_recognition_hint">部分應用程式的表單欄位無法辨識，請檢查欄位解析設定。</string>
+    <string name="autofill_report_add_passwords">新增密碼條目</string>
+    <string name="autofill_report_add_passwords_hint">未找到匹配密碼，請為這些應用程式新增密碼條目。</string>
+    <string name="autofill_report_integrity">檢查資料完整性</string>
+    <string name="autofill_report_integrity_hint">資料不完整可能導致回應構建失敗，請檢查密碼條目。</string>
+    <string name="autofill_report_optimize">優化效能</string>
+    <string name="autofill_report_optimize_hint">回應較慢，可嘗試清理快取或減少密碼條目數量。</string>
+    <string name="autofill_report_title">=== Monica 自動填入診斷 ===</string>
+    <string name="autofill_report_exported_at">匯出時間：%1$s</string>
+    <string name="autofill_report_device">裝置資料</string>
+    <string name="autofill_report_manufacturer">製造商：%1$s</string>
+    <string name="autofill_report_model">型號：%1$s</string>
+    <string name="autofill_report_android">Android：%1$s（API %2$d）</string>
+    <string name="autofill_report_rom">ROM：%1$s</string>
+    <string name="autofill_report_inline">支援鍵盤內聯建議：%1$s</string>
+    <string name="autofill_report_statistics">統計資料</string>
+    <string name="autofill_report_log_details">記錄詳情</string>
+    <string name="autofill_report_end">=== 記錄結束 ===</string>
+</resources>

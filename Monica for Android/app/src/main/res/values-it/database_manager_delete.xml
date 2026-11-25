@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Le cartelle e i loro contenuti sono inclusi. Le password locali e gli elementi protetti finiscono nel Cestino. Le cartelle e passkeys vengono eliminati definitivamente.</string>
+    <string name="manager_delete_native_hint">Gli elementi selezionati e il contenuto della cartella verranno eliminati definitivamente da questo database. Questa operazione non può essere annullata.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d selezionato</string>
+    <string name="manager_delete_title">Eliminare gli elementi selezionati?</string>
+</resources>

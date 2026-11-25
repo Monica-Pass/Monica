@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Tampilkan kode boarding</string>
+    <string name="boarding_code_add">Edit dan pindai boarding pass</string>
+    <string name="boarding_code_missing">Tidak ada kode boarding yang disimpan untuk pass ini</string>
+    <string name="boarding_code_saved">Kode boarding asli disimpan</string>
+    <string name="wallet_code_hint">Kode atau kode batang QR · Ketuk untuk menampilkan</string>
+    <string name="boarding_code_original_hint">Ini adalah dokumen asli yang dipindai. Mengedit detail pass tidak mengubah kode ini.</string>
+    <string name="boarding_code_expand">Perbesar kode</string>
+    <string name="boarding_code_collapse">Tampilkan detail tiket</string>
+    <string name="boarding_code_unavailable">Kode ini tidak dapat ditampilkan di sini. Coba lanskap atau pindai kembali boarding pass asli.</string>
+    <string name="boarding_code_rescan">Pindai lagi</string>
+    <string name="boarding_code_remove">Hapus kode yang disimpan</string>
+    <string name="wallet_pass_scan_boarding_pass">Pindai boarding pass</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Sejajarkan barcode pada boarding pass dengan bingkainya</string>
+    <string name="wallet_pass_boarding_pass_invalid">Bukan kode batang boarding pass IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Detail boarding pass diisi; simpan untuk menyimpan kodenya</string>
+    <string name="boarding_code_draft_hint">Simpan pass untuk menyimpan perubahan kode</string>
+    <string name="wallet_pass_show_code">Lihat kode keanggotaan</string>
+</resources>

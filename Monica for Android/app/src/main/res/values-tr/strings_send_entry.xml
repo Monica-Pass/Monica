@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_account_choose">Hesap seçin</string>
+    <string name="send_search_or_link_hint">Ara Gönder bağlantısını gönderir veya yapıştırır</string>
+    <string name="send_draft_replace_title">Bu taslak açılsın mı?</string>
+    <string name="send_draft_replace_message">Bu formdaki kaydedilmemiş değişiklikler değiştirilecektir. Kaydedilen taslaklar saklanacaktır.</string>
+</resources>

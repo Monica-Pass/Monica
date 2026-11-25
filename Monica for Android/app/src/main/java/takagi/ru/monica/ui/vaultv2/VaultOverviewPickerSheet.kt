@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.vaultv2
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -201,7 +205,7 @@ internal fun VaultOverviewPickerSheet(
             ) {
                 if (copyAction == null && query.isBlank() && !imeVisible) item(key = "recommend", contentType = "recommend") {
                     Row(Modifier.fillMaxWidth().padding(bottom = 12.dp).clip(GroupedItemDefaults.SingleShape)
-                        .toggleable(value = recommend, role = Role.Switch, interactionSource = remember { MutableInteractionSource() },
+                        .hapticSwitchToggleable(value = recommend, role = Role.Switch, interactionSource = remember { MutableInteractionSource() },
                             indication = null, onValueChange = setRecommend)
                         .padding(horizontal = 4.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f).padding(end = 12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {

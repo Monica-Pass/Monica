@@ -3,7 +3,7 @@
     <string name="nearby_hotspot_create">建臨時熱點</string>
     <string name="nearby_hotspot_create_hint">無共用 Wi-Fi 時，可連他機。</string>
     <string name="nearby_hotspot_title">臨時熱點</string>
-    <string name="nearby_hotspot_help">此碼十分鐘後失效。閉此窗、鎖定或離 Monica，即止熱點。連後仍驗配對。</string>
+    <string name="nearby_hotspot_help">此码于 10 分钟后失效。闭此面板、封库或离开 Monica，即止热点。配对仍须核验。</string>
     <string name="nearby_hotspot_active">臨時熱點已啟</string>
     <string name="nearby_hotspot_stop">止臨時熱點</string>
     <string name="nearby_hotspot_starting">正建熱點與配對碼…</string>

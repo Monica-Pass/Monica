@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Giữ và kéo để sắp xếp lại</string>
+    <string name="entry_content_remove_message">Thao tác này sẽ xóa nội dung khỏi bản nháp này. Những thay đổi có hiệu lực khi bạn lưu.</string>
+    <string name="entry_content_remove_title">Xóa %1$s?</string>
+</resources>

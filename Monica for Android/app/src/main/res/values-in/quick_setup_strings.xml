@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_step_presets_title">Mulailah dengan preset</string>
+    <string name="qs_step_presets_subtitle">Pilih tata letak. Anda dapat menyesuaikannya di langkah selanjutnya.</string>
+    <string name="qs_dock_subtitle">Pilih halaman Dock Anda dan urutannya.</string>
+    <string name="qs_step_customize_title">Sempurnakan halaman Anda</string>
+    <string name="qs_step_customize_subtitle">Perluas hanya apa yang ingin Anda ubah. Opsi ini terpisah dari Dock.</string>
+    <string name="qs_step_protect_title">Keamanan &amp; isi otomatis</string>
+    <string name="qs_step_protect_subtitle">Lindungi brankas Anda, lalu permudah proses masuk.</string>
+    <string name="qs_ready_title">Siap berangkat</string>
+    <string name="qs_ready_subtitle">Ini tata letak Anda. Anda dapat mengubahnya kapan saja di Pengaturan.</string>
+    <string name="qs_save_failed">Tidak dapat menyimpan pengaturan Anda. Silakan coba lagi.</string>
+    <string name="qs_use_preset">Gunakan prasetel</string>
+    <string name="qs_enter_monica">Buka Monica</string>
+    <string name="qs_current_layout">Tata letak saat ini</string>
+    <string name="qs_data_optional">Anda dapat menghubungkan database atau mengimpor data sekarang, atau melakukannya nanti di Pengaturan.</string>
+    <string name="qs_preset_bitwarden_preview">Bitwarden · Pratinjau</string>
+    <string name="qs_preset_bitwarden_preview_desc">Buka ikhtisar brankas, dengan Kirim dan Generator di Dock.</string>
+    <string name="qs_preset_bitwarden_list">Bitwarden · Daftar</string>
+    <string name="qs_preset_bitwarden_list_desc">Langsung ke daftar vault, dengan Send dan Generator di Dock.</string>
+    <string name="qs_preset_authenticator">Pengautentik</string>
+    <string name="qs_preset_authenticator_desc">Authenticator dan Steam, fokus pada kode verifikasi.</string>
+    <string name="qs_preset_paged">Halaman terpisah</string>
+    <string name="qs_preset_paged_desc">Kata Sandi, Authenticator, Dompet, dan Catatan di halamannya masing-masing.</string>
+    <string name="qs_preset_everyday">Setiap hari</string>
+    <string name="qs_preset_everyday_desc">Simpan Kata Sandi, Authenticator, dan Generator di dekat Anda.</string>
+    <string name="qs_preset_minimal">Minimal</string>
+    <string name="qs_preset_minimal_desc">Hanya Kata Sandi dan Generator untuk Dock yang lebih sederhana.</string>
+    <string name="qs_keep_layout">Pertahankan tata letak saat ini</string>
+    <string name="qs_keep_layout_desc">Lanjutkan dengan tata letak yang ada dan sesuaikan sesuai kebutuhan.</string>
+    <string name="qs_presets_hint">Pengaturan tetap di Dock. Preset berfungsi dengan database apa pun; sambungkan milik Anda di langkah data.</string>
+    <string name="qs_move_up">Naik</string>
+    <string name="qs_move_down">Pindah ke bawah</string>
+    <string name="qs_settings_kept">Selalu tersedia</string>
+    <string name="qs_vault_overview">Mulai brankas dengan ikhtisar</string>
+    <string name="qs_import_from_apps">Impor dari aplikasi lain</string>
+    <string name="qs_import_from_apps_desc">Transfer kata sandi dan kunci sandi, lalu kembali ke pengaturan.</string>
+</resources>

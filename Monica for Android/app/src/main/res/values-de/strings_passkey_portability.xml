@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Geräteübergreifende Nutzung</string>
+    <string name="passkey_portability_algorithm_hint">Das Ziel muss denselben Schlüsselalgorithmus unterstützen. Die aktuelle Bitwarden-Übertragung unterstützt nur ES256.</string>
+    <string name="passkey_portability_backup_hint">Diese Anmeldeinformationen wurden als nicht für die Sicherung geeignet markiert. Nur ein Ziel, das diese Eigenschaft bewahrt, kann sie nutzen; Die Konvertierung in Bitwarden oder der Austausch von Anmeldeinformationen ist blockiert.</string>
+    <string name="passkey_portability_checking">Überprüfen…</string>
+    <string name="passkey_portability_counter_hint">Diese Anmeldeinformationen haben einen Signaturzählerverlauf ungleich Null. Monica verwendet Nullzähler; Die geräteübergreifende Nutzung kann von einer Website abgelehnt werden, die vorherige Zähler überprüft.</string>
+    <string name="passkey_portability_exportable">Schlüssel kann exportiert werden</string>
+    <string name="passkey_portability_exportable_hint">Der Schlüssel kann in einem unterstützten verschlüsselten Format exportiert werden. Das Ziel muss seine ID-, Schlüssel- und Registrierungseigenschaften beibehalten; Die Website-Kompatibilität hängt immer noch vom Zielclient ab.</string>
+    <string name="passkey_portability_invalid">Widersprüchliche Metadaten</string>
+    <string name="passkey_portability_invalid_hint">Der Konflikt mit den Sicherungseigenschaften liegt vor. Durch das Signieren dürfen registrierte Eigenschaften nicht stillschweigend geändert werden. Bewahren Sie die Quellanmeldeinformationen für die Wiederherstellung auf.</string>
+    <string name="passkey_portability_key_unavailable">Schlüssel nicht verfügbar</string>
+    <string name="passkey_portability_local_hint">Der private Schlüssel ist an dieses Gerät gebunden und kann nicht exportiert werden. Durch das Kopieren der Datenbank allein ist die Anmeldung auf einem anderen Gerät nicht möglich.</string>
+    <string name="passkey_portability_local_only">Nur lokal</string>
+    <string name="passkey_portability_missing_hint">Auf diesem Gerät wurde kein verwendbarer privater Schlüssel gefunden. Dieser Datensatz allein kann weder hier noch auf einem anderen Gerät angemeldet werden.</string>
+    <string name="passkey_portability_restricted">Übertragung begrenzt</string>
+    <string name="passkey_portability_unknown">Nicht verifiziert</string>
+    <string name="passkey_portability_unknown_hint">Schlüsselfähigkeit konnte nicht überprüft werden. Entsperren Sie die Quelldatenbank und versuchen Sie es erneut.</string>
+</resources>

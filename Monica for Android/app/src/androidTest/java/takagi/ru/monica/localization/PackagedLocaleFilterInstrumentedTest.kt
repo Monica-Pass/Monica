@@ -24,8 +24,11 @@ class PackagedLocaleFilterInstrumentedTest {
     @Test fun everySelectableLanguageStillResolvesItsOwnCompiledTranslation() {
         val expected = mapOf(
             Language.ENGLISH to "Cancel",
+            Language.INDONESIAN to "Batal",
+            Language.TURKISH to "İptal",
             Language.CHINESE to "取消",
             Language.TRADITIONAL_CHINESE to "取消",
+            Language.TRADITIONAL_CHINESE_TAIWAN to "取消",
             Language.CLASSICAL_CHINESE to "罢",
             Language.VIETNAMESE to "Hủy",
             Language.JAPANESE to "キャンセル",
@@ -58,7 +61,7 @@ class PackagedLocaleFilterInstrumentedTest {
         assertEquals("更新已有密码？", hans.getString(R.string.autofill_save_review_title))
         assertEquals("删除未完成", hans.getString(R.string.batch_delete_incomplete_title))
 
-        for (tag in listOf("zh-Hant-HK", "zh-Hant-TW", "zh-Hant-MO")) {
+        for (tag in listOf("zh-Hant-HK", "zh-Hant-MO")) {
             val locale = Locale.forLanguageTag(tag)
             val configuration = Configuration(context.resources.configuration).apply {
                 setLocales(checkNotNull(LocaleHelper.chineseFallbackLocales(locale)))
@@ -66,7 +69,9 @@ class PackagedLocaleFilterInstrumentedTest {
             val traditional = context.createConfigurationContext(configuration)
             assertEquals("$tag,zh-Hans-CN,en", traditional.resources.configuration.locales.toLanguageTags())
             assertEquals("儲存", traditional.getString(R.string.save))
-            assertEquals("Deletion incomplete", traditional.getString(R.string.batch_delete_incomplete_title))
+            // An absent Hong Kong/Macau entry now uses the closest packaged Hant
+            // region (Taiwan); existing Hant translations and the selected region stay intact.
+            assertEquals("刪除未完成", traditional.getString(R.string.batch_delete_incomplete_title))
             assertEquals(Language.TRADITIONAL_CHINESE, LocaleHelper.getCurrentLanguage(traditional))
         }
     }
@@ -96,7 +101,7 @@ class PackagedLocaleFilterInstrumentedTest {
 
     @Test fun unsupportedLanguagesUseTheDefaultEnglishAppResources() {
         val english = context.localized("en-US")
-        for (tag in listOf("ar", "tr", "th", "nl", "uk")) {
+        for (tag in listOf("ar", "sv", "th", "nl", "uk")) {
             val localized = context.localized(tag)
             assertEquals(tag, "Cancel", localized.getString(R.string.cancel))
             assertEquals(tag, english.getString(R.string.local_password_protection_scope),

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.switchClick
+
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.ComponentName
@@ -63,7 +65,7 @@ import androidx.compose.material3.MaterialTheme
 import takagi.ru.monica.ui.components.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -856,7 +858,7 @@ private fun V2BlacklistManagementDialog(
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { onPackageToggle(app.packageName, !checked) },
+                                    .clickable(onClick = switchClick(checked) { onPackageToggle(app.packageName, it) }),
                                 shape = RoundedCornerShape(12.dp),
                                 colors = CardDefaults.cardColors(
                                     containerColor = if (checked)

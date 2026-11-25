@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_title">Kunci API</string>
+    <string name="api_key_add">Tambahkan Kunci API</string>
+    <string name="api_key_edit">Edit Kunci API</string>
+    <string name="api_key_provider">Nama penyedia *</string>
+    <string name="api_key_provider_hint">mis. Claude, penyedia AI khusus</string>
+    <string name="api_key_website">Situs web resmi (opsional)</string>
+    <string name="api_key_website_label">Situs web resmi</string>
+    <string name="api_key_secret_required">Kunci API *</string>
+    <string name="api_key_url">API permintaan URL (opsional)</string>
+    <string name="api_key_url_label">API permintaan URL</string>
+    <string name="api_key_required">Diperlukan</string>
+    <string name="api_key_invalid_url">Masukkan http:// atau https:// URL dengan host dan tanpa kredensial tertanam.</string>
+    <string name="api_key_show">Tampilkan kunci</string>
+    <string name="api_key_hide">Sembunyikan kunci</string>
+    <string name="api_key_open_website">Buka situs web</string>
+    <string name="api_key_load_error">Tidak dapat membaca Kunci API ini. Buka kembali basis datanya dan coba lagi.</string>
+    <string name="api_key_save_error">Tidak dapat menyimpan ke semua lokasi yang dipilih. Periksa ketersediaannya dan coba lagi.</string>
+    <string name="api_key_locked">Gudang Anda terkunci. Buka kuncinya untuk melanjutkan.</string>
+</resources>

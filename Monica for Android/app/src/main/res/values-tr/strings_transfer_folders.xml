@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">Sonuçları kopyala</string>
+    <string name="passkey_copy_result_summary">Kopyalandı %1$d; atlandı veya başarısız oldu: %2$d</string>
+    <string name="passkey_copy_success_count">Kopyalanan %1$d Geçiş Anahtarları</string>
+    <string name="passkey_transfer_key_unavailable">Özel anahtar bu cihazda mevcut değil.</string>
+    <string name="passkey_transfer_restricted">Bu Şifre bu hedefe aktarılamaz.</string>
+    <string name="passkey_transfer_same_database_copy">Bu veritabanı benzersiz bir kimlik bilgisi kimliği gerektirir. Bu Şifre Anahtarını kopyalamak için başka bir veritabanı seçin.</string>
+    <string name="passkey_copy_blocked_title">Bazı Şifreler kopyalanamıyor</string>
+    <string name="passkey_move_blocked_title">Bazı Şifre Anahtarları taşınamıyor</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Geçiş Anahtarları işlenemez; %2$d devam edebilir. Henüz hiçbir şey değişmedi.</string>
+    <string name="passkey_cancel_copy">Kopyalamayı iptal et</string>
+    <string name="passkey_cancel_move">Taşımayı iptal et</string>
+    <string name="passkey_transfer_skip">%1$d\'yu atlayın ve devam edin</string>
+</resources>

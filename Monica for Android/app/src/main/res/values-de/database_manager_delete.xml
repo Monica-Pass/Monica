@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">Ordner und deren Inhalte sind enthalten. Lokale Passwörter und sichere Elemente werden in den Papierkorb verschoben. Die Ordner passkeys werden dauerhaft gelöscht.</string>
+    <string name="manager_delete_native_hint">Ausgewählte Elemente und Ordnerinhalte werden dauerhaft aus dieser Datenbank gelöscht. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="manager_delete_source">%1$s · %2$s · %3$d ausgewählt</string>
+    <string name="manager_delete_title">Ausgewählte Elemente löschen?</string>
+</resources>

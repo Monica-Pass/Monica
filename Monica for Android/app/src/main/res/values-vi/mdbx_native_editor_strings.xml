@@ -14,6 +14,6 @@
     <string name="mdbx_native_delete_confirm">Xóa mục này và các tệp đính kèm?</string>
     <string name="mdbx_native_editable">Thay đổi được ghi trực tiếp vào cơ sở dữ liệu đã mã hóa này.</string>
     <string name="mdbx_native_app_locked">Mở khóa Monica theo quy trình thông thường của ứng dụng để tiếp tục.</string>
-    <string name="mdbx_client_mode_unsupported_title">Glitter is not supported yet</string>
-    <string name="mdbx_client_mode_unsupported">The Android client does not support Glitter yet. Choose Sky, Multi or Power. Existing database files and records are preserved without automatic downgrade or conversion. Use a client that supports Glitter to access them.</string>
+    <string name="mdbx_client_mode_unsupported_title">Glitter chưa được hỗ trợ</string>
+    <string name="mdbx_client_mode_unsupported">Máy khách Android chưa hỗ trợ Glitter. Chọn Sky, Multi hoặc Power. Các tệp và bản ghi cơ sở dữ liệu hiện có được bảo tồn mà không cần hạ cấp hoặc chuyển đổi tự động. Sử dụng ứng dụng khách hỗ trợ Glitter để truy cập chúng.</string>
 </resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">刪除未完成</string>
+    <string name="batch_delete_interrupted_count">處理到 %1$d / %2$d 項時中斷，請檢查剩餘條目後重試。</string>
+</resources>

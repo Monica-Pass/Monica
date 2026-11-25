@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Karte kopieren</string>
+    <string name="embedded_copy_document">Dokument kopieren</string>
+    <string name="embedded_copy_failed">Die Kopie des Inhalts ist unvollständig</string>
+    <string name="embedded_copy_failed_message">%1$s konnte nicht vollständig kopiert werden. Ihre Quelle und Ihr Entwurf bleiben erhalten. Überprüfen Sie, ob die Quelldatenbank entsperrt ist und Anhänge verfügbar sind, und versuchen Sie es dann erneut.</string>
+    <string name="embedded_copy_independent">Unabhängige Kopie · %1$d-Anhänge</string>
+    <string name="embedded_copy_note">Notiz kopieren</string>
+    <string name="embedded_copy_working">Kompletter Inhalt wird kopiert…</string>
+    <string name="password_content_document">Ausweisdokument</string>
+    <string name="password_content_document_description">Identitätsfelder, Kartenvorderseite, Fotos und Anhänge</string>
+</resources>

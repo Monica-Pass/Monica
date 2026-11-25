@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_sort">Sıralama ölçütü</string>
+    <string name="vault_sort_scope">Tüm öğelere, klasörlere ve arama sonuçlarına uygulanır</string>
+    <string name="vault_sort_title_asc">Ad: A → Z</string>
+    <string name="vault_sort_title_desc">Ad: Z → A</string>
+    <string name="vault_sort_created_desc">Oluşturuldu: önce en yeni</string>
+    <string name="vault_sort_created_asc">Oluşturuldu: önce en eski</string>
+    <string name="vault_sort_updated_desc">Güncellendi: önce en yeni</string>
+    <string name="vault_sort_updated_asc">Güncellendi: önce en eski</string>
+    <string name="vault_sort_unknown_date">Bilinmeyen tarih</string>
+</resources>

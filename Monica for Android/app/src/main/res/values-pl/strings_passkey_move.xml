@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">Tryb przechowywania lub klucz prywatny nie spełnia wymagań migracji Bitwarden. Odblokuj Monica i spróbuj ponownie lub wybierz inny skarbiec. Nie można eksportować kluczy powiązanych z urządzeniem; zachowaj je na oryginalnym urządzeniu lub zarejestruj nowe passkey w serwisie.</string>
+    <string name="passkey_move_bound_reason">Ten passkey jest powiązany z wpisem hasła i nie można go oddzielnie przenosić. Przenieś połączony wpis hasła lub najpierw odłącz passkey.</string>
+    <string name="passkey_move_cleanup_reason">Miejsce docelowe zostało zapisane, ale czyszczenie źródła nie zostało zakończone. Kopie mogą pozostać w obu skarbcach. Przed kontynuowaniem sprawdź miejsce docelowe oraz skarbiec źródłowy lub stan synchronizacji. nie powtarzaj ruchu na ślepo.</string>
+    <string name="passkey_move_conflict_reason">Docelowa baza danych KeePass zawiera już te same dane uwierzytelniające passkey. Nic nie zostało nadpisane. Sprawdź istniejący wpis lub wybierz inną bazę danych.</string>
+    <string name="passkey_move_reference_reason">Ten element stanowi jedynie odniesienie i nie ma klucza prywatnego, który można przenieść oddzielnie. Użyj oryginalnej aplikacji lub skarbca, w którym znajduje się aktualny plik passkey.</string>
+    <string name="passkey_move_result_summary">Ukończono %1$d; wymaga uwagi %2$d</string>
+    <string name="passkey_move_result_title">Przenieś wynik</string>
+    <string name="passkey_move_success_count">Przeniesiono elementy %1$d</string>
+    <string name="passkey_move_unnamed_account">Konto bez nazwy</string>
+    <string name="passkey_move_update_reason">Przenoszenie nie zostało zakończone i nie udało się ustalić dokładnej przyczyny. Sprawdź, czy skarbce źródłowe i docelowe są odblokowane i możliwe do zapisu oraz czy mają wystarczającą ilość wolnego miejsca. Sprawdź oba skarbce przed ponowną próbą; nie usuwaj źródła.</string>
+</resources>

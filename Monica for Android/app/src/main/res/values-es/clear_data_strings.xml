@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Compensación de tarjetas bancarias…</string>
+    <string name="clear_data_completed">Borrado completo</string>
+    <string name="clear_data_completed_hint">Los datos seleccionados han sido borrados.</string>
+    <string name="clear_data_count">Entradas %1$d / %2$d borradas</string>
+    <string name="clear_data_documents">Borrando documentos…</string>
+    <string name="clear_data_failed">No se pudieron borrar todos los datos seleccionados</string>
+    <string name="clear_data_failed_hint">Se detuvo la limpieza. Las entradas ya borradas no se restaurarán. Verifique la conexión de su base de datos e inténtelo nuevamente.</string>
+    <string name="clear_data_generator_history">Borrando el historial de generación de contraseñas…</string>
+    <string name="clear_data_notes">Borrando notas…</string>
+    <string name="clear_data_passwords">Borrando contraseñas…</string>
+    <string name="clear_data_preparing">Contando entradas seleccionadas…</string>
+    <string name="clear_data_totp">Borrando autenticadores…</string>
+    <string name="clear_data_verifying">Verificando…</string>
+    <string name="clear_data_wait">Por favor espere a que finalice esta operación.</string>
+</resources>

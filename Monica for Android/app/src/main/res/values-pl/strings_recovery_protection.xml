@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">Ochrona odzyskiwania</string>
+    <string name="recovery_protection_summary">Sprawdź odzyskiwanie oryginalnym hasłem głównym</string>
+    <string name="recovery_protection_verified">Sprawdzono w tej sesji: %1$s</string>
+    <string name="recovery_protection_not_ready">Nie udało się sprawdzić ochrony. Dane zachowano. Spróbuj ponownie lub utwórz zaszyfrowaną kopię.</string>
+    <string name="recovery_protection_needs_password">Wpisz hasło główne, aby przygotować i sprawdzić odzyskiwanie</string>
+    <string name="recovery_protection_explanation">Sprawdza, czy oryginalne hasło główne otwiera niezależne dane odzyskiwania. Nie zastępuje sejfu ani kluczy urządzenia. Sprawna starsza instalacja może przygotować te dane.</string>
+    <string name="recovery_protection_limits">Zachowaj niezależną zaszyfrowaną kopię. Sprawdzenie dotyczy bieżących danych i sesji; nie gwarantuje przyszłej integralności plików ani odzyskania poświadczeń związanych ze sprzętem. Po zablokowaniu lub zmianach sprawdź ponownie.</string>
+    <string name="recovery_protection_verify">Sprawdź odzyskiwanie</string>
+    <string name="recovery_protection_checking">Sprawdzanie odzyskiwania…</string>
+    <string name="recovery_material_available">Znaleziono dane odzyskiwania. Nadal trzeba zweryfikować oryginalne hasło główne.</string>
+    <string name="recovery_material_missing">Brak niezależnych danych odzyskiwania. Przywróć pierwotne środowisko kluczy lub sprawdź zaszyfrowaną kopię w innej instalacji.</string>
+    <string name="recovery_material_reenroll">Po zmianie poświadczeń przygotuj odzyskiwanie ponownie. Przywróć zwykły dostęp i sprawdź aktualnym hasłem głównym.</string>
+    <string name="recovery_material_revoked">Te dane odzyskiwania zostały jawnie unieważnione. Zachowaj oryginalne pliki.</string>
+    <string name="recovery_material_unsupported">Nieobsługiwany format odzyskiwania. Zachowaj pliki i użyj zgodnej wersji Monica.</string>
+    <string name="recovery_material_invalid">Dane odzyskiwania są niepełne lub nieprawidłowe. Zachowaj oryginały; nie zastępuj ich pustymi plikami ani danymi innego sejfu.</string>
+    <string name="recovery_material_unreadable">Nie można odczytać danych. Zachowaj pliki, odblokuj urządzenie i spróbuj ponownie.</string>
+    <string name="recovery_material_unchecked">Danych jeszcze nie sprawdzono. Spróbuj po odblokowaniu i zakończeniu bieżącej operacji.</string>
+    <string name="secure_startup_key_missing">Bieżąca usługa kluczy nie znajduje oryginalnego klucza. To nie dowodzi jego trwałego usunięcia.</string>
+    <string name="secure_startup_wait">System nie jest gotowy lub trwa bezpieczna operacja. Odblokuj urządzenie i spróbuj później.</string>
+    <string name="secure_startup_inconsistent">Zaszyfrowane ustawienia i stan odzyskiwania nie pasują. Zachowaj oryginały; nie usuwaj znaczników w celu pominięcia kontroli.</string>
+    <string name="secure_startup_environment_omk">Jeśli problem wystąpił po zmianie OMK lub innego modułu kluczy, przywróć środowisko utworzenia sejfu. Usunięcie Monica z niedawno dodanego zakresu może pomóc, ale nie dla każdego sejfu. Zachowaj konfigurację i klucze; nie reinstaluj modułów ani nie resetuj ziarna na próbę.</string>
+</resources>

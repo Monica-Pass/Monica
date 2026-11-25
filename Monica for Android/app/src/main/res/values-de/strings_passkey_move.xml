@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">Der Speichermodus oder der private Schlüssel erfüllt nicht die Bitwarden-Migrationsanforderungen. Entsperren Sie Monica und versuchen Sie es erneut, oder wählen Sie einen anderen Tresor. Gerätegebundene Schlüssel können nicht exportiert werden; Behalten Sie sie auf dem Originalgerät oder registrieren Sie ein neues passkey beim Dienst.</string>
+    <string name="passkey_move_bound_reason">Dieser passkey ist mit einem Passworteintrag verknüpft und kann nicht separat verschoben werden. Verschieben Sie den verknüpften Passworteintrag oder heben Sie zuerst die Verknüpfung von passkey auf.</string>
+    <string name="passkey_move_cleanup_reason">Das Ziel wurde gespeichert, aber die Quellbereinigung wurde nicht abgeschlossen. Kopien können in beiden Tresoren verbleiben. Überprüfen Sie das Ziel und den Quelltresor oder den Synchronisierungsstatus, bevor Sie fortfahren. Wiederholen Sie den Zug nicht blind.</string>
+    <string name="passkey_move_conflict_reason">Die Zieldatenbank KeePass enthält bereits dieselben passkey-Anmeldeinformationen. Es wurde nichts überschrieben. Überprüfen Sie den vorhandenen Eintrag oder wählen Sie eine andere Datenbank.</string>
+    <string name="passkey_move_reference_reason">Dieses Element ist nur eine Referenz und verfügt über keinen privaten Schlüssel, der separat verschoben werden kann. Verwenden Sie die Original-App oder den Original-Tresor, der den tatsächlichen passkey enthält.</string>
+    <string name="passkey_move_result_summary">Abgeschlossen %1$d; braucht Aufmerksamkeit %2$d</string>
+    <string name="passkey_move_result_title">Ergebnis verschieben</string>
+    <string name="passkey_move_success_count">%1$d-Elemente verschoben</string>
+    <string name="passkey_move_unnamed_account">Unbenanntes Konto</string>
+    <string name="passkey_move_update_reason">Der Umzug wurde nicht abgeschlossen und die genaue Ursache konnte nicht ermittelt werden. Überprüfen Sie, ob die Quell- und Zieldepots entsperrt und beschreibbar sind und über ausreichend freien Speicherplatz verfügen. Überprüfen Sie beide Tresore, bevor Sie es erneut versuchen. Löschen Sie die Quelle nicht.</string>
+</resources>

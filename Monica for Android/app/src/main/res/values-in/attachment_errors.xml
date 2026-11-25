@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_error_bitwarden_locked">Gudang Bitwarden terkunci atau sesi telah berakhir. Buka kuncinya atau masuk lagi.</string>
+    <string name="attachment_error_remote_data">Server mengembalikan informasi lampiran yang tidak lengkap. Sinkronkan brankas dan coba lagi.</string>
+    <string name="attachment_error_unsupported_encryption">Lampiran ini menggunakan format enkripsi yang tidak didukung (tipe %1$d). Ekspor dengan klien resmi dan unggah lagi.</string>
+    <string name="attachment_error_unknown">Operasi lampiran gagal. Silakan coba lagi.</string>
+    <string name="attachment_error_decryption_failed">Dekripsi lampiran atau verifikasi integritas gagal. Sinkronkan brankas dan coba lagi.</string>
+    <string name="password_batch_attachment_failure">Lampiran tidak dapat ditransfer untuk item %1$d. %2$s</string>
+</resources>

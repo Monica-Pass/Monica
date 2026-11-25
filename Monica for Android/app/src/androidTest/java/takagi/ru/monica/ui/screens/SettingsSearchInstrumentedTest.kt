@@ -158,7 +158,7 @@ class SettingsSearchInstrumentedTest {
 
 
     @Test fun everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData() {
-        val tags = listOf("en", "zh-CN", "zh-Hant-HK", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")
+        val tags = listOf("en", "zh-CN", "zh-Hant-HK", "zh-Hant-TW", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")
         for (tag in tags) {
             val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply {
                 setLocale(Locale.forLanguageTag(tag))
@@ -223,7 +223,7 @@ class SettingsSearchInstrumentedTest {
             R.string.default_manager_title, R.string.autofill_hyperos_save_compatibility,
             R.string.reduce_animations, R.string.hyperos_hook_reset, R.string.hyperos_hook_settings,
             R.string.hyperos_hook_chooser, R.string.hyperos_hook_hybrid, R.string.hyperos_drift_title)
-        for (tag in listOf("en", "zh-CN", "zh-Hant-HK", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")) {
+        for (tag in listOf("en", "zh-CN", "zh-Hant-HK", "zh-Hant-TW", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")) {
             val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply {
                 setLocale(Locale.forLanguageTag(tag))
             })

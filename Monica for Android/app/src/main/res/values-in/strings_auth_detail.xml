@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">Salin kode saat ini</string>
+    <string name="auth_detail_copy_next">Salin Berikutnya</string>
+    <string name="auth_detail_qr_migrate">Hasilkan kode QR (migrasi)</string>
+    <string name="auth_detail_qr_current">Hasilkan kode QR (kode saat ini)</string>
+</resources>

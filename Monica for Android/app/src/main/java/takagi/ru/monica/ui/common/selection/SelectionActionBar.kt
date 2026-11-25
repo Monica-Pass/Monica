@@ -1,11 +1,14 @@
 package takagi.ru.monica.ui.common.selection
 
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -18,14 +21,23 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.RemoveCircleOutline
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,95 +54,116 @@ fun SelectionActionBar(
     onMoveToCategory: (() -> Unit)? = null,
     onStack: (() -> Unit)? = null,
     onDelete: (() -> Unit)? = null,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    containerColor: Color = Color.Unspecified,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onRemoveFromFrequent: (() -> Unit)? = null,
     onRestore: (() -> Unit)? = null,
 ) {
+    val scheme = MaterialTheme.colorScheme
+    val colors = remember(scheme, containerColor, contentColor) {
+        selectionBarColors(scheme, containerColor, contentColor)
+    }
+    val countDescription = stringResource(R.string.selected_items, selectedCount)
     Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(28.dp),
-        tonalElevation = 3.dp,
+        modifier = modifier.testTag("selection_action_bar"),
+        shape = RoundedCornerShape(32.dp),
+        tonalElevation = 0.dp,
         shadowElevation = 8.dp,
-        color = containerColor,
-        contentColor = contentColor
+        color = colors.container,
+        contentColor = colors.content,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+            modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Surface(
+                modifier = Modifier.semantics { contentDescription = countDescription },
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                color = scheme.primary,
+                contentColor = readableSelectionContent(scheme.onPrimary, scheme.primary),
             ) {
-                Text(
-                    text = selectedCount.toString(),
-                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                )
+                Box(Modifier.widthIn(min = 36.dp).heightIn(min = 40.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = selectedCount.toString(),
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                        maxLines = 1,
+                    )
+                }
             }
+            // Keep the count and close action visible; only actions scroll on narrow screens.
+            Row(
+                Modifier.weight(1f, fill = false).horizontalScroll(rememberScrollState())
+                    .testTag("selection_actions"),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                ActionIcon(
+                    colors = colors,
+                    icon = Icons.Outlined.CheckCircle,
+                    contentDescription = stringResource(id = R.string.select_all),
+                    onClick = onSelectAll
+                )
 
-            Spacer(modifier = Modifier.width(4.dp))
+                onFavorite?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Outlined.FavoriteBorder,
+                        contentDescription = stringResource(id = R.string.favorite),
+                        onClick = it
+                    )
+                }
 
+                onMoveToCategory?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Default.Folder,
+                        contentDescription = stringResource(id = R.string.move_to_category),
+                        onClick = it
+                    )
+                }
+
+                onStack?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Default.Layers,
+                        contentDescription = stringResource(id = R.string.batch_stack),
+                        onClick = it
+                    )
+                }
+
+                onRemoveFromFrequent?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Outlined.RemoveCircleOutline,
+                        contentDescription = stringResource(R.string.vault_overview_remove_frequent_items),
+                        onClick = it
+                    )
+                }
+
+                onRestore?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Outlined.Restore,
+                        contentDescription = stringResource(R.string.restore),
+                        onClick = it
+                    )
+                }
+
+                onDelete?.let {
+                    ActionIcon(
+                        colors = colors,
+                        icon = Icons.Outlined.Delete,
+                        contentDescription = stringResource(id = R.string.delete),
+                        destructive = true,
+                        onClick = it
+                    )
+                }
+
+            }
             ActionIcon(
-                icon = Icons.Outlined.CheckCircle,
-                contentDescription = stringResource(id = R.string.select_all),
-                onClick = onSelectAll
-            )
-
-            onFavorite?.let {
-                ActionIcon(
-                    icon = Icons.Outlined.FavoriteBorder,
-                    contentDescription = stringResource(id = R.string.favorite),
-                    onClick = it
-                )
-            }
-
-            onMoveToCategory?.let {
-                ActionIcon(
-                    icon = Icons.Default.Folder,
-                    contentDescription = stringResource(id = R.string.move_to_category),
-                    onClick = it
-                )
-            }
-
-            onStack?.let {
-                ActionIcon(
-                    icon = Icons.Default.Layers,
-                    contentDescription = stringResource(id = R.string.batch_stack),
-                    onClick = it
-                )
-            }
-
-            onRemoveFromFrequent?.let {
-                ActionIcon(
-                    icon = Icons.Outlined.RemoveCircleOutline,
-                    contentDescription = stringResource(R.string.vault_overview_remove_frequent_items),
-                    onClick = it
-                )
-            }
-
-            onRestore?.let {
-                ActionIcon(
-                    icon = Icons.Outlined.Restore,
-                    contentDescription = stringResource(R.string.restore),
-                    onClick = it
-                )
-            }
-
-            onDelete?.let {
-                ActionIcon(
-                    icon = Icons.Outlined.Delete,
-                    contentDescription = stringResource(id = R.string.delete),
-                    onClick = it
-                )
-            }
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            ActionIcon(
+                colors = colors,
                 icon = Icons.Default.Close,
                 contentDescription = stringResource(id = R.string.close),
                 onClick = onExit
@@ -140,15 +173,76 @@ fun SelectionActionBar(
 }
 
 @Composable
-private fun ActionIcon(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
-    IconButton(
+private fun ActionIcon(
+    icon: ImageVector,
+    contentDescription: String,
+    onClick: () -> Unit,
+    colors: SelectionBarColors,
+    destructive: Boolean = false,
+) {
+    FilledIconButton(
         onClick = onClick,
-        modifier = Modifier.size(40.dp)
+        modifier = Modifier.size(48.dp),
+        shape = CircleShape,
+        colors = IconButtonDefaults.filledIconButtonColors(
+            containerColor = if (destructive) colors.deleteContainer else colors.actionContainer,
+            contentColor = if (destructive) colors.deleteContent else colors.actionContent,
+        ),
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Icon(imageVector = icon, contentDescription = contentDescription,
+            modifier = Modifier.size(24.dp))
     }
+}
+
+internal data class SelectionBarColors(
+    val container: Color,
+    val content: Color,
+    val actionContainer: Color,
+    val actionContent: Color,
+    val deleteContainer: Color,
+    val deleteContent: Color,
+)
+
+internal fun selectionContrast(a: Color, b: Color): Float {
+    val first = a.luminance() + 0.05f
+    val second = b.luminance() + 0.05f
+    return maxOf(first, second) / minOf(first, second)
+}
+
+/** Preserve theme hues; use an opaque readable foreground for unusual custom palettes. */
+internal fun readableSelectionContent(preferred: Color, background: Color): Color {
+    val opaque = preferred.copy(alpha = 1f)
+    if (selectionContrast(opaque, background) >= 4.5f) return opaque
+    return if (selectionContrast(Color.Black, background) >= selectionContrast(Color.White, background))
+        Color.Black else Color.White
+}
+
+internal fun selectionBarColors(
+    scheme: ColorScheme,
+    container: Color = Color.Unspecified,
+    content: Color = scheme.onSurface,
+): SelectionBarColors {
+    // Keep the toolbar separate from list cards, including collapsed OLED roles.
+    val preferred = if (container.isSpecified) container
+        else lerp(scheme.surfaceContainerHighest, scheme.primary, 0.18f)
+    val surface = separateSelectionSurface(preferred, scheme.surfaceContainerHighest)
+    val action = separateSelectionSurface(scheme.secondaryContainer, surface)
+    val delete = separateSelectionSurface(scheme.errorContainer, surface)
+    return SelectionBarColors(
+        surface, readableSelectionContent(content, surface),
+        action, readableSelectionContent(scheme.onSecondaryContainer, action),
+        delete, readableSelectionContent(scheme.onErrorContainer, delete),
+    )
+}
+
+private fun separateSelectionSurface(preferred: Color, background: Color): Color {
+    val opaque = preferred.copy(alpha = 1f)
+    if (selectionContrast(opaque, background) >= 1.25f) return opaque
+    val edge = if (selectionContrast(Color.Black, background) >= selectionContrast(Color.White, background))
+        Color.Black else Color.White
+    for (step in 1..20) {
+        val candidate = lerp(opaque, edge, step / 20f)
+        if (selectionContrast(candidate, background) >= 1.25f) return candidate
+    }
+    return edge
 }

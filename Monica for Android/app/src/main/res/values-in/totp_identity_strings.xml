@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Tidak dapat mengidentifikasi secara unik entri pengautentikasi KeePass asli. Refresh database dan coba lagi.</string>
+</resources>

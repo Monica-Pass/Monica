@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuite name="takagi.ru.monica.keepass.KeePassNativeMutationTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-25T07:27:11.519Z" time="0.036">
+  <testcase name="changingProtectionIsStillARealEditEvenWithIdenticalText" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.002" />
+  <testcase name="historyItemLimitKeepsNewestSnapshots" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.023" />
+  <testcase name="rewritingIdenticalProtectedFieldsKeepsOriginalHistoryAndTimes" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="zeroHistorySizeRemovesAllSnapshots" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="replayingAnIdenticalProtectedFieldPatchDoesNotAddHistory" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="unlimitedHistoryKeepsExistingSnapshotsAndNewSnapshot" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="movingEntryUpdatesLocationChangedWithoutCreatingHistory" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.004" />
+  <testcase name="fieldEditCreatesFlatHistoryAndTouchesKeePassTimes" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="permanentGroupDeleteWritesTombstonesForWholeTree" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  <testcase name="permanentEntryDeleteWritesDeletedObjectTombstone" classname="takagi.ru.monica.keepass.KeePassNativeMutationTest" time="0.001" />
+  </testsuite>

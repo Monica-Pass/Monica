@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_title">Güvenli depolama alanı kullanılamıyor</string>
+    <string name="secure_startup_preserved">Mevcut veriler korundu</string>
+    <string name="secure_startup_description">Android şu anda bu kurulumun şifrelenmiş ayarlarını doğrulayamıyor. Normal başlatma durduruldu. Monica ayarları temizlemedi veya tuşları değiştirmedi.</string>
+    <string name="secure_startup_restart">Telefonu yeniden başlatın, sistem ekran kilidi kimlik bilgileriyle kilidini açın ve yeniden deneyin.</string>
+    <string name="secure_startup_environment">Bu durum, uygulama verilerini geri yükledikten, bir ROM\'u yükledikten veya sistemi değiştirdikten sonra başladıysa, orijinal sistemin ve anahtar ortamının geri yüklenip yüklenmediğini kontrol edin. Bu hata tek başına nedeni belirlemez.</string>
+    <string name="secure_startup_no_reset">Uygulama verilerini temizlemeyin veya Monica\'yu kaldırmayın. Orijinal dosyaları saklayın. Monica olarak dışa aktarılmış bir yedeğiniz varsa bunu başka bir kurulumda doğrulayın. Kalıcı olarak kaybedilen bir sistem anahtarı yeniden denenerek yeniden oluşturulamaz.</string>
+    <string name="secure_startup_retry">Tekrar dene</string>
+    <string name="secure_startup_diagnostic">Tanılama bilgilerini kopyala</string>
+</resources>

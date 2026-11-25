@@ -7,7 +7,7 @@
     <string name="content_block_key">密钥</string>
     <string name="content_block_token">令牌</string>
     <string name="content_block_provider">服务方</string>
-    <string name="content_block_url">接口地址</string>
+    <string name="content_block_url">API 端点</string>
     <string name="content_block_algorithm">算法</string>
     <string name="content_block_public">公钥</string>
     <string name="content_block_private">私钥</string>

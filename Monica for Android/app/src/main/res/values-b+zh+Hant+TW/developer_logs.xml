@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="developer_logs_title">診斷記錄</string>
+    <string name="developer_logs_entry_description">搜尋、篩選並分享完整診斷報告</string>
+    <string name="developer_logs_search">搜尋記錄、標籤或異常</string>
+    <string name="developer_logs_source">來源：%1$s</string>
+    <string name="developer_logs_hint">先重現問題，再重新整理記錄。錯誤層級不一定代表功能故障。</string>
+    <string name="developer_logs_share_full">分享完整記錄</string>
+    <string name="developer_logs_result_count">%1$d / %2$d 筆 · %3$s 更新</string>
+    <string name="developer_logs_no_matches">沒有符合條件的記錄，請更換關鍵字或篩選條件。</string>
+    <string name="developer_logs_clear_confirmation">清除診斷記錄緩衝？密碼庫資料和設定會保留。目前環境資訊和新記錄仍可能顯示。</string>
+    <string name="developer_logs_copy_event">複製此筆</string>
+    <string name="developer_logs_preview_limit">預覽已縮短，複製此筆或分享完整報告可查看全部內容。</string>
+    <string name="developer_logs_expand">展開記錄</string>
+    <string name="developer_logs_collapse">收合記錄</string>
+    <string name="developer_logs_security">安全</string>
+    <string name="developer_verification_group">驗證與相容性</string>
+    <string name="developer_forensics_group">Bitwarden 同步診斷</string>
+    <string name="developer_logs_copy_failed">無法複製此筆記錄，請分享完整記錄檔案。</string>
+</resources>

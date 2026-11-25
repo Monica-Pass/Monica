@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Tieni premuto e trascina per riordinare</string>
+    <string name="entry_content_remove_message">Ciò rimuove il contenuto da questa bozza. Le modifiche diventano effettive quando salvi.</string>
+    <string name="entry_content_remove_title">Eliminare %1$s?</string>
+</resources>

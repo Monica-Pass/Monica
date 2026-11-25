@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.webdav.MdbxWebDavRetryTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-25T16:01:35.167Z" hostname="JOYIN" time="0.037">
+  <properties/>
+  <testcase name="temporary503ResumesOnlyTheFailedOperation" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.007"/>
+  <testcase name="oneSyncSharesItsRetryBudgetAcrossFiles" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.005"/>
+  <testcase name="longServerDelayIsNeverShortened" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.004"/>
+  <testcase name="permanentRateLimitHasBoundedAttempts" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.004"/>
+  <testcase name="authConflictsAndCancellationAreNotRetried" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.005"/>
+  <testcase name="cancellationBeforeTheNextOperationDoesNotSendARequest" classname="takagi.ru.monica.webdav.MdbxWebDavRetryTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

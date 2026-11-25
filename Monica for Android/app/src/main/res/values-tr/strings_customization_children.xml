@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_live_preview">Canlı önizleme</string>
+    <string name="customization_filters_navigation">Filtreler ve gezinme</string>
+    <string name="customization_drag_handle">%1$s\'yu yeniden sipariş edin</string>
+    <string name="customization_clear_presets_message">Tüm ön ayarlı alanlar kaldırılsın mı? Mevcut kayıtlı girişlerin alanları korunacaktır.</string>
+</resources>

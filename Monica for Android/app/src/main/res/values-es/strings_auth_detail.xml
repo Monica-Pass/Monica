@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">Copiar código actual</string>
+    <string name="auth_detail_copy_next">Copiar siguiente</string>
+    <string name="auth_detail_qr_current">Generar código QR (código actual)</string>
+    <string name="auth_detail_qr_migrate">Generar código QR (migración)</string>
+</resources>

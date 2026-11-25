@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">"Sincronizzazione annullata"</string>
+    <string name="lan_completed">Entrambi i dispositivi hanno terminato la sincronizzazione</string>
+    <string name="lan_confirming">In attesa che l\'altro dispositivo finisca di applicare le modifiche…</string>
+    <string name="lan_conflicts">I conflitti %1$d necessitano di revisione nella gestione del deposito. Entrambe le versioni sono conservate.</string>
+    <string name="lan_connect">Accoppia e sincronizza</string>
+    <string name="lan_connecting">Verifica dell\'accoppiamento...</string>
+    <string name="lan_copy_link">Copia il collegamento di accoppiamento</string>
+    <string name="lan_description">Sincronizza un vault tra telefoni e computer sullo stesso Wi-Fi. Trova un dispositivo e inserisci il codice di accoppiamento oppure scansiona il codice QR.</string>
+    <string name="lan_different_vault">Questi sono caveau diversi. Seleziona lo stesso deposito su entrambi i dispositivi o ricevi questo deposito come nuovo.</string>
+    <string name="lan_discover">Trova dispositivi nelle vicinanze</string>
+    <string name="lan_discovering">Ricerca dispositivi…</string>
+    <string name="lan_expired">Associazione scaduta. Consentire a un dispositivo di connettersi nuovamente per creare un nuovo codice.</string>
+    <string name="lan_external_blobs">Questo deposito fa riferimento a file archiviati al di fuori di esso. La sincronizzazione nelle vicinanze attualmente richiede che tutti gli allegati siano archiviati all\'interno del vault.</string>
+    <string name="lan_failed">La sincronizzazione non è terminata</string>
+    <string name="lan_failed_hint">Verifica che entrambi i dispositivi siano ancora connessi allo stesso Wi-Fi, quindi accoppia nuovamente. Le modifiche già apportate vengono conservate.</string>
+    <string name="lan_host">Consentire a un dispositivo di connettersi</string>
+    <string name="lan_imported">Il deposito ricevuto è stato aggiunto alla gestione del deposito.</string>
+    <string name="lan_invalid_code">Il codice di abbinamento non è valido o non corrisponde più. Ottieni un nuovo codice dall\'altro dispositivo.</string>
+    <string name="lan_invitation_hint">L\'accoppiamento scade dopo 10 minuti. Condividi questo codice o il codice QR solo con il dispositivo a cui desideri connetterti.</string>
+    <string name="lan_manage">Gestisci i depositi</string>
+    <string name="lan_merging">Applicazione delle modifiche al deposito…</string>
+    <string name="lan_new_vault_hint">Per la prima connessione, inserire la password del vault di origine. Il deposito ricevuto viene aggiunto separatamente. Per sincronizzazioni successive, seleziona lo stesso deposito su entrambi i dispositivi.</string>
+    <string name="lan_no_devices">Nessun dispositivo ancora trovato. Sull\'altro dispositivo, seleziona \"Consenti a un dispositivo di connettersi\". Puoi anche scansionare o incollare il collegamento di accoppiamento.</string>
+    <string name="lan_no_network">Nessun indirizzo Wi-Fi locale trovato.</string>
+    <string name="lan_pairing_autofilled">Codice di abbinamento e collegamento compilati automaticamente. Tocca Accoppia e sincronizza per continuare.</string>
+    <string name="lan_pairing_code">Codice di abbinamento</string>
+    <string name="lan_pairing_needs_vault_password">Informazioni sull\'accoppiamento compilate automaticamente. Inserisci la password del vault di origine per il primo trasferimento, quindi tocca Accoppia e sincronizza.</string>
+    <string name="lan_paste_link">Collegamento di accoppiamento</string>
+    <string name="lan_peer_failed">L\'altro dispositivo non è riuscito ad applicare le modifiche. Controllalo e riprova.</string>
+    <string name="lan_preparing">Preparazione dei dati del deposito crittografati…</string>
+    <string name="lan_receive_new">Ricevilo come nuovo deposito</string>
+    <string name="lan_scan">Scansiona il codice QR di accoppiamento</string>
+    <string name="lan_select_vault">Scegli un caveau</string>
+    <string name="lan_title">Sincronizzazione nelle vicinanze</string>
+    <string name="lan_transferring">Trasferimento di dati crittografati…</string>
+    <string name="lan_unavailable">La sincronizzazione nelle vicinanze non è disponibile in questa build.</string>
+    <string name="lan_vault_failed">Impossibile aprire o unire il deposito. Controlla la password del vault e lo spazio di archiviazione disponibile, quindi riprova.</string>
+    <string name="lan_vault_name">Nome del deposito ricevuto</string>
+    <string name="lan_vault_password">Password del vault di origine</string>
+    <string name="lan_waiting">In attesa dell\'altro dispositivo…</string>
+</resources>

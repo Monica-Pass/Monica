@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">Yapılandırma teşhisi</string>
+    <string name="hyperos_diagnostics_note">Başarılı geçiş anahtarı yönlendirmesini değil, hizmet bildirimlerini ve seçimini kontrol eder. Güvenli ayarlar yetkili Shizuku veya root gerektirir.</string>
+    <string name="hyperos_diag_declaration">Geçerli Monica hizmeti ve geçiş anahtarı özelliği</string>
+    <string name="hyperos_diag_feature">Kimlik bilgisi sistemi özelliği mevcut</string>
+    <string name="hyperos_diag_unrestricted">Bu Android kullanıcısı için otomatik doldurmaya izin verildi</string>
+    <string name="hyperos_diag_framework">Çerçeve, Monica\'yu etkin olarak tanıyor</string>
+    <string name="hyperos_diag_registered">Monica etkinleştirilmiş kimlik bilgisi hizmetlerinde</string>
+    <string name="hyperos_drift_title">Onarımdan sonra değişiklikleri algıla</string>
+    <string name="hyperos_drift_note">Bu sayfa görünür durumdayken ve yeniden açıldığında her 30 saniyede bir kontrol eder. Ayarları hiçbir zaman otomatik olarak yazmaz.</string>
+    <string name="hyperos_drift_result">Son doğrulanan onarımla karşılaştırıldığında</string>
+    <string name="hyperos_drift_off">Algılama kapalı</string>
+    <string name="hyperos_drift_no_baseline">Bir temel oluşturmak için önce bir konfigürasyon uygulayın.</string>
+    <string name="hyperos_drift_unchanged">Yapılandırma değişmedi</string>
+    <string name="hyperos_drift_changed">Yapılandırma değişti. Yöneticileri kendiniz değiştirmiş olabilirsiniz; geri yüklemeden önce inceleyin.</string>
+    <string name="hyperos_update_failed">Kaydedilemedi. Yenileyin ve mevcut durumu kontrol edin.</string>
+    <string name="hyperos_check_yes">Evet</string>
+    <string name="hyperos_check_no">Hayır</string>
+    <string name="hyperos_check_unsupported">Desteklenmiyor</string>
+    <string name="hyperos_module_title">İsteğe bağlı uyumluluk modülü</string>
+    <string name="hyperos_module_requirements">Uyumlu LSPosed API 102+, Android 14–16 ve bir Xiaomi/Redmi/POCO sahibi kullanıcı gerektirir. Monica\'yu ve çerçevede gerekli kapsamları etkinleştirin. Tüm seçenekler varsayılan olarak kapalıdır.</string>
+    <string name="hyperos_module_connected">Çerçeve bağlandı; bu kancaların çalıştığını kanıtlamaz.</string>
+    <string name="hyperos_module_disconnected">Uyumlu çerçeve mevcut değil</string>
+    <string name="hyperos_module_scope">Verilen kapsamlar: %1$s</string>
+    <string name="hyperos_hook_reset">Güvenlik Merkezi sıfırlamalarını engelle</string>
+    <string name="hyperos_hook_reset_note">Yalnızca tanımlanan kimlik bilgisi yapılandırma yöntemlerini durdurun.</string>
+    <string name="hyperos_hook_settings">Sistem seçim sayfası uyumluluğu</string>
+    <string name="hyperos_hook_settings_note">Tanımlanan Ayarlar denetleyicilerini ayarlayın; uyumsuz yöntemler sistem davranışını korur.</string>
+    <string name="hyperos_hook_chooser">Google kimlik bilgisi seçici</string>
+    <string name="hyperos_hook_chooser_note">Etkinleştirilmiş bir sistem Google Oynatma hizmetleri seçicisi gerektirir.</string>
+    <string name="hyperos_hook_hybrid">Cihazlar arası kimlik bilgisi uyumluluğu</string>
+    <string name="hyperos_hook_hybrid_note">Doğrulanmış Google hibrit hizmetini ve Xiaomi tarayıcı yolunu kullanın.</string>
+    <string name="hyperos_module_restart">Etkinleştirme, etkilenen süreçlerin veya aygıtın kendinizin yeniden başlatılmasını gerektirir. Çerçeve değişikliği sunduğunda, durakların devre dışı bırakılması yüklü kancalardaki geçersiz kılmaları devre dışı bırakır. Otomatik yeniden başlatma yok.</string>
+    <string name="hyperos_physical_feedback">Fiziksel HyperOS cihazlarda test edilmemiştir. Lütfen ROM sürümünüzü ve çoğaltma adımlarınızı GitHub sayısında bildirin; şifreleri ve anahtarları atlayın.</string>
+    <string name="hyperos_reference_projects">Referans proje ve lisans</string>
+    <string name="hyperos_module_confirmation">Bu deneysel sistem davranışı değişikliği etkinleştirilsin mi? Uyumlu bir çerçeve ve hedef bileşenler gereklidir. Diğer şifre yöneticilerini etkileyebilir. Buradan veya çerçevede devre dışı bırakabilirsiniz.</string>
+    <string name="hyperos_feedback_action">Uyumluluk sorununu bildirin</string>
+    <string name="hyperos_module_entry_note">Varsayılan kapalı · Uyumlu LSPose gerektirir</string>
+</resources>

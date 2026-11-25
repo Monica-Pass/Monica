@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_count_loading">계산 중…</string>
+    <string name="export_source_count_locked">계산을 위해 잠금 해제</string>
+    <string name="export_source_count_unavailable">사용 불가</string>
+    <string name="export_source_record_count">%1$d 레코드</string>
+</resources>

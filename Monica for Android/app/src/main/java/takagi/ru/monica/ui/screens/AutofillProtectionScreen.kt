@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
@@ -43,7 +45,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -405,7 +407,7 @@ private fun ProtectionSwitchRow(
 ) {
     Row(
         Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag(tag)
-            .toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
+            .hapticSwitchToggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Icon(icon, null, Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)

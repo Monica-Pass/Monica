@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">複製結果</string>
+    <string name="passkey_copy_result_summary">已複製 %1$d 項；略過或失敗 %2$d 項</string>
+    <string name="passkey_copy_success_count">已複製 %1$d 個 Passkey</string>
+    <string name="passkey_transfer_key_unavailable">此裝置上沒有可用的私鑰。</string>
+    <string name="passkey_transfer_restricted">此 Passkey 無法轉移到所選位置。</string>
+    <string name="passkey_transfer_same_database_copy">此資料庫要求憑證 ID 唯一，請選擇其他資料庫複製此 Passkey。</string>
+    <string name="passkey_copy_blocked_title">部分 Passkey 無法複製</string>
+    <string name="passkey_move_blocked_title">部分 Passkey 無法移動</string>
+    <string name="passkey_transfer_preflight_summary">%1$d 個 Passkey 無法處理，%2$d 個可以繼續。目前尚未修改任何項目。</string>
+    <string name="passkey_cancel_copy">取消複製</string>
+    <string name="passkey_cancel_move">取消移動</string>
+    <string name="passkey_transfer_skip">略過 %1$d 項並繼續</string>
+</resources>

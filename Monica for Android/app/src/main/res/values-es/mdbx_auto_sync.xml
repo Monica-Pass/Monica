@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">Subir al guardar; comprobar actualizaciones mientras está desbloqueado en primer plano</string>
+    <string name="mdbx_auto_sync_manual_hint">Desactivado · Sincronizar manualmente cuando sea necesario</string>
+    <string name="mdbx_auto_sync_title">Sincronización automática</string>
+</resources>

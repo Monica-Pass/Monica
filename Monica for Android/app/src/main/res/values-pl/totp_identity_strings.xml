@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Nie można jednoznacznie zidentyfikować oryginalnego wpisu uwierzytelniającego KeePass. Odśwież bazę danych i spróbuj ponownie.</string>
+</resources>

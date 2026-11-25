@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Dodaj subskrypcję</string>
+    <string name="image_sources_cards">Grafika karty</string>
+    <string name="image_sources_choose">Wybierz jedną z subskrypcji</string>
+    <string name="image_sources_count">Obrazy %1$d</string>
+    <string name="image_sources_empty">Dodaj swoje pierwsze źródło obrazu</string>
+    <string name="image_sources_error">Nie można załadować lub zapisać. Sprawdź źródło, format i połączenie, a następnie spróbuj ponownie. Istniejące subskrypcje i obrazy przedmiotów zostaną zachowane.</string>
+    <string name="image_sources_formats">HTTPS JSON pakiety obrazów lub łącza do obrazów PNG, JPEG i WebP.</string>
+    <string name="image_sources_icons">Ikony</string>
+    <string name="image_sources_name">Nazwa (opcjonalnie)</string>
+    <string name="image_sources_no_results">Brak pasujących obrazów</string>
+    <string name="image_sources_options">Opcje subskrypcji</string>
+    <string name="image_sources_refresh">Odśwież</string>
+    <string name="image_sources_remove">Anuluj subskrypcję</string>
+    <string name="image_sources_remove_hint">Usunąć tę subskrypcję? Obrazy już używane w Twoich przedmiotach zostaną zachowane.</string>
+    <string name="image_sources_retry">Ponów</string>
+    <string name="image_sources_search">Wyszukaj obrazy</string>
+    <string name="image_sources_settings_hint">Zarządzaj pakietami ikon i źródłami grafik kart</string>
+    <string name="image_sources_title">Subskrypcje obrazów</string>
+    <string name="image_sources_url">Subskrypcja lub obraz URL</string>
+    <string name="image_sources_use_hint">Wybierz obrazy z edytora niestandardowych ikon lub grafik kart.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_title">API Key</string>
+    <string name="api_key_add">新增 API Key</string>
+    <string name="api_key_edit">編輯 API Key</string>
+    <string name="api_key_provider">供應商名稱 *</string>
+    <string name="api_key_provider_hint">例如：Claude 官方、我的中轉站</string>
+    <string name="api_key_website">官網連結（選填）</string>
+    <string name="api_key_website_label">官網連結</string>
+    <string name="api_key_secret_required">API Key *</string>
+    <string name="api_key_url">API 請求位址（選填）</string>
+    <string name="api_key_url_label">API 請求位址</string>
+    <string name="api_key_required">請填寫此項</string>
+    <string name="api_key_invalid_url">請填寫包含主機名稱的 http:// 或 https:// 位址，位址中不要包含使用者名稱和密碼。</string>
+    <string name="api_key_show">顯示金鑰</string>
+    <string name="api_key_hide">隱藏金鑰</string>
+    <string name="api_key_open_website">開啟官網</string>
+    <string name="api_key_load_error">無法讀取此 API Key，請重新開啟所屬資料庫後重試。</string>
+    <string name="api_key_save_error">未能儲存到所有選定位置，請檢查儲存位置是否可用後重試。</string>
+    <string name="api_key_locked">密碼庫已鎖定，請解鎖後繼續。</string>
+</resources>

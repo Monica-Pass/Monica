@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android attualmente non può verificare le impostazioni crittografate di questa installazione. L\'avvio normale è stato interrotto. Monica non ha cancellato le impostazioni né sostituito le chiavi.</string>
+    <string name="secure_startup_diagnostic">Copia le informazioni diagnostiche</string>
+    <string name="secure_startup_environment">Se il problema è iniziato dopo il ripristino dei dati dell\'app, il flashing di una ROM o la modifica del sistema, verificare se è possibile ripristinare il sistema originale e l\'ambiente della chiave. Questo errore da solo non ne stabilisce la causa.</string>
+    <string name="secure_startup_no_reset">Non cancellare i dati dell\'app o disinstallare Monica. Conserva i file originali. Se disponi di un backup esportato con Monica, verificalo in un\'altra installazione. Non è possibile ricreare una chiave di sistema persa in modo permanente riprovando.</string>
+    <string name="secure_startup_preserved">Dati esistenti conservati</string>
+    <string name="secure_startup_restart">Riavviare il telefono, sbloccarlo con le credenziali di blocco schermo del sistema, quindi riprovare.</string>
+    <string name="secure_startup_retry">"Riprova"</string>
+    <string name="secure_startup_title">Archiviazione sicura non disponibile</string>
+</resources>

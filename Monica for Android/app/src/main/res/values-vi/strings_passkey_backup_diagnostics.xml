@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">passkey này sử dụng khóa Android Keystore gắn với thiết bị và không thể xuất được. Nó vẫn có thể hoạt động trên thiết bị gốc nhưng không thể đưa vào bản sao lưu di động.</string>
+    <string name="backup_passkey_unavailable">Khóa riêng bị thiếu hoặc không thể đọc được. Nhập lại bản sao lưu chứa khóa riêng hoặc kiểm tra thiết bị gốc. Các dữ liệu khác và bản sao lưu từ xa vẫn được giữ nguyên.</string>
+    <string name="backup_passkey_unreadable">Không thể đọc được khóa riêng được bảo vệ. Mở khóa Monica và thử lại; nếu điều này tiếp tục, hãy kiểm tra thiết bị gốc hoặc bản sao lưu chứa khóa riêng.</string>
+</resources>

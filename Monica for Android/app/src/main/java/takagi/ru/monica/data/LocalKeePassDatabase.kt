@@ -316,6 +316,16 @@ interface LocalKeePassDatabaseDao {
     
     @Update
     suspend fun updateDatabase(database: LocalKeePassDatabase)
+
+    @Query("UPDATE local_keepass_databases SET sort_order = :order WHERE id = :id")
+    suspend fun updateDisplayOrder(id: Long, order: Int)
+
+    @Transaction
+    suspend fun reorderDisplay(ids: List<Long>) {
+        val current = getAllDatabasesSync().map { it.id }
+        mergeDatabaseDisplayOrder(current, ids).forEachIndexed { index, id -> updateDisplayOrder(id, index) }
+    }
+
     
     @Delete
     suspend fun deleteDatabase(database: LocalKeePassDatabase)

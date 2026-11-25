@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_title">Varsayılan şifre yöneticisi</string>
+    <string name="default_manager_entry_hint">HyperOS üçüncü taraf şifre yöneticisi ayarlarını gizlediğinde Monica\'yu Shizuku veya Root kullanarak ayarlayın</string>
+    <string name="default_manager_description">Geçerli Android kullanıcısı için varsayılan yöneticiyi ayarlayın. Android 14 veya üzerini ve Shizuku veya Root yetkilendirmesini gerektirir. Başarılı ayar doğrulaması, her HyperOS geçiş anahtarı akışını garanti etmez.</string>
+    <string name="default_manager_denied">İzin reddedildi. Shizuku\'da Monica\'ya izin verin ve yeniden deneyin</string>
+    <string name="default_manager_read_failed">Sistem ayarları okunamadı. Yenileyin ve yeniden deneyin</string>
+    <string name="default_manager_unset">Ayarlanmadı</string>
+    <string name="default_manager_unknown">Henüz okunmadı</string>
+    <string name="default_manager_restore">Önceki ayarları geri yükle</string>
+    <string name="default_manager_apply">Monica olarak ayarla</string>
+    <string name="default_manager_restore_confirm">Son geçişten önce kaydedilen sistem yapılandırmasını geri yükleyin.</string>
+    <string name="default_manager_confirm">Bu kullanıcı için varsayılan şifre yöneticisini değiştirin. Mevcut konfigürasyon öncelikle geri yükleme için yerel olarak kaydedilecektir.</string>
+    <string name="default_manager_credential">Birincil kimlik bilgisi sağlayıcısı</string>
+    <string name="default_manager_autofill">Otomatik doldurma hizmeti</string>
+    <string name="default_manager_replace_warning">Diğer kimlik bilgisi sağlayıcıları devre dışı bırakılacak. Verileri silinmeyecektir.</string>
+    <string name="default_manager_restored">Önceki sistem ayarları geri yüklendi ve doğrulandı</string>
+    <string name="default_manager_applied">Monica seçildi ve sistem ayarları doğrulandı</string>
+    <string name="default_manager_write_failed">Değişiklik tamamlanamadı veya doğrulanamadı. Durumu kontrol etmek için yenileyin; kaydedilen konfigürasyon geri yükleme için kullanılabilir.</string>
+    <string name="default_manager_ready">Bağlı ve yetkili</string>
+    <string name="default_manager_permission">Yetkilendirme gerekli</string>
+    <string name="default_manager_stopped">Shizuku\'yu kurun ve başlatın</string>
+    <string name="default_manager_unsupported">Android 14+ ve Shizuku 13+ gerektirir</string>
+    <string name="default_manager_grant">Shizuku\'ya yetki ver</string>
+    <string name="default_manager_open_shizuku">Shizuku\'yu aç</string>
+    <string name="default_manager_include_autofill">Otomatik doldurmayı da ayarla</string>
+    <string name="default_manager_include_autofill_hint">Otomatik doldurma hizmetini Monica olarak değiştir</string>
+    <string name="default_manager_keep_others">Diğer kimlik bilgisi sağlayıcılarını koruyun</string>
+    <string name="default_manager_keep_others_hint">Etkin sağlayıcıları koruyun ve Monica\'yu birincil sağlayıcı yapın</string>
+    <string name="default_manager_refresh">Durumu yenile</string>
+    <string name="default_manager_source">CR-zhichen/şifre-yönetici-anahtarı · MIT\'ye dayanmaktadır</string>
+</resources>

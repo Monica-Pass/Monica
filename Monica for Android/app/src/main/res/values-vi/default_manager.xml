@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_applied">Monica đã chọn và xác minh cài đặt hệ thống</string>
+    <string name="default_manager_apply">Đặt thành Monica</string>
+    <string name="default_manager_autofill">Dịch vụ tự động điền</string>
+    <string name="default_manager_confirm">Thay đổi trình quản lý mật khẩu mặc định cho người dùng này. Cấu hình hiện tại trước tiên sẽ được lưu cục bộ để khôi phục.</string>
+    <string name="default_manager_credential">Nhà cung cấp thông tin xác thực chính</string>
+    <string name="default_manager_denied">Quyền bị từ chối. Cho phép Monica trong Shizuku và thử lại</string>
+    <string name="default_manager_description">Đặt trình quản lý mặc định cho người dùng Android hiện tại. Yêu cầu Android 14 trở lên và ủy quyền Shizuku hoặc Root. Xác minh cài đặt thành công không đảm bảo mọi luồng HyperOS passkey.</string>
+    <string name="default_manager_entry_hint">Đặt Monica bằng Shizuku hoặc Root khi HyperOS ẩn cài đặt trình quản lý mật khẩu của bên thứ ba</string>
+    <string name="default_manager_grant">Ủy quyền cho Shizuku</string>
+    <string name="default_manager_include_autofill">Đồng thời đặt tự động điền</string>
+    <string name="default_manager_include_autofill_hint">Chuyển dịch vụ tự động điền sang Monica</string>
+    <string name="default_manager_keep_others">Giữ các nhà cung cấp thông tin xác thực khác</string>
+    <string name="default_manager_keep_others_hint">Giữ các nhà cung cấp được kích hoạt và đặt Monica làm nhà cung cấp chính</string>
+    <string name="default_manager_open_shizuku">Mở Shizuku</string>
+    <string name="default_manager_permission">Cần có sự cho phép</string>
+    <string name="default_manager_read_failed">Không thể đọc cài đặt hệ thống. Làm mới và thử lại</string>
+    <string name="default_manager_ready">Đã kết nối và được ủy quyền</string>
+    <string name="default_manager_refresh">Trạng thái làm mới</string>
+    <string name="default_manager_replace_warning">Các nhà cung cấp thông tin xác thực khác sẽ bị vô hiệu hóa. Dữ liệu của họ sẽ không bị xóa.</string>
+    <string name="default_manager_restore">Khôi phục cài đặt trước đó</string>
+    <string name="default_manager_restore_confirm">Khôi phục cấu hình hệ thống đã lưu trước lần chuyển đổi cuối cùng.</string>
+    <string name="default_manager_restored">Đã khôi phục và xác minh cài đặt hệ thống trước đó</string>
+    <string name="default_manager_source">Dựa trên cr-zhichen/password-manager-switch · MIT</string>
+    <string name="default_manager_stopped">Cài đặt và khởi động Shizuku</string>
+    <string name="default_manager_title">Trình quản lý mật khẩu mặc định</string>
+    <string name="default_manager_unknown">Chưa đọc</string>
+    <string name="default_manager_unset">Chưa đặt</string>
+    <string name="default_manager_unsupported">Yêu cầu Android 14+ và Shizuku 13+</string>
+    <string name="default_manager_write_failed">Không thể hoàn thành hoặc xác minh thay đổi. Làm mới để kiểm tra trạng thái; cấu hình đã lưu có sẵn để khôi phục.</string>
+</resources>

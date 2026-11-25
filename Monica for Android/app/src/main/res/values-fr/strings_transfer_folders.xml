@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cancel_copy">Annuler la copie</string>
+    <string name="passkey_cancel_move">Annuler le déplacement</string>
+    <string name="passkey_copy_blocked_title">Certains Passkeys ne peuvent pas être copiés</string>
+    <string name="passkey_copy_result_summary">Copié %1$d ; ignoré ou échoué : %2$d</string>
+    <string name="passkey_copy_result_title">Copier les résultats</string>
+    <string name="passkey_copy_success_count">Copié %1$d Passkeys</string>
+    <string name="passkey_move_blocked_title">Certains Passkeys ne peuvent pas être déplacés</string>
+    <string name="passkey_transfer_key_unavailable">La clé privée n\'est pas disponible sur cet appareil.</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys ne peut pas être traité ; %2$d peut continuer. Rien n\'a encore été modifié.</string>
+    <string name="passkey_transfer_restricted">Ce Passkey ne peut pas être transféré vers cette destination.</string>
+    <string name="passkey_transfer_same_database_copy">Cette base de données nécessite un identifiant d\'identification unique. Choisissez une autre base de données pour copier ce Passkey.</string>
+    <string name="passkey_transfer_skip">Ignorer %1$d et continuer</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Đã hủy đồng bộ</string>
+    <string name="lan_completed">Cả hai thiết bị đã đồng bộ hóa xong</string>
+    <string name="lan_confirming">Đang đợi thiết bị kia áp dụng xong các thay đổi…</string>
+    <string name="lan_conflicts">Xung đột %1$d cần được xem xét trong quản lý vault. Cả hai phiên bản đều được bảo tồn.</string>
+    <string name="lan_connect">Ghép nối và đồng bộ hóa</string>
+    <string name="lan_connecting">Đang xác minh việc ghép nối…</string>
+    <string name="lan_copy_link">Sao chép liên kết ghép nối</string>
+    <string name="lan_description">Đồng bộ hóa vault giữa điện thoại và máy tính trên cùng một Wi-Fi. Tìm một thiết bị và nhập mã ghép nối hoặc quét mã QR của thiết bị đó.</string>
+    <string name="lan_different_vault">Đây là những kho tiền khác nhau. Chọn cùng một kho tiền trên cả hai thiết bị hoặc nhận kho tiền này làm kho tiền mới.</string>
+    <string name="lan_discover">Tìm thiết bị ở gần</string>
+    <string name="lan_discovering">Đang tìm thiết bị…</string>
+    <string name="lan_expired">Ghép nối đã hết hạn. Cho phép thiết bị kết nối lại để tạo mã mới.</string>
+    <string name="lan_external_blobs">Vault này tham chiếu đến các tệp được lưu trữ bên ngoài nó. Đồng bộ hóa lân cận hiện yêu cầu tất cả tệp đính kèm phải được lưu trữ bên trong vault.</string>
+    <string name="lan_failed">Đồng bộ hóa không hoàn tất</string>
+    <string name="lan_failed_hint">Kiểm tra để đảm bảo cả hai thiết bị vẫn được kết nối với cùng một Wi-Fi, sau đó ghép nối lại. Những thay đổi đã cam kết sẽ được bảo tồn.</string>
+    <string name="lan_host">Cho phép thiết bị kết nối</string>
+    <string name="lan_imported">Vault nhận được đã được thêm vào quản lý vault.</string>
+    <string name="lan_invalid_code">Mã ghép nối không hợp lệ hoặc không còn khớp. Nhận mã mới từ thiết bị kia.</string>
+    <string name="lan_invitation_hint">Việc ghép nối sẽ hết hạn sau 10 phút. Chỉ chia sẻ mã này hoặc mã QR với thiết bị bạn muốn kết nối.</string>
+    <string name="lan_manage">Quản lý kho tiền</string>
+    <string name="lan_merging">Đang áp dụng các thay đổi cho vault…</string>
+    <string name="lan_new_vault_hint">Đối với kết nối đầu tiên, hãy nhập mật khẩu vault nguồn. Kho tiền nhận được sẽ được thêm riêng. Để đồng bộ hóa sau này, hãy chọn cùng một vault trên cả hai thiết bị.</string>
+    <string name="lan_no_devices">Chưa tìm thấy thiết bị nào. Trên thiết bị kia, chọn “Cho phép thiết bị kết nối”. Bạn cũng có thể quét hoặc dán liên kết ghép nối của nó.</string>
+    <string name="lan_no_network">Không tìm thấy địa chỉ Wi-Fi cục bộ.</string>
+    <string name="lan_pairing_autofilled">Mã ghép nối và liên kết được điền tự động. Nhấn vào Ghép nối và đồng bộ hóa để tiếp tục.</string>
+    <string name="lan_pairing_code">Mã ghép nối</string>
+    <string name="lan_pairing_needs_vault_password">Thông tin ghép nối được điền tự động. Nhập mật khẩu kho nguồn cho lần chuyển đầu tiên, sau đó nhấn vào Ghép nối và đồng bộ hóa.</string>
+    <string name="lan_paste_link">Liên kết ghép nối</string>
+    <string name="lan_peer_failed">Thiết bị kia không thể áp dụng các thay đổi. Hãy kiểm tra và thử lại.</string>
+    <string name="lan_preparing">Đang chuẩn bị dữ liệu vault được mã hóa…</string>
+    <string name="lan_receive_new">Nhận dưới dạng vault mới</string>
+    <string name="lan_scan">Quét ghép nối mã QR</string>
+    <string name="lan_select_vault">Chọn một vault</string>
+    <string name="lan_title">Đồng bộ hóa lân cận</string>
+    <string name="lan_transferring">Đang truyền dữ liệu được mã hóa…</string>
+    <string name="lan_unavailable">Tính năng đồng bộ hóa lân cận không khả dụng trong bản dựng này.</string>
+    <string name="lan_vault_failed">Không thể mở hoặc hợp nhất kho tiền. Hãy kiểm tra mật khẩu vault và bộ nhớ còn trống, sau đó thử lại.</string>
+    <string name="lan_vault_name">Tên của kho tiền đã nhận</string>
+    <string name="lan_vault_password">Mật khẩu kho nguồn</string>
+    <string name="lan_waiting">Đang chờ thiết bị kia…</string>
+</resources>

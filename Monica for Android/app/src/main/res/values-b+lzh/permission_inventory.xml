@@ -50,6 +50,6 @@
     <string name="pm_wake">WorkManager 行排定之工作，短暫維持執行。不因而自啟常駐背景活動。</string>
     <string name="pm_hide_overlay">Android 12 及其後，匯出憑據時阻他應用懸浮之窗。</string>
     <string name="pm_internal">AndroidX 以本應用簽章專用之權，護內部動態廣播接收器。</string>
-    <string name="pm_binding">持宣告之系統權限者，方可綁定此服務。</string>
+    <string name="pm_binding">Android 仅许持已声明系统权限之调用方绑定此服务。</string>
     <string name="pm_other">此安裝包或相依程式庫所宣告之權。下方 Android 識別碼示其確切範圍，不自請授。</string>
 </resources>

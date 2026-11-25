@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Las carpetas Bitwarden permanecen dentro de la misma cuenta. Aún no se admite la copia de carpetas con archivos adjuntos, passkeys o entradas de organización.</string>
+    <string name="external_folder_choose_destination">Elija una base de datos y una carpeta de destino</string>
+    <string name="external_folder_copy_hint">Copia la carpeta y su contenido; conservar el original.</string>
+    <string name="external_folder_move_hint">Mover la carpeta y su contenido. El original se elimina sólo después de guardar el destino.</string>
+    <string name="external_folder_root">Raíz de la base de datos</string>
+</resources>

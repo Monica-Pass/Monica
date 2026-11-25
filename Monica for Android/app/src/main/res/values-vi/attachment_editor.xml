@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">Chưa có tệp đính kèm nào</string>
+    <string name="attachment_editor_hint">Chọn file, hình ảnh hoặc tài liệu</string>
+    <string name="attachment_editor_working">Đang hoạt động…</string>
+</resources>

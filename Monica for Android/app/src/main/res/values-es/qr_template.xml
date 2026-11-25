@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">Plantilla personalizada QR</string>
+    <string name="qr_template_error">No se puede leer la entrada, guardar la plantilla o generar el código. Verifique que la base de datos esté desbloqueada y que el contenido esté dentro de los límites, luego vuelva a intentarlo.</string>
+    <string name="qr_template_field_error">Falta el campo “%1$s”, es ilegible o ambiguo. Seleccione un campo disponible antes de generar.</string>
+    <string name="qr_template_generate">Generar código QR</string>
+    <string name="qr_template_hint">Lee los campos actuales cuando se generan. Guarda la plantilla, no una copia de contraseña resuelta. Las plantillas de Wi-Fi escapan de los valores insertados automáticamente.</string>
+    <string name="qr_template_insert">Insertar campo</string>
+    <string name="qr_template_literal">Texto sin formato</string>
+    <string name="qr_template_mode">Plantilla de campo</string>
+    <string name="qr_template_wifi">Preajuste de Wi-Fi</string>
+</resources>

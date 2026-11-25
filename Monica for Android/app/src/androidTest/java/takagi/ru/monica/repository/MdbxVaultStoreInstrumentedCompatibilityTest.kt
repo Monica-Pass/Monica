@@ -556,6 +556,10 @@ class MdbxVaultStoreInstrumentedCompatibilityTest {
             publish()
         }
 
+        override suspend fun updateDisplayOrder(id: Long, order: Int) {
+            mutate(id) { it.copy(sortOrder = order) }
+        }
+
         override suspend fun updateLastAccessedTime(id: Long, time: Long) {
             mutate(id) { it.copy(lastAccessedAt = time) }
         }

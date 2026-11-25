@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">Xóa tất cả các trường đặt trước? Các mục đã lưu hiện tại sẽ giữ nguyên các trường của chúng.</string>
+    <string name="customization_drag_handle">Sắp xếp lại %1$s</string>
+    <string name="customization_filters_navigation">Bộ lọc và điều hướng</string>
+    <string name="customization_live_preview">Xem truoc truc tiep</string>
+</resources>

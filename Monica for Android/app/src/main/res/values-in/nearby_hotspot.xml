@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Hotspot sementara</string>
+    <string name="nearby_hotspot_create_hint">Hubungkan ketika perangkat tidak memiliki Wi-Fi bersama.</string>
+    <string name="nearby_hotspot_title">Hotspot sementara</string>
+    <string name="nearby_hotspot_help">Kode ini kedaluwarsa dalam 10 menit. Menutup panel ini, mengunci, atau meninggalkan Monica akan menghentikan hotspot. Penyandingan masih diverifikasi.</string>
+    <string name="nearby_hotspot_active">Hotspot sementara aktif</string>
+    <string name="nearby_hotspot_stop">Akhiri hotspot sementara</string>
+    <string name="nearby_hotspot_starting">Membuat hotspot dan kode penyandingan…</string>
+    <string name="nearby_hotspot_join_title">Hubungkan ke hotspot ini?</string>
+    <string name="nearby_hotspot_join_hint">Bergabunglah dengan %1$s melalui konfirmasi Android. Monica kemudian memverifikasi perangkat yang dipasangkan.</string>
+    <string name="nearby_hotspot_connecting">Menunggu koneksi Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android tidak dapat menyelesaikan koneksi. Anda dapat terhubung secara manual dan memindai kode lagi.</string>
+    <string name="nearby_hotspot_permissions">Berikan izin Wi-Fi yang diminta oleh Android untuk membuat atau bergabung dengan hotspot.</string>
+    <string name="nearby_hotspot_unsupported">Koneksi hotspot otomatis tidak tersedia. Hubungkan secara manual dan pindai lagi.</string>
+    <string name="nearby_hotspot_manual">Sudah terhubung, lanjutkan</string>
+    <string name="nearby_hotspot_open_wifi">Pengaturan Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Pindai pasangan Monica atau kode hotspot sementara.</string>
+    <string name="nearby_hotspot_connect">Hubungkan</string>
+    <string name="nearby_hotspot_copy_password">Salin kata sandi hotspot</string>
+    <string name="nearby_hotspot_interrupted">Koneksi dibatalkan ketika Monica meninggalkan latar depan. Hubungkan ke hotspot secara manual, lalu pindai kembali kodenya.</string>
+</resources>

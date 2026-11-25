@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_clear_presets_message">¿Eliminar todos los campos preestablecidos? Las entradas guardadas existentes conservarán sus campos.</string>
+    <string name="customization_drag_handle">Reordenar %1$s</string>
+    <string name="customization_filters_navigation">Filtros y navegación</string>
+    <string name="customization_live_preview">Vista previa en vivo</string>
+</resources>

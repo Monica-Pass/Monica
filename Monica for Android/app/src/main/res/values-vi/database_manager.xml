@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Dữ liệu đã thay đổi hoặc xác minh thất bại. Nguồn được giữ nguyên. Làm mới cả hai ngăn và kiểm tra đích trước khi thử lại.</string>
     <string name="manager_failure_locked">Cơ sở dữ liệu bị khóa hoặc tệp gốc không khả dụng. Mở trong cài đặt rồi làm mới ngăn này.</string>
     <string name="manager_failure_general">Thao tác chưa hoàn tất. Kiểm tra cả hai ngăn và chi tiết: đích có thể chứa bản sao chưa đầy đủ.</string>
+    <string name="manager_clear_selection">Xóa lựa chọn</string>
+    <string name="manager_copy_left">← Sao chép</string>
+    <string name="manager_copy_right">Sao chép →</string>
+    <string name="manager_focused_location">Đang hoạt động: %1$s · %2$s</string>
+    <string name="manager_focused_selection">Đang hoạt động: %1$s · %2$d đã chọn</string>
+    <string name="manager_history_back">Quay lại</string>
+    <string name="manager_history_forward">Chuyển tiếp</string>
+    <string name="manager_left_pane">Khung bên trái</string>
+    <string name="manager_move_left">← Di chuyển</string>
+    <string name="manager_move_right">Di chuyển →</string>
+    <string name="manager_new_folder_short">Thư mục mới</string>
+    <string name="manager_open_item">Mở</string>
+    <string name="manager_parent">Lên</string>
+    <string name="manager_right_pane">Khung bên phải</string>
+    <string name="manager_switch_pane">Khung chuyển đổi</string>
 </resources>

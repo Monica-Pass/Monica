@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haptic_strength">진동 강도</string>
+    <string name="haptic_strength_description">0 = 끄기 · 1 = 약하게 · 2 = 강하게</string>
+    <string name="haptic_test">진동 테스트</string>
+    <string name="haptic_system_disabled">진동을 느끼려면 시스템 설정에서 터치 피드백을 켜세요.</string>
+    <string name="haptic_unavailable">이 기기에서는 진동을 사용할 수 없거나 시스템이 진동 요청을 거부했습니다.</string>
+</resources>

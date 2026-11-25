@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">设默认密码管理器，须 Android 14 及以上。</string>
+    <string name="privilege_method">授权之法</string>
+    <string name="privilege_recovery_title">增强恢复 · 可选</string>
+    <string name="privilege_root_confirm_body">须设备已 Root，且获其 Root 管理器许可。Monica 仅以 Root 调整增强无障碍恢复与默认密码管理器所需之系统设置，不启封密府，亦不读其他应用数据。\n\n增强恢复仅重连已启用之 Monica 无障碍服务。启用后，应用或设备重启仍可续行，或短暂中断填写。\n\n于此停用 Root，可止今后使用；欲撤系统授权，请于 Root 管理器移除 Monica。Shizuku 不可用时，绝不自行改求 Root。</string>
+    <string name="privilege_root_confirm_title">许 Monica 用 Root 乎？</string>
+    <string name="privilege_root_denied">Root 授权未允。请于 Root 管理器许可 Monica 后重试。</string>
+    <string name="privilege_root_disable">于 Monica 停用 Root</string>
+    <string name="privilege_root_grant">授 Root 之权</string>
+    <string name="privilege_root_hint">直接用此设备之 Root 权限</string>
+    <string name="privilege_root_not_authorized">Root 尚未授权。请点“授 Root 之权”以继续。</string>
+    <string name="privilege_root_ready">已启 Root 以设系统</string>
+    <string name="privilege_root_requesting">候 Root 授权…</string>
+    <string name="privilege_root_timeout">Root 授权或命令已超时。请查 Root 管理器后重试。</string>
+    <string name="privilege_root_unavailable">未寻得可用 su 命令。须先使此设备取得 Root。</string>
+    <string name="privilege_shizuku_hint">经运行中之 Shizuku 服务授权</string>
+</resources>

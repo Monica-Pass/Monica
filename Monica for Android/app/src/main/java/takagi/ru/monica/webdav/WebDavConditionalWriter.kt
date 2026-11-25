@@ -23,7 +23,7 @@ internal class WebDavConditionalWriter(
         source: File,
         mode: MdbxRemoteWriteMode,
         expectedVersion: String?
-    ) {
+    ): String? {
         val request = Request.Builder()
             .url(targetUrl)
             .put(source.asRequestBody(OCTET_STREAM))
@@ -43,7 +43,7 @@ internal class WebDavConditionalWriter(
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            if (response.code in SUCCESS_CODES) return
+            if (response.code in SUCCESS_CODES) return response.header("ETag")?.takeIf(String::isNotBlank)
             val body = response.body?.string().orEmpty()
             when (response.code) {
                 409, 412 -> throw WebDavPreconditionException(response.code, body)

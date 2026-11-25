@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Czyszczenie kart bankowych…</string>
+    <string name="clear_data_completed">Czyszczenie zakończone</string>
+    <string name="clear_data_completed_hint">Wybrane dane zostały usunięte.</string>
+    <string name="clear_data_count">Usunięto wpisy %1$d / %2$d</string>
+    <string name="clear_data_documents">Czyszczenie dokumentów…</string>
+    <string name="clear_data_failed">Nie można wyczyścić wszystkich wybranych danych</string>
+    <string name="clear_data_failed_hint">Czyszczenie zatrzymane. Wpisy już usunięte nie zostaną przywrócone. Sprawdź połączenie z bazą danych i spróbuj ponownie.</string>
+    <string name="clear_data_generator_history">Czyszczenie historii generowania haseł…</string>
+    <string name="clear_data_notes">Czyszczenie notatek…</string>
+    <string name="clear_data_passwords">Usuwanie haseł…</string>
+    <string name="clear_data_preparing">Liczenie wybranych wpisów…</string>
+    <string name="clear_data_totp">Czyszczenie uwierzytelniaczy…</string>
+    <string name="clear_data_verifying">Weryfikowanie…</string>
+    <string name="clear_data_wait">Proszę poczekać na zakończenie tej operacji.</string>
+</resources>

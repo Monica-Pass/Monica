@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_conflict_choice_effect">Bu, çakışan silme işlemi de dahil olmak üzere, seçilen sürümü kullanan çakışan alanları çözer. Sonuç bir sonraki senkronizasyonda paylaşılacaktır. Devam etmeden önce seçiminizi gözden geçirin.</string>
+    <string name="mdbx_conflict_confirm_choice">Seçimi onayla</string>
+    <string name="mdbx_conflict_values_unavailable">Geçmiş değerlerin önizlemesi burada görüntülenemez. Seçmeden önce kaynak cihazlardaki öğeyi kontrol edin.</string>
+    <string name="mdbx_conflict_show_values">Sürüm karşılaştırmasını göster</string>
+    <string name="mdbx_conflict_version_help">Yerel: çakışma sırasındaki bu cihaz.\nGelen: alınan sürüm, en son olmayabilir.</string>
+    <string name="mdbx_copy_parameters">Parametreleri kopyala</string>
+    <string name="mdbx_snapshot_retention_help">Otomatik anlık görüntüler budanabilir. Manuel anlık görüntüler siz silene kadar kalır.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_remove_title">%1$s silinsin mi?</string>
+    <string name="entry_content_remove_message">Bu işlem, içeriği bu taslaktan kaldırır. Kaydettiğinizde değişiklikler geçerli olur.</string>
+    <string name="entry_content_drag">Yeniden sıralamak için basılı tutun ve sürükleyin</string>
+</resources>

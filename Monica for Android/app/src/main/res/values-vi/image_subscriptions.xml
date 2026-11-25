@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Thêm đăng ký</string>
+    <string name="image_sources_cards">Tác phẩm nghệ thuật thẻ</string>
+    <string name="image_sources_choose">Chọn từ đăng ký</string>
+    <string name="image_sources_count">Hình ảnh %1$d</string>
+    <string name="image_sources_empty">Thêm nguồn hình ảnh đầu tiên của bạn</string>
+    <string name="image_sources_error">Không thể tải hoặc lưu. Hãy kiểm tra nguồn, định dạng và kết nối rồi thử lại. Đăng ký hiện tại và hình ảnh mục được giữ nguyên.</string>
+    <string name="image_sources_formats">Gói hình ảnh HTTPS JSON hoặc liên kết hình ảnh PNG, JPEG và WebP.</string>
+    <string name="image_sources_icons">Biểu tượng</string>
+    <string name="image_sources_name">Tên (tùy chọn)</string>
+    <string name="image_sources_no_results">Không có hình ảnh phù hợp</string>
+    <string name="image_sources_options">Tùy chọn đăng ký</string>
+    <string name="image_sources_refresh">Làm mới</string>
+    <string name="image_sources_remove">Hủy đăng ký</string>
+    <string name="image_sources_remove_hint">Xóa đăng ký này? Hình ảnh đã được sử dụng bởi các mặt hàng của bạn sẽ được lưu giữ.</string>
+    <string name="image_sources_retry">Thử lại</string>
+    <string name="image_sources_search">Tìm kiếm hình ảnh</string>
+    <string name="image_sources_settings_hint">Quản lý gói biểu tượng và nguồn ảnh minh họa thẻ</string>
+    <string name="image_sources_title">Đăng ký hình ảnh</string>
+    <string name="image_sources_url">Đăng ký hoặc hình ảnh URL</string>
+    <string name="image_sources_use_hint">Chọn hình ảnh từ biểu tượng tùy chỉnh hoặc trình chỉnh sửa tác phẩm nghệ thuật thẻ.</string>
+</resources>

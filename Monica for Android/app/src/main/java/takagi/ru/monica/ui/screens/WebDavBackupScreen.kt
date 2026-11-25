@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.components.MonicaSlider as Slider
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState

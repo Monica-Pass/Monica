@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_library">密碼庫與清單</string>
+    <string name="customization_group_cards">卡片與錢包</string>
+    <string name="customization_group_fields_icons">欄位與圖示</string>
+    <string name="permission_summary_title">依需求開啟權限</string>
+    <string name="permission_summary_hint">僅開啟你使用的功能所需權限，部分權限由 Android 自動授予。</string>
+    <string name="permission_summary_granted">已授予 %1$d 項權限</string>
+    <string name="permission_refresh_status">重新整理狀態</string>
+    <string name="permission_action_request">申請權限</string>
+    <string name="permission_action_none">無需操作</string>
+    <string name="permission_action_for">%1$s：%2$s</string>
+    <string name="permission_help_actions">點選「申請權限」向 Android 提出授權要求，或點選「開啟設定」管理服務及已授予的權限。\n\n顯示「無需操作」或「不可用」的項目沒有操作按鈕，依需求開啟即可。\n\n從系統設定返回後會自動重新整理，也可點選「重新整理狀態」再次檢查。</string>
+</resources>

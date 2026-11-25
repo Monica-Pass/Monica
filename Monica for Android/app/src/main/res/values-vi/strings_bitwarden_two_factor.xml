@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_authenticator_search">Tìm kiếm tên hoặc tài khoản</string>
+    <string name="bitwarden_change_method">Thay đổi phương pháp</string>
+    <string name="bitwarden_choose_method">Chọn phương thức xác minh</string>
+    <string name="bitwarden_email_action_hint">Gửi mã, sau đó nhập mã nhận được qua email.</string>
+    <string name="bitwarden_totp_action_hint">Chọn trình xác thực hiện có trong Monica hoặc nhập mã hiện tại của nó.</string>
+    <string name="bitwarden_totp_generation_failed">Không thể tạo mã. Kiểm tra trình xác thực này hoặc chọn một mục khác.</string>
+    <string name="bitwarden_totp_picker_hint">Việc chọn một mục sẽ điền mã hiện tại của nó mà không cần gửi.</string>
+    <string name="bitwarden_two_factor_unsupported">Phương pháp này yêu cầu luồng đăng nhập tương tác và không thể hoàn thành bằng mã tại đây. Chọn một phương thức xác thực, email hoặc YubiKey OTP có sẵn. Nếu tổ chức của bạn yêu cầu SSO hoặc chỉ khóa bảo mật, hãy sử dụng ứng dụng khách hỗ trợ luồng đó.</string>
+    <string name="bitwarden_two_factor_unsupported_short">Không được hỗ trợ trong ứng dụng khách này</string>
+</resources>

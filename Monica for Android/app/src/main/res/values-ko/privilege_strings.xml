@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">기본 비밀번호 관리자를 설정하려면 Android 14 이상이 필요합니다.</string>
+    <string name="privilege_method">승인 방법</string>
+    <string name="privilege_recovery_title">향상된 복구 · 선택 사항</string>
+    <string name="privilege_root_confirm_body">이미 루팅된 기기이며 Root 관리자에서 승인을 받아야 합니다. Monica는 접근성 서비스 복구 강화 및 기본 비밀번호 관리자에 필요한 시스템 설정에만 Root를 사용합니다. 보관함의 잠금을 해제하거나 다른 앱의 데이터를 읽지 않습니다.\n\n복구 강화는 이미 활성화된 Monica 접근성 서비스만 다시 연결합니다. 활성화하면 앱이나 기기를 다시 시작한 뒤에도 작동할 수 있으며 자동 입력이 잠시 중단될 수 있습니다.\n\n이후 사용을 중지하려면 여기서 Root를 비활성화하세요. 시스템 권한을 취소하려면 Root 관리자에서 Monica를 제거하세요. Shizuku를 대신하기 위해 Root를 자동으로 요청하지 않습니다.</string>
+    <string name="privilege_root_confirm_title">Monica가 Root를 사용하도록 허용하시겠습니까?</string>
+    <string name="privilege_root_denied">Root 액세스가 거부되었습니다. Root 관리자에서 Monica를 허용하고 다시 시도하세요.</string>
+    <string name="privilege_root_disable">Monica에서 Root 비활성화</string>
+    <string name="privilege_root_grant">Root 승인</string>
+    <string name="privilege_root_hint">이 장치의 Root 액세스를 직접 사용하십시오.</string>
+    <string name="privilege_root_not_authorized">Root는 인증되지 않았습니다. 계속하려면 Root 승인을 탭하세요.</string>
+    <string name="privilege_root_ready">Root가 시스템 설정에 활성화되었습니다.</string>
+    <string name="privilege_root_requesting">Root 인증을 기다리는 중…</string>
+    <string name="privilege_root_timeout">Root 인증 또는 명령 시간이 초과되었습니다. Root 관리자를 확인하고 다시 시도하세요.</string>
+    <string name="privilege_root_unavailable">사용 가능한 su 명령을 찾을 수 없습니다. 이 장치는 먼저 루팅되어야 합니다.</string>
+    <string name="privilege_shizuku_hint">실행 중인 Shizuku 서비스를 통해 승인</string>
+</resources>

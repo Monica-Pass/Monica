@@ -180,6 +180,33 @@ internal class BitwardenPasswordHistoryStore(
         needsUpload
     }
 
+    /** An explicit local move keeps its row identity; ordinary edits never change ownership. */
+    suspend fun persistLocalTransfer(expected: PasswordEntry, updated: PasswordEntry, oldPlain: String,
+        session: Session): Boolean = authorizedTransaction(expected = session) {
+        if (!isNativeLogin(updated)) return@authorizedTransaction false
+        check(expected.keepassDatabaseId == null && expected.mdbxDatabaseId == null && expected.bitwardenVaultId == null &&
+            expected.keepassEntryUuid.isNullOrEmpty() && expected.keepassGroupUuid.isNullOrEmpty() &&
+            expected.keepassGroupPath.isNullOrEmpty() && expected.bitwardenCipherId.isNullOrEmpty() &&
+            expected.bitwardenRevisionDate.isNullOrEmpty() && !expected.isDeleted) { "Transfer source is not local" }
+        check(updated.id == expected.id && updated.bitwardenVaultId == session.vaultId &&
+            updated.keepassDatabaseId == null && updated.mdbxDatabaseId == null &&
+            updated.keepassEntryUuid.isNullOrEmpty() && updated.keepassGroupUuid.isNullOrEmpty() &&
+            updated.keepassGroupPath.isNullOrEmpty()) { "Transfer destination changed" }
+        requireUnboundState(updated, states.get(expected.id))
+        check(states.get(expected.id) == null) { "Local source has Bitwarden history binding" }
+        check(entries.getPasswordEntryById(expected.id) == expected) { "Password changed before transfer" }
+        check(oldPlain == security.decryptData(expected.password)) { "Password history snapshot changed" }
+        val newPlain = security.decryptData(updated.password)
+        requireUiWrite(updated)
+        seed(expected.id)
+        entries.update(updated.copy(bitwardenLocalModified = true))
+        if (oldPlain.isNotEmpty() && oldPlain != newPlain) {
+            history.insert(PasswordHistoryEntry(entryId = updated.id, password = protect(oldPlain), lastUsedAt = Date()))
+            history.trimToLimit(updated.id, BitwardenPasswordHistory.MAX_ENTRIES)
+        }
+        true
+    }
+
     /** The password edit and its old-password history become visible to sync in one transaction. */
     suspend fun persistPasswordTransition(expected: PasswordEntry, updated: PasswordEntry, oldPlain: String, session: Session? = null): Boolean = authorizedTransaction(updated.bitwardenVaultId, session) {
         val unboundLogin = updated.bitwardenVaultId != null && updated.bitwardenCipherId.isNullOrEmpty() &&

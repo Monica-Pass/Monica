@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_message_empty">File cadangan yang diekspor kosong</string>
+    <string name="export_message_empty_zip">Cadangan ZIP tidak memiliki konten</string>
+    <string name="export_message_open_failed">Tidak dapat membuka tujuan ekspor</string>
+    <string name="export_message_incomplete">Ekspor tidak lengkap: %1$d/%2$d byte</string>
+    <string name="export_message_invalid_encrypted">Cadangan tertulis memiliki format terenkripsi yang tidak valid</string>
+    <string name="export_message_verify_failed">Tidak dapat memverifikasi file yang diekspor</string>
+    <string name="export_message_backup_summary">Cadangan diekspor: kata sandi %1$d dan gambar %2$d</string>
+    <string name="import_message_aegis_unencrypted">Impor ini memerlukan ekspor Aegis JSON yang tidak terenkripsi</string>
+    <string name="import_message_aegis_missing">File Aegis tidak valid: %1$s hilang</string>
+    <string name="import_message_aegis_empty_slots">File Aegis tidak valid: slot kosong</string>
+    <string name="import_message_aegis_slot_type">Jenis slot Aegis yang tidak didukung: %1$s</string>
+    <string name="import_message_aegis_no_totp">Tidak ditemukan entri TOTP yang valid di file Aegis</string>
+    <string name="import_message_aegis_failed">Tidak dapat mengimpor file Aegis: %1$s</string>
+    <string name="import_message_key_length">Kunci yang didekripsi memiliki panjang yang tidak valid</string>
+    <string name="import_message_steam_missing">Data Steam Guard tidak valid: %1$s hilang</string>
+    <string name="import_message_steam_device_id">ID perangkat tidak valid. Format yang diharapkan: android:xxxx</string>
+    <string name="import_message_steam_secret">Format rahasia_berbagi Steam tidak valid</string>
+    <string name="import_message_steam_exists">Pengautentikasi Steam Guard ini sudah ada</string>
+    <string name="export_message_empty_mafile">MaFile yang diekspor kosong</string>
+    <string name="crypto_message_encrypt_failed">Enkripsi gagal: %1$s</string>
+    <string name="crypto_message_decrypt_failed">Dekripsi gagal: %1$s</string>
+    <string name="crypto_message_file_too_small">File terenkripsi terlalu kecil dan mungkin rusak</string>
+    <string name="crypto_message_invalid_file">Format file terenkripsi tidak valid</string>
+    <string name="crypto_message_password_or_corrupt">Kata sandi salah atau data terenkripsi rusak</string>
+    <string name="crypto_message_invalid_text">Format teks terenkripsi tidak valid</string>
+    <string name="photo_message_camera_failed">Tidak dapat membuka kamera: %1$s</string>
+    <string name="photo_message_gallery_missing">Tidak ada aplikasi galeri yang tersedia</string>
+    <string name="photo_message_gallery_failed">Tidak dapat membuka galeri: %1$s</string>
+    <string name="photo_message_data_failed">Tidak dapat membaca gambar yang dikembalikan: %1$s</string>
+    <string name="photo_message_file_missing">File foto kosong atau hilang</string>
+    <string name="photo_message_not_selected">Tidak ada gambar yang dipilih</string>
+</resources>

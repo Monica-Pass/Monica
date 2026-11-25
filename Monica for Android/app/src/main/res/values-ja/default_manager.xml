@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_applied">Monica が選択され、システム設定が確認されました</string>
+    <string name="default_manager_apply">Monica に設定します</string>
+    <string name="default_manager_autofill">自動入力サービス</string>
+    <string name="default_manager_confirm">このユーザーのデフォルトのパスワード マネージャーを変更します。現在の構成は、復元のためにまずローカルに保存されます。</string>
+    <string name="default_manager_credential">プライマリ認証情報プロバイダー</string>
+    <string name="default_manager_denied">許可が拒否されました。 Shizuku で Monica を許可して再試行してください</string>
+    <string name="default_manager_description">現在の Android ユーザーのデフォルトのマネージャーを設定します。 Android 14 以降と Shizuku または Root 認証が必要です。設定の検証が成功しても、すべての HyperOS passkey フローが保証されるわけではありません。</string>
+    <string name="default_manager_entry_hint">HyperOS がサードパーティのパスワード マネージャー設定を非表示にする場合は、Shizuku または Root を使用して Monica を設定します</string>
+    <string name="default_manager_grant">Shizuku を承認します</string>
+    <string name="default_manager_include_autofill">自動入力も設定します</string>
+    <string name="default_manager_include_autofill_hint">自動入力サービスを Monica に切り替えます</string>
+    <string name="default_manager_keep_others">他の資格情報プロバイダーを維持する</string>
+    <string name="default_manager_keep_others_hint">有効なプロバイダーを維持し、Monica をプライマリプロバイダーにします</string>
+    <string name="default_manager_open_shizuku">Shizuku を開く</string>
+    <string name="default_manager_permission">許可が必要です</string>
+    <string name="default_manager_read_failed">システム設定を読み取れませんでした。更新して再試行してください</string>
+    <string name="default_manager_ready">接続され、承認されました</string>
+    <string name="default_manager_refresh">ステータスの更新</string>
+    <string name="default_manager_replace_warning">他の資格情報プロバイダーは無効になります。彼らのデータは削除されません。</string>
+    <string name="default_manager_restore">以前の設定を復元する</string>
+    <string name="default_manager_restore_confirm">最後の切り替え前に保存されたシステム構成を復元します。</string>
+    <string name="default_manager_restored">以前のシステム設定が復元され、検証されました</string>
+    <string name="default_manager_source">cr-zhichen/password-manager-switch · MIT に基づく</string>
+    <string name="default_manager_stopped">Shizuku をインストールして起動します</string>
+    <string name="default_manager_title">デフォルトのパスワードマネージャー</string>
+    <string name="default_manager_unknown">まだ読んでいません</string>
+    <string name="default_manager_unset">未設定</string>
+    <string name="default_manager_unsupported">Android 14+ および Shizuku 13+ が必要です</string>
+    <string name="default_manager_write_failed">変更を完了または検証できませんでした。更新して状態を確認します。保存された設定は復元可能です。</string>
+</resources>

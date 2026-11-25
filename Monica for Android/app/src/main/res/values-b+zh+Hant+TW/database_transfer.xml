@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_zip_title">ZIP 備份</string>
+    <string name="transfer_zip_description">僅備份所選資料庫。</string>
+    <string name="transfer_contents">匯出內容</string>
+    <string name="transfer_images_attachments">圖片與附件</string>
+    <string name="transfer_encrypt_backup">加密備份</string>
+    <string name="transfer_encryption_hint">匯出 Passkey 或附件時需要加密備份。</string>
+    <string name="transfer_choose_location">選擇儲存位置</string>
+    <string name="transfer_background_continue">在後臺繼續</string>
+    <string name="transfer_background_hint">可以離開此頁面，通知中會顯示進度。</string>
+    <string name="transfer_reading">正在讀取檔案…</string>
+    <string name="transfer_decrypting">正在解密備份…</string>
+    <string name="transfer_preparing">正在整理條目…</string>
+    <string name="transfer_writing">正在寫入資料庫…</string>
+    <string name="transfer_attachments">正在複製附件…</string>
+    <string name="transfer_packing">正在打包…</string>
+    <string name="transfer_encrypting">正在加密檔案…</string>
+    <string name="transfer_saving">正在儲存檔案…</string>
+    <string name="transfer_items_progress">%1$d / %2$d</string>
+    <string name="transfer_export_complete">已匯出 %1$d 項。</string>
+    <string name="transfer_export_done">匯出完成</string>
+    <string name="transfer_channel">匯入與匯出</string>
+    <string name="transfer_open_result">開啟 Monica 查看結果。</string>
+    <string name="transfer_background_start_failed">無法啟動匯出，請保持 Monica 開啟後重試。</string>
+    <string name="transfer_cancelled">已取消匯出。</string>
+    <string name="transfer_attachment_encryption">請加密備份以包含附件。</string>
+    <string name="transfer_password_mismatch">兩次輸入的密碼不一致。</string>
+    <string name="transfer_kdbx_password_description">設定密碼以保護匯出的 KDBX 資料庫。</string>
+    <string name="transfer_unsupported_token">此權杖格式無法轉換，請使用 ZIP 備份。</string>
+    <string name="steam_mafile_export_title">Steam maFile</string>
+    <string name="steam_mafile_export_desc">匯出此資料庫中選中的 Steam 帳號。</string>
+    <string name="transfer_kdbx_description">以 KeePass 格式匯出密碼、驗證器、Passkey 和附件。</string>
+    <string name="transfer_unsupported_records">此庫包含暫不支援的項目類型，請另存原生資料庫副本。</string>
+    <string name="transfer_zip_password_title">解密 ZIP 備份</string>
+    <string name="transfer_zip_password_description">請輸入建立這份 ZIP 備份時設定的密碼。</string>
+    <string name="transfer_attachment_export_failed">條目「%1$s」的附件「%2$s」匯出失敗。%3$s</string>
+    <string name="transfer_attachment_key_unavailable">無法解開此附件的金鑰。請先解鎖 Monica，並在條目詳情中嘗試開啟；仍失敗時需從原裝置或可讀取的備份重新匯入該附件。</string>
+    <string name="transfer_attachment_content_unreadable">此附件未通過完整性校驗，匯出已停止。請檢查原檔案或從可讀取的備份還原。</string>
+    <string name="transfer_incomplete_export_file">未能自動刪除匯出失敗留下的檔案。請手動刪除這個空檔案或不完整檔案，它不能用於還原資料。</string>
+</resources>

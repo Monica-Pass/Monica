@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Przytrzymaj i przeciągnij, aby zmienić kolejność</string>
+    <string name="entry_content_remove_message">Spowoduje to usunięcie treści z tej wersji roboczej. Zmiany zaczną obowiązywać po zapisaniu.</string>
+    <string name="entry_content_remove_title">Usunąć %1$s?</string>
+</resources>

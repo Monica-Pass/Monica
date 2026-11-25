@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Le cartelle Bitwarden rimangono nello stesso account. La copia di cartelle con allegati, passkeys o voci dell\'organizzazione non è ancora supportata.</string>
+    <string name="external_folder_choose_destination">Scegliere un database e una cartella di destinazione</string>
+    <string name="external_folder_copy_hint">Copia la cartella e il suo contenuto; mantenere l\'originale.</string>
+    <string name="external_folder_move_hint">Sposta la cartella e il suo contenuto. L\'originale viene rimosso solo dopo aver salvato la destinazione.</string>
+    <string name="external_folder_root">"Radice del database"</string>
+</resources>

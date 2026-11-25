@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_decrease">減少</string>
+    <string name="cg_email_alias">電子メールとエイリアス</string>
+    <string name="cg_increase">増加</string>
+    <string name="cg_invalid_options">文字を選択し、その最小合計が長さ内に収まるようにしてください。</string>
+    <string name="cg_length">長さ</string>
+    <string name="cg_minimum">最小数</string>
+    <string name="cg_random_username">ランダムなユーザー名</string>
+    <string name="cg_saved_suggestions">保存された提案</string>
+    <string name="cg_symbols">ランダムなシンボル</string>
+    <string name="cg_use">このパスワードを使用</string>
+    <string name="cg_username_title">ユーザー名ジェネレータ</string>
+    <string name="cg_valid_email">有効な電子メール アドレスを入力してください</string>
+    <string name="cg_words">言葉</string>
+</resources>

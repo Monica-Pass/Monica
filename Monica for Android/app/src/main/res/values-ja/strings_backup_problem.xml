@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">これらのアイテムをバックアップできませんでした。ローカル データと既存のリモート バックアップは変更されません。</string>
+    <string name="passkey_backup_problem_title">バックアップには注意が必要です</string>
+    <string name="passkey_device_bound_solution">新しいエクスポート可能な passkey をサービスに登録し、古いキーを廃止する前に機能することを確認します。現時点ではこの項目をスキップすることもできます。</string>
+    <string name="passkey_partial_replace_blocked">このバックアップでは、Passkeys の一部が省略されています。マージ復元を使用します。ローカル データの置き換えはブロックされます。</string>
+    <string name="passkey_partial_requires_encryption">Passkeys をスキップする部分バックアップも暗号化する必要があります。</string>
+    <string name="passkey_partial_restore_warning">この部分バックアップでは、スキップされた Passkeys が省略されます。既存のローカル レコードとのマージを復元します。</string>
+    <string name="passkey_partial_saved">部分的なバックアップが保存されました</string>
+    <string name="passkey_partial_saved_detail">下記のPasskeysは付属しません。ローカルの記録と既存のリモート バックアップは保持されます。前回の完全バックアップ時間は変更されません。</string>
+    <string name="passkey_problem_close">閉じる</string>
+    <string name="passkey_retry_full_backup">完全バックアップを再試行します</string>
+    <string name="passkey_skip_and_backup">%1$d をスキップしてバックアップします</string>
+    <string name="passkey_skip_explanation">スキップはこのバックアップにのみ影響し、ローカル アイテムは削除されません。別の部分バックアップが保存されます。既存のリモート バックアップは保持されます。完全バックアップに代わるものではありません。</string>
+</resources>

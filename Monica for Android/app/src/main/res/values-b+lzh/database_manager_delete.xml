@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_local_hint">含卷夹及其中内容。本机密钥与安全项目入回收站；卷夹与通行之钥永久删除。</string>
+    <string name="manager_delete_native_hint">所选项目与卷夹内容将自此库永久删除，不可复。</string>
+    <string name="manager_delete_source">%1$s · %2$s · 已择 %3$d 项</string>
+    <string name="manager_delete_title">果欲删所择项目乎？</string>
+</resources>

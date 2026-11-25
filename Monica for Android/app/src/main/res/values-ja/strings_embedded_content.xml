@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">コピーカード</string>
+    <string name="embedded_copy_document">ドキュメントのコピー</string>
+    <string name="embedded_copy_failed">コンテンツのコピーが不完全です</string>
+    <string name="embedded_copy_failed_message">%1$s を完全にコピーできませんでした。ソースと下書きは保持されます。ソース データベースのロックが解除されており、添付ファイルが利用可能であることを確認してから、再試行してください。</string>
+    <string name="embedded_copy_independent">独立したコピー · %1$d 添付ファイル</string>
+    <string name="embedded_copy_note">メモをコピー</string>
+    <string name="embedded_copy_working">完全なコンテンツをコピーしています…</string>
+    <string name="password_content_document">身分証明書</string>
+    <string name="password_content_document_description">ID フィールド、カード表面、写真、添付ファイル</string>
+</resources>

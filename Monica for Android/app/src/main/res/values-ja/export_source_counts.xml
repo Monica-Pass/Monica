@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_count_loading">数えています…</string>
+    <string name="export_source_count_locked">カウントを解除する</string>
+    <string name="export_source_count_unavailable">利用不可</string>
+    <string name="export_source_record_count">%1$d レコード</string>
+</resources>

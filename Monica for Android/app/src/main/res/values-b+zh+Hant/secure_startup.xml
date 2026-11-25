@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android 目前無法驗證此安裝中的加密配置。應用已停止正常啓動，沒有清除配置或替換密鑰。</string>
+    <string name="secure_startup_diagnostic">複製診斷信息</string>
+    <string name="secure_startup_environment">如果此前恢復過應用資料、刷機或修改系統，請檢查能否恢復原系統和密鑰環境。僅憑此錯誤無法確定具體誘因。</string>
+    <string name="secure_startup_no_reset">不要清除應用資料或卸載 Monica，請保留原文件。如有 Monica 導出的備份，可先在另一安裝中驗證恢復。永久丟失的系統密鑰無法通過重試重新找回。</string>
+    <string name="secure_startup_preserved">原有資料已保留</string>
+    <string name="secure_startup_restart">先重啓手機，使用系統鎖屏憑據解鎖，再重試。</string>
+    <string name="secure_startup_retry">重試</string>
+    <string name="secure_startup_title">安全存儲暫不可用</string>
+</resources>

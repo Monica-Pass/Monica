@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">押したままドラッグして並べ替えます</string>
+    <string name="entry_content_remove_message">これにより、このドラフトからコンテンツが削除されます。変更は保存すると有効になります。</string>
+    <string name="entry_content_remove_title">%1$s を削除しますか?</string>
+</resources>

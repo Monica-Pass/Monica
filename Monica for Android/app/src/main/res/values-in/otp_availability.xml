@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_temporarily_unavailable">Kunci pengautentikasi ini untuk sementara tidak dapat dibaca. Buka kunci Monica dan coba lagi. Data asli telah disimpan.</string>
+</resources>

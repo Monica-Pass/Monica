@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">교차 장치 사용</string>
+    <string name="passkey_portability_algorithm_hint">대상은 동일한 키 알고리즘을 지원해야 합니다. 현재 Bitwarden 전송은 ES256만 지원합니다.</string>
+    <string name="passkey_portability_backup_hint">이 자격 증명은 백업할 수 없는 것으로 표시되었습니다. 해당 속성을 보존하는 대상만이 이를 사용할 수 있습니다. Bitwarden로 변환하거나 자격 증명 교환이 차단됩니다.</string>
+    <string name="passkey_portability_checking">확인 중…</string>
+    <string name="passkey_portability_counter_hint">이 자격 증명에는 0이 아닌 서명 카운터 기록이 있습니다. Monica는 제로 카운터를 사용합니다. 교차 기기 사용은 사전 카운터를 확인하는 웹사이트에 의해 거부될 수 있습니다.</string>
+    <string name="passkey_portability_exportable">키를 내보낼 수 있습니다.</string>
+    <string name="passkey_portability_exportable_hint">지원되는 암호화 형식으로 키를 내보낼 수 있습니다. 대상은 ID, 키 및 등록 속성을 보존해야 합니다. 웹사이트 호환성은 대상 클라이언트에 따라 달라집니다.</string>
+    <string name="passkey_portability_invalid">메타데이터 충돌</string>
+    <string name="passkey_portability_invalid_hint">백업 속성이 충돌합니다. 서명은 등록된 속성을 자동으로 변경해서는 안 됩니다. 복구를 위해 소스 자격 증명을 보관하세요.</string>
+    <string name="passkey_portability_key_unavailable">키를 사용할 수 없음</string>
+    <string name="passkey_portability_local_hint">개인 키가 이 장치에 바인딩되어 있으므로 내보낼 수 없습니다. 데이터베이스만 복사하면 다른 장치에서 로그인이 활성화되지 않습니다.</string>
+    <string name="passkey_portability_local_only">로컬 전용</string>
+    <string name="passkey_portability_missing_hint">이 장치에서 사용 가능한 개인 키를 찾을 수 없습니다. 이 기록만으로는 여기 또는 다른 장치에 로그인할 수 없습니다.</string>
+    <string name="passkey_portability_restricted">전송 제한됨</string>
+    <string name="passkey_portability_unknown">확인되지 않음</string>
+    <string name="passkey_portability_unknown_hint">키 기능을 확인할 수 없습니다. 소스 데이터베이스를 잠금 해제하고 다시 시도하십시오.</string>
+</resources>

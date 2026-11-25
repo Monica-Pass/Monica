@@ -1,0 +1,116 @@
+{
+  "main": {
+    "buildSeconds": 266.638156800007,
+    "testBuildSeconds": 92.3994132999942,
+    "apks": [
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261126-note-toolbar-floating-331\\raw\\main-tests02\\app.apk",
+        "sha256": "ffe44d271e9f1777eafd2bb85120cd10e5d57099c224e20c186cddd4b4c2fc33"
+      },
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261126-note-toolbar-floating-331\\raw\\main-tests02\\test.apk",
+        "sha256": "cf175dd619b0906e2dcb08f9c43f0a39f440ba4e26455062c788fe9f7da44384"
+      }
+    ],
+    "jvm": {
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    "device": {
+      "completedMethodPasses": 1,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.credentialexchange.EmbeddedWalletUiTest#fullNoteEditorRetainsFormattingAndTagsInDraft",
+      "tests": 1,
+      "failures": 0,
+      "success": true,
+      "seconds": 4.410321200004546
+    },
+    "sourceHashes": {
+      "app/src/main/java/takagi/ru/monica/ui/screens/AddEditNoteScreen.kt": "b98790ff385bc152873cd1e0942f8663d319f0c4042b5d43fc89bb0ed27b3c7d",
+      "app/src/androidTest/java/takagi/ru/monica/credentialexchange/EmbeddedWalletUiTest.kt": "376f0737378648650508fd1f9534012769a45b65bfea71bed2dc1a7fcffb1ab7"
+    },
+    "apkMetadata": "package: name='takagi.ru.monica.notetoolbarmain33120261126.localedebug' versionCode='12' versionName='1.0.331-26112612-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+  },
+  "fd": {
+    "buildSeconds": 235.6948240000056,
+    "testBuildSeconds": 88.19966250000289,
+    "apks": [
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261126-note-toolbar-floating-331\\raw\\fd-tests02\\app.apk",
+        "sha256": "508a81a7027c9db782d3f4737db93678de873cc5d5f641bf62d94a1139a02873"
+      },
+      {
+        "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261126-note-toolbar-floating-331\\raw\\fd-tests02\\test.apk",
+        "sha256": "c453ffc9d59c5147a67ea781519ea9cb93b1f6376ff01b35a46638f69795102e"
+      }
+    ],
+    "jvm": {
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    "device": {
+      "completedMethodPasses": 1,
+      "completedMethodFailures": 0,
+      "edition": "fd",
+      "selector": "takagi.ru.monica.credentialexchange.EmbeddedWalletUiTest#fullNoteEditorRetainsFormattingAndTagsInDraft",
+      "tests": 1,
+      "failures": 0,
+      "success": true,
+      "seconds": 4.245690000010654
+    },
+    "sourceHashes": {
+      "app/src/main/java/takagi/ru/monica/ui/screens/AddEditNoteScreen.kt": "b98790ff385bc152873cd1e0942f8663d319f0c4042b5d43fc89bb0ed27b3c7d",
+      "app/src/androidTest/java/takagi/ru/monica/credentialexchange/EmbeddedWalletUiTest.kt": "376f0737378648650508fd1f9534012769a45b65bfea71bed2dc1a7fcffb1ab7"
+    },
+    "apkMetadata": "package: name='takagi.ru.monica.notetoolbarfd33120261126.localedebug' versionCode='38' versionName='1.0.331' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+  },
+  "cleanup": {
+    "removedOwnedUser": 19,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12,
+      16
+    ],
+    "restoredUser": 0,
+    "mumuRemainsRunning": true,
+    "mumuPid": 51792,
+    "scopedUninstalls": true,
+    "firstRemoveUserFailed": true,
+    "retryAfterStoppedSucceeded": true
+  },
+  "limitations": [
+    "MuMu API35/x86_64 Debug with synthetic notes only",
+    "No physical-device/OEM keyboard or Release/R8 validation",
+    "Bundled Sogou IME reported a zero-height window; visible IME checks used the actual Monica input method",
+    "Large-text arrow-key sequence stopped at line 19; not claimed as final-line-at-1.5x verification"
+  ],
+  "uiChecks": {
+    "main": [
+      "dark normal/full-screen with visible keyboard",
+      "normal long-note end cursor visible",
+      "Bold inserts markup",
+      "preview hides toolbar",
+      "back restores unsaved draft",
+      "save/reopen and cold-reopen retain full body/markup/tag",
+      "1.5x body and tag input remain above toolbar",
+      "light normal without keyboard",
+      "cold launch hides note until unlock"
+    ],
+    "fd": [
+      "light normal/full-screen with visible keyboard",
+      "Bold inserts markup",
+      "preview hides toolbar",
+      "1.5x draft restored after configuration change",
+      "1.5x body and tag input visible",
+      "save/reopen and cold-reopen retain full body/markup/tag",
+      "cold launch hides note until unlock"
+    ]
+  }
+}

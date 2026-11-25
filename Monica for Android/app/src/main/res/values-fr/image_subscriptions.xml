@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_add">Ajouter un abonnement</string>
+    <string name="image_sources_cards">Illustration de la carte</string>
+    <string name="image_sources_choose">Choisissez parmi les abonnements</string>
+    <string name="image_sources_count">Images %1$d</string>
+    <string name="image_sources_empty">Ajoutez votre première source d\'image</string>
+    <string name="image_sources_error">Impossible de charger ou d\'enregistrer. Vérifiez la source, le format et la connexion, puis réessayez. Les abonnements existants et les images d\'articles sont conservés.</string>
+    <string name="image_sources_formats">Packs d\'images HTTPS JSON ou liens d\'images PNG, JPEG et WebP.</string>
+    <string name="image_sources_icons">Icônes</string>
+    <string name="image_sources_name">Nom (facultatif)</string>
+    <string name="image_sources_no_results">Aucune image correspondante</string>
+    <string name="image_sources_options">Options d\'abonnement</string>
+    <string name="image_sources_refresh">Rafraîchir</string>
+    <string name="image_sources_remove">Se désabonner</string>
+    <string name="image_sources_remove_hint">Supprimer cet abonnement ? Les images déjà utilisées par vos articles seront conservées.</string>
+    <string name="image_sources_retry">Réessayer</string>
+    <string name="image_sources_search">Rechercher des images</string>
+    <string name="image_sources_settings_hint">Gérer les packs d\'icônes et les sources d\'illustrations de cartes</string>
+    <string name="image_sources_title">Abonnements images</string>
+    <string name="image_sources_url">Abonnement ou image URL</string>
+    <string name="image_sources_use_hint">Choisissez des images dans l\'éditeur d\'icônes personnalisées ou d\'illustrations de cartes.</string>
+</resources>

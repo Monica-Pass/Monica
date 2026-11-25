@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_enabled_hint">保存後上傳，前台解鎖時檢查更新</string>
+    <string name="mdbx_auto_sync_manual_hint">已關閉 · 按需手動同步</string>
+    <string name="mdbx_auto_sync_title">自動同步</string>
+</resources>

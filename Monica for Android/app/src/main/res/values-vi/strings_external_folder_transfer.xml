@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Các thư mục Bitwarden vẫn nằm trong cùng một tài khoản. Sao chép các thư mục có tệp đính kèm, passkeys hoặc các mục tổ chức chưa được hỗ trợ.</string>
+    <string name="external_folder_choose_destination">Chọn cơ sở dữ liệu và thư mục đích</string>
+    <string name="external_folder_copy_hint">Sao chép thư mục và nội dung của nó; giữ bản gốc.</string>
+    <string name="external_folder_move_hint">Di chuyển thư mục và nội dung của nó. Bản gốc chỉ bị xóa sau khi đích đến được lưu.</string>
+    <string name="external_folder_root">Goc co so du lieu</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_step_presets_title">由一套方案開始</string>
+    <string name="qs_step_presets_subtitle">先選版面，之後仍可分別調整 Dock 和頁面細節。</string>
+    <string name="qs_dock_subtitle">選擇 Dock 顯示的頁面，再調整排列次序。</string>
+    <string name="qs_step_customize_title">頁面微調</string>
+    <string name="qs_step_customize_subtitle">只展開想調整的部分，亦可隨時在設定中修改。</string>
+    <string name="qs_step_protect_title">安全與自動填入</string>
+    <string name="qs_step_protect_subtitle">先保護密碼庫，再讓登入更方便。</string>
+    <string name="qs_ready_title">準備就緒</string>
+    <string name="qs_ready_subtitle">這是你的版面，隨時可以在設定中修改。</string>
+    <string name="qs_save_failed">無法儲存設定，請重試。</string>
+    <string name="qs_use_preset">套用預設</string>
+    <string name="qs_enter_monica">進入 Monica</string>
+    <string name="qs_current_layout">目前版面</string>
+    <string name="qs_data_optional">可以現在連接資料庫或匯入資料，亦可稍後在設定中完成。</string>
+    <string name="qs_preset_bitwarden_preview">Bitwarden · 預覽</string>
+    <string name="qs_preset_bitwarden_preview_desc">由密碼庫總覽進入，Dock 配備 Send 和產生器。</string>
+    <string name="qs_preset_bitwarden_list">Bitwarden · 清單</string>
+    <string name="qs_preset_bitwarden_list_desc">直接開啟密碼庫清單，Dock 配備 Send 和產生器。</string>
+    <string name="qs_preset_authenticator">驗證器專用</string>
+    <string name="qs_preset_authenticator_desc">保留驗證器與 Steam，專注動態驗證碼。</string>
+    <string name="qs_preset_paged">分頁管理</string>
+    <string name="qs_preset_paged_desc">密碼、驗證器、卡包及筆記各設一頁。</string>
+    <string name="qs_preset_everyday">日常常用</string>
+    <string name="qs_preset_everyday_desc">密碼、驗證器與產生器，常用功能隨手開啟。</string>
+    <string name="qs_preset_minimal">簡約密碼</string>
+    <string name="qs_preset_minimal_desc">只保留密碼與產生器，精簡 Dock。</string>
+    <string name="qs_keep_layout">保留目前版面</string>
+    <string name="qs_keep_layout_desc">沿用現有設定，下一步依需求要調整。</string>
+    <string name="qs_presets_hint">所有方案均保留設定入口，適用於各種資料庫；可於匯入步驟連接資料庫。</string>
+    <string name="qs_move_up">上移</string>
+    <string name="qs_move_down">下移</string>
+    <string name="qs_settings_kept">始終保留</string>
+    <string name="qs_vault_overview">由總覽開啟密碼庫</string>
+    <string name="qs_import_from_apps">從其他應用程式匯入</string>
+    <string name="qs_import_from_apps_desc">轉移密碼及通行金鑰，完成後繼續設定。</string>
+</resources>

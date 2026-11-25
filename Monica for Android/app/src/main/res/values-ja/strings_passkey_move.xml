@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_bitwarden_reason">ストレージ モードまたは秘密キーが Bitwarden 移行要件を満たしていません。 Monica のロックを解除して再試行するか、別のボールトを選択してください。デバイスにバインドされたキーはエクスポートできません。元のデバイスにそれらを保持するか、新しい passkey をサービスに登録します。</string>
+    <string name="passkey_move_bound_reason">この passkey はパスワード入力にリンクされており、個別に移動することはできません。リンクされているパスワード エントリを移動するか、最初に passkey のリンクを解除してください。</string>
+    <string name="passkey_move_cleanup_reason">宛先は保存されましたが、ソースのクリーンアップが完了していません。コピーは両方の保管庫に残る場合があります。続行する前に、宛先とソースのボールトまたは同期のステータスを確認してください。やみくもにこの動きを繰り返さないでください。</string>
+    <string name="passkey_move_conflict_reason">ターゲット KeePass データベースには、同じ passkey 資格情報がすでに含まれています。何も上書きされませんでした。既存のエントリを確認するか、別のデータベースを選択してください。</string>
+    <string name="passkey_move_reference_reason">このアイテムは参照のみであり、個別に移動できる秘密キーはありません。実際の passkey を保持する元のアプリまたは保管庫を使用します。</string>
+    <string name="passkey_move_result_summary">%1$d を完了しました。注意が必要です %2$d</string>
+    <string name="passkey_move_result_title">移動結果</string>
+    <string name="passkey_move_success_count">%1$d アイテムを移動しました</string>
+    <string name="passkey_move_unnamed_account">名前のないアカウント</string>
+    <string name="passkey_move_update_reason">移動は完了せず、正確な原因を特定できませんでした。ソースおよび宛先ボールトのロックが解除されており、書き込み可能であり、十分な空き領域があることを確認してください。再試行する前に両方のボールトを検査してください。ソースは削除しないでください。</string>
+</resources>

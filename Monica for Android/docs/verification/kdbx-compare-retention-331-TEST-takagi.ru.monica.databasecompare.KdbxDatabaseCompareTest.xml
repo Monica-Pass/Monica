@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-23T14:26:03.234Z" time="1.948">
+  <testcase name="sameTimestampDifferentHistoryValuesAreBothRetained" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.454" />
+  <testcase name="malformedPolicyAndIncompleteAssociationsBlockEncryptedOutput" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.419" />
+  <testcase name="emptyAutoTypeAssociationSequenceSurvivesEncryptedMerge" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.098" />
+  <testcase name="cancelDuringResultBuildKeepsBothSourcesAndNoOutput" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.019" />
+  <testcase name="excludedEntryDoesNotLeakAttachmentAndOriginalOrphanIsExplicit" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.036" />
+  <testcase name="unrelatedSameTitlesRemainIndependentAndUnknownCustomDataSurvives" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.044" />
+  <testcase name="kdbx3FractionalMetadataAndMultipleHistoryTimesSurvive" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.039" />
+  <testcase name="sourceConsistentLiveAndTombstoneCoexistenceIsPreserved" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.043" />
+  <testcase name="safeBothCreatesDistinctIdentityButPasskeyCannotBeDuplicated" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.047" />
+  <testcase name="invalidBooleanContentCannotSilentlyChangeNativePolicy" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.014" />
+  <testcase name="kdbx3SubsecondHistoryVersionsAndCurrentChangesRemainDistinct" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.037" />
+  <testcase name="deletingReferenceTargetOrIntroducingAmbiguousTitleReferenceIsRejected" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.059" />
+  <testcase name="validBooleanCaseAndInheritedGroupPolicyRoundTrip" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.032" />
+  <testcase name="customFieldNamesRemainDistinctFromGeneratedLabels" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.018" />
+  <testcase name="malformedOrFutureXmlIsRejectedAndConventionalForceOnceFalseAccepted" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.011" />
+  <testcase name="explicitDeletionRequiresConsistentChoiceAndDoesNotInferFromAbsence" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.048" />
+  <testcase name="independentlyKeyedInputsCreateResultUsingOnlyNewPassword" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.028" />
+  <testcase name="missingAttachmentAndUnrelatedIdentityCollisionAreNotSilentlyDropped" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.016" />
+  <testcase name="staleSourceAndClosedSessionNeverPublish" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.018" />
+  <testcase name="nestedCompressedAttachmentIsBoundedBeforeNativeModelConstruction" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.342" />
+  <testcase name="mixedChangesCannotCreateReferenceCycle" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.019" />
+  <testcase name="encodedUnsupportedXmlAndMissingBinaryReferenceBlockWholePlan" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.023" />
+  <testcase name="matchingIdentityRetainsBothHistoriesProtectionAttachmentsAndInputs" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.061" />
+  <testcase name="groupMoveCycleCannotPublish" classname="takagi.ru.monica.databasecompare.KdbxDatabaseCompareTest" time="0.015" />
+  </testsuite>

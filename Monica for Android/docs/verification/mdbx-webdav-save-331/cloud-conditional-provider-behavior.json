@@ -1,0 +1,49 @@
+{
+  "ifNoneMatchStatus": 204,
+  "ifNoneMatchPreserved": false,
+  "staleIfMatchStatus": 412,
+  "staleIfMatchPreserved": true,
+  "requests": [
+    {
+      "method": "PUT",
+      "headers": {
+        "If-None-Match": "*"
+      },
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "headers": {
+        "If-None-Match": "*"
+      },
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "headers": {},
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "headers": {},
+      "status": 204
+    },
+    {
+      "method": "PUT",
+      "headers": {
+        "If-Match": "\"nonexistent-synthetic-version\""
+      },
+      "status": 412
+    },
+    {
+      "method": "GET",
+      "headers": {},
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "headers": {},
+      "status": 204
+    }
+  ]
+}

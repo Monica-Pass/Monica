@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haptic_strength">震動強度</string>
+    <string name="haptic_strength_description">0 關閉 · 1 輕 · 2 強</string>
+    <string name="haptic_test">測試震動</string>
+    <string name="haptic_system_disabled">請在系統設定中開啟觸覺回應，再體驗震動。</string>
+    <string name="haptic_unavailable">此裝置不支援震動，或系統未接受震動要求。</string>
+</resources>

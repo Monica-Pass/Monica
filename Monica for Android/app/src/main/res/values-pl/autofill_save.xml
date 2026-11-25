@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Zapisz jako nowy wpis</string>
+    <string name="autofill_save_local_source">Lokalne</string>
+    <string name="autofill_save_review_description">Wybierz wpis, aby go przejrzeć przed zapisaniem. Istniejące foldery, notatki i inne konta zostaną zachowane.</string>
+    <string name="autofill_save_review_title">Zaktualizować istniejące hasło?</string>
+</resources>

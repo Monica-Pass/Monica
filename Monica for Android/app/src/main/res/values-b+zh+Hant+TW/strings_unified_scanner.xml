@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">掃描驗證器或通行金鑰 QR Code</string>
+    <string name="qr_credentials_invalid">這不是支援的驗證器或通行金鑰 QR Code</string>
+    <string name="qr_multiple_codes">偵測到多個 QR Code，請只對準一個</string>
+</resources>

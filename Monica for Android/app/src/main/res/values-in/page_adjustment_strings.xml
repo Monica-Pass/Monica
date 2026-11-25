@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_stack_loop_title">Tumpukan kartu berulang</string>
+    <string name="wallet_stack_loop_desc">Gesek tumpukan kartu ke arah mana pun. Kartu terakhir terhubung ke kartu pertama.</string>
+    <string name="page_adjustment_preview_games">Permainan</string>
+    <string name="page_adjustment_preview_folder">Map 1</string>
+    <string name="page_adjustment_preview_subfolder">Subfolder</string>
+</resources>

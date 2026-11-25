@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Impossibile identificare in modo univoco la voce dell\'autenticatore KeePass originale. Aggiorna il database e riprova.</string>
+</resources>

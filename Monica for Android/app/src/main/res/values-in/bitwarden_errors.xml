@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_error_certificate_expired">Sertifikat telah habis masa berlakunya. Periksa tanggal dan waktu perangkat Anda, dan minta administrator server untuk memperbarui sertifikat.</string>
+    <string name="bitwarden_error_certificate_not_yet_valid">Sertifikat belum valid. Periksa tanggal dan waktu perangkat Anda serta masa berlaku sertifikat.</string>
+    <string name="bitwarden_error_certificate_hostname">Sertifikat server tidak cocok dengan domain yang Anda masukkan. Periksa alamat yang dihosting sendiri dan sertifikat yang dikembalikan oleh proksi terbalik.</string>
+    <string name="bitwarden_error_certificate_untrusted">Kami tidak dapat memverifikasi sertifikat server. Periksa rantai sertifikat server lengkap, CA tepercaya perangkat, dan apakah proksi menggantikan sertifikat HTTPS. Untuk server yang ditandatangani sendiri, konfigurasikan CA-nya di pengaturan sertifikat.</string>
+    <string name="bitwarden_error_tls_handshake">Kami tidak dapat membuat koneksi TLS yang aman. Periksa konfigurasi TLS dan versi protokol server atau proksi terbalik, dan sertifikat klien jika mTLS diaktifkan.</string>
+    <string name="bitwarden_error_dns">Kami tidak dapat menyelesaikan domain server. Periksa alamat yang dihosting sendiri, DNS, VPN, dan pengaturan proxy.</string>
+    <string name="bitwarden_error_timeout">Waktu koneksi ke server habis. Periksa apakah server sedang online dan tinjau pengaturan port, jaringan, VPN, dan proxy.</string>
+    <string name="bitwarden_error_connection">Kami tidak dapat terhubung ke server. Periksa alamat dan port, konfirmasikan bahwa layanan sedang berjalan, dan tinjau pengaturan firewall dan proxy.</string>
+    <string name="bitwarden_error_proxy">Proksi menolak koneksi atau memerlukan otentikasi. Periksa alamat proxy, port, dan pengaturan akun.</string>
+    <string name="bitwarden_error_cleartext">Alamat server menggunakan HTTP, yang tidak diizinkan oleh kebijakan keamanan saat ini. Gunakan alamat HTTPS dan periksa konfigurasi HTTPS proksi terbalik.</string>
+    <string name="bitwarden_error_network_io">Kesalahan jaringan mengganggu komunikasi dengan server. Periksa pengaturan jaringan, VPN, dan proxy Anda, lalu coba lagi.</string>
+    <string name="bitwarden_organization_sync_incomplete">Beberapa item tim tidak dapat didekripsi (%1$d). Item yang dapat dibaca telah disinkronkan; item yang terkena dampak yang ada dipertahankan. Periksa keanggotaan organisasi dan masuk lagi.</string>
+    <string name="bitwarden_sync_incomplete_items">Beberapa item tidak dapat disinkronkan (%1$d). Item yang dapat dibaca telah disinkronkan; data lokal yang ada dipertahankan.</string>
+</resources>

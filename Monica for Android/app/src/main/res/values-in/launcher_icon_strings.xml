@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_icon_default">Ikon bawaan</string>
+    <string name="launcher_icon_blue_star">Bot Grok</string>
+    <string name="launcher_icon_selection_description">Pilih ikon layar beranda Anda. Anda dapat beralih kembali kapan saja.</string>
+    <string name="launcher_icon_refresh_hint">Peluncur Anda mungkin memerlukan waktu beberapa detik untuk menyegarkan ikon.</string>
+</resources>

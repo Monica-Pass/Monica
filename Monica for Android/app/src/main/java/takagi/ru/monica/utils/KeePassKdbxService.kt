@@ -4393,6 +4393,33 @@ class KeePassKdbxService(
         return synchronized(loadedDatabaseCache) { loadedDatabaseCache.containsKey(databaseId) }
     }
 
+    /** Borrow only a live authenticated native session; never open a library to answer this query.
+     * The caller owns the short-lived reader and must drop it on cancellation/background.
+     * Decoded LRU membership alone is insufficient after a global lock/re-authentication.
+     */
+    internal suspend fun comparisonCredentialReader(
+        databaseId: Long,
+        checkActive: () -> Unit = {},
+    ): (() -> Credentials)? = withContext(Dispatchers.IO) {
+        val session = takagi.ru.monica.security.SessionManager
+        val appGeneration = session.lockGeneration.value
+        val dataGeneration = SecurityManager.dataReadGeneration.value
+        if (!session.isUnlocked.value || nativeRecordCountCache.count(databaseId) == null) return@withContext null
+        val loaded = getCachedLoadedDatabase(databaseId) ?: return@withContext null
+        val scope = nativeRecordCountCache.capture(databaseId)
+        val credentials = loaded.credentials
+        fun checkSession() {
+            checkActive()
+            check(session.isUnlocked.value && session.lockGeneration.value == appGeneration &&
+                SecurityManager.dataReadGeneration.value == dataGeneration &&
+                nativeRecordCountCache.capture(databaseId) == scope &&
+                nativeRecordCountCache.count(databaseId) != null) { "KeePass authentication expired" }
+        }
+        checkSession()
+        // Retain protected credential hashes only for this comparison, never a native record graph.
+        return@withContext { checkSession(); credentials }
+    }
+
     internal fun isDatabaseReadOnly(databaseId: Long): Boolean = accessPolicy.isReadOnly(databaseId)
 
     internal fun setDatabaseReadOnly(databaseId: Long, readOnly: Boolean) {

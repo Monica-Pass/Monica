@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_bank_cards">Cancellazione delle carte bancarie...</string>
+    <string name="clear_data_completed">Cancellazione completata</string>
+    <string name="clear_data_completed_hint">I dati selezionati sono stati cancellati.</string>
+    <string name="clear_data_count">Voci %1$d / %2$d cancellate</string>
+    <string name="clear_data_documents">Cancellazione dei documenti...</string>
+    <string name="clear_data_failed">Impossibile cancellare tutti i dati selezionati</string>
+    <string name="clear_data_failed_hint">Cancellazione interrotta. Le voci già cancellate non verranno ripristinate. Controlla la connessione al database e riprova.</string>
+    <string name="clear_data_generator_history">Cancellazione della cronologia di generazione della password…</string>
+    <string name="clear_data_notes">Cancellazione delle note…</string>
+    <string name="clear_data_passwords">Cancellazione delle password…</string>
+    <string name="clear_data_preparing">Conteggio delle voci selezionate…</string>
+    <string name="clear_data_totp">Cancellazione degli autenticatori…</string>
+    <string name="clear_data_verifying">"Verifica…"</string>
+    <string name="clear_data_wait">Attendi il completamento di questa operazione.</string>
+</resources>

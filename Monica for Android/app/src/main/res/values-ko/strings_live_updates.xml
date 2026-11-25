@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_copy_status">복사</string>
+    <string name="live_update_seconds">%1$ds</string>
+    <string name="live_update_smart_copy_channel">순차적 자격 증명 복사</string>
+    <string name="live_update_unlock_to_copy">복사하려면 기기를 잠금 해제하세요.</string>
+    <string name="live_update_unlock_to_view">보고 계속하려면 잠금을 해제하세요.</string>
+    <string name="permission_live_updates_description">OTP 카운트다운 및 복사할 다음 자격 증명 표시</string>
+    <string name="permission_live_updates_name">실시간 업데이트</string>
+</resources>

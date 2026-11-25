@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_decrease">Zmniejszenie</string>
+    <string name="cg_email_alias">E-mail i alias</string>
+    <string name="cg_increase">Zwiększenie</string>
+    <string name="cg_invalid_options">Wybierz znaki i zachowaj ich minimalną sumę w ramach długości.</string>
+    <string name="cg_length">Długość</string>
+    <string name="cg_minimum">Minimalna liczba</string>
+    <string name="cg_random_username">Losowa nazwa użytkownika</string>
+    <string name="cg_saved_suggestions">Zapisane sugestie</string>
+    <string name="cg_symbols">Losowe symbole</string>
+    <string name="cg_use">Użyj</string>
+    <string name="cg_username_title">Generator nazw użytkowników</string>
+    <string name="cg_valid_email">Wpisz prawidłowy adres e-mail</string>
+    <string name="cg_words">Słowa</string>
+</resources>

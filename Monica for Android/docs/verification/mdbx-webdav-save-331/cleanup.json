@@ -1,0 +1,61 @@
+{
+  "originalUserRestored": 0,
+  "ownedUserRemoved": 18,
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12,
+    16
+  ],
+  "originalMonicaPackageUnchanged": true,
+  "ownedPackagesRemoved": [
+    {
+      "package": "takagi.ru.monica.mdbxwebdavmain33120261125.localedebug",
+      "uninstalled": true
+    },
+    {
+      "package": "takagi.ru.monica.mdbxwebdavmain33120261125.localedebug.test",
+      "uninstalled": true
+    },
+    {
+      "package": "takagi.ru.monica.mdbxwebdavfd33120261125.localedebug",
+      "uninstalled": true
+    },
+    {
+      "package": "takagi.ru.monica.mdbxwebdavfd33120261125.localedebug.test",
+      "uninstalled": true
+    },
+    {
+      "package": "takagi.ru.monica.issue189main33120261125",
+      "uninstalled": true
+    },
+    {
+      "package": "takagi.ru.monica.issue189fd33120261125",
+      "uninstalled": true
+    }
+  ],
+  "mumuKeptRunning": true,
+  "mumuPid": 51792,
+  "remote": {
+    "status": 207,
+    "syntheticContentsRemoved": true,
+    "remainingChildren": 0,
+    "emptyCollection": "monica331-add893d9",
+    "topLevelDeleteStatus": 403,
+    "topLevelDeleteReason": "OperationNotAllowed"
+  },
+  "privateFilesRemoved": [
+    "webdav.json",
+    "device-config-name.txt",
+    "cloud-owned-list.xml",
+    "root-collections.json",
+    "root-list.xml"
+  ],
+  "credentialAudit": {
+    "scannedTextFiles": 1043,
+    "credentialMatches": 0,
+    "sourceAndRawEvidenceChecked": true
+  },
+  "ownedAdbStopped": 15087
+}

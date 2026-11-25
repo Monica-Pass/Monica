@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timeline_display_content_summary">İçerik özeti</string>
+    <string name="timeline_display_deleted_state">Silme durumu</string>
+    <string name="timeline_display_metadata">Meta Veri</string>
+    <string name="mdbx_message_no_objects">Nesne değişikliği yok</string>
+    <string name="mdbx_message_no_fields">Alan değişikliği yok</string>
+    <string name="mdbx_message_object_preview">%1$s … (%2$d nesneleri)</string>
+    <string name="mdbx_message_field_preview">%1$s … (%2$d alanları)</string>
+    <string name="mdbx_message_folder_exists">%1$s adında bir MDBX klasörü zaten mevcut</string>
+</resources>

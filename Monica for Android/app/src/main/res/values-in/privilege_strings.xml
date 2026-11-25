@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_method">Metode otorisasi</string>
+    <string name="privilege_root_hint">Gunakan akses Root perangkat ini secara langsung</string>
+    <string name="privilege_shizuku_hint">Otorisasi melalui layanan Shizuku yang sedang berjalan</string>
+    <string name="privilege_root_requesting">Menunggu otorisasi Root…</string>
+    <string name="privilege_root_denied">Akses root ditolak. Izinkan Monica di Root manager Anda dan coba lagi.</string>
+    <string name="privilege_root_unavailable">Tidak ditemukan perintah su yang dapat digunakan. Perangkat ini perlu di-root terlebih dahulu.</string>
+    <string name="privilege_root_timeout">Otorisasi root atau waktu perintah habis. Periksa manajer Root Anda dan coba lagi.</string>
+    <string name="privilege_root_ready">Root diaktifkan untuk pengaturan sistem</string>
+    <string name="privilege_root_not_authorized">Root tidak diotorisasi. Ketuk Otorisasi Root untuk melanjutkan.</string>
+    <string name="privilege_root_grant">Otorisasi Root</string>
+    <string name="privilege_root_disable">Nonaktifkan Root di Monica</string>
+    <string name="privilege_root_confirm_title">Izinkan Monica menggunakan Root?</string>
+    <string name="privilege_root_confirm_body">Ini memerlukan perangkat yang sudah di-root dan persetujuan di manajer Root-nya. Monica menggunakan Root hanya untuk pengaturan sistem yang diperlukan oleh pemulihan aksesibilitas yang ditingkatkan dan pengelola kata sandi default. Itu tidak membuka kunci brankas Anda atau membaca data aplikasi lainnya.\n\nPemulihan yang ditingkatkan hanya menyambungkan kembali layanan aksesibilitas Monica yang sudah diaktifkan. Setelah diaktifkan, ini dapat dilanjutkan setelah aplikasi atau perangkat dimulai ulang dan mungkin mengganggu pengisian sebentar.\n\nNonaktifkan Root di sini untuk menghentikan penggunaan di masa mendatang. Untuk mencabut otorisasi sistem, hapus Monica dari Manajer Root Anda. Root tidak pernah diminta sebagai pengganti Shizuku.</string>
+    <string name="privilege_recovery_title">Pemulihan yang ditingkatkan · Opsional</string>
+    <string name="privilege_default_requires_android14">Menyetel pengelola kata sandi default memerlukan Android 14 atau lebih baru.</string>
+</resources>

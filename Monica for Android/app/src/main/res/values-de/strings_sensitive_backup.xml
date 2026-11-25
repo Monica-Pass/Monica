@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Die Sicherung konnte nicht abgeschlossen werden, da sensible Daten in „%1$s“ nicht gelesen werden konnten. Die Originaldaten wurden beibehalten.</string>
+</resources>

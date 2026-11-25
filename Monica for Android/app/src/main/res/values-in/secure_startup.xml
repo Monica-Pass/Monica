@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_title">Penyimpanan aman tidak tersedia</string>
+    <string name="secure_startup_preserved">Data yang ada dipertahankan</string>
+    <string name="secure_startup_description">Android saat ini tidak dapat memverifikasi pengaturan terenkripsi instalasi ini. Startup normal telah dihentikan. Monica belum menghapus pengaturan atau mengganti kunci.</string>
+    <string name="secure_startup_restart">Nyalakan ulang ponsel, buka kuncinya dengan kredensial kunci layar sistem, lalu coba lagi.</string>
+    <string name="secure_startup_environment">Jika ini dimulai setelah memulihkan data aplikasi, mem-flash ROM, atau memodifikasi sistem, periksa apakah sistem asli dan lingkungan utama dapat dipulihkan. Kesalahan ini saja tidak dapat menentukan penyebabnya.</string>
+    <string name="secure_startup_no_reset">Jangan hapus data aplikasi atau hapus instalan Monica. Simpan file aslinya. Jika Anda memiliki cadangan yang diekspor Monica, verifikasikan di instalasi lain. Kunci sistem yang hilang secara permanen tidak dapat dibuat ulang dengan mencoba lagi.</string>
+    <string name="secure_startup_retry">Coba lagi</string>
+    <string name="secure_startup_diagnostic">Salin informasi diagnostik</string>
+</resources>

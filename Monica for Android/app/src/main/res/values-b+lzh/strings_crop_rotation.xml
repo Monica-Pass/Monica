@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="card_face_rotate_left">左旋九十度</string>
-    <string name="card_face_rotate_right">右旋九十度</string>
+    <string name="card_face_rotate_left">左旋 90°</string>
+    <string name="card_face_rotate_right">右旋 90°</string>
     <string name="card_face_crop_rotation_hint">拖以定位，双指缩放；亦可旋图、上下左右镜转。</string>
     <string name="card_face_flip_horizontal">左右镜转</string>
     <string name="card_face_flip_vertical">上下镜转</string>

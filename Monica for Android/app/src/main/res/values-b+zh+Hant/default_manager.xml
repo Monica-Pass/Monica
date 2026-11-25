@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_manager_applied">已設為 Monica，並核驗系統設定</string>
+    <string name="default_manager_apply">設為 Monica</string>
+    <string name="default_manager_autofill">自動填充服務</string>
+    <string name="default_manager_confirm">將修改當前用户的預設密碼管理器。當前配置會先保存在本機，以便恢復。</string>
+    <string name="default_manager_credential">預設憑據提供方</string>
+    <string name="default_manager_denied">未獲得授權，請在 Shizuku 中允許 Monica 後重試</string>
+    <string name="default_manager_description">為當前 Android 用户設定預設密碼管理器。需要 Android 14 或更新版本及 Shizuku 或 Root 授權。設定成功不代表所有 HyperOS 通行密鑰流程均可用。</string>
+    <string name="default_manager_entry_hint">HyperOS 無法打開第三方密碼管理器設定時，通過 Shizuku 或 Root 設為 Monica</string>
+    <string name="default_manager_grant">授權 Shizuku</string>
+    <string name="default_manager_include_autofill">同時設定自動填充</string>
+    <string name="default_manager_include_autofill_hint">將自動填充服務切換為 Monica</string>
+    <string name="default_manager_keep_others">保留其他憑據提供方</string>
+    <string name="default_manager_keep_others_hint">保留已啓用的提供方，將 Monica 設為預設</string>
+    <string name="default_manager_open_shizuku">打開 Shizuku</string>
+    <string name="default_manager_permission">需要授權</string>
+    <string name="default_manager_read_failed">無法讀取系統設定，請刷新後重試</string>
+    <string name="default_manager_ready">已連接並授權</string>
+    <string name="default_manager_refresh">刷新狀態</string>
+    <string name="default_manager_replace_warning">其他憑據提供方將被停用，不會刪除其中的資料。</string>
+    <string name="default_manager_restore">恢復上次設定</string>
+    <string name="default_manager_restore_confirm">將恢復上次切換前保存的系統配置。</string>
+    <string name="default_manager_restored">已恢復並核驗系統設定</string>
+    <string name="default_manager_source">參考項目：cr-zhichen/password-manager-switch · MIT</string>
+    <string name="default_manager_stopped">請安裝並啓動 Shizuku</string>
+    <string name="default_manager_title">預設密碼管理器</string>
+    <string name="default_manager_unknown">尚未讀取</string>
+    <string name="default_manager_unset">未設定</string>
+    <string name="default_manager_unsupported">需要 Android 14+ 和 Shizuku 13+</string>
+    <string name="default_manager_write_failed">未能完成或核驗更改。請刷新檢查狀態；已保存的配置可用於恢復。</string>
+</resources>

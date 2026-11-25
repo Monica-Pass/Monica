@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_symbols">隨機符號</string>
+    <string name="cg_random_username">隨機使用者名稱</string>
+    <string name="cg_email_alias">電子郵件加號別名</string>
+    <string name="cg_username_title">使用者名稱產生器</string>
+    <string name="cg_valid_email">請輸入有效的電子郵件地址</string>
+    <string name="cg_invalid_options">請選擇可用字元，並確保最少字元數總和不超過長度。</string>
+    <string name="cg_use">使用</string>
+    <string name="cg_saved_suggestions">常用建議</string>
+    <string name="cg_length">長度</string>
+    <string name="cg_words">單字數</string>
+    <string name="cg_minimum">最少數量</string>
+    <string name="cg_decrease">減少</string>
+    <string name="cg_increase">增加</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_error_bitwarden_locked">Bitwarden kasası kilitli veya oturumun süresi dolmuş. Kilidini açın veya tekrar oturum açın.</string>
+    <string name="attachment_error_remote_data">Sunucu eksik ek bilgisi döndürdü. Kasayı senkronize edin ve tekrar deneyin.</string>
+    <string name="attachment_error_unsupported_encryption">Bu ek, desteklenmeyen bir şifreleme biçimi kullanıyor (%1$d türü). Resmi istemciyle dışa aktarın ve tekrar yükleyin.</string>
+    <string name="attachment_error_unknown">Ekleme işlemi başarısız oldu. Lütfen tekrar deneyin.</string>
+    <string name="attachment_error_decryption_failed">Ek şifre çözme veya bütünlük doğrulaması başarısız oldu. Kasayı senkronize edin ve tekrar deneyin.</string>
+    <string name="password_batch_attachment_failure">%1$d öğeleri için ekler aktarılamadı. %2$s</string>
+</resources>

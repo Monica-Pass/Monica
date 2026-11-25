@@ -4,6 +4,7 @@ import java.util.UUID
 import kotlinx.serialization.json.*
 import takagi.ru.monica.data.CustomFieldDraft
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.passwordProjectKey
 
 /** Metadata only. Passwords and OTP use PasswordEntry's existing encrypted storage. */
 object ProjectCredentialGroup {
@@ -31,6 +32,29 @@ object ProjectCredentialGroup {
         internal val loadedOtp: String? = null,
         internal val originalOtpByPasswordId: Map<String, String> = emptyMap())
     data class Row(val username: String, val password: Password, val otp: String, val metadata: Metadata)
+
+    private data class AccountKey(val explicitId: String?, val username: String = "", val otp: String = "")
+
+    /** A project id groups records, not usernames. Legacy rows retain their exact account/OTP pair.
+     * This read-only projection never writes metadata or merges unidentified rows into an explicit account.
+     */
+    fun rowGroups(entries: List<PasswordEntry>, metadata: Map<Long, Metadata>): List<List<PasswordEntry>> =
+        entries.groupBy { entry ->
+            metadata[entry.id]?.let { AccountKey(it.groupId) }
+                ?: AccountKey(null, entry.username, entry.authenticatorKey)
+        }.values.sortedWith(compareBy<List<PasswordEntry>> { group ->
+            metadata[group.first().id]?.groupOrder ?: 0
+        }.thenBy { it.minOf { row -> row.id } }).map { group ->
+            group.sortedWith(compareBy<PasswordEntry> { metadata[it.id]?.passwordOrder ?: 0 }.thenBy { it.id })
+        }
+
+    /** Stable UI/editor identity for a legacy account; contains no account or secret material. */
+    fun rowGroupId(rows: List<PasswordEntry>, metadata: Map<Long, Metadata>): String {
+        val first = rows.first()
+        return metadata[first.id]?.groupId ?: UUID.nameUUIDFromBytes(
+            "monica-legacy-account:${first.passwordProjectKey()}:${rows.minOf { it.id }}".toByteArray(Charsets.UTF_8)
+        ).toString()
+    }
 
     fun read(fields: List<CustomFieldDraft>): Metadata? {
         val copies = fields.filter { it.title == FIELD }
@@ -100,9 +124,11 @@ object ProjectCredentialGroup {
         }
         val identities = metadata.values.filterNotNull().map { it.passwordId }
         if (identities.distinct().size != identities.size) throw RestoreException(RestoreFailure.DUPLICATE_PASSWORD_ID)
-        val legacyGroup = metadata.values.filterNotNull().firstOrNull { it.primary }?.groupId ?: UUID.randomUUID().toString()
-        return entries.groupBy { metadata[it.id]?.groupId ?: legacyGroup }.values
-            .sortedWith(compareBy<List<PasswordEntry>> { group -> metadata[group.first().id]?.groupOrder ?: 0 }.thenBy { it.minOf { row -> row.id } })
+        // A partially described project may have lost metadata. Do not invent account membership.
+        if (identities.isNotEmpty() && metadata.values.any { it == null })
+            throw RestoreException(RestoreFailure.UNSUPPORTED_METADATA)
+        val knownMetadata = metadata.mapNotNull { (id, value) -> value?.let { id to it } }.toMap()
+        return rowGroups(entries, knownMetadata)
             .map { group ->
                 val ordered = group.sortedWith(compareBy<PasswordEntry> { metadata[it.id]?.passwordOrder ?: 0 }.thenBy { it.id })
                 val first = ordered.first(); val meta = metadata[first.id]
@@ -115,7 +141,7 @@ object ProjectCredentialGroup {
                 if (ordered.any { metadata[it.id]?.note.orEmpty() != meta?.note.orEmpty() })
                     throw RestoreException(RestoreFailure.NOTE_CONFLICT)
                 val otp = if (retainPartialOtp) otpValues.single { it.isNotEmpty() } else first.authenticatorKey
-                Group(meta?.groupId ?: legacyGroup, meta?.label.orEmpty(), first.username,
+                Group(rowGroupId(ordered, knownMetadata), meta?.label.orEmpty(), first.username,
                     ordered.map { row -> Password(metadata[row.id]?.passwordId ?: UUID.randomUUID().toString(), row.password, row.id, metadata[row.id]) },
                     otp, meta?.note.orEmpty(),
                     loadedOtp = otp.takeIf { retainPartialOtp },

@@ -65,6 +65,7 @@ import takagi.ru.monica.ui.components.MonicaExpansionChevron
 internal val chineseLanguageVariants = listOf(
     Language.CHINESE,
     Language.TRADITIONAL_CHINESE,
+    Language.TRADITIONAL_CHINESE_TAIWAN,
     Language.CLASSICAL_CHINESE,
 )
 
@@ -336,6 +337,7 @@ internal fun getLanguageDisplayName(language: Language, context: Context): Strin
         Language.ENGLISH -> R.string.language_english
         Language.CHINESE -> R.string.language_chinese_simplified
         Language.TRADITIONAL_CHINESE -> R.string.language_chinese_traditional
+        Language.TRADITIONAL_CHINESE_TAIWAN -> R.string.language_chinese_traditional_taiwan
         Language.CLASSICAL_CHINESE -> R.string.language_classical_chinese_native
         Language.VIETNAMESE -> R.string.language_vietnamese
         Language.JAPANESE -> R.string.language_japanese
@@ -348,5 +350,7 @@ internal fun getLanguageDisplayName(language: Language, context: Context): Strin
         Language.ITALIAN -> R.string.language_italian
         Language.PORTUGUESE_PORTUGAL -> R.string.language_portuguese_portugal
         Language.PORTUGUESE_BRAZIL -> R.string.language_portuguese_brazil
+        Language.INDONESIAN -> R.string.language_indonesian
+        Language.TURKISH -> R.string.language_turkish
     }
 )

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_unknown_read_only">Jenis item ini belum mendukung pengeditan. Anda masih dapat melihat semua datanya.</string>
+    <string name="mdbx_unknown_unavailable">Tidak dapat membaca item ini. Buka kunci database dan buka kembali detailnya.</string>
+    <string name="mdbx_unknown_show">Tampilkan nilai</string>
+    <string name="mdbx_unknown_hide">Sembunyikan nilai</string>
+</resources>

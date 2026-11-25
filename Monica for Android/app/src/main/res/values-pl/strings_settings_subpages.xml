@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_cards">Karty &amp; portfel</string>
+    <string name="customization_group_fields_icons">Ikony pól &amp;</string>
+    <string name="customization_group_library">Listy biblioteki &amp;</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_action_none">Nie jest wymagane żadne działanie</string>
+    <string name="permission_action_request">Poproś o pozwolenie</string>
+    <string name="permission_help_actions">Użyj opcji Poproś o pozwolenie, aby poprosić Android o dostęp lub Otwórz ustawienia, aby zarządzać usługami i przyznanymi uprawnieniami. \n\nElementy oznaczone Nie są wymagane żadne działania lub Niedostępne nie mają przycisku akcji. Włącz tylko to, czego potrzebujesz.\n\nStany odświeżają się po powrocie z ustawień systemowych. Możesz także dotknąć opcji Odśwież status, aby sprawdzić ponownie.</string>
+    <string name="permission_refresh_status">Odśwież status</string>
+    <string name="permission_summary_granted">Przyznano uprawnienia %1$d</string>
+    <string name="permission_summary_hint">Włącz tylko uprawnienia potrzebne do funkcji, których używasz. Niektóre są przyznawane automatycznie przez Android.</string>
+    <string name="permission_summary_title">Zezwolenia na Twoich warunkach</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_count_loading">Compter…</string>
+    <string name="export_source_count_locked">Déverrouiller pour compter</string>
+    <string name="export_source_count_unavailable">Indisponible</string>
+    <string name="export_source_record_count">Enregistrements %1$d</string>
+</resources>

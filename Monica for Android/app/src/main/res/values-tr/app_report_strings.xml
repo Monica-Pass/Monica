@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_report_title">Monica uygulama listesi teşhisi</string>
+    <string name="app_report_generated">Oluşturuldu: %1$s</string>
+    <string name="app_report_brand">Cihaz markası: %1$s</string>
+    <string name="app_report_model">Cihaz modeli: %1$s</string>
+    <string name="app_report_android">Android sürümü: %1$s (API %2$d)</string>
+    <string name="app_report_summary">Özet</string>
+    <string name="app_report_total">Toplam uygulama: %1$d</string>
+    <string name="app_report_user_count">Kullanıcı uygulamaları: %1$d</string>
+    <string name="app_report_system_count">Sistem uygulamaları: %1$d (güncellendi: %2$d)</string>
+    <string name="app_report_visible_percent">Görünür: %1$d (%2$s%%)</string>
+    <string name="app_report_hidden_percent">Gizli: %1$d (%2$s%%)</string>
+    <string name="app_report_filter_health">Filtre kontrolü: %1$s</string>
+    <string name="app_report_filter_loose">Filtre çok az sistem bileşenini gizleyebilir</string>
+    <string name="app_report_filter_strict">Filtre yararlı uygulamaları gizleyebilir</string>
+    <string name="app_report_filter_good">Filtre dengeli görünüyor</string>
+    <string name="app_report_visible_apps">Görünür uygulamalar: %1$d</string>
+    <string name="app_report_user_apps">Kullanıcı tarafından yüklenen uygulamalar: %1$d</string>
+    <string name="app_report_system_apps">Sistem uygulamaları: %1$d</string>
+    <string name="app_report_more_apps">Ek uygulamalar: %1$d</string>
+    <string name="app_report_hidden_components">Gizli sistem bileşenleri: %1$d</string>
+    <string name="app_report_hidden_feedback">Yararlı bir uygulama gizliyse geri bildiriminize uygulamanın paket adını ekleyin.</string>
+    <string name="app_report_android_core">Android çekirdeği</string>
+    <string name="app_report_android_system">Android sistemi</string>
+    <string name="app_report_google_services">Google hizmetleri</string>
+    <string name="app_report_chip_vendor">Çip tedarikçisi bileşenleri</string>
+    <string name="app_report_other">Diğer bileşenler</string>
+    <string name="app_report_more_components">Ek bileşenler: %1$d</string>
+    <string name="app_report_all_apps">Tam uygulama listesi: %1$d</string>
+    <string name="app_report_format">Biçim: [durum] uygulama adı</string>
+    <string name="app_report_package_type">Paket adı · Tür</string>
+    <string name="app_report_unknown_app">Bilinmeyen uygulama</string>
+    <string name="app_report_user_app">Kullanıcı uygulaması</string>
+    <string name="app_report_system_app">Sistem uygulaması</string>
+    <string name="app_report_updated_system_app">Güncellenen sistem uygulaması</string>
+    <string name="app_report_filter_rules">Uygulama filtresi kuralları</string>
+    <string name="app_report_rule_count">Filtre kuralları: %1$d</string>
+    <string name="app_report_rules_feedback">Filtrede değişiklik önermek için şu adresi ziyaret edin:</string>
+    <string name="app_report_complete">Rapor tamamlandı</string>
+    <string name="app_report_hidden_count">Gizli uygulamalar: %1$d</string>
+    <string name="app_report_path">Dosya yolu:</string>
+</resources>

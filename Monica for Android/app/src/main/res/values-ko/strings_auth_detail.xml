@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">현재 코드 복사</string>
+    <string name="auth_detail_copy_next">다음 복사</string>
+    <string name="auth_detail_qr_current">QR 코드 생성(현재 코드)</string>
+    <string name="auth_detail_qr_migrate">QR 코드 생성(이전)</string>
+</resources>

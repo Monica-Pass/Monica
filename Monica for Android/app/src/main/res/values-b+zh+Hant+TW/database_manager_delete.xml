@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_title">刪除所選項目？</string>
+    <string name="manager_delete_source">%1$s · %2$s · 已選 %3$d 項</string>
+    <string name="manager_delete_local_hint">資料夾及其內容也會一起刪除。本機密碼、卡片等內容將移至資源回收筒；資料夾與通行金鑰會永久刪除。</string>
+    <string name="manager_delete_native_hint">將從此資料庫永久刪除所選項目及資料夾內的內容，此操作無法復原。</string>
+</resources>

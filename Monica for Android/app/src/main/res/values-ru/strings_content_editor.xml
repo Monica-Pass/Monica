@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Удерживайте и перетащите, чтобы изменить порядок</string>
+    <string name="entry_content_remove_message">При этом содержимое черновика будет удалено. Изменения вступят в силу при сохранении.</string>
+    <string name="entry_content_remove_title">Удалить %1$s?</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="otp_algorithm">演演算法</string>
+    <string name="otp_parameters_invalid">請檢查驗證器參數後再儲存。</string>
+</resources>

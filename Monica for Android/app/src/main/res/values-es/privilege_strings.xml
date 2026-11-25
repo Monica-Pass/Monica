@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">Para configurar el administrador de contraseñas predeterminado se requiere Android 14 o posterior.</string>
+    <string name="privilege_method">Método de autorización</string>
+    <string name="privilege_recovery_title">Recuperación mejorada · Opcional</string>
+    <string name="privilege_root_confirm_body">Esto requiere un dispositivo ya rooteado y aprobación en su administrador Root. Monica usa Root solo para la configuración del sistema necesaria para la recuperación de accesibilidad mejorada y el administrador de contraseñas predeterminado. No desbloquea su bóveda ni lee otros datos de aplicaciones. \n\nLa recuperación mejorada solo vuelve a conectar un servicio de accesibilidad Monica ya habilitado. Una vez habilitado, puede continuar después de reiniciar una aplicación o dispositivo y puede interrumpir brevemente el llenado. \n\nDesactive Root aquí para detener su uso futuro. Para revocar la autorización del sistema, elimine Monica de su administrador Root. Root nunca se solicita como alternativa para Shizuku.</string>
+    <string name="privilege_root_confirm_title">¿Permitir que Monica use Root?</string>
+    <string name="privilege_root_denied">Acceso denegado a Root. Permita Monica en su administrador Root y vuelva a intentarlo.</string>
+    <string name="privilege_root_disable">Deshabilitar Root en Monica</string>
+    <string name="privilege_root_grant">Autorizar Root</string>
+    <string name="privilege_root_hint">Utilice el acceso Root de este dispositivo directamente</string>
+    <string name="privilege_root_not_authorized">Root no está autorizado. Toque Autorizar Root para continuar.</string>
+    <string name="privilege_root_ready">Root habilitado para la configuración del sistema</string>
+    <string name="privilege_root_requesting">Esperando autorización Root…</string>
+    <string name="privilege_root_timeout">Se agotó el tiempo de espera del comando o autorización Root. Verifique su administrador Root y vuelva a intentarlo.</string>
+    <string name="privilege_root_unavailable">No se encontró ningún comando su utilizable. Este dispositivo necesita ser rooteado primero.</string>
+    <string name="privilege_shizuku_hint">Autorizar a través de un servicio Shizuku en ejecución</string>
+</resources>

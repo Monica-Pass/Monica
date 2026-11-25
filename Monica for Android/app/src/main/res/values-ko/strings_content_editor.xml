@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">재정렬하려면 길게 누른 채 드래그하세요.</string>
+    <string name="entry_content_remove_message">이 초안에서 콘텐츠가 제거됩니다. 저장하면 변경사항이 적용됩니다.</string>
+    <string name="entry_content_remove_title">%1$s를 삭제하시겠습니까?</string>
+</resources>

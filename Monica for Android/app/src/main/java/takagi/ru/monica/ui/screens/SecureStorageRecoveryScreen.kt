@@ -29,7 +29,9 @@ internal fun SecureStorageRecoveryScreen(
     onRetry: () -> Unit,
     onCopyDiagnostic: () -> Unit,
     onExit: () -> Unit,
-    onRecover: (suspend (String) -> Boolean)? = null
+    onRecover: (suspend (String) -> Boolean)? = null,
+    failureReason: String? = null,
+    recoveryMaterial: takagi.ru.monica.security.RecoveryMaterialState = takagi.ru.monica.security.RecoveryMaterialState.NOT_CHECKED,
 ) {
     var password by remember { mutableStateOf("") }
     var confirmationPassword by remember { mutableStateOf<String?>(null) }
@@ -126,6 +128,17 @@ internal fun SecureStorageRecoveryScreen(
                         style = MaterialTheme.typography.bodyMedium)
                 }
             }
+            val reasonText = when {
+                failureReason == "MISSING_MASTER_KEY" -> R.string.secure_startup_key_missing
+                failureReason in setOf("SECURE_OPERATION_TIMEOUT", "SECURE_OPERATION_IN_PROGRESS", "USER_STORAGE_LOCKED") ->
+                    R.string.secure_startup_wait
+                failureReason == "SECURE_STORAGE_CHANGED" || failureReason == "INVALID_RECOVERY_SELECTOR" ||
+                    failureReason?.startsWith("RECOVERY_") == true -> R.string.secure_startup_inconsistent
+                else -> null
+            }
+            reasonText?.let { Text(stringResource(it), Modifier.testTag("secure_startup_reason")) }
+            Text(stringResource(takagi.ru.monica.ui.components.recoveryMaterialMessage(recoveryMaterial)),
+                Modifier.testTag("secure_startup_material"), style = MaterialTheme.typography.bodyMedium)
             if (onRecover != null) {
                 Text(stringResource(R.string.local_recovery_description), style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(value = password, onValueChange = { password = it; failed = false },
@@ -140,7 +153,9 @@ internal fun SecureStorageRecoveryScreen(
                 Text(stringResource(R.string.local_recovery_limits), style = MaterialTheme.typography.bodySmall)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                listOf(R.string.secure_startup_restart, R.string.secure_startup_environment, R.string.secure_startup_no_reset)
+                listOf(R.string.secure_startup_restart,
+                    if (failureReason == "MISSING_MASTER_KEY") R.string.secure_startup_environment_omk else R.string.secure_startup_environment,
+                    R.string.secure_startup_no_reset)
                     .forEachIndexed { index, text ->
                         Surface(shape = settingsSectionItemShape(index, 3), color = MaterialTheme.colorScheme.surfaceContainer) {
                             Text(stringResource(text), modifier = Modifier.fillMaxWidth().padding(16.dp),

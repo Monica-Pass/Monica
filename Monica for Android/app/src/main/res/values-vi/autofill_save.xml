@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_as_new">Lưu dưới dạng mục nhập mới</string>
+    <string name="autofill_save_local_source">Cục bộ</string>
+    <string name="autofill_save_review_description">Chọn một mục để xem lại trước khi lưu. Các thư mục, ghi chú và tài khoản khác hiện có đều được giữ nguyên.</string>
+    <string name="autofill_save_review_title">Cập nhật mật khẩu hiện có?</string>
+</resources>

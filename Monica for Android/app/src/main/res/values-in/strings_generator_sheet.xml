@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_symbols">Simbol acak</string>
+    <string name="cg_random_username">Nama pengguna acak</string>
+    <string name="cg_email_alias">Alias email dengan tanda plus</string>
+    <string name="cg_username_title">Pembuat nama pengguna</string>
+    <string name="cg_valid_email">Masukkan alamat email yang valid</string>
+    <string name="cg_invalid_options">Pilih karakter dan pertahankan total minimumnya dalam panjang karakter.</string>
+    <string name="cg_use">Gunakan</string>
+    <string name="cg_saved_suggestions">Saran tersimpan</string>
+    <string name="cg_length">Panjangnya</string>
+    <string name="cg_words">Kata-kata</string>
+    <string name="cg_minimum">Jumlah minimum</string>
+    <string name="cg_decrease">Menurun</string>
+    <string name="cg_increase">Meningkat</string>
+</resources>

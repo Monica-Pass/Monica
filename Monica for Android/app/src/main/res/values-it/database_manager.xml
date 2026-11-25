@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Dati modificati o verifica non riuscita. L’origine è conservata. Aggiorna entrambi i pannelli e controlla la destinazione prima di riprovare.</string>
     <string name="manager_failure_locked">Database bloccato o file originale non disponibile. Aprilo nelle impostazioni e aggiorna questo pannello.</string>
     <string name="manager_failure_general">Operazione incompleta. Controlla entrambi i pannelli e i dettagli: la destinazione potrebbe contenere copie parziali.</string>
+    <string name="manager_clear_selection">Cancella la selezione</string>
+    <string name="manager_copy_left">← Copia</string>
+    <string name="manager_copy_right">Copia →</string>
+    <string name="manager_focused_location">Attivo: %1$s · %2$s</string>
+    <string name="manager_focused_selection">Attivo: %1$s · %2$d selezionato</string>
+    <string name="manager_history_back">Indietro</string>
+    <string name="manager_history_forward">Avanti</string>
+    <string name="manager_left_pane">Riquadro sinistro</string>
+    <string name="manager_move_left">← Sposta</string>
+    <string name="manager_move_right">Sposta →</string>
+    <string name="manager_new_folder_short">"Nuova cartella"</string>
+    <string name="manager_open_item">"Apri"</string>
+    <string name="manager_parent">Su</string>
+    <string name="manager_right_pane">Riquadro destro</string>
+    <string name="manager_switch_pane">Riquadro Cambia</string>
 </resources>

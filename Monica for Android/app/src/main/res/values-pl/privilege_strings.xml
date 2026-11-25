@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">Ustawienie domyślnego menedżera haseł wymaga Android 14 lub nowszego.</string>
+    <string name="privilege_method">Metoda autoryzacji</string>
+    <string name="privilege_recovery_title">Ulepszone odzyskiwanie · Opcjonalnie</string>
+    <string name="privilege_root_confirm_body">Wymaga to już zrootowanego urządzenia i zatwierdzenia w jego menedżerze Root. Monica używa Root tylko do ustawień systemowych wymaganych przez ulepszone odzyskiwanie dostępności i domyślnego menedżera haseł. Nie odblokowuje skarbca ani nie odczytuje danych innych aplikacji. \n\nUlepszone odzyskiwanie powoduje jedynie ponowne połączenie już włączonej usługi ułatwień dostępu Monica. Po włączeniu może kontynuować po ponownym uruchomieniu aplikacji lub urządzenia i może na krótko przerwać napełnianie.\n\nWyłącz tutaj Root, aby zatrzymać używanie w przyszłości. Aby cofnąć autoryzację systemu, usuń Monica z menedżera Root. Root nigdy nie jest wymagane jako rozwiązanie zastępcze dla Shizuku.</string>
+    <string name="privilege_root_confirm_title">Zezwolić Monica na używanie Root?</string>
+    <string name="privilege_root_denied">Odmowa dostępu do Root. Zezwól na Monica w swoim menedżerze Root i spróbuj ponownie.</string>
+    <string name="privilege_root_disable">Wyłącz Root w Monica</string>
+    <string name="privilege_root_grant">Autoryzuj Root</string>
+    <string name="privilege_root_hint">Skorzystaj bezpośrednio z dostępu Root tego urządzenia</string>
+    <string name="privilege_root_not_authorized">Root nie jest autoryzowany. Kliknij Autoryzuj Root, aby kontynuować.</string>
+    <string name="privilege_root_ready">Root włączone w ustawieniach systemowych</string>
+    <string name="privilege_root_requesting">Oczekiwanie na autoryzację Root…</string>
+    <string name="privilege_root_timeout">Upłynął limit czasu autoryzacji lub polecenia Root. Sprawdź menedżera Root i spróbuj ponownie.</string>
+    <string name="privilege_root_unavailable">Nie znaleziono użytecznego polecenia su. To urządzenie musi być najpierw zrootowane.</string>
+    <string name="privilege_shizuku_hint">Autoryzuj poprzez działającą usługę Shizuku</string>
+</resources>

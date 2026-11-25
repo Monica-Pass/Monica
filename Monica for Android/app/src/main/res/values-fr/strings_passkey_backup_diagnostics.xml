@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_passkey_device_bound">Ce passkey utilise une clé Android Keystore liée au périphérique qui ne peut pas être exportée. Il peut toujours fonctionner sur le périphérique d\'origine, mais ne peut pas être inclus dans une sauvegarde portable.</string>
+    <string name="backup_passkey_unavailable">La clé privée est manquante ou illisible. Réimportez une sauvegarde contenant la clé privée ou vérifiez le périphérique d\'origine. Les autres données et la sauvegarde à distance ont été conservées.</string>
+    <string name="backup_passkey_unreadable">La clé privée protégée n\'a pas pu être lue. Déverrouillez Monica et réessayez ; si cela continue, vérifiez le périphérique d\'origine ou une sauvegarde contenant la clé privée.</string>
+</resources>

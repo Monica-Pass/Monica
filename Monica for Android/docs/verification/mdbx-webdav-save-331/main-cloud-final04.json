@@ -1,0 +1,10 @@
+{
+  "provider": "Jianguoyun",
+  "edition": "main",
+  "selector": "takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentSaveAuthenticatesIndependentlyAndLeavesWebDavEditPending,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#savingToMdbxReturnsTheNewNativeObjectDespiteSameTitleAndAccount,takagi.ru.monica.autofill_ng.MdbxWebDavSaveUiTest#transparentUpdatePreservesNativeIdAndFutureFields",
+  "success": true,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "seconds": 243.16686909999407
+}

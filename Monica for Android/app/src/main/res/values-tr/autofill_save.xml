@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_review_title">Mevcut bir şifre güncellensin mi?</string>
+    <string name="autofill_save_review_description">Kaydetmeden önce gözden geçirmek için bir girişi seçin. Mevcut klasörler, notlar ve diğer hesaplar korunur.</string>
+    <string name="autofill_save_as_new">Yeni giriş olarak kaydet</string>
+    <string name="autofill_save_local_source">Yerel</string>
+</resources>

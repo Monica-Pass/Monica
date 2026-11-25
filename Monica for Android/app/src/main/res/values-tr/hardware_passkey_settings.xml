@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_passkey_settings_title">Otomatik doldurma ve geçiş anahtarları</string>
+    <string name="hardware_key_enable">Fiziksel anahtarları etkinleştir</string>
+    <string name="hardware_key_enable_description">Monica ile USB veya NFC güvenlik anahtarlarını kullanın. Varsayılan olarak kapalıdır. Kaydedilen yazılım geçiş anahtarları etkilenmez.</string>
+</resources>

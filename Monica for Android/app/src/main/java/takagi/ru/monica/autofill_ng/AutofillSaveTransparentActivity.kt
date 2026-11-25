@@ -82,6 +82,8 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     private lateinit var autofillPreferences: AutofillPreferences
     @Volatile
     private var didSave = false
+    @Volatile private var requestRevoked = false
+    private var editorStarted = false
     private var saveRequestId = "direct"
 
     private fun recordSaveEvent(event: AutofillSaveDiagnostics.Event) {
@@ -90,11 +92,13 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     }
 
     private fun closeSave(event: AutofillSaveDiagnostics.Event) {
+        requestRevoked = true
         recordSaveEvent(event)
         finish()
     }
 
     override fun onNewIntent(intent: android.content.Intent) {
+        requestRevoked = true
         super.onNewIntent(intent)
         AutofillSaveDiagnostics.record(this,
             intent.getStringExtra(AutofillSaveLaunch.EXTRA_REQUEST_ID).orEmpty(),
@@ -211,6 +215,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                 )
                 return@setContent
             }
+            val editorReadGeneration = remember(authorized) { SecurityManager.dataReadGeneration.value }
             val settings by settingsManager.settingsFlow.collectAsState(
                 initial = takagi.ru.monica.data.AppSettings()
             )
@@ -357,9 +362,20 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                     Box(Modifier.weight(1f)) {
                     val resolvedInitialTarget = initialTarget
                     if (resolvedInitialTarget != null) {
-                        LaunchedEffect(Unit) { recordSaveEvent(AutofillSaveDiagnostics.Event.EDITOR_READY) }
+                        LaunchedEffect(Unit) {
+                            editorStarted = true
+                            recordSaveEvent(AutofillSaveDiagnostics.Event.EDITOR_READY)
+                        }
                         AddEditPasswordScreen(
                             viewModel = passwordViewModel,
+                            nativeEditorAuthorization = {
+                                authorized && !requestRevoked && !isFinishing && !isDestroyed &&
+                                    SessionManager.lockGeneration.value == lockGenerationAtOpen &&
+                                    securityManager.isDataReadCurrent(editorReadGeneration) &&
+                                    lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+                                    getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                                    getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
+                            },
                             localKeePassViewModel = localKeePassViewModel,
                             mdbxDatabasesFallback = resolvedInitialTarget.mdbxDatabasesFallback,
                             passwordId = updateId,
@@ -423,8 +439,14 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     }
 
     override fun onDestroy() {
+        requestRevoked = true
         recordSaveEvent(AutofillSaveDiagnostics.Event.ACTIVITY_DESTROYED)
         super.onDestroy()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (editorStarted && !isChangingConfigurations) closeSave(AutofillSaveDiagnostics.Event.EDITOR_CLOSED)
     }
 
     private fun blockCurrentTarget(packageName: String, website: String) {

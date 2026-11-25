@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">Mantenga presionado y arrastre para reordenar</string>
+    <string name="entry_content_remove_message">Esto elimina el contenido de este borrador. Los cambios entran en vigor cuando los guarda.</string>
+    <string name="entry_content_remove_title">¿Eliminar %1$s?</string>
+</resources>

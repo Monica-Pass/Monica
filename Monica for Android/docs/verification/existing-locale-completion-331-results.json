@@ -1,0 +1,165 @@
+{
+  "edition": "main",
+  "currentResourcesPerPack": 7351,
+  "translatedPacks": 17,
+  "changes": {
+    "zh": {
+      "entries": 291,
+      "new": 291,
+      "replaced": 0,
+      "files": 6
+    },
+    "hk": {
+      "entries": 406,
+      "new": 406,
+      "replaced": 0,
+      "files": 20
+    },
+    "lzh": {
+      "entries": 574,
+      "new": 558,
+      "replaced": 16,
+      "files": 50
+    },
+    "vi": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "ja": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "ru": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "ko": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "de": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "es": {
+      "entries": 574,
+      "new": 572,
+      "replaced": 2,
+      "files": 40
+    },
+    "fr": {
+      "entries": 572,
+      "new": 570,
+      "replaced": 2,
+      "files": 39
+    },
+    "pl": {
+      "entries": 575,
+      "new": 573,
+      "replaced": 2,
+      "files": 40
+    },
+    "it": {
+      "entries": 575,
+      "new": 573,
+      "replaced": 2,
+      "files": 41
+    },
+    "id": {
+      "entries": 3,
+      "new": 0,
+      "replaced": 3,
+      "files": 3
+    },
+    "tr": {
+      "entries": 1,
+      "new": 0,
+      "replaced": 1,
+      "files": 1
+    }
+  },
+  "newKeys": 6403,
+  "targetedCorrections": 38,
+  "jvmPassed": 16,
+  "differentDeviceMethodsPassed": 34,
+  "compiledAdditionsAndCorrectionsVerified": 6441,
+  "builds": [
+    {
+      "label": "main-final03",
+      "seconds": 46.63888309999311,
+      "mode": "full",
+      "sourceUnchanged": true,
+      "apks": [
+        {
+          "name": "app.apk",
+          "sha256": "d54d5bd74fc7fbde9a730a26440834cf3b27ca6e53c77e4d75b3bb7fea956cca"
+        },
+        {
+          "name": "test.apk",
+          "sha256": "213616111371cd6ae8f10e84dcfd6b824d4229ef0d654ed1b165259facf82ff5"
+        }
+      ]
+    },
+    {
+      "label": "main-test04",
+      "seconds": 71.6218860999943,
+      "mode": "tests",
+      "sourceUnchanged": true,
+      "apks": [
+        {
+          "name": "app.apk",
+          "sha256": "d54d5bd74fc7fbde9a730a26440834cf3b27ca6e53c77e4d75b3bb7fea956cca"
+        },
+        {
+          "name": "test.apk",
+          "sha256": "5840b2afcffa5e2bdc4ef713add986e84fb5144f62b7354eaf43168e9d258d2b"
+        }
+      ]
+    }
+  ],
+  "deviceRuns": [
+    {
+      "completedMethodPasses": 9,
+      "completedMethodFailures": 25,
+      "edition": "main",
+      "selector": "takagi.ru.monica.localization.AllLocalesInstrumentedTest,takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest,takagi.ru.monica.localization.ExistingLocaleWarningsUiTest,takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest",
+      "tests": 34,
+      "failures": 25,
+      "success": false,
+      "seconds": 21.873699499992654
+    },
+    {
+      "completedMethodPasses": 24,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.localization.ExistingLocaleWarningsUiTest",
+      "tests": 24,
+      "failures": 0,
+      "success": true,
+      "seconds": 23.1493463999941
+    },
+    {
+      "completedMethodPasses": 2,
+      "completedMethodFailures": 0,
+      "edition": "main",
+      "selector": "takagi.ru.monica.localization.ExistingLocaleAdditionsInstrumentedTest,takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest#everyPackagedResourceMatchesTheCompleteSourceContractAndFormats",
+      "tests": 2,
+      "failures": 0,
+      "success": true,
+      "seconds": 5.823252599991974
+    }
+  ],
+  "syntheticMuMuApi": 35,
+  "abi": "x86_64",
+  "productionKotlinChanged": false
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">Impossibile completare il backup perché i dati sensibili di «%1$s» non sono leggibili. I dati originali sono stati conservati.</string>
+</resources>

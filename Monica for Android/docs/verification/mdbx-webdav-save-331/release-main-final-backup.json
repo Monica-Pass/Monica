@@ -1,0 +1,22 @@
+{
+  "edition": "main",
+  "originalPassword": true,
+  "wrongPasswordRejected": true,
+  "oldRecordReadable": true,
+  "newRecordWrittenAndColdReadable": true,
+  "coldPids": [
+    "52661",
+    "53481",
+    "55151"
+  ],
+  "passed": true,
+  "backupTimeoutMinutes": 5,
+  "immediateRestoredAndLoginVerified": true,
+  "backupRestoration": {
+    "items": 1,
+    "encryptedOldBackup": true,
+    "source": "Documents/issue189-main-old331.enc.zip",
+    "restoredRecordRead": true,
+    "newRecordRetained": true
+  }
+}

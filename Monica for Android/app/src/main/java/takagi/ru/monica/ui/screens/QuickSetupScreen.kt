@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
@@ -64,7 +66,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -121,7 +123,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ViewList
@@ -1149,7 +1150,7 @@ private fun SetupSwitchCard(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Surface(shape = settingsSectionItemShape(groupIndex, groupSize), color = MaterialTheme.colorScheme.surfaceContainerLow) {
-        Row(Modifier.fillMaxWidth().toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
+        Row(Modifier.fillMaxWidth().hapticSwitchToggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
             .padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             IconSurface(icon)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -1167,7 +1168,7 @@ private fun SetupSwitchRow(
     enabled: Boolean = true, tag: String = title,
 ) {
     Row(Modifier.fillMaxWidth().testTag(tag).clip(RoundedCornerShape(16.dp))
-        .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
+        .hapticSwitchToggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
         .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
@@ -1256,6 +1257,7 @@ private fun languageLabelRes(language: Language): Int = when (language) {
     Language.ENGLISH -> R.string.qs_lang_english
     Language.CHINESE -> R.string.qs_lang_chinese
     Language.TRADITIONAL_CHINESE -> R.string.language_chinese_traditional
+    Language.TRADITIONAL_CHINESE_TAIWAN -> R.string.language_chinese_traditional_taiwan
     Language.CLASSICAL_CHINESE -> R.string.language_classical_chinese
     Language.VIETNAMESE -> R.string.qs_lang_vietnamese
     Language.JAPANESE -> R.string.qs_lang_japanese
@@ -1268,6 +1270,8 @@ private fun languageLabelRes(language: Language): Int = when (language) {
     Language.ITALIAN -> R.string.language_italian
     Language.PORTUGUESE_PORTUGAL -> R.string.language_portuguese_portugal
     Language.PORTUGUESE_BRAZIL -> R.string.language_portuguese_brazil
+    Language.INDONESIAN -> R.string.language_indonesian
+    Language.TURKISH -> R.string.language_turkish
 }
 
 @StringRes

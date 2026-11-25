@@ -66,10 +66,14 @@ class ItalianLocaleInstrumentedTest {
         }
     }
 
-    @Test fun languageNameIsPlayfulOnlyInChineseContexts() {
+    @Test fun languageNameUsesItalianAutonymInChineseContexts() {
         Language.entries.filter { it != Language.SYSTEM }.forEach { language ->
-            val chinese = language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE)
-            assertEquals(language.name, if (chinese) "超级马里奥语" else "Italiano",
+            val expected = when (language) {
+                Language.INDONESIAN -> "Italia"
+                Language.TURKISH -> "İtalyan"
+                else -> "Italiano"
+            }
+            assertEquals(language.name, expected,
                 LocaleHelper.setLocale(context, language).getString(R.string.language_italian))
         }
     }

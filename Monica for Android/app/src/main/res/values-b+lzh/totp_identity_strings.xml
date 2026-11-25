@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">未能唯一确定原 KeePass 验码器项目。请刷新数据库后重试。</string>
+</resources>

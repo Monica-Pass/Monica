@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden フォルダーは同じアカウント内に残ります。添付ファイル、passkeys、または組織エントリを含むフォルダーのコピーはまだサポートされていません。</string>
+    <string name="external_folder_choose_destination">宛先データベースとフォルダーを選択してください</string>
+    <string name="external_folder_copy_hint">フォルダーとその内容をコピーします。原本を保管してください。</string>
+    <string name="external_folder_move_hint">フォルダーとその内容を移動します。オリジナルは、宛先が保存された後にのみ削除されます。</string>
+    <string name="external_folder_root">データベースのルート</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_title">Yedeklemeyle ilgilenilmesi gerekiyor</string>
+    <string name="passkey_backup_problem_detail">Bu öğeler yedeklenemedi. Yerel veriler ve mevcut uzaktan yedeklemeler değişmedi.</string>
+    <string name="passkey_device_bound_solution">Hizmete yeni, dışa aktarılabilir bir geçiş anahtarı kaydedin ve eski anahtarı kullanımdan kaldırmadan önce bunun çalıştığını doğrulayın. Ayrıca şimdilik bu öğeyi atlayabilirsiniz.</string>
+    <string name="passkey_skip_explanation">Atlama yalnızca bu yedeklemeyi etkiler ve yerel öğeleri silmez. Ayrı bir kısmi yedekleme kaydedilecektir; mevcut uzaktan yedeklemeler korunur. Tam yedeklemenin yerini almaz.</string>
+    <string name="passkey_skip_and_backup">%1$d\'yu atlayın ve yedekleyin</string>
+    <string name="passkey_retry_full_backup">Tam yedeklemeyi yeniden deneyin</string>
+    <string name="passkey_problem_close">Kapat</string>
+    <string name="passkey_partial_saved">Kısmi yedekleme kaydedildi</string>
+    <string name="passkey_partial_saved_detail">Aşağıdaki Geçiş Anahtarları dahil değildir. Yerel kayıtları ve mevcut uzak yedeklemeleri korunur. Son tam yedekleme süresi değişmedi.</string>
+    <string name="passkey_partial_requires_encryption">Geçiş Anahtarlarını atlayan kısmi yedeklemelerin yine de şifrelenmesi gerekir.</string>
+    <string name="passkey_partial_replace_blocked">Bu yedeklemede bazı Geçiş Anahtarları atlanıyor. Birleştirme geri yüklemesini kullanın; yerel verilerin değiştirilmesi engellendi.</string>
+    <string name="passkey_partial_restore_warning">Bu kısmi yedekleme, atlanan Geçiş Anahtarlarını atlar. Mevcut yerel kayıtlarla birleştirmeleri geri yükleyin.</string>
+</resources>

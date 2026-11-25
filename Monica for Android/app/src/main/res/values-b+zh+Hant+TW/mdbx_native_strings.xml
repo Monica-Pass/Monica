@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_title">管理原始資訊</string>
+    <string name="mdbx_native_summary">瀏覽資料夾、項目與原始欄位</string>
+    <string name="mdbx_native_search">搜尋名稱或類型</string>
+    <string name="mdbx_native_readonly">原始欄位唯讀；可從清單重新命名項目，不會修改其內容。</string>
+    <string name="mdbx_native_schema">資料格式版本：%1$d</string>
+    <string name="mdbx_native_failed">操作未能完成。請先重新整理確認已儲存的狀態，再重試。</string>
+    <string name="mdbx_native_snapshot_readonly">快照結構唯讀。需要還原時，請使用快照選單。</string>
+</resources>

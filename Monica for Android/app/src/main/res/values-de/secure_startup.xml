@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android kann die verschlüsselten Einstellungen dieser Installation derzeit nicht überprüfen. Der normale Start wurde gestoppt. Monica hat die Einstellungen nicht gelöscht oder die Schlüssel ersetzt.</string>
+    <string name="secure_startup_diagnostic">Diagnoseinformationen kopieren</string>
+    <string name="secure_startup_environment">Wenn dies nach der Wiederherstellung von App-Daten, dem Flashen eines ROM oder einer Änderung des Systems begann, prüfen Sie, ob das ursprüngliche System und die Schlüsselumgebung wiederhergestellt werden können. Dieser Fehler allein stellt die Ursache nicht dar.</string>
+    <string name="secure_startup_no_reset">Löschen Sie keine App-Daten und deinstallieren Sie Monica nicht. Behalten Sie die Originaldateien. Wenn Sie über ein mit Monica exportiertes Backup verfügen, überprüfen Sie es in einer anderen Installation. Ein dauerhaft verlorener Systemschlüssel kann durch einen erneuten Versuch nicht wiederhergestellt werden.</string>
+    <string name="secure_startup_preserved">Vorhandene Daten bleiben erhalten</string>
+    <string name="secure_startup_restart">Starten Sie das Telefon neu, entsperren Sie es mit den Anmeldeinformationen für die Bildschirmsperre des Systems und versuchen Sie es dann erneut.</string>
+    <string name="secure_startup_retry">Wiederholen</string>
+    <string name="secure_startup_title">Sicherer Speicher nicht verfügbar</string>
+</resources>

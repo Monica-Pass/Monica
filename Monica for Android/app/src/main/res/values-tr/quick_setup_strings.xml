@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="qs_step_presets_title">Bir ön ayarla başlayın</string>
+    <string name="qs_step_presets_subtitle">Bir düzen seçin. Sonraki adımlarda bunu ayarlayabilirsiniz.</string>
+    <string name="qs_dock_subtitle">Dock sayfalarınızı ve sıralarını seçin.</string>
+    <string name="qs_step_customize_title">Sayfalarınıza ince ayar yapın</string>
+    <string name="qs_step_customize_subtitle">Yalnızca değiştirmek istediklerinizi genişletin. Bu seçenekler Dock\'tan ayrıdır.</string>
+    <string name="qs_step_protect_title">Güvenlik ve otomatik doldurma</string>
+    <string name="qs_step_protect_subtitle">Kasanızı koruyun, ardından oturum açmayı kolaylaştırın.</string>
+    <string name="qs_ready_title">Gitmeye hazır</string>
+    <string name="qs_ready_subtitle">İşte düzeniniz. Bunu istediğiniz zaman Ayarlar\'dan değiştirebilirsiniz.</string>
+    <string name="qs_save_failed">Ayarlarınız kaydedilemedi. Lütfen tekrar deneyin.</string>
+    <string name="qs_use_preset">Ön ayarı kullan</string>
+    <string name="qs_enter_monica">Monica\'yu açın</string>
+    <string name="qs_current_layout">Mevcut düzen</string>
+    <string name="qs_data_optional">Şimdi bir veritabanına bağlanabilir veya verileri içe aktarabilirsiniz ya da bunu daha sonra Ayarlar\'dan yapabilirsiniz.</string>
+    <string name="qs_preset_bitwarden_preview">Bitwarden · Önizleme</string>
+    <string name="qs_preset_bitwarden_preview_desc">Dock\'ta Gönder ve Oluşturucu ile kasa genel bakışını açın.</string>
+    <string name="qs_preset_bitwarden_list">Bitwarden · Liste</string>
+    <string name="qs_preset_bitwarden_list_desc">Dock\'ta Gönder ve Oluşturucu ile doğrudan kasa listesine gidin.</string>
+    <string name="qs_preset_authenticator">Kimlik Doğrulayıcı</string>
+    <string name="qs_preset_authenticator_desc">Kimlik Doğrulayıcı ve Steam, doğrulama kodlarına odaklandı.</string>
+    <string name="qs_preset_paged">Ayrı sayfalar</string>
+    <string name="qs_preset_paged_desc">Şifreler, Kimlik Doğrulayıcı, Cüzdan ve Notlar kendi sayfalarında.</string>
+    <string name="qs_preset_everyday">Her gün</string>
+    <string name="qs_preset_everyday_desc">Parolaları, Kimlik Doğrulayıcıyı ve Oluşturucuyu elinizin altında tutun.</string>
+    <string name="qs_preset_minimal">Minimum</string>
+    <string name="qs_preset_minimal_desc">Daha basit bir Dock için Yalnızca Şifreler ve Oluşturucu.</string>
+    <string name="qs_keep_layout">Mevcut düzeni koru</string>
+    <string name="qs_keep_layout_desc">Mevcut düzeninize devam edin ve gerektiği gibi ayarlayın.</string>
+    <string name="qs_presets_hint">Ayarlar Dock\'ta kalır. Ön ayarlar herhangi bir veritabanıyla çalışır; veri adımında sizinkini bağlayın.</string>
+    <string name="qs_move_up">Yukarı taşı</string>
+    <string name="qs_move_down">Aşağı taşı</string>
+    <string name="qs_settings_kept">Her zaman kullanılabilir</string>
+    <string name="qs_vault_overview">Kasayı genel bakışla başlatın</string>
+    <string name="qs_import_from_apps">Başka bir uygulamadan içe aktarın</string>
+    <string name="qs_import_from_apps_desc">Şifreleri ve geçiş anahtarlarını aktarın, ardından kuruluma dönün.</string>
+</resources>

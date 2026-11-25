@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_original_entry_unresolved">Orijinal KeePass kimlik doğrulayıcı girişi benzersiz şekilde tanımlanamadı. Veritabanını yenileyip tekrar deneyin.</string>
+</resources>

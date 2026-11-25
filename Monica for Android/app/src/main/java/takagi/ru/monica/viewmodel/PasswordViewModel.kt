@@ -312,7 +312,8 @@ class PasswordViewModel internal constructor(
         appContext?.let { takagi.ru.monica.repository.MdbxPasswordEditor(it,
             takagi.ru.monica.data.PasswordDatabase.getDatabase(it), securityManager) }
     }
-    fun beginNativePasswordEditor(): AutoCloseable? = mdbxPasswordEditor?.begin()
+    fun beginNativePasswordEditor(isRequestAuthorized: (() -> Boolean)? = null): AutoCloseable? =
+        mdbxPasswordEditor?.begin(isRequestAuthorized)
     private val bitwardenPasswordHistoryStore by lazy {
         appContext?.let { takagi.ru.monica.bitwarden.service.BitwardenPasswordHistoryStore(it) }
     }
@@ -1340,6 +1341,21 @@ class PasswordViewModel internal constructor(
         return passwordProviderRegistry.inspectSecret(entry)
     }
 
+    /** Details retain only a safe error category from the same read, with no retry or key probing. */
+    fun inspectDetailSecretState(entry: PasswordEntry): SecretValueState {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id) ||
+            passwordProviderRegistry.sourceOf(entry) != PasswordSource.Local) return inspectSecretState(entry)
+        var reason = takagi.ru.monica.ui.model.PasswordReadFailure.UNKNOWN
+        val decoded = decodePasswordOrNull(entry.password) { error ->
+            reason = takagi.ru.monica.ui.model.PasswordReadFailure.from(error)
+        }
+        return when (decoded) {
+            null -> SecretValueState.Unreadable(PasswordSource.Local, reason)
+            "" -> SecretValueState.Empty
+            else -> SecretValueState.Available(decoded)
+        }
+    }
+
     fun hasOwnershipConflict(entry: PasswordEntry): Boolean = entry.hasOwnershipConflict()
 
     suspend fun getRawPasswordEntryById(id: Long, forEdit: Boolean = false): PasswordEntry? {
@@ -1412,11 +1428,14 @@ class PasswordViewModel internal constructor(
         return result
     }
 
-    private fun decodePasswordOrNull(rawPassword: String): String? {
+    private fun decodePasswordOrNull(rawPassword: String): String? = decodePasswordOrNull(rawPassword) {}
+
+    private fun decodePasswordOrNull(rawPassword: String, onFailure: (Exception) -> Unit): String? {
         if (rawPassword.isEmpty()) return ""
         return try {
             unwrapPasswordLayersForDisplay(rawPassword)
         } catch (error: Exception) {
+            onFailure(error)
             val forcedReauth = securityManager.handleVaultDecryptFailure(error)
             if (forcedReauth) {
                 _isAuthenticated.value = false
@@ -3650,7 +3669,10 @@ class PasswordViewModel internal constructor(
                     "History session changed while editing"
                 }
                 storedWithBitwardenHistory = if (oldEntry != null && updated.bitwardenVaultId != null) {
-                    requireNotNull(bitwardenPasswordHistoryStore).persistPasswordTransition(oldEntry, updated, oldPassword, historySession)
+                    val store = requireNotNull(bitwardenPasswordHistoryStore)
+                    if (oldEntry.keepassDatabaseId == null && oldEntry.mdbxDatabaseId == null && oldEntry.bitwardenVaultId == null) {
+                        store.persistLocalTransfer(oldEntry, updated, oldPassword, requireNotNull(historySession))
+                    } else store.persistPasswordTransition(oldEntry, updated, oldPassword, historySession)
                 } else false
                 if (!storedWithBitwardenHistory) repository.updatePasswordEntry(updated)
             }
@@ -5072,7 +5094,28 @@ class PasswordViewModel internal constructor(
         val expectedLocalGeneration = SessionManager.lockGeneration.value
         viewModelScope.launch {
             if (projectCredentials != null) {
-                val result = saveProjectCredentials(originalIds, commonEntry, projectCredentials, targets, customFields, embeddedContentSave)
+                // Acquire before Room: native/cross-storage saves use the same project lock.
+                projectCredentialSaveMutex.lock()
+                val result = try {
+                    val localOnly = targets.isNotEmpty() && targets.all { it is StorageTarget.MonicaLocal } &&
+                        originalIds.all { repository.getPasswordEntryById(it)?.isLocalOnlyEntry() == true }
+                    if (localOnly) {
+                        // A legacy project can contain several accounts. Commit all of them under
+                        // the same transaction and lock generation, including their custom fields.
+                        commitLocalPasswordSave(expectedGeneration = expectedLocalGeneration) {
+                            check(originalIds.all { repository.getPasswordEntryById(it)?.isLocalOnlyEntry() == true })
+                            saveProjectCredentials(originalIds, commonEntry, projectCredentials, targets, customFields, embeddedContentSave)
+                                .also { check(it.size == targets.distinctBy(StorageTarget::stableKey).size) { "Incomplete local project save" } }
+                        }
+                    } else saveProjectCredentials(originalIds, commonEntry, projectCredentials, targets, customFields, embeddedContentSave)
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (_: Exception) {
+                    Log.e("PasswordViewModel", "Project credential save failed; local transaction rolled back")
+                    emptyList()
+                } finally {
+                    projectCredentialSaveMutex.unlock()
+                }
                 onComplete(result.firstOrNull())
                 onCompleteWithIds(result.firstOrNull(), result)
                 return@launch
@@ -5438,7 +5481,6 @@ class PasswordViewModel internal constructor(
         groups: List<takagi.ru.monica.data.model.ProjectCredentialGroup.Group>, targets: List<StorageTarget>,
         commonFields: List<CustomFieldDraft>, embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave?
     ): List<Long> = withContext(Dispatchers.IO) {
-        projectCredentialSaveMutex.lock()
         val created = mutableListOf<Long>()
         val changed = mutableListOf<Pair<PasswordEntry, List<CustomFieldDraft>>>()
         var destinationsCommitted = false
@@ -5649,7 +5691,7 @@ class PasswordViewModel internal constructor(
             if (error is CancellationException) throw error
             Log.e("PasswordViewModel", "Project credential save incomplete; committed destinations retained=$destinationsCommitted")
             emptyList()
-        } finally { projectCredentialSaveMutex.unlock() }
+        }
     }
 
     private suspend fun copyProjectCredentialAttachments(source: PasswordEntry, target: PasswordEntry) {
@@ -5721,6 +5763,29 @@ class PasswordViewModel internal constructor(
             }
         }
         val vaultId = requestedEntry.bitwardenVaultId
+        if (originalIds.isNotEmpty() && vaultId != null && requestedEntry.keepassDatabaseId == null &&
+            requestedEntry.mdbxDatabaseId == null && originalIds.all {
+                repository.getPasswordEntryById(it)?.let { source ->
+                    source.keepassDatabaseId == null && source.mdbxDatabaseId == null && source.bitwardenVaultId == null
+                } == true
+            }) {
+            val transferEntry = if (skipCategoryBinding) requestedEntry else applyCategoryBinding(requestedEntry)
+            check(transferEntry.bitwardenVaultId == vaultId && transferEntry.keepassDatabaseId == null &&
+                transferEntry.mdbxDatabaseId == null) { "Transfer destination changed" }
+            return commitLocalPasswordSave(expectedGeneration = expectedLocalGeneration) {
+                requireNotNull(bitwardenPasswordHistoryStore).commitLocalCreate(vaultId) {
+                    check(originalIds.all {
+                        repository.getPasswordEntryById(it)?.let { source ->
+                            source.keepassDatabaseId == null && source.mdbxDatabaseId == null && source.bitwardenVaultId == null
+                        } == true
+                    }) { "Transfer source ownership changed" }
+                    requireNotNull(saveGroupedPasswordContents(originalIds, transferEntry, passwords,
+                        requestedCustomFields, skipCategoryBinding = true, embeddedContentSave = embeddedContentSave)) {
+                        "Incomplete local Bitwarden transfer"
+                    }
+                }
+            }
+        }
         if (originalIds.isEmpty() && vaultId != null && requestedEntry.keepassDatabaseId == null &&
             requestedEntry.mdbxDatabaseId == null) {
             // A failed field save used to lose the inserted ID before the caller could

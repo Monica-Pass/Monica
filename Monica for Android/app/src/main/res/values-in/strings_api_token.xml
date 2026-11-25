@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_type_api_token">Token API</string>
+    <string name="api_token_no_database">Buka database MDBX asli untuk melihat atau membuat token API.</string>
+    <string name="api_token_load_error">Tidak dapat memuat atau menyimpan token. Buka kembali atau sinkronkan database, lalu muat ulang. Data yang ada telah disimpan.</string>
+    <string name="api_token_reload">Muat ulang</string>
+    <string name="api_token_root_collection">Akar basis data</string>
+    <string name="api_token_database">Basis data</string>
+    <string name="api_token_collection">Kategori</string>
+    <string name="api_token_complete_payload">Data token lengkap (JSON)</string>
+    <string name="api_token_empty">Tidak ada token API di database ini.</string>
+    <string name="api_token_native_hint">Disimpan sebagai token MDBX API asli, kompatibel dengan Monica CLI.</string>
+    <string name="api_token_toggle_visibility">Menampilkan atau menyembunyikan nilai</string>
+    <string name="api_token_validation">Masukkan penyedia dan token. Alamat API opsional harus berupa HTTP atau HTTPS URL.</string>
+    <string name="api_token_fields_limit">Gunakan hingga 128 bidang khusus. Catatan dan nilai bidang harus sesuai dalam ukuran 64 KB.</string>
+    <string name="api_token_import_json">Tempelkan token JSON</string>
+    <string name="api_token_parse">Parsing</string>
+    <string name="api_token_delete_confirmation">Hapus token API ini dari database?</string>
+    <string name="api_token_entry_id">ID Entri</string>
+    <string name="api_token_collection_id">ID Koleksi</string>
+    <string name="api_token_provider">Penyedia</string>
+    <string name="api_token_api_base">API dasar URL</string>
+    <string name="api_token_note">Catatan</string>
+    <string name="api_token_schema">Skema muatan</string>
+    <string name="api_token_name">Nama token</string>
+    <string name="api_token_add">Tambahkan token API</string>
+    <string name="api_token_edit">Edit token API</string>
+    <string name="api_token_credentials">Detail token</string>
+    <string name="api_token_manage_databases">Kelola database</string>
+    <string name="api_token_folder_error">Tidak dapat memuat kategori. Buka kembali alat pilih penyimpanan untuk mencoba lagi.</string>
+    <string name="api_token_storage">Lokasi penyimpanan</string>
+    <string name="api_token_advanced">Informasi lebih lanjut</string>
+    <string name="api_token_unknown_schema">Token ini menggunakan format lain. Anda dapat melihat dan menyalin data lengkapnya di bawah ini.</string>
+    <string name="api_token_discard_title">Hapus perubahan?</string>
+    <string name="api_token_discard_message">Perubahan Anda yang belum disimpan akan hilang.</string>
+    <string name="api_token_discard">Buang</string>
+    <string name="api_token_name_hint">1–64 huruf, angka, - atau _</string>
+</resources>

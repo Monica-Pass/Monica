@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nfc_card_unlock_retap">Buka kunci Monica, lalu ketuk lagi kartu tersebut.</string>
+    <string name="nfc_card_unsupported">Tidak ada nomor kartu bank yang dapat digunakan yang terbaca. Simpan kartu di dekat telepon dan coba lagi; beberapa kartu tidak memaparkan informasi ini.</string>
+    <string name="nfc_card_read_failed">Tidak dapat membaca kartu. Pegang di dekat telepon dan coba lagi.</string>
+    <string name="nfc_card_new_title">Buat kartu bank?</string>
+    <string name="nfc_card_new_message">Kartu bank telah dibaca, tetapi halaman ini ditujukan untuk jenis item lain. Buka halaman kartu bank baru? Konten Anda saat ini akan disimpan.</string>
+    <string name="nfc_card_replace_title">Ganti detail kartu yang ada?</string>
+    <string name="nfc_card_replace_message">Detail yang dipindai berbeda dari formulir. Hanya nomor kartu, masa berlaku, dan detail pemegang kartu yang diberikan dalam kartu yang akan diganti. Konten lainnya akan disimpan.</string>
+    <string name="nfc_card_busy">Selesaikan pengoperasian saat ini sebelum memindai kartu.</string>
+    <string name="nfc_card_new_action">Buka kartu baru</string>
+    <string name="nfc_card_replace_action">Ganti</string>
+    <string name="nfc_card_type_select">Pilih jenis kartu</string>
+</resources>

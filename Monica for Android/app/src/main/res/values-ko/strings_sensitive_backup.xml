@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">“%1$s”의 민감한 데이터를 읽을 수 없어 백업을 완료하지 못했습니다. 원본 데이터는 보존되었습니다.</string>
+</resources>

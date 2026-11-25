@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">自定二维码模板</string>
+    <string name="qr_template_error">未能读取项目、保存模板或制码。请确认库已启封且内容未逾限制，再试。</string>
+    <string name="qr_template_field_error">栏“%1$s”有缺、不可读或不唯一。请择可用栏后制码。</string>
+    <string name="qr_template_generate">制二维码</string>
+    <string name="qr_template_hint">制码时读取当前栏值。所存为模板，非已解析之密钥副本。Wi-Fi 模板自动转义所插之值。</string>
+    <string name="qr_template_insert">插入栏</string>
+    <string name="qr_template_literal">纯文本</string>
+    <string name="qr_template_mode">栏模板</string>
+    <string name="qr_template_wifi">Wi-Fi 预设</string>
+</resources>

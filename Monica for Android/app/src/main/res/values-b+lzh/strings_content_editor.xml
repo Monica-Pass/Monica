@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_drag">长按拖曳以改次序</string>
+    <string name="entry_content_remove_message">将自此草稿移除此内容，保存时方生效。</string>
+    <string name="entry_content_remove_title">果欲删 %1$s 乎？</string>
+</resources>

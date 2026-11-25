@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">Bitwarden 僅支援同帳號內移動和複製。含附件、通行金鑰或組織項目的資料夾暫不支援複製。</string>
+    <string name="external_folder_choose_destination">選擇目標資料庫和資料夾</string>
+    <string name="external_folder_root">資料庫根目錄</string>
+    <string name="external_folder_copy_hint">複製資料夾及其內容，保留原資料夾。</string>
+    <string name="external_folder_move_hint">移動資料夾及其內容，目標儲存成功後才移除來源內容。</string>
+</resources>

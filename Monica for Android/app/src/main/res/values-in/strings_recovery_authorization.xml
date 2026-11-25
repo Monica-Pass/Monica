@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Jawab pertanyaan keamanan, lalu konfirmasikan PIN, pola, atau kata sandi perangkat Anda. Jawaban saja tidak dapat mereset kata sandi utama.</string>
+    <string name="recovery_device_title">Konfirmasikan kredensial perangkat</string>
+    <string name="recovery_device_unavailable">Perangkat ini tidak dapat mengonfirmasi kredensial layar kunci untuk pemulihan. Gunakan kata sandi utama asli Anda atau cadangan terenkripsi.</string>
+    <string name="recovery_authorization_expired">Konfirmasi pemulihan dibatalkan atau kedaluwarsa. Mulai lagi.</string>
+    <string name="recovery_attempts_limited">Terlalu banyak percobaan. Batasnya tetap ada setelah meninggalkan halaman ini atau memulai ulang. Coba lagi nanti.</string>
+</resources>

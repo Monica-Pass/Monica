@@ -133,6 +133,7 @@ data class PageAdjustmentSettingsSnapshot(
     val validatorSmoothProgress: Boolean = true,
     val validatorVibrationEnabled: Boolean = true,
     val hapticFeedbackEnabled: Boolean = true,
+    val hapticFeedbackStrength: Int = 1,
     val copyNextCodeWhenExpiring: Boolean = false,
     val securityAnalysisAutoEnabled: Boolean = false,
     val passwordDetailSecurityAnalysisEnabled: Boolean = true,
@@ -209,6 +210,7 @@ class SettingsManager(private val context: Context) {
         private val VALIDATOR_SMOOTH_PROGRESS_KEY = booleanPreferencesKey("validator_smooth_progress")
         private val VALIDATOR_VIBRATION_ENABLED_KEY = booleanPreferencesKey("validator_vibration_enabled")
         private val HAPTIC_FEEDBACK_ENABLED_KEY = booleanPreferencesKey("haptic_feedback_enabled")
+        private val HAPTIC_FEEDBACK_STRENGTH_KEY = intPreferencesKey("haptic_feedback_strength")
         private val BITWARDEN_BOTTOM_STATUS_BAR_ENABLED_KEY = booleanPreferencesKey("bitwarden_bottom_status_bar_enabled")
         private val COPY_NEXT_CODE_WHEN_EXPIRING_KEY = booleanPreferencesKey("copy_next_code_when_expiring")
         private val NOTIFICATION_VALIDATOR_ENABLED_KEY = booleanPreferencesKey("notification_validator_enabled")
@@ -585,6 +587,7 @@ class SettingsManager(private val context: Context) {
             validatorSmoothProgress = preferences[VALIDATOR_SMOOTH_PROGRESS_KEY] ?: true,
             validatorVibrationEnabled = preferences[VALIDATOR_VIBRATION_ENABLED_KEY] ?: true,
             hapticFeedbackEnabled = preferences[HAPTIC_FEEDBACK_ENABLED_KEY] ?: true,
+            hapticFeedbackStrength = (preferences[HAPTIC_FEEDBACK_STRENGTH_KEY] ?: 1).coerceIn(1, 2),
             hideFabOnScroll = preferences[HIDE_FAB_ON_SCROLL_KEY] ?: false,
             securityAnalysisAutoEnabled = preferences[SECURITY_ANALYSIS_AUTO_ENABLED_KEY] ?: false,
             passwordDetailSecurityAnalysisEnabled =
@@ -955,6 +958,15 @@ class SettingsManager(private val context: Context) {
     suspend fun updateValidatorVibrationEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[VALIDATOR_VIBRATION_ENABLED_KEY] = enabled
+        }
+    }
+
+    /** 0 disables feedback; retain the last non-zero strength for the main switch. */
+    suspend fun updateHapticFeedbackStrength(strength: Int) {
+        val value = strength.coerceIn(0, 2)
+        dataStore.edit { preferences ->
+            preferences[HAPTIC_FEEDBACK_ENABLED_KEY] = value > 0
+            if (value > 0) preferences[HAPTIC_FEEDBACK_STRENGTH_KEY] = value
         }
     }
 
@@ -1413,6 +1425,7 @@ class SettingsManager(private val context: Context) {
             validatorSmoothProgress = settings.validatorSmoothProgress,
             validatorVibrationEnabled = settings.validatorVibrationEnabled,
             hapticFeedbackEnabled = settings.hapticFeedbackEnabled,
+            hapticFeedbackStrength = settings.hapticFeedbackStrength,
             copyNextCodeWhenExpiring = settings.copyNextCodeWhenExpiring,
             securityAnalysisAutoEnabled = settings.securityAnalysisAutoEnabled,
             passwordDetailSecurityAnalysisEnabled = settings.passwordDetailSecurityAnalysisEnabled,
@@ -1602,6 +1615,7 @@ class SettingsManager(private val context: Context) {
             preferences[VALIDATOR_SMOOTH_PROGRESS_KEY] = snapshot.validatorSmoothProgress
             preferences[VALIDATOR_VIBRATION_ENABLED_KEY] = snapshot.validatorVibrationEnabled
             preferences[HAPTIC_FEEDBACK_ENABLED_KEY] = snapshot.hapticFeedbackEnabled
+            preferences[HAPTIC_FEEDBACK_STRENGTH_KEY] = snapshot.hapticFeedbackStrength.coerceIn(1, 2)
             preferences[COPY_NEXT_CODE_WHEN_EXPIRING_KEY] = snapshot.copyNextCodeWhenExpiring
             preferences[SECURITY_ANALYSIS_AUTO_ENABLED_KEY] = snapshot.securityAnalysisAutoEnabled
             preferences[PASSWORD_DETAIL_SECURITY_ANALYSIS_ENABLED_KEY] =

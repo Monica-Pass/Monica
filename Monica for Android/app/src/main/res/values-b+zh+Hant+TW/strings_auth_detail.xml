@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">複製目前驗證碼</string>
+    <string name="auth_detail_copy_next">複製 Next</string>
+    <string name="auth_detail_qr_migrate">產生 QR 碼（移轉）</string>
+    <string name="auth_detail_qr_current">產生 QR 碼（目前驗證碼）</string>
+</resources>

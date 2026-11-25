@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">데이터가 변경되었거나 검증에 실패했습니다. 원본은 유지됩니다. 양쪽 열을 새로고침하고 대상을 확인한 뒤 다시 시도하세요.</string>
     <string name="manager_failure_locked">데이터베이스가 잠겼거나 원본 파일을 사용할 수 없습니다. 설정에서 연 뒤 이 열을 새로고침하세요.</string>
     <string name="manager_failure_general">작업이 완료되지 않았습니다. 대상에 일부 사본이 있을 수 있으니 양쪽 열과 세부 정보를 확인한 뒤 다시 시도하세요.</string>
+    <string name="manager_clear_selection">선택 취소</string>
+    <string name="manager_copy_left">← 복사</string>
+    <string name="manager_copy_right">복사 →</string>
+    <string name="manager_focused_location">활성: %1$s · %2$s</string>
+    <string name="manager_focused_selection">활성: %1$s · %2$d 선택됨</string>
+    <string name="manager_history_back">뒤로</string>
+    <string name="manager_history_forward">앞으로</string>
+    <string name="manager_left_pane">왼쪽 창</string>
+    <string name="manager_move_left">← 이동</string>
+    <string name="manager_move_right">이동 →</string>
+    <string name="manager_new_folder_short">새 폴더</string>
+    <string name="manager_open_item">열기</string>
+    <string name="manager_parent">위로</string>
+    <string name="manager_right_pane">오른쪽 창</string>
+    <string name="manager_switch_pane">스위치 창</string>
 </resources>

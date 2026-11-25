@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="backup_passkey_unavailable">Özel anahtar eksik veya okunamıyor. Özel anahtarı içeren bir yedeği yeniden içe aktarın veya orijinal cihazı kontrol edin. Diğer veriler ve uzaktan yedekleme tutuldu.</string>
+    <string name="backup_passkey_device_bound">Bu geçiş anahtarı, dışa aktarılamayan, aygıta bağlı bir Android Anahtar Deposu anahtarını kullanıyor. Orijinal cihazda çalışmaya devam edebilir ancak taşınabilir yedeklemeye dahil edilemez.</string>
+    <string name="backup_passkey_unreadable">Korunan özel anahtar okunamadı. Monica\'nın kilidini açın ve yeniden deneyin; bu durum devam ederse orijinal cihazı veya özel anahtarı içeren yedeği kontrol edin.</string>
+</resources>

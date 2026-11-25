@@ -44,6 +44,16 @@ internal class LocalVaultRecovery(private val context: Context) {
     }
 
     companion object {
+        private data class CheckRecord(val digest: String, val selector: Pair<String, String>?,
+            val session: Long, val verifiedAtMillis: Long?)
+        private val checks = ConcurrentHashMap<String, CheckRecord>()
+        private val changes = kotlinx.coroutines.flow.MutableStateFlow(0L)
+        internal val protectionChanges: kotlinx.coroutines.flow.StateFlow<Long> = changes
+        internal fun clearProtectionChecks() {
+            checks.clear()
+            changed()
+        }
+        private fun changed() { synchronized(changes) { changes.value = changes.value + 1 } }
         internal const val KEY = "local_recovery_key_v1"
         internal const val GENERATION = "local_recovery_generation_v1"
         internal const val REVISION = "local_recovery_revision_v2"
@@ -159,7 +169,9 @@ internal class LocalVaultRecovery(private val context: Context) {
     private fun exists(file: AtomicFile) = file.baseFile.exists() || File(file.baseFile.path + ".bak").exists()
     private fun currentEnvelope(): JSONObject? {
         if (!exists(envelope)) return null
-        val doc = read(envelope)
+        return parseEnvelope(read(envelope))
+    }
+    private fun parseEnvelope(doc: JSONObject): JSONObject? {
         when (doc.getInt("version")) {
             0 -> {
                 require(doc.getString("reason") in setOf("explicit_reset", "credential_change_requires_enrollment"))
@@ -178,7 +190,101 @@ internal class LocalVaultRecovery(private val context: Context) {
         return doc
     }
     private fun readEnvelope(): JSONObject = checkNotNull(currentEnvelope()) { "Recovery unavailable" }
-    fun available(): Boolean = runCatching { locked { readEnvelope(); true } }.getOrDefault(false)
+    fun available(): Boolean = materialState() == RecoveryMaterialState.AVAILABLE
+
+    /** No password, key generation or secure preference opening is performed by this probe. */
+    fun materialState(): RecoveryMaterialState = try { locked { materialStateLocked() } }
+        catch (_: Exception) { RecoveryMaterialState.UNREADABLE }
+
+    private fun materialStateLocked(): RecoveryMaterialState {
+        if (!exists(envelope)) return RecoveryMaterialState.MISSING
+        val doc = try { read(envelope) }
+            catch (_: IOException) { return RecoveryMaterialState.UNREADABLE }
+            catch (_: SecurityException) { return RecoveryMaterialState.UNREADABLE }
+            catch (_: Exception) { return RecoveryMaterialState.INVALID }
+        return try {
+            when (doc.getInt("version")) {
+                0 -> return when (doc.getString("reason")) {
+                    "explicit_reset" -> RecoveryMaterialState.REVOKED
+                    "credential_change_requires_enrollment" -> RecoveryMaterialState.REENROLLMENT_REQUIRED
+                    else -> RecoveryMaterialState.INVALID
+                }
+                1, 2 -> Unit
+                else -> return RecoveryMaterialState.UNSUPPORTED_VERSION
+            }
+            parseEnvelope(doc)
+            require(decode(doc.getString("credentials")).size == 32)
+            require(decode(doc.getString("key")).size == 60)
+            require(decode(doc.getString("snapshot")).size in 28..MAX_BYTES)
+            RecoveryMaterialState.AVAILABLE
+        } catch (_: Exception) { RecoveryMaterialState.INVALID }
+    }
+
+    private fun digest(doc: JSONObject): String = encode(MessageDigest.getInstance("SHA-256")
+        .digest(doc.toString().toByteArray(Charsets.UTF_8)))
+
+    /** Only scalar evidence is retained; every document/selector/session change retires it. */
+    fun protectionStatus(session: Long): RecoveryProtectionStatus = locked {
+        val material = materialStateLocked()
+        if (material != RecoveryMaterialState.AVAILABLE) return@locked RecoveryProtectionStatus(material)
+        val record = checks[directory.absolutePath]?.takeIf {
+            it.session == session && it.digest == digest(readEnvelope()) && it.selector == activeStore()
+        }
+        RecoveryProtectionStatus(material, record?.verifiedAtMillis, record != null && record.verifiedAtMillis == null)
+    }
+
+    /** Expensive KDF/decryption runs outside the storage lock, including for optional checks. */
+    fun verifyProtection(prefs: SharedPreferences, password: String, expectedMdk: ByteArray,
+        session: Long, ensureCurrent: () -> Unit, publish: (() -> Unit) -> Unit): Boolean {
+        var passwordKey: ByteArray? = null
+        var key: ByteArray? = null
+        var bytes: ByteArray? = null
+        var recoveredMdk: ByteArray? = null
+        var proof: CheckRecord? = null
+        try {
+            val (doc, current) = locked {
+                ensureCurrent()
+                checks.remove(directory.absolutePath)
+                (PreparedSecureStore.unwrap(prefs) as? MirroredPreferences)?.checkActive()
+                check(materialStateLocked() == RecoveryMaterialState.AVAILABLE)
+                val doc = readEnvelope()
+                checkMirror(prefs, doc)
+                check(fingerprint(prefs.all, doc.getInt("version")) == doc.getString("credentials"))
+                proof = CheckRecord(digest(doc), activeStore(), session, null)
+                doc to prefs.all.toMap()
+            }
+            val captured = checkNotNull(proof)
+            passwordKey = PasswordKdf.derive(password, decode(doc.getString("salt")), documentProfile(doc))
+            ensureCurrent()
+            key = unseal(passwordKey, doc.getString("key"), keyAad(doc))
+            require(key.size == 32)
+            bytes = unseal(key, doc.getString("snapshot"), snapshotAad(doc))
+            val values = deserialize(bytes)
+            require(fingerprint(values, doc.getInt("version")) == doc.getString("credentials"))
+            require(outerProfile(values).encoded == documentProfile(doc).encoded)
+            require(values == current.filterKeys { it != KEY && it != GENERATION && it != REVISION })
+            recoveredMdk = LocalPasswordCredentials.unwrap(password, values)
+            require(MessageDigest.isEqual(expectedMdk, recoveredMdk))
+            locked {
+                ensureCurrent()
+                check(prefs.all == current && digest(readEnvelope()) == captured.digest && activeStore() == captured.selector)
+                val verified = captured.copy(verifiedAtMillis = System.currentTimeMillis())
+                publish { checks[directory.absolutePath] = verified }
+            }
+            return true
+        } catch (_: Exception) {
+            // A cancelled/retired attempt must not publish either success or failure.
+            runCatching { locked {
+                ensureCurrent()
+                proof?.takeIf { it.digest == digest(readEnvelope()) && it.selector == activeStore() }
+                    ?.let { record -> publish { checks[directory.absolutePath] = record } }
+            } }
+            return false
+        } finally {
+            passwordKey?.fill(0); key?.fill(0); bytes?.fill(0); recoveredMdk?.fill(0)
+            changed()
+        }
+    }
 
     fun activeStore(): Pair<String, String>? = locked {
         if (!exists(selector)) return@locked null
@@ -337,6 +443,17 @@ internal class LocalVaultRecovery(private val context: Context) {
         editor.commit()
     }
 
+    /** A settings check may fill missing protection, but must never refresh existing evidence. */
+    fun enrollMissingProtection(prefs: SharedPreferences, password: String,
+        expectedCredentials: Map<String, *>, beforeCommit: () -> Unit) = locked {
+        when (materialStateLocked()) {
+            RecoveryMaterialState.AVAILABLE -> Unit
+            RecoveryMaterialState.MISSING, RecoveryMaterialState.REENROLLMENT_REQUIRED ->
+                enroll(prefs, password, emptyMap<String, Any>(), expectedCredentials, beforeCommit)
+            else -> error("Existing recovery material must be preserved")
+        }
+    }
+
     /** Called only with a verified password and a valid MDK; atomically replaces old recovery credentials. */
     fun enroll(
         prefs: SharedPreferences,
@@ -443,6 +560,8 @@ internal class LocalVaultRecovery(private val context: Context) {
         } finally {
             inFlight?.let(PreparedSecureStore::finishMirrorCommit)
             plain.fill(0)
+            checks.remove(directory.absolutePath)
+            changed()
         }
     }
 

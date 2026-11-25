@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">Henüz ek yok</string>
+    <string name="attachment_editor_hint">Dosyaları, görüntüleri veya belgeleri seçin</string>
+    <string name="attachment_editor_working">Çalışıyor…</string>
+</resources>

@@ -34,11 +34,13 @@ private fun unmarshalAutoTypeItems(node: Node): List<AutoTypeItem> {
         .childNodes()
         .filter { it.nodeName == Tags.Entry.AutoType.Association }
         .mapNotNull {
-            val window = it.firstOrNull(Tags.Entry.AutoType.Window)?.getText()
-            val sequence = it.firstOrNull(Tags.Entry.AutoType.KeystrokeSequence)?.getText()
+            val window = it.firstOrNull(Tags.Entry.AutoType.Window)
+            val sequence = it.firstOrNull(Tags.Entry.AutoType.KeystrokeSequence)
 
             if (window != null && sequence != null) {
-                AutoTypeItem(window, sequence)
+                // An empty sequence inherits the default. Distinguish a present,
+                // empty XML element from a missing association component.
+                AutoTypeItem(window.getText().orEmpty(), sequence.getText().orEmpty())
             } else {
                 null
             }

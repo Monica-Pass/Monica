@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">データが変更されたか、検証に失敗しました。元データは保持されています。両方の列を更新し、転送先を確認してから再試行してください。</string>
     <string name="manager_failure_locked">データベースがロックされているか、元のファイルを開けません。設定から開き、この列を更新してください。</string>
     <string name="manager_failure_general">操作を完了できませんでした。転送先に一部のコピーが残っている可能性があります。両方の列と詳細を確認してから再試行してください。</string>
+    <string name="manager_clear_selection">選択をクリア</string>
+    <string name="manager_copy_left">← コピー</string>
+    <string name="manager_copy_right">コピー →</string>
+    <string name="manager_focused_location">アクティブ: %1$s · %2$s</string>
+    <string name="manager_focused_selection">アクティブ: %1$s · %2$d が選択されました</string>
+    <string name="manager_history_back">戻る</string>
+    <string name="manager_history_forward">進む</string>
+    <string name="manager_left_pane">左側のペイン</string>
+    <string name="manager_move_left">← 移動</string>
+    <string name="manager_move_right">移動 →</string>
+    <string name="manager_new_folder_short">新しいフォルダー</string>
+    <string name="manager_open_item">開く</string>
+    <string name="manager_parent">アップ</string>
+    <string name="manager_right_pane">右ペイン</string>
+    <string name="manager_switch_pane">ペインの切り替え</string>
 </resources>

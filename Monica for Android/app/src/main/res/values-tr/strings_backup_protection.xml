@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Yedekleme koruması</string>
+    <string name="zip_protection_plain">Şifrelenmemiş ZIP</string>
+    <string name="zip_protection_plain_warning">Bu dosyaya sahip olan herkes içeriğini okuyabilir.</string>
+    <string name="zip_protection_required">Geçiş anahtarları, ekler ve Monica yapılandırması şifreleme gerektirir. Şifrelenmemiş bir ZIP\'yu dışa aktarmak için bunların seçimini kaldırın.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android hiện không thể xác minh cài đặt được mã hóa của cài đặt này. Khởi động bình thường đã bị dừng lại. Monica chưa xóa cài đặt hoặc thay thế phím.</string>
+    <string name="secure_startup_diagnostic">Sao chép thông tin chẩn đoán</string>
+    <string name="secure_startup_environment">Nếu điều này bắt đầu sau khi khôi phục dữ liệu ứng dụng, flash ROM hoặc sửa đổi hệ thống, hãy kiểm tra xem hệ thống ban đầu và môi trường chính có thể được khôi phục hay không. Chỉ riêng lỗi này không xác định được nguyên nhân.</string>
+    <string name="secure_startup_no_reset">Không xóa dữ liệu ứng dụng hoặc gỡ cài đặt Monica. Giữ các tập tin gốc. Nếu bạn có bản sao lưu được xuất Monica, hãy xác minh nó trong một bản cài đặt khác. Không thể tạo lại khóa hệ thống bị mất vĩnh viễn bằng cách thử lại.</string>
+    <string name="secure_startup_preserved">Dữ liệu hiện có được bảo tồn</string>
+    <string name="secure_startup_restart">Khởi động lại điện thoại, mở khóa bằng thông tin xác thực khóa màn hình hệ thống, sau đó thử lại.</string>
+    <string name="secure_startup_retry">Thử lại</string>
+    <string name="secure_startup_title">Không có bộ nhớ an toàn</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_record_count">%1$d kayıtları</string>
+    <string name="export_source_count_locked">Saymak için kilidi açın</string>
+    <string name="export_source_count_loading">Sayılıyor…</string>
+    <string name="export_source_count_unavailable">Kullanılamıyor</string>
+</resources>

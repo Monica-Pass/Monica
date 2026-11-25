@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">重新傳送驗證郵件</string>
+    <string name="bitwarden_new_device_resend_sent">已要求傳送驗證郵件，請查看收件匣。</string>
+    <string name="bitwarden_new_device_resend_failed">無法要求傳送驗證郵件，請再試一次。</string>
+    <string name="bitwarden_new_device_resend_unavailable">此伺服器不支援重新傳送新裝置驗證郵件。</string>
+    <string name="bitwarden_new_device_resend_wait">請在 %1$d 秒後再試。</string>
+    <string name="bitwarden_new_device_resend_rate_limited">要求過於頻繁，請稍後再試。</string>
+    <string name="bitwarden_account_fingerprint">帳號指紋短語</string>
+    <string name="bitwarden_account_fingerprint_hint">請透過另一個可信管道比對這段短語，以協助核實你的帳號身分。</string>
+    <string name="bitwarden_account_fingerprint_unavailable">請先同步此帳號以載入身分金鑰，再試一次。</string>
+    <string name="bitwarden_account_fingerprint_copy">複製短語</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_two_factor_unsupported_short">此用戶端暫不支援</string>
+    <string name="bitwarden_two_factor_unsupported">此方式需要專用登入互動，無法在此輸入驗證碼完成。請選擇伺服器提供的驗證器、郵件或 YubiKey OTP；若組織僅允許 SSO 或安全金鑰，請使用支援該流程的用戶端。</string>
+    <string name="bitwarden_choose_method">選擇驗證方式</string>
+    <string name="bitwarden_change_method">更換方式</string>
+    <string name="bitwarden_email_action_hint">傳送驗證碼後，輸入信箱收到的驗證碼。</string>
+    <string name="bitwarden_totp_action_hint">從 Monica 選擇現有驗證器，或手動輸入目前驗證碼。</string>
+    <string name="bitwarden_authenticator_search">搜尋名稱或帳號</string>
+    <string name="bitwarden_totp_picker_hint">選擇後填入目前驗證碼，不會自動提交。</string>
+    <string name="bitwarden_totp_generation_failed">無法產生驗證碼，請檢查此驗證器或選擇其他項目。</string>
+</resources>

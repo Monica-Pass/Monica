@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_error">모든 파일을 읽거나 저장할 수 없습니다. 귀하의 원본 콘텐츠는 보관되었습니다. 파일 액세스 및 크기를 확인한 후 다시 시도하세요.</string>
+    <string name="native_token_assets_limit">저장당 최대 64MiB의 새 파일 또는 이동된 파일, 토큰당 첨부 파일 128개.</string>
+    <string name="native_token_backup_limit">하나의 ZIP 백업에 있는 기본 API 토큰 파일은 총 64MiB 이하여야 합니다. 더 큰 Vault에는 기본 데이터베이스 백업을 사용하십시오.</string>
+    <string name="native_token_backup_needs_files">이 데이터베이스에는 파일과 함께 API 토큰이 포함되어 있습니다. 전체 백업을 내보내려면 이미지와 첨부 파일을 포함하세요.</string>
+    <string name="native_token_kdbx_files_unsupported">파일이 포함된 API 토큰에는 암호화된 Monica ZIP 또는 기본 데이터베이스 백업이 필요합니다. KDBX 내보내기는 파일 없이 API 토큰을 지원합니다.</string>
+</resources>

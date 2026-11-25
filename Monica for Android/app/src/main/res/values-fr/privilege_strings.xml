@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_default_requires_android14">La définition du gestionnaire de mots de passe par défaut nécessite Android 14 ou version ultérieure.</string>
+    <string name="privilege_method">Méthode d\'autorisation</string>
+    <string name="privilege_recovery_title">Récupération améliorée · Facultatif</string>
+    <string name="privilege_root_confirm_body">Cela nécessite un appareil déjà rooté et une approbation dans son gestionnaire Root. Monica utilise Root uniquement pour les paramètres système nécessaires à la récupération d\'accessibilité améliorée et au gestionnaire de mots de passe par défaut. Il ne déverrouille pas votre coffre-fort et ne lit pas les données d\'autres applications.\n\nLa récupération améliorée reconnecte uniquement un service d\'accessibilité Monica déjà activé. Une fois activé, il peut continuer après le redémarrage d\'une application ou d\'un appareil et peut interrompre brièvement le remplissage.\n\nDésactivez Root ici pour arrêter toute utilisation future. Pour révoquer l\'autorisation du système, supprimez Monica de votre gestionnaire Root. Root n’est jamais demandé comme solution de secours pour Shizuku.</string>
+    <string name="privilege_root_confirm_title">Autoriser Monica à utiliser Root ?</string>
+    <string name="privilege_root_denied">L\'accès au Root a été refusé. Autorisez Monica dans votre gestionnaire Root et réessayez.</string>
+    <string name="privilege_root_disable">Désactiver Root dans Monica</string>
+    <string name="privilege_root_grant">Autoriser Root</string>
+    <string name="privilege_root_hint">Utiliser directement l\'accès Root de cet appareil</string>
+    <string name="privilege_root_not_authorized">Root n\'est pas autorisé. Appuyez sur Autoriser Root pour continuer.</string>
+    <string name="privilege_root_ready">Root activé pour les paramètres système</string>
+    <string name="privilege_root_requesting">En attente de l\'autorisation Root…</string>
+    <string name="privilege_root_timeout">L\'autorisation ou la commande Root a expiré. Vérifiez votre gestionnaire Root et réessayez.</string>
+    <string name="privilege_root_unavailable">Aucune commande su utilisable trouvée. Cet appareil doit d\'abord être rooté.</string>
+    <string name="privilege_shizuku_hint">Autoriser via un service Shizuku en cours d\'exécution</string>
+</resources>

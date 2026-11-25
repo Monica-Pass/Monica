@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuite name="takagi.ru.monica.keepass.KeePassXmlContentParserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-25T07:27:11.624Z" time="0.012">
+  <testcase name="dtdAndExternalEntitiesAreRejectedBeforeReadingContent" classname="takagi.ru.monica.keepass.KeePassXmlContentParserTest" time="0.002" />
+  <testcase name="encryptedKdbx3And4RetainExactTextProtectionTagsAndHistory" classname="takagi.ru.monica.keepass.KeePassXmlContentParserTest" time="0.006" />
+  <testcase name="literalXmlKeepsCdataChunksEntitiesAndEmptyPluginValues" classname="takagi.ru.monica.keepass.KeePassXmlContentParserTest" time="0.002" />
+  </testsuite>

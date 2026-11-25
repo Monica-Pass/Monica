@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_detail">Не удалось создать резервную копию этих элементов. Локальные данные и существующие удаленные резервные копии не изменяются.</string>
+    <string name="passkey_backup_problem_title">Резервное копирование требует внимания</string>
+    <string name="passkey_device_bound_solution">Зарегистрируйте новый экспортируемый passkey в службе и убедитесь, что он работает, прежде чем удалять старый ключ. Вы также можете пока пропустить этот пункт.</string>
+    <string name="passkey_partial_replace_blocked">В этой резервной копии отсутствует часть Passkeys. Используйте восстановление слиянием; замена локальных данных заблокирована.</string>
+    <string name="passkey_partial_requires_encryption">Частичные резервные копии, пропускающие Passkeys, все равно должны быть зашифрованы.</string>
+    <string name="passkey_partial_restore_warning">В этой частичной резервной копии отсутствует пропущенный Passkeys. Восстановление объединяется с существующими локальными записями.</string>
+    <string name="passkey_partial_saved">Частичная резервная копия сохранена.</string>
+    <string name="passkey_partial_saved_detail">Passkeys ниже не включены. Их локальные записи и существующие удаленные резервные копии сохраняются. Время последнего полного резервного копирования не изменяется.</string>
+    <string name="passkey_problem_close">Закрыть</string>
+    <string name="passkey_retry_full_backup">Повторите полное резервное копирование.</string>
+    <string name="passkey_skip_and_backup">Пропустите %1$d и создайте резервную копию.</string>
+    <string name="passkey_skip_explanation">Пропуск влияет только на эту резервную копию и не удаляет локальные элементы. Будет сохранена отдельная частичная резервная копия; существующие удаленные резервные копии сохраняются. Он не заменяет полную резервную копию.</string>
+</resources>

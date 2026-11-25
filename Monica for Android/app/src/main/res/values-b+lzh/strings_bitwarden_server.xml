@@ -11,7 +11,7 @@
     <string name="bitwarden_server_discovery_title">所獲伺服器</string>
     <string name="bitwarden_server_done">完成</string>
     <string name="bitwarden_server_endpoints">獨立服務位址</string>
-    <string name="bitwarden_server_endpoints_hint">留空則從伺服器預設。通知位址為服務基址，非 hub 位址。</string>
+    <string name="bitwarden_server_endpoints_hint">覆盖值留空则从服务器默认。通知地址为服务基址，非 hub URL。</string>
     <string name="bitwarden_server_error_ca">請填有效 PEM CA 憑證，或清此欄。</string>
     <string name="bitwarden_server_error_generic">未能核驗設定，請重試。</string>
     <string name="bitwarden_server_error_header_duplicate">標頭名不得重複，大小寫同視。</string>

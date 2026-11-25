@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.ui.haptic.InteractionHapticsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-25T12:36:39.206Z" time="0.02">
+  <properties/>
+  <testcase name="rejectedHostGetsOneMatchingFallback" classname="takagi.ru.monica.ui.haptic.InteractionHapticsTest" time="0.01"/>
+  <testcase name="appAndSystemOffNeverReachEitherOutput" classname="takagi.ru.monica.ui.haptic.InteractionHapticsTest" time="0.0"/>
+  <testcase name="unavailableMotorIsReportedInsteadOfClaimingSuccess" classname="takagi.ru.monica.ui.haptic.InteractionHapticsTest" time="0.0"/>
+  <testcase name="acceptedRequestNeverVibratesTwice" classname="takagi.ru.monica.ui.haptic.InteractionHapticsTest" time="0.0"/>
+  <testcase name="malformedStrengthIsBounded" classname="takagi.ru.monica.ui.haptic.InteractionHapticsTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

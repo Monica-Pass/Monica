@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_message_delete_queue_failed">Tidak dapat mengantri penghapusan Bitwarden</string>
+    <string name="bitwarden_message_conflict_detail">Entri ini diubah baik secara lokal maupun di server</string>
+    <string name="bitwarden_message_empty_vault">Server tidak mengembalikan data, tetapi entri lokal %1$d tetap ada. Sinkronisasi dijeda untuk melindungi data Anda. Periksa server dan akun sebelum melanjutkan.</string>
+    <string name="runtime_kdbx_decode_failed">Tidak dapat membaca database KDBX</string>
+</resources>

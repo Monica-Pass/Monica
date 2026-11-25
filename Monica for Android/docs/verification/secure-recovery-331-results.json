@@ -1,0 +1,915 @@
+{
+  "version": "1.0.331",
+  "date": "2026-11-23",
+  "environment": {
+    "device": "MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "data": "synthetic only",
+    "provider": "third-party OhMyKeymint 1.3.5 / ba6f300",
+    "moduleSeedOrKeyboxChanged": false,
+    "releaseSigning": "same local test certificate; not production signing"
+  },
+  "editions": {
+    "main": {
+      "versionCode": 12,
+      "baseCommit": "ec4f67bd70616d353604fe5bea62eaf3f005b5f4",
+      "sourceMatchesR8Build": true,
+      "unit": {
+        "tests": 68,
+        "failures": 3,
+        "skipped": 0,
+        "failureMethods": [
+          "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest#compatDataEncryptionDoesNotUsePredictableMasterKeyString",
+          "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest#pageSwitchHotPathsDoNotRunAuthOrBitwardenSyncWorkOnMainThread",
+          "takagi.ru.monica.ui.SteamMarketSensitiveActionGuardTest#protectedExecutorRequiresMasterPasswordOrStrongBiometricSuccess"
+        ],
+        "baselineEvidence": "The same three guard failures independently reproduced against original main HEAD and current sources; FD reports the same methods."
+      },
+      "builds": [
+        {
+          "label": "main01-baseline",
+          "mode": "baseline",
+          "exit": 0,
+          "seconds": 188.84766890015453,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "2fa852f4dfe523a5443359b7b3c6f1331161754cdc2049653fe8b77204627a9e"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "f3baaf613dca0034d2a1fb29d333e3b84a4937547fe4b0404afe4b19f1731368"
+            }
+          ]
+        },
+        {
+          "label": "main02-implementation",
+          "mode": "debug",
+          "exit": 0,
+          "seconds": 422.8443769000005,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "e002d5033da4be848ca308ada21ede59c52a836e390874a6002594e0e62e9d2b"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "c65dc7fc8b4e09d2ec6b3a20446eec8ea98d0af2235608ef1beced935f97e9b5"
+            }
+          ]
+        },
+        {
+          "label": "main03-unit",
+          "mode": "unit",
+          "exit": 1,
+          "seconds": 155.19373160018586,
+          "sourceUnchanged": true,
+          "artifacts": []
+        },
+        {
+          "label": "main04-readonly",
+          "mode": "debug",
+          "exit": 1,
+          "seconds": 711.4897002999205,
+          "sourceUnchanged": true,
+          "artifacts": []
+        },
+        {
+          "label": "main05-bounded-memory",
+          "mode": "debug",
+          "exit": 0,
+          "seconds": 435.5964184999466,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "6720ea026ef8372bea861cf3fffe26720f31ff9c46572ef42ee9218bdba77fd3"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "234e5f99ea83e87a58a379f81b577e29009280ba31cee2afe76f3f3932a0955d"
+            }
+          ]
+        },
+        {
+          "label": "main06-final-tests",
+          "mode": "debug",
+          "exit": 0,
+          "seconds": 122.50667670019902,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "f03e3f7ff0c657116cba25fddb6e00d635f18f719ba155426f6936fa489238bd"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "5279ce4a85d35f387d753a02ce1afe753641d0d3bbfb3f10c790ef2275f6b9be"
+            }
+          ]
+        },
+        {
+          "label": "main07-release",
+          "mode": "release",
+          "exit": 0,
+          "seconds": 486.22778520011343,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "0db7e322aaf02afd69a31a53e7d5c61e50fd7be3c74ca804dbb29a42b31db308"
+            }
+          ]
+        }
+      ],
+      "uniquePassedDeviceMethods": 120,
+      "passedDeviceMethods": [
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#changedCredentialIsUsedOnTheNextRequestInsteadOfCachedValue",
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsStandardNativeLoginWithoutVerification",
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillWithoutVerificationStillWorksAfterSessionLock",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#selectedProjectAccountFillsItsOwnLatestPasswordInSystemForm",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#acceptedForegroundCheckIsReadOnlyAndDoesNotChangeAuthentication",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#backgroundCancellationDropsPendingPasswordAndDoesNotQueueAnotherCheck",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#lockCancellationCannotPublishOrRestoreSession",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#biometricReadStagesKeyAndCancellationPreventsPublication",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#cancellationAfterCandidateCreationPreservesBindingAndDiscardsOnlyCandidate",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#competingBindingChangeRejectsPreparedCandidate",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#confirmedRebindRetainsPasswordOldWrapperAliasesAndColdData",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#damagedPasswordWrapperCannotUseWarmCache",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#disablingDeveloperBypassCannotLeaveRepairedCompatBindingSelected",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#lockAfterCandidateCreationCannotPublish",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#missingKeyNeverReportsRebuiltOrGeneratesReplacementDuringRead",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#repairedBindingDoesNotReplaceLegacyFieldEncryptionKey",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#secondRebindRetainsPreviousSlotAndAlias",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#selectedBindingFailureNeverFallsBackToHealthyLegacyWrapper",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#unreadableExistingWrapperNeverReportsRebuiltEvenWithPasswordCache",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#wrongPasswordCannotUseWarmCacheOrGenerateKeys",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#cancellationDuringPrivateTraversalCannotReturnLateResult",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#privateBatchStillRequiresFullAuthorizationAtReturn",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#timedOutReadRetainsNativeSlotUntilWorkerReallyExits",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#changingPasswordInLegacyClientRevokesStaleRecoveryUntilPasswordUnlock",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#concurrentProtectedWritesRemainRecoverable",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryProviderTimeoutAndCancellationNeverPublishLateOrQueueRetries",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryWithLostOrReplacedRealStorageKeyPreservesDataAndPreviousStore",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#deniedPublicationPreservesEnvelopeAndSelectorAfterStaging",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedConfirmedRecoveryDoesNotRewriteRecoveryEnvelope",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedRecoveryWriteDoesNotSetInitialPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedCredentialMirrorBlocksOldPasswordAndRecoversNewPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedLargeMigrationResumesWithoutLosingRows",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#legacyStoreStillContainsReadableCredentialsAndNewProtectedValues",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#migrationPreservesUnreadableFieldsAndSyncMetadata",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingEnvelopeCannotCreateReplacementStoreOrKeys",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingMdkDuringPasswordChangeDoesNotGenerateReplacementOrChangeVerifier",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingPasswordWrapperMustNotOfferImpossibleRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#offlineRecoveryPreservesPasswordOtpAttachmentKeyAndNewPasskeyPreferences",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordRotationRevokesOldPasswordWithoutReencryptingLocalItems",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordUnlockAfterConvenienceKeyLossDoesNotSilentlyRecreateKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#recoveredGenerationCanSurviveLosingItsOwnKeystoreKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#staleManagerCannotWriteAfterRecoverySwitchesStores",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#upgradeAfterLegacyProtectedWriteRefreshesRecoverySnapshot",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#wrongPasswordAndDamagedEnvelopeNeverModifyOriginalsOrActivateAnotherStore",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#reopenOriginalVault",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#seedOriginalVault",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#verifyAfterColdRestart",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#answersAloneAndCancelledChallengeDoNotAuthorize",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#forgedOrMissingPermitNeverChangesCredentials",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#missingWrapperCannotGenerateReplacementMdkDuringRecovery",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#badIndependentPasswordWrapperDoesNotBreakNormalLoginOrWrites",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#changedRecoveryCiphertextCannotReusePreviousSuccess",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#diagnosticReportsOnlyMaterialClassification",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#explicitCheckEnrollsMissingMaterialAndPreservesRevokedMaterial",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#independentRehearsalPreservesBytesKeysAndDoesNotGrantUnlock",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#lockDuringIndependentKdfCannotPublishSuccess",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#lockRevisionAndPasswordChangeRetireVerification",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#materialStatesDistinguishMissingInvalidRevokedAndUnsupported",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#missingModernEnvelopeCannotBypassPublicationMarkers",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#wrongPasswordAndCancelledAttemptCannotPublishOrMutate",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#largeTextCancelRetainsAllMaterial",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#lockRemovesTypedPasswordAndPreventsConfirmation",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#passwordConfirmationVerifiesWithoutChangingOriginalCiphertext",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#settingsShowsVerifiedStatusAndOpensExistingBackupAtLargeText",
+        "takagi.ru.monica.security.SecureSecondaryEntryActivityTest#authenticationEntryTimesOutWithoutBlockingMainOrQueueingRetry",
+        "takagi.ru.monica.security.SecureSecondaryEntryActivityTest#saveEntryTimesOutWithoutBlockingMainOrQueueingRetry",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#bitwardenFailureDoesNotBlockOrModifyTheLocalVault",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#cancelledStartupDoesNotPerformAnotherRead",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#concurrentFirstOpenDoesNotMistakeAnInProgressKeysetForCorruption",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#corruptIndividualPreferenceIsDetectedBeforeNormalStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#diagnosticIdentifiesReadPhaseWithoutExceptionMessages",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#healthyBackgroundStartupDoesNotDependOnAnActivity",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#healthyStoreRoundTripsAndDiagnosticsExcludeExceptionMessages",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingKeysetIsNotAutomaticallyRetriedOrRebuilt",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingKeysetIsNotGeneratedOverExistingEncryptedValues",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingMasterKeyIsNotRecreatedForAnExistingStore",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#persistentReadFailureStopsAfterThreeAttemptsAndKeepsStorage",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#preliminaryStoreReadFailureAlsoFailsClosedInsteadOfEscapingStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#providerDeadlineReturnsBlockedBeforeTheReadReturns",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#reproduceAuthenticatedKeysetFailureWithoutTouchingUserData",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#retrySucceedsOnlyAfterTheOriginalConfigurationIsRestored",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#transientPreflightFailureIsRetriedWithoutChangingCiphertextOrUnlocking",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#wrappedKeystoreFailuresReachBlockedStartupAndPreserveEncryptedPreferences",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#blockedScreenKeepsActionsReachableWithLargeTextAndDoesNotRunThemAutomatically",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationDialogRemainsReadableWithLargeTextAndBothThemes",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationIsDiscardedWhenRecoveryPageLeavesComposition",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#explicitConfirmationExecutesOnceAndClearsPassword",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#leavingForegroundCancelsConfirmedRecoveryAndDoesNotRestartIt",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#leavingForegroundClearsPendingConfirmation",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#missingMaterialShowsSpecificGuidanceWithoutRecoveryAction",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#passwordRecoveryHandlesFailureWithoutExposingPasswordOrRunningAutomatically",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#recoveryNeedsSecondConfirmationAndCancelDoesNotCallRecovery",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#systemBackDismissesConfirmationWithoutRecovery",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#timeoutDoesNotClaimMaterialOrKeyWasDeleted",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData"
+      ],
+      "unresolvedDeviceFailures": [
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#existingUnreadableXmlIsNotTreatedAsANewInstallation"
+      ],
+      "deviceRuns": [
+        {
+          "label": "main-regression01",
+          "tests": 78,
+          "failures": 1,
+          "success": false,
+          "seconds": 172.8982780999504,
+          "selector": "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest,takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest,takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest,takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest,takagi.ru.monica.security.SecureStartupInstrumentedTest,takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest"
+        },
+        {
+          "label": "main-final01",
+          "tests": 17,
+          "failures": 0,
+          "success": true,
+          "seconds": 21.151248399866745,
+          "selector": "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest,takagi.ru.monica.security.BackgroundRecoveryVerificationTest,takagi.ru.monica.security.RecoveryProtectionUiTest"
+        },
+        {
+          "label": "main-normal-ui01",
+          "tests": 8,
+          "failures": 0,
+          "success": true,
+          "seconds": 70.39959020004608,
+          "selector": "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest,takagi.ru.monica.security.SecureSecondaryEntryActivityTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData"
+        },
+        {
+          "label": "main-ui01",
+          "tests": 14,
+          "failures": 3,
+          "success": false,
+          "seconds": 32.322730500018224,
+          "selector": "takagi.ru.monica.security.RecoveryProtectionUiTest,takagi.ru.monica.security.SecureStorageRecoveryUiTest"
+        },
+        {
+          "label": "main-ui02-single",
+          "tests": 1,
+          "success": true,
+          "seconds": 5.5843080000486225,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest#recoveryNeedsSecondConfirmationAndCancelDoesNotCallRecovery"
+        },
+        {
+          "label": "main-ui03-isolated",
+          "tests": 2,
+          "success": true,
+          "seconds": 12.720569900004193,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest#systemBackDismissesConfirmationWithoutRecovery,takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationDialogRemainsReadableWithLargeTextAndBothThemes"
+        },
+        {
+          "label": "main-autofill-system",
+          "tests": 3,
+          "success": true,
+          "seconds": 14.172068899963051,
+          "selector": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsStandardNativeLoginWithoutVerification,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillWithoutVerificationStillWorksAfterSessionLock,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#changedCredentialIsUsedOnTheNextRequestInsteadOfCachedValue"
+        },
+        {
+          "label": "main-ime-system",
+          "tests": 1,
+          "success": true,
+          "seconds": 13.825511199887842,
+          "selector": "takagi.ru.monica.ime.MonicaImeSystemTest#selectedProjectAccountFillsItsOwnLatestPasswordInSystemForm"
+        },
+        {
+          "label": "main-omk-seed",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 11.067541299853474,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#seedOriginalVault"
+        },
+        {
+          "label": "main-omk-recover",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 11.32170690014027,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#reopenOriginalVault"
+        },
+        {
+          "label": "main-omk-cold",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 8.821750599890947,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#verifyAfterColdRestart"
+        },
+        {
+          "label": "main-startup-final01",
+          "tests": 11,
+          "failures": 1,
+          "success": false,
+          "seconds": 19.104723500087857,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest"
+        },
+        {
+          "label": "main-startup-final02-isolated",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.337471100036055,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationIsDiscardedWhenRecoveryPageLeavesComposition"
+        }
+      ],
+      "release": {
+        "upgrade": {
+          "actualR8": true,
+          "sameCertificate": true,
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "oldSha256": "7777430cb2d0b020204dae06d9b982157885b88c0608112b016f09b2e2ad3991",
+          "newSha256": "0db7e322aaf02afd69a31a53e7d5c61e50fd7be3c74ca804dbb29a42b31db308",
+          "unchangedBeforeFirstLaunch": true
+        },
+        "core": {
+          "edition": "main",
+          "originalPassword": true,
+          "wrongPasswordRejected": true,
+          "oldRecordReadable": true,
+          "newRecordWrittenAndColdReadable": true,
+          "distinctColdProcesses": 2
+        },
+        "backup": {
+          "edition": "main",
+          "originalPassword": true,
+          "wrongPasswordRejected": true,
+          "oldRecordReadable": true,
+          "newRecordWrittenAndColdReadable": true,
+          "passed": true,
+          "backupTimeoutMinutes": 5,
+          "immediateRestoredAndLoginVerified": true,
+          "backupRestoration": {
+            "items": 1,
+            "encryptedOldBackup": true,
+            "restoredRecordRead": true,
+            "newRecordRetained": true
+          },
+          "distinctColdProcesses": 3
+        },
+        "settings": {
+          "searchNavigation": true,
+          "wrongPasswordRejected": true,
+          "independentVerification": true,
+          "backupNavigation": true
+        },
+        "to-omk": {
+          "materialCases": [
+            {
+              "kind": "missing",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "invalid",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "revoked",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "unsupported",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            }
+          ],
+          "wrongPasswordRejected": true,
+          "cancelRetained": true,
+          "confirmedRecovery": true,
+          "oldRecordRead": true,
+          "newRecordWriteAndColdRead": true,
+          "distinctColdProcesses": 2
+        },
+        "to-system": {
+          "materialCases": [
+            {
+              "kind": "missing",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "invalid",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "revoked",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "unsupported",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            }
+          ],
+          "wrongPasswordRejected": true,
+          "cancelRetained": true,
+          "confirmedRecovery": true,
+          "oldRecordRead": true,
+          "newRecordWriteAndColdRead": true,
+          "distinctColdProcesses": 2
+        }
+      }
+    },
+    "fd": {
+      "versionCode": 38,
+      "baseCommit": "4864b6cedd04eebc3513ef65ca12bc731d83fab5",
+      "sourceMatchesR8Build": true,
+      "unit": {
+        "tests": 68,
+        "failures": 3,
+        "skipped": 0,
+        "failureMethods": [
+          "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest#compatDataEncryptionDoesNotUsePredictableMasterKeyString",
+          "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest#pageSwitchHotPathsDoNotRunAuthOrBitwardenSyncWorkOnMainThread",
+          "takagi.ru.monica.ui.SteamMarketSensitiveActionGuardTest#protectedExecutorRequiresMasterPasswordOrStrongBiometricSuccess"
+        ],
+        "baselineEvidence": "The same three guard failures independently reproduced against original main HEAD and current sources; FD reports the same methods."
+      },
+      "builds": [
+        {
+          "label": "fd01-implementation",
+          "mode": "debug",
+          "exit": 0,
+          "seconds": 450.96283720014617,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "206aef0a34123cd5cb1251b6a9b224c5c690433258e9f0ce704079d9a016bc91"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "060fa0aa6563c62cf1e5138fc5cb287611bfb9cb89eb6f89508def63e3db4ce5"
+            }
+          ]
+        },
+        {
+          "label": "fd02-final-tests",
+          "mode": "debug",
+          "exit": 0,
+          "seconds": 45.16403539991006,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "206aef0a34123cd5cb1251b6a9b224c5c690433258e9f0ce704079d9a016bc91"
+            },
+            {
+              "name": "test.apk",
+              "sha256": "7fd34d3083671a9a9e0c5f5fb5fd11107ff2ee2e540caef1ba84eda61a8f4612"
+            }
+          ]
+        },
+        {
+          "label": "fd03-release",
+          "mode": "release",
+          "exit": 0,
+          "seconds": 468.5255174001213,
+          "sourceUnchanged": true,
+          "artifacts": [
+            {
+              "name": "app.apk",
+              "sha256": "f78617ecf5e293a5570082ef650f96430f826574276fceb34c9063d6ca971764"
+            }
+          ]
+        },
+        {
+          "label": "fd04-unit",
+          "mode": "unit",
+          "exit": 1,
+          "seconds": 82.48851860011928,
+          "sourceUnchanged": true,
+          "artifacts": []
+        }
+      ],
+      "uniquePassedDeviceMethods": 120,
+      "passedDeviceMethods": [
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#changedCredentialIsUsedOnTheNextRequestInsteadOfCachedValue",
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsStandardNativeLoginWithoutVerification",
+        "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillWithoutVerificationStillWorksAfterSessionLock",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#selectedProjectAccountFillsItsOwnLatestPasswordInSystemForm",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#acceptedForegroundCheckIsReadOnlyAndDoesNotChangeAuthentication",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#backgroundCancellationDropsPendingPasswordAndDoesNotQueueAnotherCheck",
+        "takagi.ru.monica.security.BackgroundRecoveryVerificationTest#lockCancellationCannotPublishOrRestoreSession",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#biometricReadStagesKeyAndCancellationPreventsPublication",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#cancellationAfterCandidateCreationPreservesBindingAndDiscardsOnlyCandidate",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#competingBindingChangeRejectsPreparedCandidate",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#confirmedRebindRetainsPasswordOldWrapperAliasesAndColdData",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#damagedPasswordWrapperCannotUseWarmCache",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#disablingDeveloperBypassCannotLeaveRepairedCompatBindingSelected",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#lockAfterCandidateCreationCannotPublish",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#missingKeyNeverReportsRebuiltOrGeneratesReplacementDuringRead",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#repairedBindingDoesNotReplaceLegacyFieldEncryptionKey",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#secondRebindRetainsPreviousSlotAndAlias",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#selectedBindingFailureNeverFallsBackToHealthyLegacyWrapper",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#unreadableExistingWrapperNeverReportsRebuiltEvenWithPasswordCache",
+        "takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest#wrongPasswordCannotUseWarmCacheOrGenerateKeys",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#cancellationDuringPrivateTraversalCannotReturnLateResult",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#privateBatchStillRequiresFullAuthorizationAtReturn",
+        "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest#timedOutReadRetainsNativeSlotUntilWorkerReallyExits",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#changingPasswordInLegacyClientRevokesStaleRecoveryUntilPasswordUnlock",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#concurrentProtectedWritesRemainRecoverable",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryProviderTimeoutAndCancellationNeverPublishLateOrQueueRetries",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryWithLostOrReplacedRealStorageKeyPreservesDataAndPreviousStore",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#deniedPublicationPreservesEnvelopeAndSelectorAfterStaging",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedConfirmedRecoveryDoesNotRewriteRecoveryEnvelope",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedRecoveryWriteDoesNotSetInitialPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedCredentialMirrorBlocksOldPasswordAndRecoversNewPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedLargeMigrationResumesWithoutLosingRows",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#legacyStoreStillContainsReadableCredentialsAndNewProtectedValues",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#migrationPreservesUnreadableFieldsAndSyncMetadata",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingEnvelopeCannotCreateReplacementStoreOrKeys",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingMdkDuringPasswordChangeDoesNotGenerateReplacementOrChangeVerifier",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingPasswordWrapperMustNotOfferImpossibleRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#offlineRecoveryPreservesPasswordOtpAttachmentKeyAndNewPasskeyPreferences",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordRotationRevokesOldPasswordWithoutReencryptingLocalItems",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordUnlockAfterConvenienceKeyLossDoesNotSilentlyRecreateKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#recoveredGenerationCanSurviveLosingItsOwnKeystoreKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#staleManagerCannotWriteAfterRecoverySwitchesStores",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#upgradeAfterLegacyProtectedWriteRefreshesRecoverySnapshot",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#wrongPasswordAndDamagedEnvelopeNeverModifyOriginalsOrActivateAnotherStore",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#reopenOriginalVault",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#seedOriginalVault",
+        "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#verifyAfterColdRestart",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#answersAloneAndCancelledChallengeDoNotAuthorize",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#forgedOrMissingPermitNeverChangesCredentials",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#missingWrapperCannotGenerateReplacementMdkDuringRecovery",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#badIndependentPasswordWrapperDoesNotBreakNormalLoginOrWrites",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#changedRecoveryCiphertextCannotReusePreviousSuccess",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#diagnosticReportsOnlyMaterialClassification",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#explicitCheckEnrollsMissingMaterialAndPreservesRevokedMaterial",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#independentRehearsalPreservesBytesKeysAndDoesNotGrantUnlock",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#lockDuringIndependentKdfCannotPublishSuccess",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#lockRevisionAndPasswordChangeRetireVerification",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#materialStatesDistinguishMissingInvalidRevokedAndUnsupported",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#missingModernEnvelopeCannotBypassPublicationMarkers",
+        "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest#wrongPasswordAndCancelledAttemptCannotPublishOrMutate",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#largeTextCancelRetainsAllMaterial",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#lockRemovesTypedPasswordAndPreventsConfirmation",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#passwordConfirmationVerifiesWithoutChangingOriginalCiphertext",
+        "takagi.ru.monica.security.RecoveryProtectionUiTest#settingsShowsVerifiedStatusAndOpensExistingBackupAtLargeText",
+        "takagi.ru.monica.security.SecureSecondaryEntryActivityTest#authenticationEntryTimesOutWithoutBlockingMainOrQueueingRetry",
+        "takagi.ru.monica.security.SecureSecondaryEntryActivityTest#saveEntryTimesOutWithoutBlockingMainOrQueueingRetry",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#bitwardenFailureDoesNotBlockOrModifyTheLocalVault",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#cancelledStartupDoesNotPerformAnotherRead",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#concurrentFirstOpenDoesNotMistakeAnInProgressKeysetForCorruption",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#corruptIndividualPreferenceIsDetectedBeforeNormalStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#diagnosticIdentifiesReadPhaseWithoutExceptionMessages",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#healthyBackgroundStartupDoesNotDependOnAnActivity",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#healthyStoreRoundTripsAndDiagnosticsExcludeExceptionMessages",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingKeysetIsNotAutomaticallyRetriedOrRebuilt",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingKeysetIsNotGeneratedOverExistingEncryptedValues",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#missingMasterKeyIsNotRecreatedForAnExistingStore",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#persistentReadFailureStopsAfterThreeAttemptsAndKeepsStorage",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#preliminaryStoreReadFailureAlsoFailsClosedInsteadOfEscapingStartup",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#providerDeadlineReturnsBlockedBeforeTheReadReturns",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#reproduceAuthenticatedKeysetFailureWithoutTouchingUserData",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#retrySucceedsOnlyAfterTheOriginalConfigurationIsRestored",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#transientPreflightFailureIsRetriedWithoutChangingCiphertextOrUnlocking",
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#wrappedKeystoreFailuresReachBlockedStartupAndPreserveEncryptedPreferences",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#blockedScreenKeepsActionsReachableWithLargeTextAndDoesNotRunThemAutomatically",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationDialogRemainsReadableWithLargeTextAndBothThemes",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationIsDiscardedWhenRecoveryPageLeavesComposition",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#explicitConfirmationExecutesOnceAndClearsPassword",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#leavingForegroundCancelsConfirmedRecoveryAndDoesNotRestartIt",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#leavingForegroundClearsPendingConfirmation",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#missingMaterialShowsSpecificGuidanceWithoutRecoveryAction",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#passwordRecoveryHandlesFailureWithoutExposingPasswordOrRunningAutomatically",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#recoveryNeedsSecondConfirmationAndCancelDoesNotCallRecovery",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#systemBackDismissesConfirmationWithoutRecovery",
+        "takagi.ru.monica.security.SecureStorageRecoveryUiTest#timeoutDoesNotClaimMaterialOrKeyWasDeleted",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData"
+      ],
+      "unresolvedDeviceFailures": [
+        "takagi.ru.monica.security.SecureStartupInstrumentedTest#existingUnreadableXmlIsNotTreatedAsANewInstallation"
+      ],
+      "deviceRuns": [
+        {
+          "label": "fd-regression01",
+          "tests": 78,
+          "failures": 1,
+          "success": false,
+          "seconds": 164.56010969984345,
+          "selector": "takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest,takagi.ru.monica.security.BiometricWrapperRecoveryInstrumentedTest,takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest,takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest,takagi.ru.monica.security.SecureStartupInstrumentedTest,takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest"
+        },
+        {
+          "label": "fd-final01",
+          "tests": 25,
+          "failures": 0,
+          "success": true,
+          "seconds": 95.1740707999561,
+          "selector": "takagi.ru.monica.security.RecoveryProtectionInstrumentedTest,takagi.ru.monica.security.BackgroundRecoveryVerificationTest,takagi.ru.monica.security.RecoveryProtectionUiTest,takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest,takagi.ru.monica.security.SecureSecondaryEntryActivityTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData"
+        },
+        {
+          "label": "fd-startup-ui01",
+          "tests": 11,
+          "failures": 3,
+          "success": false,
+          "seconds": 25.302493000170216,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest"
+        },
+        {
+          "label": "fd-startup-ui02-isolated",
+          "tests": 3,
+          "failures": 0,
+          "success": true,
+          "seconds": 9.428186600096524,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest#leavingForegroundClearsPendingConfirmation,takagi.ru.monica.security.SecureStorageRecoveryUiTest#recoveryNeedsSecondConfirmationAndCancelDoesNotCallRecovery,takagi.ru.monica.security.SecureStorageRecoveryUiTest#passwordRecoveryHandlesFailureWithoutExposingPasswordOrRunningAutomatically"
+        },
+        {
+          "label": "fd-startup-ui03-isolated",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 4.849288299912587,
+          "selector": "takagi.ru.monica.security.SecureStorageRecoveryUiTest#confirmationIsDiscardedWhenRecoveryPageLeavesComposition"
+        },
+        {
+          "label": "fd-autofill-system",
+          "tests": 3,
+          "success": true,
+          "seconds": 10.304490499896929,
+          "selector": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsStandardNativeLoginWithoutVerification,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillWithoutVerificationStillWorksAfterSessionLock,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#changedCredentialIsUsedOnTheNextRequestInsteadOfCachedValue"
+        },
+        {
+          "label": "fd-ime-system",
+          "tests": 1,
+          "success": true,
+          "seconds": 10.749425399815664,
+          "selector": "takagi.ru.monica.ime.MonicaImeSystemTest#selectedProjectAccountFillsItsOwnLatestPasswordInSystemForm"
+        },
+        {
+          "label": "fd-omk-seed",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 10.96597500005737,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#seedOriginalVault"
+        },
+        {
+          "label": "fd-omk-recover",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 10.499195500044152,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#reopenOriginalVault"
+        },
+        {
+          "label": "fd-omk-cold",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 8.500406800070778,
+          "selector": "takagi.ru.monica.security.MuMuOmkModuleFixtureTest#verifyAfterColdRestart"
+        }
+      ],
+      "release": {
+        "upgrade": {
+          "actualR8": true,
+          "sameCertificate": true,
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "oldSha256": "6e4f285f9d3a5a8a5f53f1e7c1e881bfd0f4456b0d5c7f8eb8b98084e40104ce",
+          "newSha256": "f78617ecf5e293a5570082ef650f96430f826574276fceb34c9063d6ca971764",
+          "unchangedBeforeFirstLaunch": true
+        },
+        "core": {
+          "edition": "fd",
+          "originalPassword": true,
+          "wrongPasswordRejected": true,
+          "oldRecordReadable": true,
+          "newRecordWrittenAndColdReadable": true,
+          "distinctColdProcesses": 2
+        },
+        "backup": {
+          "edition": "fd",
+          "originalPassword": true,
+          "wrongPasswordRejected": true,
+          "oldRecordReadable": true,
+          "newRecordWrittenAndColdReadable": true,
+          "passed": true,
+          "backupTimeoutMinutes": 5,
+          "immediateRestoredAndLoginVerified": true,
+          "backupRestoration": {
+            "items": 1,
+            "encryptedOldBackup": true,
+            "restoredRecordRead": true,
+            "newRecordRetained": true
+          },
+          "distinctColdProcesses": 3
+        },
+        "settings": {
+          "searchNavigation": true,
+          "wrongPasswordRejected": true,
+          "independentVerification": true,
+          "backupNavigation": true
+        },
+        "to-omk": {
+          "materialCases": [
+            {
+              "kind": "missing",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "invalid",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "revoked",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "unsupported",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            }
+          ],
+          "wrongPasswordRejected": true,
+          "cancelRetained": true,
+          "confirmedRecovery": true,
+          "oldRecordRead": true,
+          "newRecordWriteAndColdRead": true,
+          "distinctColdProcesses": 2
+        },
+        "to-system": {
+          "materialCases": [
+            {
+              "kind": "missing",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "invalid",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "revoked",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            },
+            {
+              "kind": "unsupported",
+              "noRecoveryAction": true,
+              "reasonVisible": true
+            }
+          ],
+          "wrongPasswordRejected": true,
+          "cancelRetained": true,
+          "confirmedRecovery": true,
+          "oldRecordRead": true,
+          "newRecordWriteAndColdRead": true,
+          "distinctColdProcesses": 2
+        }
+      }
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/java/takagi/ru/monica/security/RecoveryProtectionState.kt": "a17cf59a66d324d56c1a1b253bf2b55ee163b4dde1f7388d61bdba3b7db9ab95",
+    "app/src/main/java/takagi/ru/monica/security/LocalVaultRecovery.kt": "3c09a4033495e13c70198ae71e8398d776821d9d6dfff2d1cdb2c90340333581",
+    "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt": "8538b1ba0cb6b072ad1db1b3952c63ad85b4ad312353c1fa2fffa08983904049",
+    "app/src/main/java/takagi/ru/monica/security/SecurePreferencesStore.kt": "89afad26820db38938c8bd84da0f459fda350c49d34bde7d3e813f1116afc5eb",
+    "app/src/main/java/takagi/ru/monica/security/BackgroundRecoveryVerification.kt": "6bea781badb3fe1e18b1def4c1edd735baa221b2bde37065a9ce49e64ec5ed3c",
+    "app/src/main/java/takagi/ru/monica/ui/components/AuthComponents.kt": "9561aec1fbb39cc73ebefc0e9b0927a67eabb5f0182a0f7576378680ba0946a1",
+    "app/src/main/java/takagi/ru/monica/ui/components/RecoveryProtectionSetting.kt": "de9068c9d566fd35f7dd2037aadb84e21e16572bdec0011b10e1961289c778f0",
+    "app/src/main/java/takagi/ru/monica/ui/components/RecoveryProtectionDialog.kt": "f67cfd64d5de71b42a423a7d2a3ebdb870b4c9b53a681dee67f135a6a23ae66d",
+    "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt": "3fdcaa2754d65744ec2cf677e57cba5a9faea2d8decd6c5493f5b006e741e88e",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SecureStorageRecoveryScreen.kt": "bfb89452a5d93294edbed83af1cf8960ebf7c050a9a3de4104317662fd31296e",
+    "app/src/androidTest/java/takagi/ru/monica/security/LocalVaultRecoveryInstrumentedTest.kt": "449e24fc80b1e0e64e86b01ffc89d657577d286f654c7a3586fbf06eb03120f5",
+    "app/src/androidTest/java/takagi/ru/monica/security/RecoveryProtectionInstrumentedTest.kt": "7201f0d519da2f4b710475abecee99c27b04d9ffe2ae7e34482ba9a990f86948",
+    "app/src/androidTest/java/takagi/ru/monica/security/RecoveryProtectionUiTest.kt": "9d8bf953ea57a40b3c51fdc6182fb7510bca5a031f9796b2b709f69b928a4da9",
+    "app/src/androidTest/java/takagi/ru/monica/security/SecureStorageRecoveryUiTest.kt": "765b9a9854b77365c16a94cb8cfaac6b537360d41a81358fc5f61caa6745dcca",
+    "app/src/main/res/values/strings_recovery_protection.xml": "9306ac5580729e8481a7842b27328f87fbe539a97196461dd761f3aa9cb49188",
+    "app/src/main/res/values-b+lzh/strings_recovery_protection.xml": "e1eb514f83b65104abe607949b33334e5f560597a4baaf38d00cc3b37e5e428d",
+    "app/src/main/res/values-b+zh+Hant/strings_recovery_protection.xml": "e1eb514f83b65104abe607949b33334e5f560597a4baaf38d00cc3b37e5e428d",
+    "app/src/main/res/values-de/strings_recovery_protection.xml": "8643a0bed6b347d9715b49932ffcdaa0b1a6af3fa0f35f14db5ddc962ce072e5",
+    "app/src/main/res/values-es/strings_recovery_protection.xml": "dd4e8836df8a900092b58ed03dbabb54b698011374cf4d8e21454af8eac8d1f1",
+    "app/src/main/res/values-fr/strings_recovery_protection.xml": "a34025625cb027c9579a161ab76dc3807866c6132f5278aa3cbbd5ccb8bb455a",
+    "app/src/main/res/values-it/strings_recovery_protection.xml": "3faee0de2777c1e8d16f7fcdfae1ee271ffb0c5ab7c213c69fc8f44875ba80c2",
+    "app/src/main/res/values-ja/strings_recovery_protection.xml": "cac021b047abe9fab449cbf3a979ccb14f11b42edd5f4820feaaa314a3911dd5",
+    "app/src/main/res/values-ko/strings_recovery_protection.xml": "02bde54460c08dfa139e3da9a9d602423dc4640dac21ea9856d786534d350bac",
+    "app/src/main/res/values-pl/strings_recovery_protection.xml": "4d401e95f305aa410bafe5b56b8d83ad1fa88c3ea3e05c51144925a7e70e171c",
+    "app/src/main/res/values-pt/strings_recovery_protection.xml": "c4988963c31a0d7924fb3c98487854f94e3461e00e16001e322ef3b7fad61ca4",
+    "app/src/main/res/values-pt-rBR/strings_recovery_protection.xml": "c0e943e008b5905beb6f213ebd802ad3d77b9d6dee2ffefd7b45dec18c54889c",
+    "app/src/main/res/values-ru/strings_recovery_protection.xml": "ccd09d85f6f3f28f9cfc2dacfcbddf890ec4f80721bda1c5bc3225f4a67a6acb",
+    "app/src/main/res/values-vi/strings_recovery_protection.xml": "18c2befa3e99f6a34522c1aacc529d77ea1177f593370c6c8a1f8a3014819cbb",
+    "app/src/main/res/values-zh/strings_recovery_protection.xml": "dcddeff832912f2307f801bdf537705f3066e311f4aef869244d6bfc69d4d91f",
+    "app/src/main/res/values-zh-rCN/strings_recovery_protection.xml": "dcddeff832912f2307f801bdf537705f3066e311f4aef869244d6bfc69d4d91f",
+    "app/src/main/res/values-zh-rNY/strings_recovery_protection.xml": "dcddeff832912f2307f801bdf537705f3066e311f4aef869244d6bfc69d4d91f",
+    "app/src/main/res/values-zh-rXB/strings_recovery_protection.xml": "dcddeff832912f2307f801bdf537705f3066e311f4aef869244d6bfc69d4d91f",
+    "app/src/androidTest/java/takagi/ru/monica/security/BackgroundRecoveryVerificationTest.kt": "4ed9fb0776475c6e64793884002f69934c51e5b6e358a52e324c3f6d9690b6ac"
+  },
+  "compiledResources": {
+    "main": {
+      "count": 378,
+      "matches": true,
+      "build": "main06-final-tests"
+    },
+    "fd": {
+      "count": 378,
+      "matches": true,
+      "build": "fd02-final-tests"
+    }
+  },
+  "limitations": [
+    "MuMu Android35 x86_64 synthetic data; no user API37 ARM64/OEM/physical TEE coverage",
+    "Third-party OMK ba6f300 x86_64; keybox/seed unchanged",
+    "Old release329 is not proven identical to reported build329-26112012-93",
+    "Actual cryptographic biometric wrapper checks; physical fingerprint sensor not available",
+    "Three pre-existing JVM source guard failures reproduced against original HEAD",
+    "Unreadable XML expected error-code mismatch reproduced in unchanged baseline APK",
+    "Compose hierarchy failures in batches retained; relevant methods passed isolated runs",
+    "Slow/unavailable provider covered by deterministic fixtures; real OMK backend was not stopped",
+    "Optional background verification consumes bounded concurrency and CPU; no whole-device performance or battery guarantee",
+    "Release screenshots protected by FLAG_SECURE; tutorial images are actual Compose test component captures"
+  ],
+  "cleanup": {
+    "complete": true,
+    "originalScopeRestored": true,
+    "originalConfigHashesRestored": true,
+    "originalUsersPreserved": true,
+    "taskUsersRemoved": true,
+    "adbdShellRestored": true,
+    "taskInstanceStopped": true,
+    "originalInstanceStillRunning": true
+  },
+  "realProviderRouteEvidence": {
+    "lines": 382,
+    "destinations": {
+      "System": 328,
+      "Omk": 54
+    }
+  }
+}

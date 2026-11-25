@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-21",
+  "task": "omk-startup-missing-master-331",
+  "productionCodeChanged": false,
+  "newBuilds": 0,
+  "committed": false,
+  "pushed": false,
+  "suppliedDiagnostic": {
+    "version": "1.0.329-26112012-93",
+    "build": "e834a78751",
+    "api": 37,
+    "code": "MISSING_MASTER_KEY",
+    "phase": "PREFLIGHT",
+    "attempts": 1
+  },
+  "device": {
+    "api": 35,
+    "abi": "x86_64",
+    "emulator": "existing MuMu 1",
+    "omk": "third-party 1.3.5 (1-ba6f300-release)"
+  },
+  "oldReleaseIsExactUserBuild": false,
+  "apkSHA256": {
+    "main07-final/app.apk": "0b81d5c828ed7311cf6d193e2d1093a1bfe0f028975cb5d40ac9c1418a8e4c74",
+    "main07-final/test.apk": "e1aafba945781212feeb4e1665fa2fc82032244f95eefe36a227aaf93db040d9",
+    "fd03-final/app.apk": "8109f6e0b8129db3bada7a7cff03213a6dcbb77956ecd8b6176209ff8a05765f",
+    "fd03-final/test.apk": "482d10c8140ca92a3a2dc1e9f69a3f142f685c48f85473e7c6e0ef2b28e8ed1f",
+    "main08-release/app.apk": "a986c023d18719d6bb73b9dbc930a1f8cdfa102ead0ad6252fd4951140d8d22c",
+    "main329-release/app.apk": "7777430cb2d0b020204dae06d9b982157885b88c0608112b016f09b2e2ad3991"
+  },
+  "instrumentation": {
+    "passedStages": [
+      {
+        "log": "fd-omk-cold-corrected.txt",
+        "tests": 1
+      },
+      {
+        "log": "fd-omk-recover.txt",
+        "tests": 1
+      },
+      {
+        "log": "fd-seed-with.txt",
+        "tests": 1
+      },
+      {
+        "log": "fd-seed-without.txt",
+        "tests": 1
+      },
+      {
+        "log": "fd-system-cold.txt",
+        "tests": 1
+      },
+      {
+        "log": "fd-system-originals-restored.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-omk-cold-corrected.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-omk-recover.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-seed-with.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-seed-without.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-system-cold.txt",
+        "tests": 1
+      },
+      {
+        "log": "main-system-originals-restored.txt",
+        "tests": 1
+      }
+    ],
+    "excludedZeroTestRuns": [
+      {
+        "log": "fd-omk-cold.txt",
+        "tests": 0
+      },
+      {
+        "log": "main-omk-cold.txt",
+        "tests": 0
+      }
+    ],
+    "distinctMethodsPerEdition": 3
+  },
+  "release": {
+    "oldVersion": "1.0.329-26112012-95",
+    "newVersion": "1.0.331-26112112-71",
+    "samePackageAndTestSignature": true,
+    "clearedData": false,
+    "missingEnvelopeUpgradeStillBlocked": true,
+    "restoredOriginalRouteAndOriginalEnvelopePassed": true,
+    "wrongRecoveryPasswordRejected": true,
+    "passwordConfirmedRecoveryPassed": true,
+    "newWriteAndColdRead": {
+      "newWriteThroughUI": true,
+      "oldAndNewSecretColdReadThroughUI": true,
+      "originalPassword": true,
+      "coldPids": [
+        "41975",
+        "49266"
+      ]
+    },
+    "encryptedZipExported": true,
+    "zipImportTested": false
+  },
+  "findings": {
+    "missingMasterMeansCurrentRouteCannotFindAlias": true,
+    "missingRecoveryEnvelopeWasDeliberatelySimulated": true,
+    "omkDeletedUserRecoveryFileProven": false,
+    "actualUserRecoveryMaterialState": "unknown",
+    "routeOnlyWithMissingModernEnvelope": "SECURE_STORAGE_CHANGED",
+    "completeMaterialsAllowExistingRecovery": true,
+    "upgradeAloneCannotReplaceMissingKeyMaterial": true
+  },
+  "cleanup": {
+    "originalUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "removedTaskUsers": [
+      13,
+      14,
+      15
+    ],
+    "originalScopeAndConfigHashesRestored": true,
+    "packagesMatchBaseline": true,
+    "adbdUid": 2000,
+    "taskInstanceStopped": true,
+    "preexistingInstancePreserved": true,
+    "syntheticDataArchivedPrivately": true
+  },
+  "limitations": [
+    "API 37/ARM64 user device not tested",
+    "329-95 substitute, not exact user 329-93 APK",
+    "third-party OMK only",
+    "no new production fix",
+    "no ZIP import in this run"
+  ],
+  "repositories": {
+    "main": {
+      "head": "ec4f67bd70616d353604fe5bea62eaf3f005b5f4",
+      "effectiveTrackedChanges": [
+        ".gitignore"
+      ],
+      "priorDirtyFilesUnchanged": true
+    },
+    "fd": {
+      "head": "4864b6cedd04eebc3513ef65ca12bc731d83fab5",
+      "effectiveTrackedChanges": [],
+      "priorDirtyFilesUnchanged": true
+    }
+  }
+}

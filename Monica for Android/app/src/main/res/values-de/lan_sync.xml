@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Synchronisierung abgebrochen</string>
+    <string name="lan_completed">Beide Geräte haben die Synchronisierung abgeschlossen</string>
+    <string name="lan_confirming">Ich warte darauf, dass das andere Gerät die Änderungen übernommen hat …</string>
+    <string name="lan_conflicts">%1$d-Konflikte müssen in der Tresorverwaltung überprüft werden. Beide Versionen sind erhalten.</string>
+    <string name="lan_connect">Koppeln und synchronisieren</string>
+    <string name="lan_connecting">Kopplung wird überprüft…</string>
+    <string name="lan_copy_link">Kopplungslink kopieren</string>
+    <string name="lan_description">Synchronisieren Sie einen Tresor zwischen Telefonen und Computern im selben WLAN. Suchen Sie ein Gerät und geben Sie seinen Kopplungscode ein oder scannen Sie seinen QR-Code.</string>
+    <string name="lan_different_vault">Dies sind verschiedene Tresore. Wählen Sie auf beiden Geräten denselben Tresor aus oder erhalten Sie diesen Tresor als neuen.</string>
+    <string name="lan_discover">Finden Sie Geräte in der Nähe</string>
+    <string name="lan_discovering">Geräte finden…</string>
+    <string name="lan_expired">Kopplung abgelaufen. Erlauben Sie einem Gerät, erneut eine Verbindung herzustellen, um einen neuen Code zu erstellen.</string>
+    <string name="lan_external_blobs">Dieser Tresor referenziert Dateien, die außerhalb davon gespeichert sind. Für die Nearby-Synchronisierung müssen derzeit alle Anhänge im Tresor gespeichert werden.</string>
+    <string name="lan_failed">Die Synchronisierung wurde nicht abgeschlossen</string>
+    <string name="lan_failed_hint">Überprüfen Sie, ob beide Geräte noch mit demselben WLAN verbunden sind, und koppeln Sie sie dann erneut. Bereits festgeschriebene Änderungen bleiben erhalten.</string>
+    <string name="lan_host">Einem Gerät erlauben, eine Verbindung herzustellen</string>
+    <string name="lan_imported">Der empfangene Tresor wurde zur Tresorverwaltung hinzugefügt.</string>
+    <string name="lan_invalid_code">Der Kopplungscode ist ungültig oder stimmt nicht mehr überein. Holen Sie sich einen neuen Code vom anderen Gerät.</string>
+    <string name="lan_invitation_hint">Die Kopplung läuft nach 10 Minuten ab. Geben Sie diesen Code oder QR-Code nur an das Gerät weiter, mit dem Sie eine Verbindung herstellen möchten.</string>
+    <string name="lan_manage">Tresore verwalten</string>
+    <string name="lan_merging">Änderungen werden auf den Tresor angewendet…</string>
+    <string name="lan_new_vault_hint">Geben Sie für die erste Verbindung das Passwort des Quelltresors ein. Der empfangene Tresor wird separat hinzugefügt. Wählen Sie für spätere Synchronisierungen denselben Tresor auf beiden Geräten aus.</string>
+    <string name="lan_no_devices">Noch keine Geräte gefunden. Wählen Sie auf dem anderen Gerät „Verbindung eines Geräts zulassen“. Sie können auch den Kopplungslink scannen oder einfügen.</string>
+    <string name="lan_no_network">Es wurde keine lokale WLAN-Adresse gefunden.</string>
+    <string name="lan_pairing_autofilled">Kopplungscode und Link werden automatisch ausgefüllt. Tippen Sie auf „Koppeln und synchronisieren“, um fortzufahren.</string>
+    <string name="lan_pairing_code">Kopplungscode</string>
+    <string name="lan_pairing_needs_vault_password">Kopplungsinformationen werden automatisch ausgefüllt. Geben Sie das Passwort des Quelltresors für die erste Übertragung ein und tippen Sie dann auf „Koppeln und synchronisieren“.</string>
+    <string name="lan_paste_link">Kopplungslink</string>
+    <string name="lan_peer_failed">Das andere Gerät konnte die Änderungen nicht übernehmen. Überprüfen Sie es und versuchen Sie es erneut.</string>
+    <string name="lan_preparing">Verschlüsselte Tresordaten werden vorbereitet…</string>
+    <string name="lan_receive_new">Als neuen Tresor empfangen</string>
+    <string name="lan_scan">Scannen Sie den Pairing-Code QR</string>
+    <string name="lan_select_vault">Wählen Sie einen Tresor</string>
+    <string name="lan_title">Nearby-Synchronisierung</string>
+    <string name="lan_transferring">Verschlüsselte Daten werden übertragen…</string>
+    <string name="lan_unavailable">Die Nearby-Synchronisierung ist in diesem Build nicht verfügbar.</string>
+    <string name="lan_vault_failed">Der Tresor konnte nicht geöffnet oder zusammengeführt werden. Überprüfen Sie das Tresorkennwort und den verfügbaren Speicher und versuchen Sie es dann erneut.</string>
+    <string name="lan_vault_name">Name für den empfangenen Tresor</string>
+    <string name="lan_vault_password">Passwort des Quelltresors</string>
+    <string name="lan_waiting">Warten auf das andere Gerät…</string>
+</resources>

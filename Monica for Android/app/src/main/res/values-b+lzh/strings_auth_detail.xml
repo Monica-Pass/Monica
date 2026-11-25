@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">摹此刻之码</string>
+    <string name="auth_detail_copy_next">摹下一码</string>
+    <string name="auth_detail_qr_current">制二维码（此刻之码）</string>
+    <string name="auth_detail_qr_migrate">制二维码（迁移）</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_bytes">%1$d / %2$d KiB</string>
+    <string name="lan_cancelled">Synchronizacja anulowana</string>
+    <string name="lan_completed">Obydwa urządzenia zakończyły synchronizację</string>
+    <string name="lan_confirming">Oczekiwanie, aż drugie urządzenie zakończy stosowanie zmian…</string>
+    <string name="lan_conflicts">Konflikty %1$d wymagają przeglądu w zarządzaniu skarbcem. Obie wersje zostały zachowane.</string>
+    <string name="lan_connect">Sparuj i zsynchronizuj</string>
+    <string name="lan_connecting">Sprawdzanie parowania…</string>
+    <string name="lan_copy_link">Skopiuj link do parowania</string>
+    <string name="lan_description">Synchronizuj skarbiec między telefonami i komputerami w tej samej sieci Wi-Fi. Znajdź urządzenie i wprowadź jego kod parowania lub zeskanuj jego kod QR.</string>
+    <string name="lan_different_vault">To są różne skarbce. Wybierz ten sam skarbiec na obu urządzeniach lub odbierz ten skarbiec jako nowy.</string>
+    <string name="lan_discover">Znajdź urządzenia w pobliżu</string>
+    <string name="lan_discovering">Znajdowanie urządzeń…</string>
+    <string name="lan_expired">Parowanie wygasło. Zezwól urządzeniu na ponowne połączenie, aby utworzyć nowy kod.</string>
+    <string name="lan_external_blobs">Ten skarbiec odwołuje się do plików przechowywanych poza nim. Synchronizacja w pobliżu wymaga obecnie przechowywania wszystkich załączników w skarbcu.</string>
+    <string name="lan_failed">Synchronizacja nie została zakończona</string>
+    <string name="lan_failed_hint">Sprawdź, czy oba urządzenia są nadal podłączone do tej samej sieci Wi-Fi, a następnie sparuj ponownie. Już zatwierdzone zmiany zostaną zachowane.</string>
+    <string name="lan_host">Zezwól urządzeniu na połączenie</string>
+    <string name="lan_imported">Otrzymany skarbiec został dodany do zarządzania skarbcem.</string>
+    <string name="lan_invalid_code">Kod parowania jest nieprawidłowy lub już nie pasuje. Uzyskaj nowy kod z drugiego urządzenia.</string>
+    <string name="lan_invitation_hint">Parowanie wygasa po 10 minutach. Udostępnij ten kod lub kod QR tylko urządzeniu, z którym chcesz się połączyć.</string>
+    <string name="lan_manage">Zarządzaj skarbcami</string>
+    <string name="lan_merging">Stosowanie zmian w skarbcu…</string>
+    <string name="lan_new_vault_hint">W przypadku pierwszego połączenia wprowadź hasło skarbca źródłowego. Otrzymany skarbiec jest dodawany osobno. W przypadku późniejszych synchronizacji wybierz ten sam skarbiec na obu urządzeniach.</string>
+    <string name="lan_no_devices">Nie znaleziono jeszcze żadnych urządzeń. Na drugim urządzeniu wybierz „Zezwól urządzeniu na połączenie”. Możesz także zeskanować lub wkleić link do parowania.</string>
+    <string name="lan_no_network">Nie znaleziono lokalnego adresu Wi-Fi.</string>
+    <string name="lan_pairing_autofilled">Kod parowania i link wypełniane automatycznie. Kliknij Paruj i synchronizuj, aby kontynuować.</string>
+    <string name="lan_pairing_code">Kod parowania</string>
+    <string name="lan_pairing_needs_vault_password">Informacje o parowaniu wypełniane automatycznie. Wprowadź hasło skarbca źródłowego dla pierwszego transferu, a następnie stuknij opcję Połącz i zsynchronizuj.</string>
+    <string name="lan_paste_link">Link do parowania</string>
+    <string name="lan_peer_failed">Drugie urządzenie nie mogło zastosować zmian. Sprawdź i spróbuj ponownie.</string>
+    <string name="lan_preparing">Przygotowywanie zaszyfrowanych danych skarbca…</string>
+    <string name="lan_receive_new">Odbierz jako nowy skarbiec</string>
+    <string name="lan_scan">Zeskanuj kod parowania QR</string>
+    <string name="lan_select_vault">Wybierz skarbiec</string>
+    <string name="lan_title">Synchronizacja w pobliżu</string>
+    <string name="lan_transferring">Przesyłanie zaszyfrowanych danych…</string>
+    <string name="lan_unavailable">Synchronizacja w pobliżu jest niedostępna w tej kompilacji.</string>
+    <string name="lan_vault_failed">Nie można otworzyć ani połączyć skarbca. Sprawdź hasło skarbca i dostępną pamięć, a następnie spróbuj ponownie.</string>
+    <string name="lan_vault_name">Nazwa otrzymanego skarbca</string>
+    <string name="lan_vault_password">Hasło skarbca źródłowego</string>
+    <string name="lan_waiting">Oczekiwanie na drugie urządzenie…</string>
+</resources>

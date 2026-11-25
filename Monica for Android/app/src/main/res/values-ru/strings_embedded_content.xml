@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_card">Копировать карточку</string>
+    <string name="embedded_copy_document">Копировать документ</string>
+    <string name="embedded_copy_failed">Копия содержимого неполная</string>
+    <string name="embedded_copy_failed_message">%1$s не удалось скопировать полностью. Ваш исходный код и черновик сохраняются. Убедитесь, что исходная база данных разблокирована и доступны вложения, затем повторите попытку.</string>
+    <string name="embedded_copy_independent">Независимая копия · Вложения %1$d</string>
+    <string name="embedded_copy_note">Копировать заметку</string>
+    <string name="embedded_copy_working">Копирование всего содержимого…</string>
+    <string name="password_content_document">Документ личности</string>
+    <string name="password_content_document_description">Поля удостоверения личности, лицевая сторона карты, фотографии и вложения</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Keamanan</string>
+    <string name="bitwarden_settings_queue_hint">Lihat perubahan yang tertunda dan masalah sinkronisasi</string>
+    <string name="bitwarden_account_web_settings_hint">Kelola kata sandi utama Anda, login dua langkah, dan berlangganan di web</string>
+    <string name="bitwarden_settings_select_account">Tetapkan sebagai rekening giro</string>
+    <string name="bitwarden_settings_account_management">Manajemen akun</string>
+    <string name="bitwarden_queue_help">Menampilkan perubahan lokal yang menunggu sinkronisasi dan hasil dari upaya terakhir. Daftar kosong tidak mengonfirmasi bahwa server mutakhir.</string>
+    <string name="bitwarden_queue_empty_local">Tidak ada perubahan lokal yang menunggu sinkronisasi.</string>
+    <string name="bitwarden_queue_locked">Buka kunci akun ini untuk melihat item yang tertunda.</string>
+    <string name="bitwarden_queue_loading_error">Tidak dapat membaca item yang tertunda. Buka kembali halaman ini untuk mencoba lagi.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Menunggu konfirmasi server</string>
+    <string name="bitwarden_queue_idle">Tidak ada tugas sinkronisasi yang berjalan</string>
+</resources>

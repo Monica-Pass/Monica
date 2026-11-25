@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.PortableTotpBackupCodecTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-25T09:49:21.042Z" hostname="JOYIN" time="0.004">
+  <properties/>
+  <testcase name="rejects an unreadable nested secret" classname="takagi.ru.monica.utils.PortableTotpBackupCodecTest" time="0.002"/>
+  <testcase name="decrypts a whole encrypted TOTP payload" classname="takagi.ru.monica.utils.PortableTotpBackupCodecTest" time="0.001"/>
+  <testcase name="decrypts nested TOTP and Steam sensitive fields without dropping metadata" classname="takagi.ru.monica.utils.PortableTotpBackupCodecTest" time="0.001"/>
+  <testcase name="preserves legacy plaintext secret payloads" classname="takagi.ru.monica.utils.PortableTotpBackupCodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

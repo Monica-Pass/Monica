@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Pindai autentikator atau kode sandi QR</string>
+    <string name="qr_credentials_invalid">Ini bukan pengautentikasi atau kode sandi QR yang didukung</string>
+    <string name="qr_multiple_codes">Beberapa kode QR terdeteksi. Tunjuk satu kode saja.</string>
+</resources>

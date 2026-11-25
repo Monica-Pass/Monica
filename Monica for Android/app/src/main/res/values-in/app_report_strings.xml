@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_report_title">Diagnostik daftar aplikasi Monica</string>
+    <string name="app_report_generated">Dihasilkan: %1$s</string>
+    <string name="app_report_brand">Merek perangkat: %1$s</string>
+    <string name="app_report_model">Model perangkat: %1$s</string>
+    <string name="app_report_android">versi Android: %1$s (API %2$d)</string>
+    <string name="app_report_summary">Ringkasan</string>
+    <string name="app_report_total">Total aplikasi: %1$d</string>
+    <string name="app_report_user_count">Aplikasi pengguna: %1$d</string>
+    <string name="app_report_system_count">Aplikasi sistem: %1$d (diperbarui: %2$d)</string>
+    <string name="app_report_visible_percent">Terlihat: %1$d (%2$s%%)</string>
+    <string name="app_report_hidden_percent">Tersembunyi: %1$d (%2$s%%)</string>
+    <string name="app_report_filter_health">Pemeriksaan filter: %1$s</string>
+    <string name="app_report_filter_loose">Filter mungkin menyembunyikan terlalu sedikit komponen sistem</string>
+    <string name="app_report_filter_strict">Filter mungkin menyembunyikan aplikasi yang berguna</string>
+    <string name="app_report_filter_good">Filter tampak seimbang</string>
+    <string name="app_report_visible_apps">Aplikasi yang terlihat: %1$d</string>
+    <string name="app_report_user_apps">Aplikasi yang dipasang pengguna: %1$d</string>
+    <string name="app_report_system_apps">Aplikasi sistem: %1$d</string>
+    <string name="app_report_more_apps">Aplikasi tambahan: %1$d</string>
+    <string name="app_report_hidden_components">Komponen sistem tersembunyi: %1$d</string>
+    <string name="app_report_hidden_feedback">Jika aplikasi berguna disembunyikan, sertakan nama paketnya dalam masukan Anda.</string>
+    <string name="app_report_android_core">inti Android</string>
+    <string name="app_report_android_system">sistem Android</string>
+    <string name="app_report_google_services">layanan Google</string>
+    <string name="app_report_chip_vendor">Komponen vendor chip</string>
+    <string name="app_report_other">Komponen lainnya</string>
+    <string name="app_report_more_components">Komponen tambahan: %1$d</string>
+    <string name="app_report_all_apps">Daftar aplikasi lengkap: %1$d</string>
+    <string name="app_report_format">Format: [status] nama aplikasi</string>
+    <string name="app_report_package_type">Nama paket · Ketik</string>
+    <string name="app_report_unknown_app">Aplikasi tidak dikenal</string>
+    <string name="app_report_user_app">Aplikasi pengguna</string>
+    <string name="app_report_system_app">Aplikasi sistem</string>
+    <string name="app_report_updated_system_app">Aplikasi sistem diperbarui</string>
+    <string name="app_report_filter_rules">Aturan filter aplikasi</string>
+    <string name="app_report_rule_count">Aturan filter: %1$d</string>
+    <string name="app_report_rules_feedback">Untuk menyarankan perubahan pada filter, kunjungi:</string>
+    <string name="app_report_complete">Laporan selesai</string>
+    <string name="app_report_hidden_count">Aplikasi tersembunyi: %1$d</string>
+    <string name="app_report_path">Jalur berkas:</string>
+</resources>

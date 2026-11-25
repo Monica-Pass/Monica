@@ -1,8 +1,11 @@
 package takagi.ru.monica.bitwarden.ui
 
+import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
+
+import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -41,7 +44,7 @@ internal fun BitwardenSettingRow(
     onClick: (() -> Unit)? = null
 ) {
     val actionModifier = when {
-        checked != null && onCheckedChange != null -> Modifier.toggleable(
+        checked != null && onCheckedChange != null -> Modifier.hapticSwitchToggleable(
             value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange
         )
         onClick != null -> Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)

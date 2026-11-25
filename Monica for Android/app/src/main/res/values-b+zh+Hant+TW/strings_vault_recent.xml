@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_sort_recent_desc">最近變動</string>
+    <string name="vault_overview_recent">最近</string>
+    <string name="vault_overview_recent_empty">暫無最近項目</string>
+</resources>

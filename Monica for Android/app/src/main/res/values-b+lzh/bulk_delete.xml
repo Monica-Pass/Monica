@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">删除未竟</string>
+    <string name="batch_delete_interrupted_count">共 %2$d 项，已办 %1$d 项而中断。重试前请查余项。</string>
+</resources>

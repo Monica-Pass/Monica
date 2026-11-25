@@ -15,4 +15,19 @@
     <string name="manager_failure_changed">Los datos cambiaron o falló la verificación. Se conserva el origen. Actualice ambos paneles y revise el destino antes de reintentar.</string>
     <string name="manager_failure_locked">Base de datos bloqueada o archivo original no disponible. Ábrala desde los ajustes y actualice este panel.</string>
     <string name="manager_failure_general">La operación no terminó. Revise ambos paneles y los detalles: puede haber copias parciales en el destino.</string>
+    <string name="manager_clear_selection">Borrar selección</string>
+    <string name="manager_copy_left">← Copiar</string>
+    <string name="manager_copy_right">Copiar →</string>
+    <string name="manager_focused_location">Activo: %1$s · %2$s</string>
+    <string name="manager_focused_selection">Activo: %1$s · %2$d seleccionado</string>
+    <string name="manager_history_back">Volver</string>
+    <string name="manager_history_forward">Adelante</string>
+    <string name="manager_left_pane">Panel izquierdo</string>
+    <string name="manager_move_left">← Mover</string>
+    <string name="manager_move_right">Mover →</string>
+    <string name="manager_new_folder_short">Nueva carpeta</string>
+    <string name="manager_open_item">Abrir</string>
+    <string name="manager_parent">Arriba</string>
+    <string name="manager_right_pane">Panel derecho</string>
+    <string name="manager_switch_pane">Cambiar panel</string>
 </resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_message_empty">匯出的備份檔案為空</string>
+    <string name="export_message_empty_zip">ZIP 備份沒有內容</string>
+    <string name="export_message_open_failed">無法開啟匯出目標檔案</string>
+    <string name="export_message_incomplete">匯出檔案寫入不完整：%1$d/%2$d 字節</string>
+    <string name="export_message_invalid_encrypted">寫入後的備份加密格式無效</string>
+    <string name="export_message_verify_failed">無法校驗匯出的檔案</string>
+    <string name="export_message_backup_summary">已匯出備份：%1$d 個密碼、%2$d 張圖片</string>
+    <string name="import_message_aegis_unencrypted">此匯入方式需要未加密的 Aegis JSON 匯出檔案</string>
+    <string name="import_message_aegis_missing">Aegis 檔案無效：缺少 %1$s</string>
+    <string name="import_message_aegis_empty_slots">Aegis 檔案無效：slots 為空</string>
+    <string name="import_message_aegis_slot_type">不支援的 Aegis slot 類型：%1$s</string>
+    <string name="import_message_aegis_no_totp">Aegis 檔案中未找到有效的 TOTP 條目</string>
+    <string name="import_message_aegis_failed">無法匯入 Aegis 檔案：%1$s</string>
+    <string name="import_message_key_length">解密後的金鑰長度無效</string>
+    <string name="import_message_steam_missing">Steam Guard 資料無效：缺少 %1$s</string>
+    <string name="import_message_steam_device_id">裝置 ID 無效，格式應為 android:xxxx</string>
+    <string name="import_message_steam_secret">Steam shared_secret 格式無效</string>
+    <string name="import_message_steam_exists">此 Steam Guard 驗證器已存在</string>
+    <string name="export_message_empty_mafile">匯出的 maFile 為空</string>
+    <string name="crypto_message_encrypt_failed">加密失敗：%1$s</string>
+    <string name="crypto_message_decrypt_failed">解密失敗：%1$s</string>
+    <string name="crypto_message_file_too_small">加密檔案過小，可能已損壞</string>
+    <string name="crypto_message_invalid_file">加密檔案格式無效</string>
+    <string name="crypto_message_password_or_corrupt">密碼錯誤或加密資料已損壞</string>
+    <string name="crypto_message_invalid_text">加密文字格式無效</string>
+    <string name="photo_message_camera_failed">無法開啟相機：%1$s</string>
+    <string name="photo_message_gallery_missing">沒有可用的圖庫應用程式</string>
+    <string name="photo_message_gallery_failed">無法開啟圖庫：%1$s</string>
+    <string name="photo_message_data_failed">無法讀取返回的圖片：%1$s</string>
+    <string name="photo_message_file_missing">照片檔案為空或不存在</string>
+    <string name="photo_message_not_selected">未選擇圖片</string>
+</resources>

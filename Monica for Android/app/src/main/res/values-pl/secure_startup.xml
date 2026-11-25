@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_description">Android nie może obecnie zweryfikować zaszyfrowanych ustawień tej instalacji. Normalne uruchamianie zostało zatrzymane. Monica nie wyczyścił ustawień ani nie wymienił kluczy.</string>
+    <string name="secure_startup_diagnostic">Skopiuj informacje diagnostyczne</string>
+    <string name="secure_startup_environment">Jeśli zaczęło się to po przywróceniu danych aplikacji, flashowaniu pamięci ROM lub modyfikacji systemu, sprawdź, czy można przywrócić oryginalny system i kluczowe środowisko. Sam ten błąd nie pozwala ustalić przyczyny.</string>
+    <string name="secure_startup_no_reset">Nie usuwaj danych aplikacji ani nie odinstaluj Monica. Zachowaj oryginalne pliki. Jeśli masz kopię zapasową wyeksportowaną za pomocą Monica, sprawdź ją w innej instalacji. Trwale utraconego klucza systemowego nie można odtworzyć poprzez ponowną próbę.</string>
+    <string name="secure_startup_preserved">Istniejące dane zostały zachowane</string>
+    <string name="secure_startup_restart">Uruchom ponownie telefon, odblokuj go przy użyciu danych uwierzytelniających blokadę ekranu systemu, a następnie spróbuj ponownie.</string>
+    <string name="secure_startup_retry">Ponów</string>
+    <string name="secure_startup_title">Bezpieczne przechowywanie jest niedostępne</string>
+</resources>

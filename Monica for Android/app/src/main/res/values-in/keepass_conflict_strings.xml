@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_conflict_review">Tinjau dan gabungkan</string>
+    <string name="keepass_conflict_banner_title">Perubahan perlu digabungkan</string>
+    <string name="keepass_conflict_banner_summary">Tinjau kedua versi untuk melanjutkan sinkronisasi.</string>
+    <string name="keepass_conflict_merge_sync">Gabungkan dan sinkronkan</string>
+    <string name="keepass_conflict_comparing">Membandingkan kedua versi…</string>
+    <string name="keepass_conflict_merging">Menggabungkan dan menyinkronkan…</string>
+    <string name="keepass_conflict_refresh">Segarkan perbandingan</string>
+    <string name="keepass_conflict_merge_help">Perubahan pada entri atau bidang berbeda digabungkan. Pilih versi ketika bidang yang sama diubah di kedua sisi.</string>
+    <string name="keepass_conflict_auto_merge">Siap digabungkan</string>
+    <string name="keepass_conflict_other_options">Opsi lainnya</string>
+    <string name="keepass_conflict_recovery_hint">Versi asli disimpan dalam salinan pemulihan basis data.</string>
+    <string name="keepass_conflict_keep_local_confirm">Ganti database jarak jauh dengan seluruh versi lokal? Perubahan yang hanya dilakukan secara jarak jauh akan tetap ada dalam salinan pemulihan.</string>
+    <string name="keepass_conflict_use_remote_confirm">Ganti database lokal dengan seluruh versi jarak jauh? Perubahan lokal saja akan tetap ada dalam salinan pemulihan.</string>
+    <string name="keepass_conflict_selected_count">%1$d dari %2$d konflik dipilih</string>
+    <string name="keepass_conflict_no_changes">Kedua versi berisi data yang sama.</string>
+    <string name="keepass_conflict_protected_value">Nilai yang dilindungi</string>
+    <string name="keepass_conflict_properties_value">Properti dari versi ini</string>
+    <string name="keepass_conflict_kind_entry">Masuk</string>
+    <string name="keepass_conflict_kind_group">Folder</string>
+    <string name="keepass_conflict_kind_metadata">Pengaturan basis data</string>
+    <string name="keepass_conflict_kind_deleted_object">Penghapusan catatan</string>
+    <string name="keepass_conflict_kind_binary">Lampiran</string>
+    <string name="keepass_conflict_kind_icon">Ikon khusus</string>
+    <string name="keepass_conflict_change_added">Ditambahkan</string>
+    <string name="keepass_conflict_change_modified">Berubah</string>
+    <string name="keepass_conflict_change_moved">Pindah</string>
+    <string name="keepass_conflict_change_deleted">Dihapus</string>
+    <string name="keepass_conflict_change_unchanged">Tidak berubah</string>
+</resources>
