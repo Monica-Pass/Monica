@@ -1,0 +1,44 @@
+{
+  "edition": "main",
+  "feedbackStorageConfirmed": "KeePass on WebDAV",
+  "methods": {
+    "completedMethodPasses": 2,
+    "completedMethodFailures": 0,
+    "edition": "main",
+    "selector": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName,takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName",
+    "tests": 2,
+    "failures": 0,
+    "success": true,
+    "seconds": 12.53187700000126
+  },
+  "productionSourceUnchanged": {
+    "onlyTestFileChanged": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/NativeMultivaultPickerUiTest.kt",
+    "allProductionSourcePreserved": true,
+    "originalSevenFixedProductionHashesPreserved": true,
+    "testSha256": "08255eb186eae4edafc58375ceba5040cb01ad1309918b8ef4c2045aa8f086e7"
+  },
+  "cleanup": {
+    "success": true,
+    "removedOnlyOwnedUser": 10,
+    "removedOwnPackages": [
+      "takagi.ru.monica.issue189fd33120261125.bindingsdebug.test",
+      "takagi.ru.monica.issue189main33120261125.bindingsdebug",
+      "takagi.ru.monica.issue189fd33120261125.bindingsdebug",
+      "takagi.ru.monica.issue189main33120261125.bindingsdebug.test"
+    ],
+    "restoredOriginalUser": 0,
+    "adbdRemainedUid2000": true,
+    "stoppedOnlyTaskStartedMuMu": 2,
+    "stoppedOwnAdbPort": 15073,
+    "otherInstancesUnchanged": true,
+    "configurationAndDataDisksPreserved": true
+  },
+  "firstMainFixtureFailures": 2,
+  "activityAndDatasetVerified": true,
+  "newWebdavCompleteSystemEntryVerified": false,
+  "syntheticWebdavOnly": true,
+  "oldRelatedDistinctDeviceMethods": 23,
+  "combinedRelatedDistinctDeviceMethods": 25,
+  "previousJVMMethodsNotRerun": 53,
+  "noNewReleaseBuildOrCommitPush": true
+}

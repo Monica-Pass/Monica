@@ -434,6 +434,13 @@ class FillResponseBuilderNg(
         val args = AutofillPickerActivityV2.Args(
             applicationId = request.packageName,
             webDomain = webDomain,
+            webScheme = request.webScheme,
+            isWebView = request.isWebView,
+            // This picker reads the active source after verification. Framework IDs
+            // only describe candidates readable before that verification.
+            refreshLoginSuggestions = request.partition.views.any {
+                it is AutofillView.Login && it.data.hint != FieldHint.NEW_PASSWORD
+            },
             interactionIdentifier = request.interactionIdentifier,
             interactionIdentifierAliases = ArrayList(request.interactionIdentifierAliases),
             autofillIds = ArrayList(fillableAutofillIds),

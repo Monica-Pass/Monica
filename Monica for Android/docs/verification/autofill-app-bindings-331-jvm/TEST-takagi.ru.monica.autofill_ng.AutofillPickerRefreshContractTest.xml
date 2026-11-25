@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.autofill_ng.AutofillPickerRefreshContractTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-24T20:25:04.328Z" hostname="JOYIN" time="3.875">
+  <properties/>
+  <testcase name="builderEnablesRefreshForLoginEvenWithNoReadableFrameworkCandidates" classname="takagi.ru.monica.autofill_ng.AutofillPickerRefreshContractTest" time="3.489"/>
+  <testcase name="newContextChangesRequestIdentityAndRoundTripsThroughBundle" classname="takagi.ru.monica.autofill_ng.AutofillPickerRefreshContractTest" time="0.041"/>
+  <testcase name="newPasswordAndStructuredRequestsRetainAuthoritativeEmptyLists" classname="takagi.ru.monica.autofill_ng.AutofillPickerRefreshContractTest" time="0.09"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -784,6 +784,8 @@ class MonicaAutofillServiceNg : AutofillService() {
         val response = bwCompatProcessor.process(
             packageName = packageName,
             uri = requestUri,
+            isWebView = parsed.webView,
+            webScheme = parsed.webScheme,
             fillableTargets = fillableTargets,
             inlineRequest = inlineRequest,
             isCompatMode = isCompatMode,

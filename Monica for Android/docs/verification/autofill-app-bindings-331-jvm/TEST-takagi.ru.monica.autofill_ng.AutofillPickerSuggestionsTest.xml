@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-24T20:30:57.566Z" hostname="JOYIN" time="4.847">
+  <properties/>
+  <testcase name="exactDomainSettingDoesNotFallBackToSiblingWebsite" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="3.797"/>
+  <testcase name="refreshedResultsCannotBypassExplicitUrlRules" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.067"/>
+  <testcase name="activeSelectionWinsWhilePersistedDefaultIsStillOld" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.073"/>
+  <testcase name="domainlessBrowserAndContextlessPickerDoNotGuessAnAccount" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.051"/>
+  <testcase name="nextOpenSeesBindingAddedAndRemoved" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.061"/>
+  <testcase name="refreshedDomainlessWebViewCannotGuessBindingsButLocalFileCanUseExactBinding" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.056"/>
+  <testcase name="refreshedWebOriginAndDisabledMatchingKeepTheirRestrictions" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.056"/>
+  <testcase name="explicitFrameworkResultsPreserveOrderAndEmptyScope" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.063"/>
+  <testcase name="suppliedIdsStayOrderedAndCannotEscapeActiveMdbxScope" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.045"/>
+  <testcase name="refreshedLoginRematchesOnlyTheActiveSource" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.043"/>
+  <testcase name="manualPickerUsesBoundPackageAndWebsite" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.046"/>
+  <testcase name="disabledMatchingAndDefaultSourceAreRespected" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.072"/>
+  <testcase name="refreshedLoginIncludesPostAuthCandidatesAndPreservesExistingOrder" classname="takagi.ru.monica.autofill_ng.AutofillPickerSuggestionsTest" time="0.054"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

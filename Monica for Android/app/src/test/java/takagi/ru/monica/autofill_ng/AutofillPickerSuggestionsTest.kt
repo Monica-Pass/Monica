@@ -95,6 +95,41 @@ class AutofillPickerSuggestionsTest {
     private suspend fun suggestions(values: List<PasswordEntry>, args: AutofillPickerActivityV2.Args) =
         AutofillPickerSuggestions.load(values, args, preferences, null).map { it.id }
 
+    @Test fun refreshedLoginIncludesPostAuthCandidatesAndPreservesExistingOrder(): Unit = runBlocking {
+        val request = native.copy(suggestedPasswordIds = longArrayOf(1, 1), refreshLoginSuggestions = true)
+        assertEquals(listOf(1L, 2L), suggestions(entries, request))
+        assertEquals(listOf(2L), suggestions(entries, request.copy(suggestedPasswordIds = longArrayOf())))
+    }
+
+    @Test fun refreshedLoginRematchesOnlyTheActiveSource(): Unit = runBlocking {
+        val values = listOf(entries[1].copy(id = -20, mdbxDatabaseId = 81),
+            entries[1].copy(id = -21, mdbxDatabaseId = 82))
+        val request = native.copy(suggestedPasswordIds = longArrayOf(-20), refreshLoginSuggestions = true)
+        assertEquals(listOf(-21L), AutofillPickerSuggestions.load(values, request, preferences, null,
+            activeScope = AutofillScope.Mdbx(82)).map { it.id })
+    }
+
+    @Test fun refreshedDomainlessWebViewCannotGuessBindingsButLocalFileCanUseExactBinding(): Unit = runBlocking {
+        val request = native.copy(suggestedPasswordIds = longArrayOf(), refreshLoginSuggestions = true, isWebView = true)
+        assertEquals(emptyList<Long>(), suggestions(entries, request))
+        assertEquals(listOf(2L), suggestions(entries, request.copy(webScheme = "file")))
+        assertEquals(emptyList<Long>(), suggestions(entries, request.copy(applicationId = "com.android.chrome", webScheme = "file")))
+    }
+
+    @Test fun refreshedWebOriginAndDisabledMatchingKeepTheirRestrictions(): Unit = runBlocking {
+        val request = web.copy(suggestedPasswordIds = longArrayOf(), refreshLoginSuggestions = true, isWebView = true)
+        assertEquals(listOf(1L), suggestions(entries, request))
+        preferences.setDomainMatchStrategy(DomainMatchStrategy.NEVER)
+        assertEquals(emptyList<Long>(), suggestions(entries, request))
+    }
+
+    @Test fun refreshedResultsCannotBypassExplicitUrlRules(): Unit = runBlocking {
+        val request = web.copy(suggestedPasswordIds = longArrayOf(), refreshLoginSuggestions = true)
+        val rules = mapOf(1L to listOf(takagi.ru.monica.data.model.PasswordUrlRules.Rule(
+            entries[0].website, takagi.ru.monica.data.model.PasswordUrlRules.Mode.NEVER)))
+        assertTrue(AutofillPickerSuggestions.load(entries, request, preferences, null, urlRules = rules).isEmpty())
+    }
+
     private fun entry(id: Long, website: String, app: String = "") =
         PasswordEntry(id = id, title = "Synthetic $id", website = website, appPackageName = app,
             username = "synthetic", password = "synthetic")

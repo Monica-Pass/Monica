@@ -20,6 +20,8 @@ sealed class AutofillRequest {
         val interactionIdentifierAliases: List<String> = emptyList(),
         val preferDirectAutoFill: Boolean = false,
         val saveEnabled: Boolean = true,
+        val isWebView: Boolean = false,
+        val webScheme: String? = null,
     ) : AutofillRequest()
 
     data object Unfillable : AutofillRequest()

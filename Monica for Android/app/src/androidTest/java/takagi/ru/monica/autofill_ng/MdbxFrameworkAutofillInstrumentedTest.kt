@@ -277,6 +277,43 @@ class MdbxFrameworkAutofillInstrumentedTest {
         assertNoRoomChanges()
     }
 
+    @Test fun coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(): Unit = runBlocking {
+        val original = nativeState()
+        enableFramework()
+        // No scoped grant exists: the service cannot read native records yet.
+        assertFalse(AutofillSessionGrants.isGranted(AutofillGrantContext(fixturePackage, null, null, null)))
+        openForm(0)
+        focusForm()
+        tap(waitText(uiStrings.getString(R.string.autofill_manual_entry_title)))
+        verifyMasterPassword()
+        waitText(uiStrings.getString(R.string.autofill_suggested_fill))
+        waitText(title(0))
+        hideResumedPickerIme()
+        assertTrue(ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK))
+        expectForm("user=EMPTY password=EMPTY")
+        assertEquals(original, nativeState())
+        assertNoRoomChanges()
+    }
+
+    @Test fun pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(): Unit = runBlocking {
+        val original = nativeState()
+        val label = context.packageManager.getApplicationLabel(context.packageManager.getApplicationInfo(fixturePackage, 0)).toString()
+        check(label.isNotBlank() && !fixturePackage.contains(label, ignoreCase = true))
+        ActivityScenario.launch<AutofillPickerActivityV2>(pickerIntent()).use {
+            verifyMasterPassword()
+            val search = waitNode { it.packageName?.toString() == context.packageName && it.isEditable && !it.isPassword }
+            assertTrue(search.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
+                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "  $label  ")
+            }))
+            waitNode { it.packageName?.toString() == context.packageName && it.text?.toString() == title(0) }
+            // Wait until the debounced search has completed, so the initial list cannot pass.
+            Thread.sleep(600)
+            waitText(title(0))
+        }
+        assertEquals(original, nativeState())
+        assertNoRoomChanges()
+    }
+
     private fun authenticatePickerForFixture() {
         ActivityScenario.launch<AutofillPickerActivityV2>(pickerIntent()).use {
             verifyMasterPassword()

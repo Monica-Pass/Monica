@@ -39,8 +39,10 @@ class AutofillProcessorNg(
         checkCancelled: () -> Unit = {},
         autoLockTimeoutMinutes: Int? = null,
         nativeSelections: Map<Long, NativeAutofillSelection> = emptyMap(),
+        isWebView: Boolean = false,
+        webScheme: String? = null,
     ): FillResponse? {
-        val request = parser.parse(
+        val parsedRequest = parser.parse(
             packageName = packageName,
             uri = uri,
             fillableTargets = fillableTargets,
@@ -51,7 +53,8 @@ class AutofillProcessorNg(
             saveEnabled = saveEnabled,
         )
 
-        if (request !is AutofillRequest.Fillable) return null
+        if (parsedRequest !is AutofillRequest.Fillable) return null
+        val request = parsedRequest.copy(isWebView = isWebView, webScheme = webScheme)
 
         val filledData = filledDataBuilder.build(
             request = request,

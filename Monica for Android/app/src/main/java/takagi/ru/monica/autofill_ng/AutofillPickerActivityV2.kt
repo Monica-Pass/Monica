@@ -189,6 +189,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                     putString("application_id", args.applicationId)
                     putString("web_domain", args.webDomain)
                     putString("web_scheme", args.webScheme)
+                    putBoolean("web_view", args.isWebView)
+                    putBoolean("refresh_login_suggestions", args.refreshLoginSuggestions)
                     putString("interaction_id", args.interactionIdentifier)
                     putStringArrayList("aliases", args.interactionIdentifierAliases)
                     putString("captured_username", args.capturedUsername)
@@ -214,6 +216,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                     applicationId = bundle.getString("application_id"),
                     webDomain = bundle.getString("web_domain"),
                     webScheme = bundle.getString("web_scheme"),
+                    isWebView = bundle.getBoolean("web_view", false),
+                    refreshLoginSuggestions = bundle.getBoolean("refresh_login_suggestions", false),
                     interactionIdentifier = bundle.getString("interaction_id"),
                     interactionIdentifierAliases = bundle.getStringArrayList("aliases"),
                     capturedUsername = bundle.getString("captured_username"),
@@ -307,6 +311,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         val saveEnabled: Boolean = false,
         val saveCompatMode: Boolean = false,
         val rememberLastFilled: Boolean = true,
+        val isWebView: Boolean = false,
+        val refreshLoginSuggestions: Boolean = false,
     ) : Parcelable {
         internal fun isSameRequestAs(other: Args): Boolean =
             applicationId == other.applicationId && webDomain == other.webDomain && webScheme == other.webScheme &&
@@ -316,7 +322,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                 suggestedPasswordIds.contentEquals(other.suggestedPasswordIds) &&
                 fieldSignatureKey == other.fieldSignatureKey && responseAuthMode == other.responseAuthMode &&
                 isSaveMode == other.isSaveMode && saveEnabled == other.saveEnabled &&
-                saveCompatMode == other.saveCompatMode && rememberLastFilled == other.rememberLastFilled
+                saveCompatMode == other.saveCompatMode && rememberLastFilled == other.rememberLastFilled &&
+                isWebView == other.isWebView && refreshLoginSuggestions == other.refreshLoginSuggestions
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -1766,6 +1773,7 @@ private data class AutofillPickerLoadedData(
     val suggestedPasswords: List<PasswordEntry>,
     val allPasswords: List<PasswordEntry>,
     val displayUsernames: Map<Long, String>,
+    val searchAppLabels: Map<Long, List<String>>,
     val allBankCards: List<SecureItem>,
     val allDocuments: List<SecureItem>,
     val allBillingAddresses: List<SecureItem>
@@ -1827,6 +1835,7 @@ private fun AutofillPickerContent(
     var unavailableMdbxDatabases by remember(loadScopeToken) { mutableStateOf<Set<Long>>(emptySet()) }
     var allPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
     var displayUsernames by remember(loadScopeToken) { mutableStateOf<Map<Long, String>>(emptyMap()) }
+    var searchAppLabels by remember(loadScopeToken) { mutableStateOf<Map<Long, List<String>>>(emptyMap()) }
     var suggestedPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
     var searchedPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
     var allBankCards by remember(loadScopeToken) { mutableStateOf<List<SecureItem>>(emptyList()) }
@@ -2254,13 +2263,20 @@ private fun AutofillPickerContent(
             val loadedData = withContext(Dispatchers.IO) {
                 val embeddedWallet = walletFillRepository.loadEmbeddedItems(scopeAtComposition)
                 val entries = source.load(scopeAtComposition).filterNot { it.isKeyCredential() }
-                val urlRules = if (args.suggestedPasswordIds != null ||
+                val urlRules = if ((args.suggestedPasswordIds != null && !args.refreshLoginSuggestions) ||
                     (args.applicationId.isNullOrBlank() && args.webDomain.isNullOrBlank())) emptyMap()
                     else source.urlRules(entries)
                 AutofillPickerLoadedData(
                     suggestedPasswords = AutofillPickerSuggestions.load(entries, args, autofillPreferences, appName,
                         urlRules, activeScope = scopeAtComposition),
                     allPasswords = entries,
+                    searchAppLabels = AutofillPickerSearch.loadAppLabels(entries) { packageName ->
+                        try {
+                            val manager = context.packageManager
+                            manager.getApplicationLabel(manager.getApplicationInfo(packageName, 0)).toString()
+                        } catch (_: android.content.pm.PackageManager.NameNotFoundException) { null }
+                          catch (_: SecurityException) { null }
+                    },
                     // Resolve legacy encrypted usernames once on IO. Presentation must never
                     // replace the original record passed to copy/fill/save actions.
                     displayUsernames = entries.associate { entry -> entry.id to
@@ -2285,6 +2301,7 @@ private fun AutofillPickerContent(
             suggestedPasswords = loadedData.suggestedPasswords
             allPasswords = loadedData.allPasswords
             displayUsernames = loadedData.displayUsernames
+            searchAppLabels = loadedData.searchAppLabels
             allBankCards = loadedData.allBankCards
             allDocuments = loadedData.allDocuments
             allBillingAddresses = loadedData.allBillingAddresses
@@ -2317,7 +2334,7 @@ private fun AutofillPickerContent(
         }
     }
 
-    LaunchedEffect(searchQuery, allPasswords) {
+    LaunchedEffect(searchQuery, allPasswords, searchAppLabels) {
         val query = searchQuery.trim()
         if (query.isBlank()) {
             searchedPasswords = emptyList()
@@ -2330,7 +2347,7 @@ private fun AutofillPickerContent(
             // 防抖，避免每次按键都触发数据库搜索。
             delay(260)
             searchedPasswords = withContext(Dispatchers.IO) {
-                allPasswords.filter { it.matchesSearchQuery(query) }
+                allPasswords.filter { AutofillPickerSearch.matches(it, query, searchAppLabels[it.id].orEmpty()) }
             }
         } catch (e: Exception) {
             android.util.Log.e("AutofillPickerV2", "Error searching passwords", e)
@@ -2479,7 +2496,7 @@ private fun AutofillPickerContent(
             if (searchQuery.isBlank()) {
                 sourceFilteredPasswords
             } else {
-                sourceFilteredPasswords.filter { it.matchesSearchQuery(searchQuery) }
+                sourceFilteredPasswords
             }
         }
     }
@@ -3409,6 +3426,7 @@ private fun AutofillPickerContent(
                                 allPasswords = emptyList()
                                 suggestedPasswords = emptyList()
                                 displayUsernames = emptyMap()
+                                searchAppLabels = emptyMap()
                                 searchedPasswords = emptyList()
                                 allBankCards = emptyList()
                                 allDocuments = emptyList()
@@ -4457,15 +4475,6 @@ private fun AutofillStorageSourceFilter.icon(): ImageVector = when (this) {
     AutofillStorageSourceFilter.KEEPASS -> Icons.Default.Storage
     AutofillStorageSourceFilter.BITWARDEN -> Icons.Default.CloudSync
     AutofillStorageSourceFilter.MDBX -> Icons.Default.Storage
-}
-
-private fun PasswordEntry.matchesSearchQuery(query: String): Boolean {
-    if (query.isBlank()) return true
-    return title.contains(query, ignoreCase = true) ||
-        appName.contains(query, ignoreCase = true) ||
-        appPackageName.contains(query, ignoreCase = true) ||
-        username.contains(query, ignoreCase = true) ||
-        website.contains(query, ignoreCase = true)
 }
 
 @Composable

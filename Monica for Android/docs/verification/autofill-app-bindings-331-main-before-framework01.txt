@@ -1,0 +1,1701 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:308)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(MdbxFrameworkAutofillInstrumentedTest.kt:298)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest):
+
+java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:308)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(MdbxFrameworkAutofillInstrumentedTest.kt:298)
+
+
+
+INSTRUMENTATION_STATUS: test=pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitText(MdbxFrameworkAutofillInstrumentedTest.kt:447)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.access$waitText(MdbxFrameworkAutofillInstrumentedTest.kt:58)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:289)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(MdbxFrameworkAutofillInstrumentedTest.kt:280)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest):
+
+java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitText(MdbxFrameworkAutofillInstrumentedTest.kt:447)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.access$waitText(MdbxFrameworkAutofillInstrumentedTest.kt:58)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:289)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(MdbxFrameworkAutofillInstrumentedTest.kt:280)
+
+
+
+INSTRUMENTATION_STATUS: test=coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 47.041
+
+There were 2 failures:
+
+1) pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest)
+
+java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|選擇密碼後複製到剪貼簿|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|選|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText|  #N1 Monica Icon Fixture  |null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|沒有找到匹配的密碼|null
+
+android.widget.TextView|試試調整搜尋條件
+
+或在主應用程式中新增新密碼|null
+
+android.view.View|null|新增
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|清除搜尋
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9ac109dc|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9ac109dc|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:308)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.pickerSearchResolvesInstalledAppLabelForPackageOnlyBinding(MdbxFrameworkAutofillInstrumentedTest.kt:298)
+
+2) coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest)
+
+java.lang.AssertionError: Expected MDBX328 UI not visible: android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.LinearLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+android.widget.FrameLayout|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+androidx.compose.ui.platform.ComposeView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|為以下應用程式自動填入|null
+
+android.widget.TextView|#N1 Monica Icon Fixture|null
+
+android.widget.TextView|takagi.ru.monica.issue189main33120261125.bindingsdebug.test|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|關閉|null
+
+android.widget.Button|null|null
+
+android.widget.EditText||null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|搜尋密碼...|null
+
+android.view.View|null|標記為非自動填入
+
+android.widget.Button|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|新增
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.view.View|null|null
+
+android.widget.TextView|篩選|null
+
+android.widget.TextView|MDBX · MDBX framework 9fe80ff8|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.HorizontalScrollView|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|密碼 2|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|銀行卡 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|證件 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|賬單地址 0|null
+
+android.widget.CheckBox|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 1|null
+
+android.widget.TextView|C2|mdbx-native-user-1|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX framework 9fe80ff8 login 0|null
+
+android.widget.TextView|C2|mdbx-native-user-0|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|2|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.view.View|null|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+android.widget.TextView|MDBX|null
+
+android.widget.TextView|MDBX framework 9fe80ff8|null
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode(MdbxFrameworkAutofillInstrumentedTest.kt:488)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitNode$default(MdbxFrameworkAutofillInstrumentedTest.kt:462)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.waitText(MdbxFrameworkAutofillInstrumentedTest.kt:447)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.access$waitText(MdbxFrameworkAutofillInstrumentedTest.kt:58)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest$coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication$1.invokeSuspend(MdbxFrameworkAutofillInstrumentedTest.kt:289)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+
+	at takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest.coldFrameworkPickerRecommendsBoundNativeRecordsAfterAuthentication(MdbxFrameworkAutofillInstrumentedTest.kt:280)
+
+
+
+FAILURES!!!
+
+Tests run: 2,  Failures: 2
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

@@ -53,6 +53,14 @@ import uniffi.mdbx_ffi.MdbxObjectSummary
 import uniffi.mdbx_ffi.MdbxObjectDisclosureLimits
 import uniffi.mdbx_ffi.MdbxWriteCommand
 import uniffi.mdbx_ffi.openVault
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
+import okio.Buffer
+import takagi.ru.monica.utils.StringResolver
+import takagi.ru.monica.utils.WebDavKeePassSupport
+import java.io.File
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 
@@ -74,6 +82,8 @@ class NativeMultivaultPickerUiTest : MdbxAutofillFixture() {
     private val ownedBwIds = mutableListOf<Long>()
     private data class KdbxFixture(val id: Long, val name: String, val title: String, val uri: Uri, val bytes: ByteArray)
     private val keepassFixtures = mutableListOf<KdbxFixture>()
+    private val remoteSourceIds = mutableListOf<Long>()
+    private val remoteMirrorFiles = mutableListOf<File>()
     private var oldSettings: AppSettings? = null
     private var oldScope: AutofillScope? = null
     private var baselinePasswords: List<PasswordEntry>? = null
@@ -113,6 +123,11 @@ class NativeMultivaultPickerUiTest : MdbxAutofillFixture() {
             KeePassKdbxService.invalidateProcessCache(it.id)
             appDb.localKeePassDatabaseDao().deleteDatabaseById(it.id)
             context.contentResolver.delete(it.uri, null, null)
+        }
+        remoteSourceIds.forEach { appDb.keepassRemoteSourceDao().deleteSourceById(it) }
+        remoteMirrorFiles.forEach {
+            check(it.canonicalFile.parentFile == context.filesDir.canonicalFile && it.name.startsWith("autofill-webdav-331-"))
+            if (it.exists()) check(it.delete())
         }
         oldScope?.let { preferences.setV2DefaultScope(it) }
         oldSettings?.let {
@@ -266,9 +281,116 @@ class NativeMultivaultPickerUiTest : MdbxAutofillFixture() {
         }
     }
 
-    private fun launch(ids: ArrayList<AutofillId>, hints: List<String>): ActivityScenario<AutofillPickerActivityV2> {
+    @Test fun refreshedFrameworkPickerRecommendsAndSearchesBindingsAcrossAllProviders() {
+        val app = instrumentation.context.packageName
+        val packages = "com.synthetic.other|androidapp://$app"
+        runBlocking {
+            val local = requireNotNull(appDb.passwordEntryDao().getPasswordEntryById(ownedPasswordIds.first()))
+            appDb.passwordEntryDao().updatePasswordEntry(local.copy(appPackageName = packages))
+        }
+        val kdbx = runBlocking { keepass("Bound-KDBX-$suffix", "Bound-Kdbx-$suffix", "synthetic-kdbx", "synthetic-secret", packages) }
+        val bw = runBlocking { bitwarden("Bound-BW-$suffix", "Bound-Bw-$suffix", "synthetic-bw", "synthetic-secret", packages) }
+        runBlocking { native("Bound-MDBX-$suffix", "Bound-Mdbx-$suffix", payload = buildJsonObject {
+            put("username", "synthetic-mdbx"); put("password_plain", "synthetic-secret"); put("app_package_name", packages)
+        }.toString()) }
+        launch(targets(2), listOf("USERNAME", "PASSWORD"), AutofillPickerActivityV2.Args(
+            applicationId = app, autofillIds = targets(2), autofillHints = arrayListOf("USERNAME", "PASSWORD"),
+            suggestedPasswordIds = longArrayOf(), refreshLoginSuggestions = true, rememberLastFilled = false))
+        val label = context.packageManager.getApplicationLabel(context.packageManager.getApplicationInfo(app, 0)).toString()
+        fun verify(title: String) {
+            waitText(title)
+            waitText(text(R.string.autofill_suggested_fill))
+            compose.onNode(hasSetTextAction()).performTextReplacement("NoMatchingApplication331")
+            compose.waitUntil(10_000) { compose.onAllNodesWithText(title).fetchSemanticsNodes().isEmpty() }
+            compose.onNode(hasSetTextAction()).performTextReplacement("  $label  ")
+            waitText(title)
+            compose.onNode(hasSetTextAction()).performTextClearance()
+            waitText(text(R.string.autofill_suggested_fill))
+        }
+        verify(localTitle)
+        selectSource(R.string.filter_keepass); verify(kdbx.title); assertAbsent(localTitle)
+        selectSource(R.string.filter_bitwarden); verify("Bound-Bw-$suffix"); assertAbsent(kdbx.title)
+        assertScope(AutofillScope.Bitwarden())
+        selectSource(R.string.filter_mdbx); verify("Bound-Mdbx-$suffix"); assertAbsent("Bound-Bw-$suffix")
+        assertNativeUnchanged()
+        keepassFixtures.forEach { assertArrayEquals(it.bytes, context.contentResolver.openInputStream(it.uri)!!.use { input -> input.readBytes() }) }
+    }
+
+    @Test fun webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName() {
+        verifyWebDavBinding(KeePassOpenMode.CACHED_MIRROR)
+    }
+
+    @Test fun webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName() {
+        verifyWebDavBinding(KeePassOpenMode.WORKING_COPY)
+    }
+
+    private fun verifyWebDavBinding(mode: KeePassOpenMode) {
+        val app = instrumentation.context.packageName
+        val kdbx = runBlocking { keepass("WebDAV-$mode-$suffix", "WebDAV-Login-$suffix",
+            "synthetic-webdav-user", "synthetic-webdav-secret", app) }
+        MockWebServer().use { server ->
+            server.dispatcher = object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse = when (request.method) {
+                    "HEAD" -> MockResponse().setResponseCode(200)
+                    "PROPFIND" -> MockResponse().setResponseCode(207).setHeader("Content-Type", "application/xml").setBody(
+                        """<?xml version="1.0" encoding="utf-8"?><d:multistatus xmlns:d="DAV:"><d:response>
+                            <d:href>/bound-login.kdbx</d:href><d:propstat><d:prop><d:displayname>bound-login.kdbx</d:displayname>
+                            <d:getetag>fixture-revision</d:getetag><d:getcontentlength>${kdbx.bytes.size}</d:getcontentlength>
+                            <d:resourcetype/></d:prop><d:status>HTTP/1.1 200 OK</d:status></d:propstat>
+                            </d:response></d:multistatus>""".trimIndent())
+                    "GET" -> MockResponse().setResponseCode(200).setBody(Buffer().write(kdbx.bytes))
+                    else -> MockResponse().setResponseCode(405)
+                }
+            }
+            runBlocking {
+                val source = KeepassRemoteSource(providerType = KeePassRemoteProviderType.WEBDAV,
+                    displayName = "Synthetic autofill WebDAV", baseUrl = server.url("/").toString(),
+                    remotePath = "bound-login.kdbx")
+                val sourceId = appDb.keepassRemoteSourceDao().insertSource(source).also(remoteSourceIds::add)
+                val strings = StringResolver { id, args -> context.getString(id, *args) }
+                // Download exact encrypted bytes through the production WebDAV transport.
+                val downloaded = WebDavKeePassSupport.createFileSource(source, security, strings).read()
+                assertArrayEquals(kdbx.bytes, downloaded)
+                val working = File(context.filesDir, "autofill-webdav-331-$suffix-working.kdbx").also(remoteMirrorFiles::add)
+                val cached = File(context.filesDir, "autofill-webdav-331-$suffix-cache.kdbx").also(remoteMirrorFiles::add)
+                working.writeBytes(downloaded); cached.writeBytes(downloaded)
+                val registration = requireNotNull(appDb.localKeePassDatabaseDao().getDatabaseById(kdbx.id))
+                appDb.localKeePassDatabaseDao().updateDatabase(registration.copy(
+                    sourceType = KeePassDatabaseSourceType.REMOTE_WEBDAV, sourceId = sourceId,
+                    storageLocation = KeePassStorageLocation.INTERNAL, openMode = mode,
+                    filePath = working.name, workingCopyPath = working.name, cacheCopyPath = cached.name,
+                    lastSyncStatus = KeePassSyncStatus.IN_SYNC))
+                KeePassKdbxService.invalidateProcessCache(kdbx.id)
+                preferences.setV2DefaultScope(AutofillScope.KeePass(kdbx.id))
+            }
+            val downloadedRequestCount = server.requestCount
+            assertTrue("The remote fixture must actually be downloaded", downloadedRequestCount > 0)
+            val ids = targets(2)
+            val scenario = launch(ids, listOf("USERNAME", "PASSWORD"), AutofillPickerActivityV2.Args(
+                applicationId = app, autofillIds = ids, autofillHints = arrayListOf("USERNAME", "PASSWORD"),
+                suggestedPasswordIds = longArrayOf(), refreshLoginSuggestions = true, rememberLastFilled = false))
+            waitText(kdbx.title)
+            waitText(text(R.string.autofill_suggested_fill))
+            assertAbsent(localTitle)
+            assertScope(AutofillScope.KeePass(kdbx.id))
+            compose.onNode(hasSetTextAction()).performTextReplacement("NoMatchingApplication331")
+            compose.waitUntil(10_000) { compose.onAllNodesWithText(kdbx.title).fetchSemanticsNodes().isEmpty() }
+            val label = context.packageManager.getApplicationLabel(context.packageManager.getApplicationInfo(app, 0)).toString()
+            compose.onNode(hasSetTextAction()).performTextReplacement("  $label  ")
+            waitText(kdbx.title)
+            compose.onNode(hasSetTextAction()).performTextClearance()
+            waitText(text(R.string.autofill_suggested_fill))
+            selectLoginAndFill(kdbx.title)
+            assertDataset(scenario, ids, listOf("synthetic-webdav-user", "synthetic-webdav-secret"))
+            remoteMirrorFiles.forEach { assertArrayEquals("Autofill preserves encrypted mirrors", kdbx.bytes, it.readBytes()) }
+            assertEquals("Autofill does not write or re-download the remote vault", downloadedRequestCount, server.requestCount)
+            assertArrayEquals(kdbx.bytes, context.contentResolver.openInputStream(kdbx.uri)!!.use { it.readBytes() })
+        }
+    }
+
+    private fun launch(ids: ArrayList<AutofillId>, hints: List<String>, overrideArgs: AutofillPickerActivityV2.Args? = null): ActivityScenario<AutofillPickerActivityV2> {
         AutofillSessionGrants.clear()
-        val args = AutofillPickerActivityV2.Args(applicationId = "org.example.multivault328",
+        val args = overrideArgs ?: AutofillPickerActivityV2.Args(applicationId = "org.example.multivault328",
             webDomain = "native.example", interactionIdentifier = "native-ui-${UUID.randomUUID()}",
             autofillIds = ids, autofillHints = ArrayList(hints), rememberLastFilled = false)
         val scenario = ActivityScenario.launchActivityForResult<AutofillPickerActivityV2>(AutofillPickerActivityV2.getIntent(context, args))
@@ -383,19 +505,19 @@ class NativeMultivaultPickerUiTest : MdbxAutofillFixture() {
         }
     }
 
-    private suspend fun bitwarden(name: String, title: String, username: String, password: String): Long {
+    private suspend fun bitwarden(name: String, title: String, username: String, password: String, packages: String = ""): Long {
         val email = "${UUID.randomUUID()}@example.invalid"
         val id = appDb.bitwardenVaultDao().insert(BitwardenVault(email = email, canonicalEmail = email,
             accountKey = UUID.randomUUID().toString(), displayName = name, serverUrl = "https://example.invalid",
             identityUrl = "https://example.invalid/identity", apiUrl = "https://example.invalid/api",
             isLocked = true, isConnected = false)).also(ownedBwIds::add)
         ownedPasswordIds += appDb.passwordEntryDao().insertPasswordEntry(PasswordEntry(title = title,
-            website = "https://native.example", username = username, password = security.encryptData(password),
+            website = "https://native.example", username = username, password = security.encryptData(password), appPackageName = packages,
             bitwardenVaultId = id, bitwardenCipherId = UUID.randomUUID().toString()))
         return id
     }
 
-    private suspend fun keepass(name: String, title: String, username: String, password: String): KdbxFixture {
+    private suspend fun keepass(name: String, title: String, username: String, password: String, packages: String = ""): KdbxFixture {
         val credentials = Credentials.from(EncryptedValue.fromString(KDBX_PASSWORD))
         val created = KeePassDatabase.Ver4x.create("Multivault328", Meta(generator = "Synthetic picker UI fixture"), credentials)
         val seed = when (val kdf = created.header.kdfParameters) {
@@ -409,7 +531,7 @@ class NativeMultivaultPickerUiTest : MdbxAutofillFixture() {
             copy(entries = listOf(Entry(uuid = UUID.randomUUID(), fields = EntryFields.of(
                 "Title" to EntryValue.Plain(title), "UserName" to EntryValue.Plain(username),
                 "Password" to EntryValue.Encrypted(EncryptedValue.fromString(password)),
-                "URL" to EntryValue.Plain("https://native.example")))))
+                "URL" to EntryValue.Plain("https://native.example"), "AppPackageName" to EntryValue.Plain(packages)))))
         }
         val uri = Uri.parse("content://${instrumentation.context.packageName}.kdbx-delete/delete-${UUID.randomUUID()}.kdbx")
         val bytes = ByteArrayOutputStream().also { value.encode(it) }.toByteArray()

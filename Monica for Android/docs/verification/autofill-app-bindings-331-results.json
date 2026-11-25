@@ -1,0 +1,145 @@
+{
+  "jvmDistinctPassed": 53,
+  "sharedSourceHashes": {
+    "app/src/main/java/takagi/ru/monica/autofill_ng/model/AutofillRequestNg.kt": "723f765e00ad6ad843b55ced6e34d379ea572346abee04ea57d13572404e6c7a",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/processor/AutofillProcessorNg.kt": "c868264bec0bb5aa0561d2e5a6f6514540a215f7f55afb070a6da7159850affc",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt": "6e44ebc074e97c57ae2ed9d094682a53eef32307b766be84ba94e73e0303cbc5",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/builder/FillResponseBuilderNg.kt": "5b2ecacd78fcf51e3b84ef9a5a442745adddfe5f63e88dbfaedda99fad97160d",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "ece891ab1e1e8fc65eed595ebd189f97b37cbeb5c95619ad0243a45cf35b3709",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerSuggestions.kt": "c4ba4b09f7129e32f84a05c6c0dc91fa09dd6c78100e3c1ad2b99d036298fda6",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerSearch.kt": "e3ba967d4c0f7dc70b36c52d77f5fce5dc14635f56c88b05ed94b9303637e7ec",
+    "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerSuggestionsTest.kt": "7d13eaa94d3cc0f6ec10245a3b21aea3b38e9f8cbdb5f7e209190a7fc9612d06",
+    "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerSearchTest.kt": "95308df7fe0671af534b16248b8909724486fbc407e3fdf200bd64c7ea8f5cc4",
+    "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerRefreshContractTest.kt": "1c3f62ef5ea916e8d7ac029336fb5baab52d447194e98ddda52b2bc42fd5a834",
+    "app/src/androidTest/java/takagi/ru/monica/autofill_ng/MdbxFrameworkAutofillInstrumentedTest.kt": "d81e0de907648a23a74f5511eb858333054890c4a10d252937f310c2cb891334",
+    "app/src/androidTest/java/takagi/ru/monica/autofill_ng/NativeMultivaultPickerUiTest.kt": "b70d60dddf8e1a748f7082fed53fc97601ac25b3c8dc075c61bb8e981cc22afc"
+  },
+  "deviceDistinctPassed": 23,
+  "releaseAudit": {
+    "old": {
+      "sha256": "2dc0a7c7159d9c7efd8a9e097fbd3f552d75a48620cc86bbf3bdc74f6580b725",
+      "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "package": "takagi.ru.monica.issue189main33120261125",
+      "versionCode": "12",
+      "versionName": "1.0.331-26112512-96",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingBytes": 388312298
+    },
+    "fixed": {
+      "sha256": "e473b0b5ee7f29555a87bbc49403c84a73461fb3c37cc2aa0a0ca00d75fceb4f",
+      "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "package": "takagi.ru.monica.issue189main33120261125",
+      "versionCode": "12",
+      "versionName": "1.0.331-26112512-97",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingBytes": 388588141
+    }
+  },
+  "edition": "main",
+  "releaseCore": {
+    "edition": "main",
+    "originalPassword": true,
+    "wrongPasswordRejected": true,
+    "oldRecordReadable": true,
+    "newRecordWrittenAndColdReadable": true,
+    "coldPids": [
+      "4793",
+      "5440"
+    ]
+  },
+  "releaseSystem": {
+    "edition": "main",
+    "actualReleaseSystemEntry": true,
+    "packageOnlyAssociation": true,
+    "appNameSearchWithWhitespace": true,
+    "recommendationAfterAuthentication": true,
+    "realFrameworkDatasetFilledExternalForm": true,
+    "twoColdPids": [
+      "7424",
+      "8029"
+    ]
+  },
+  "releaseBackup": {
+    "edition": "main",
+    "originalPassword": true,
+    "wrongPasswordRejected": true,
+    "oldRecordReadable": true,
+    "newRecordWrittenAndColdReadable": true,
+    "coldPids": [
+      "4793",
+      "5440",
+      "15652"
+    ],
+    "passed": true,
+    "backupTimeoutMinutes": 5,
+    "immediateRestoredAndLoginVerified": true,
+    "backupRestoration": {
+      "items": 1,
+      "encryptedOldBackup": true,
+      "source": "read-only-task-fixture/issue189-main-old331.enc.zip",
+      "systemDocumentsUiVerified": false,
+      "taskProfileDocumentsUiTemporarilyDisabled": true,
+      "restoredRecordRead": true,
+      "newRecordRetained": true
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "originalUser0Preserved": true,
+    "removedOnlyTaskUser": 10,
+    "removedOwnFixtureFromUsers": [
+      0,
+      10
+    ],
+    "taskProfileDocumentsUiRestored": true,
+    "removedOnlyExactStagedBackupFiles": [
+      {
+        "staged": "/data/media/0/Download/Monica_AppBindings_331_20261125/issue189-main-old331.enc.zip",
+        "sha256": "4a0e424628ba165db2d734dd215292ad4669f491919a7690623df42de3ae41cb"
+      },
+      {
+        "staged": "/data/media/0/Download/Monica_AppBindings_331_20261125/issue189-fd-old331.enc.zip",
+        "sha256": "4b09331c02b0a03a148e2c7ffeae7e0c698fbcaaf906d5547dbac9f2389aba85"
+      }
+    ],
+    "restoredAdbdUid": 2000,
+    "stoppedTaskStartedMuMuInstance": 2,
+    "stoppedOwnAdbServer": 15072,
+    "originalInstances0And1UnchangedAtCleanup": true,
+    "configurationAndDataDisksRetained": true,
+    "oldEncryptedBackupCopiesRetainedPrivately": true
+  },
+  "initialMainExpectedFailures": 2,
+  "fdInitialInterruptedAfterPasses": 19,
+  "systemDocumentsUiBackupSelectionVerified": false,
+  "scope": "synthetic MuMu API35 x86_64; isolated package and debug certificate; no original user vault or real cloud",
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "finalAudit": {
+    "changedSourcePaths": [
+      "app/src/androidTest/java/takagi/ru/monica/autofill_ng/MdbxFrameworkAutofillInstrumentedTest.kt",
+      "app/src/androidTest/java/takagi/ru/monica/autofill_ng/NativeMultivaultPickerUiTest.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerSearch.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerSuggestions.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/builder/FillResponseBuilderNg.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/model/AutofillRequestNg.kt",
+      "app/src/main/java/takagi/ru/monica/autofill_ng/processor/AutofillProcessorNg.kt",
+      "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerRefreshContractTest.kt",
+      "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerSearchTest.kt",
+      "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillPickerSuggestionsTest.kt"
+    ],
+    "unrelatedSourcePreserved": true,
+    "testedSourcesStillExact": true,
+    "newFilesWhitespaceChecked": 15,
+    "existingFileChangesCheckedByGitDiffCheck": true
+  },
+  "fdMetadataCheckPassed": true,
+  "fdMetadataScriptTestsPassed": 6
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-24T20:25:09.299Z" hostname="JOYIN" time="0.001">
+  <properties/>
+  <testcase name="webViewWithoutOriginCannotUsePackageFallbackEvenForUnknownHostApp" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.001"/>
+  <testcase name="knownBrowserWithoutOriginCannotUsePackageFallback" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.0"/>
+  <testcase name="nativeAppKeepsExactPackageMatching" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.0"/>
+  <testcase name="localHtmlAppAllowsOnlyExplicitBindings" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

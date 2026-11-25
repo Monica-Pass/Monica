@@ -1,0 +1,213 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest:
+
+INSTRUMENTATION_STATUS: test=webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stack=java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName(takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest):
+
+java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+
+
+INSTRUMENTATION_STATUS: test=webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=2
+
+INSTRUMENTATION_STATUS: stack=java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName(takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest):
+
+java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+
+
+INSTRUMENTATION_STATUS: test=webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 3.649
+
+There were 2 failures:
+
+1) webDavWorkingCopyRecommendsBoundLoginAfterAuthenticationAndSearchesAppName(takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest)
+
+java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+2) webDavCachedMirrorRecommendsBoundLoginAfterAuthenticationAndSearchesAppName(takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest)
+
+java.io.IOException: 遠端檔案不存在：bound-login.kdbx
+
+	at takagi.ru.monica.utils.WebDavKeePassFileSource$read$2.invokeSuspend(WebDavKeePassFileSource.kt:82)
+
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+
+
+FAILURES!!!
+
+Tests run: 2,  Failures: 2
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-24T20:25:09.628Z" hostname="JOYIN" time="0.042">
+  <properties/>
+  <testcase name="strict mode should match bare package name stored in website" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.021"/>
+  <testcase name="domain match does not depend on browser package ordering" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001"/>
+  <testcase name="strict mode should match androidapp package from mixed website bindings" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="strict mode should return exact package match" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="strict mode should match base domain" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="invalid reported address never falls back to a browser package binding" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="strict mode should match androidapp package stored in website" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="strict mode should match one of multiple websites" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001"/>
+  <testcase name="non strict mode should allow heuristic fallback" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.002"/>
+  <testcase name="IP defaults never match other IPs or numeric title heuristics" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.003"/>
+  <testcase name="local html app matches bindings without title or package token fallback" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001"/>
+  <testcase name="equivalent IPv6 forms match the same host" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.003"/>
+  <testcase name="bare package bindings use exact matching across cached and uncached paths" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.006"/>
+  <testcase name="strict mode should normalize androidapp package prefix" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="domainless browser request does not use shared browser package bindings" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0"/>
+  <testcase name="strict mode rejects title-only package token matches" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
