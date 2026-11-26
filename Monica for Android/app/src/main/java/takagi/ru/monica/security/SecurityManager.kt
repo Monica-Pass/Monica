@@ -741,6 +741,7 @@ class SecurityManager private constructor(
 
     /** Durable health never uses or publishes the current process's MDK or cached key handles. */
     fun biometricBindingHealth(): BiometricBindingHealth {
+        if (isPasswordRecoveryMode) return BiometricBindingHealth.TEMPORARILY_UNAVAILABLE
         var mdk: ByteArray? = null
         return try {
             localRecovery.validate(sharedPreferences)
@@ -784,6 +785,7 @@ class SecurityManager private constructor(
         attempt: BiometricRebindAttempt,
         ensureActive: () -> Unit = {},
     ): BiometricRebindResult {
+        if (isPasswordRecoveryMode) return BiometricRebindResult.UNAVAILABLE
         var mdk: ByteArray? = null
         var candidateId: String? = null
         fun checkCurrent() { attempt.ensureCurrent(); ensureActive(); check(isDataReadCurrent(attempt.generation)) }
@@ -896,6 +898,7 @@ class SecurityManager private constructor(
      * Clear all security data (for complete reset scenarios)
      */
     fun clearSecurityData() {
+        check(!isPasswordRecoveryMode) { "Export recovered data before resetting this installation" }
         sharedPreferences.edit()
             .remove(MASTER_PASSWORD_HASH_KEY)
             .remove(MASTER_PASSWORD_SALT_KEY)
@@ -930,8 +933,11 @@ class SecurityManager private constructor(
      * Biometric settings
      */
     fun setBiometricEnabled(enabled: Boolean) {
+        if (enabled && isPasswordRecoveryMode) return
         sharedPreferences.edit().putBoolean(BIOMETRIC_ENABLED_KEY, enabled).apply()
     }
+
+    val isPasswordRecoveryMode: Boolean get() = masterKey == null
     
     fun isBiometricEnabled(): Boolean {
         return sharedPreferences.getBoolean(BIOMETRIC_ENABLED_KEY, false)
@@ -1302,6 +1308,8 @@ class SecurityManager private constructor(
     }
 
     private fun persistCompatKeystoreWrappedMdk(mdk: ByteArray, allowInitialKeyCreation: Boolean = false): Boolean {
+        // Password recovery must not even probe a missing or stalled device provider.
+        if (masterKey == null) return false
         return try {
             val compatKey = if (allowInitialKeyCreation) getOrGenerateCompatSecureKey()
                 else getExistingDataKey(compat = true)
@@ -1365,7 +1373,7 @@ class SecurityManager private constructor(
         LocalPasswordCredentials.create(password, mdk, PasswordKdf.PBKDF2_600K).toMutableMap().apply {
             put(MDK_READY_KEY, true)
             if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
-                put("legacy_master_key_description_v1", masterKey.toString())
+                masterKey?.let { put("legacy_master_key_description_v1", it.toString()) }
             }
         }
 
@@ -1612,7 +1620,7 @@ class SecurityManager private constructor(
     internal fun migrateProtectedDeviceCiphertexts() {
         if (!isVaultRuntimeUnlocked()) return
         sharedPreferences.all.forEach { (name, value) ->
-            if (value !is String || (!value.startsWith("C2|") && !value.startsWith("V2|"))) return@forEach
+            if (value !is String || !LocalCipherEnvelope.isDeviceBound(value)) return@forEach
             if (!isVaultRuntimeUnlocked()) return
             val replacement = runCatching {
                 val plain = decryptData(value)
@@ -1627,10 +1635,7 @@ class SecurityManager private constructor(
     }
 
     fun looksLikeMonicaCiphertext(value: String): Boolean {
-        val trimmed = value.trim()
-        return trimmed.startsWith(DATA_PREFIX_MDK) ||
-            trimmed.startsWith(DATA_PREFIX_V2) ||
-            trimmed.startsWith(DATA_PREFIX_COMPAT)
+        return LocalCipherEnvelope.format(value) != null
     }
 
     fun decryptDataIfMonicaCiphertext(value: String): String {
@@ -1780,7 +1785,8 @@ class SecurityManager private constructor(
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
             // Historical unprefixed V1 payloads were derived from this predictable
             // value. Keep it read-only so old local data can be opened and migrated.
-            val description = sharedPreferences.getString("legacy_master_key_description_v1", null) ?: masterKey.toString()
+            val description = sharedPreferences.getString("legacy_master_key_description_v1", null)
+                ?: masterKey?.toString() ?: return encryptedData
             val keyBytes = description.toByteArray().copyOf(32)
             val secretKey = javax.crypto.spec.SecretKeySpec(keyBytes, "AES")
             val gcmSpec = GCMParameterSpec(128, iv)
@@ -2081,6 +2087,9 @@ class SecurityManager private constructor(
     fun getProtectedString(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
+
+    internal fun updateProtectedObject(key: String, update: (org.json.JSONObject) -> Unit): Boolean =
+        localRecovery.updateProtectedObject(sharedPreferences, key, update)
 
     fun removeProtectedString(key: String) {
         check(sharedPreferences.edit().remove(key).commit()) { "Protected value could not be removed" }

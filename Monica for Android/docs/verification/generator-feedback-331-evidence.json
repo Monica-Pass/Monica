@@ -1,0 +1,79 @@
+{
+  "results": {
+    "main": {
+      "buildSeconds": 146.239,
+      "testBuildSeconds": 44.337,
+      "deviceSeconds": 41.545,
+      "deviceMethods": 24,
+      "jvmTests": 9,
+      "installed": [
+        {
+          "package": "takagi.ru.monica.generatorhapticstrengthmain33120261126.localedebug",
+          "sha256": "2bb1d5face109600bc10723c50251d4aa43e6873c26bbf16c29d4f49dab954d7"
+        },
+        {
+          "package": "takagi.ru.monica.generatorhapticstrengthmain33120261126.localedebug.test",
+          "sha256": "e99532745437c1c96bb37c18b9aa08ae7f44612e6da99807396ed2a467559f7b"
+        }
+      ]
+    },
+    "fd": {
+      "buildSeconds": 201.941,
+      "testBuildSeconds": 46.2,
+      "deviceSeconds": 40.22,
+      "deviceMethods": 24,
+      "jvmTests": 9,
+      "installed": [
+        {
+          "package": "takagi.ru.monica.generatorhapticstrengthfd33120261126.localedebug",
+          "sha256": "d6764c9960813f890ee5c46dfa1eff28e3a254a78896e39c4187e957c46ffce4"
+        },
+        {
+          "package": "takagi.ru.monica.generatorhapticstrengthfd33120261126.localedebug.test",
+          "sha256": "28f58cf80b7f27a3f6343b7b543f146b749879cad5883675c172bfdbe29a387f"
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 17,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.generatorhapticstrengthmain33120261126.localedebug",
+      "takagi.ru.monica.generatorhapticstrengthmain33120261126.localedebug.test",
+      "takagi.ru.monica.generatorhapticstrengthfd33120261126.localedebug",
+      "takagi.ru.monica.generatorhapticstrengthfd33120261126.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15093
+  },
+  "sharedFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+      "sha256": "bd55219af1299a5a8453ef9223218940e4b565c002666922fcdcff79ee93e28d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt",
+      "sha256": "d897cc7b4e841adb2128ccd8bd7b339ed0baeb17e43d57cb0189b7fbee08f2f0"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/GeneratorFeedbackInstrumentedTest.kt",
+      "sha256": "90790eed177b88d139412dc904dbe5a136f54820fcc92971432cda013a4ba0bf"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/GeneratorResultMotionTest.kt",
+      "sha256": "0625ed23a79dd00a91825afdb7bc7351d6aca23f7d3e90e8f234e391dff67dd7"
+    }
+  ]
+}

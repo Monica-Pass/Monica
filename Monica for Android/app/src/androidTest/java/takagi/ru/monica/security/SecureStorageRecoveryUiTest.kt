@@ -33,12 +33,17 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 class SecureStorageRecoveryUiTest {
     @get:Rule val compose = createComposeRule()
 
+    private fun awaitPage() = compose.waitUntil(5_000) {
+        compose.onAllNodesWithTag("secure_startup_blocked").fetchSemanticsNodes(false).isNotEmpty()
+    }
+
     @Test fun missingMaterialShowsSpecificGuidanceWithoutRecoveryAction() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         compose.setContent {
             MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, failureReason = "MISSING_MASTER_KEY",
                 recoveryMaterial = RecoveryMaterialState.MISSING) }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_recover").assertDoesNotExist()
         compose.onNodeWithTag("secure_startup_material").performScrollTo()
             .assertTextEquals(context.getString(takagi.ru.monica.R.string.recovery_material_missing))
@@ -47,11 +52,49 @@ class SecureStorageRecoveryUiTest {
         compose.onNodeWithTag("secure_startup_retry").assertIsDisplayed()
     }
 
+    @Test fun independentRecoveryIsSeparateConfirmedAndReachableWithLargeText() {
+        var normal = 0
+        var independent = 0
+        compose.setContent {
+            CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density, 1.5f)) {
+                MonicaTheme { SecureStorageRecoveryScreen({}, {}, {},
+                    onRecover = { normal++; true }, onRecoverWithoutKeystore = { independent++; false }) }
+            }
+        }
+        awaitPage()
+        compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-only")
+        compose.onNodeWithTag("secure_startup_recover_without_keystore").performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(0, normal + independent) }
+        compose.onNodeWithTag("secure_startup_recovery_cancel").performClick()
+        compose.runOnIdle { assertEquals(0, normal + independent) }
+        compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-only")
+        compose.onNodeWithTag("secure_startup_recover_without_keystore").performScrollTo().performClick()
+        compose.onNodeWithTag("secure_startup_recovery_confirm").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("secure_startup_recovery_error").performScrollTo().assertIsDisplayed()
+        compose.runOnIdle { assertEquals(0, normal); assertEquals(1, independent) }
+    }
+
+    @Test fun selectedPasswordStoreShowsUnlockWithoutAnotherMigrationConfirmation() {
+        var calls = 0
+        compose.setContent {
+            MonicaTheme { SecureStorageRecoveryScreen({}, {}, {},
+                onRecover = { calls++; true }, onRecoverWithoutKeystore = { error("Already selected") },
+                failureReason = "PASSWORD_RECOVERY_REQUIRED", recoveryMaterial = RecoveryMaterialState.AVAILABLE) }
+        }
+        awaitPage()
+        compose.onNodeWithTag("secure_startup_recover_without_keystore").assertDoesNotExist()
+        compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-only")
+        compose.onNodeWithTag("secure_startup_recover").performClick()
+        compose.onNodeWithTag("secure_startup_recovery_confirm").assertDoesNotExist()
+        compose.runOnIdle { assertEquals(1, calls) }
+    }
+
     @Test fun timeoutDoesNotClaimMaterialOrKeyWasDeleted() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         compose.setContent {
             MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, failureReason = "SECURE_OPERATION_TIMEOUT") }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_reason").performScrollTo()
             .assertTextEquals(context.getString(takagi.ru.monica.R.string.secure_startup_wait))
         compose.onNodeWithTag("secure_startup_material").performScrollTo()
@@ -69,6 +112,7 @@ class SecureStorageRecoveryUiTest {
                 })
             }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_recover").assertIsNotEnabled()
         compose.runOnIdle { assertEquals(0, calls) }
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-password")
@@ -97,6 +141,7 @@ class SecureStorageRecoveryUiTest {
                 }
             }
         }
+        awaitPage()
         for (dark in listOf(false, true)) {
             compose.runOnIdle { night = dark }
             compose.onNodeWithTag("secure_startup_blocked").assertIsDisplayed()
@@ -117,6 +162,7 @@ class SecureStorageRecoveryUiTest {
         compose.setContent {
             MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, onRecover = { calls++; true }) }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-confirm-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         compose.runOnIdle { assertEquals("First click must not recreate keys", 0, calls) }
@@ -132,6 +178,7 @@ class SecureStorageRecoveryUiTest {
         compose.setContent {
             MonicaTheme { if (visible) SecureStorageRecoveryScreen({}, {}, {}, onRecover = { calls++; true }) }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-confirm-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         compose.runOnIdle { assertEquals("Consent is still pending", 0, calls); visible = false }
@@ -149,6 +196,7 @@ class SecureStorageRecoveryUiTest {
         compose.setContent {
             MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, onRecover = { calls++; result.await() }) }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-confirm-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         compose.runOnIdle { assertEquals(0, calls) }
@@ -173,6 +221,7 @@ class SecureStorageRecoveryUiTest {
         compose.setContent {
             MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, onRecover = { calls++; true }) }
         }
+        awaitPage()
         try {
             compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-back-password")
             record("password-entered")
@@ -280,6 +329,7 @@ class SecureStorageRecoveryUiTest {
                 MonicaTheme(darkTheme = night) { SecureStorageRecoveryScreen({}, {}, {}, onRecover = { false }) }
             }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-render-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         for (dark in listOf(false, true)) {
@@ -310,6 +360,7 @@ class SecureStorageRecoveryUiTest {
                 MonicaTheme { SecureStorageRecoveryScreen({}, {}, {}, onRecover = { calls++; true }) }
             }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-foreground-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         compose.onNodeWithTag("secure_startup_recovery_confirm").assertIsDisplayed()
@@ -337,6 +388,7 @@ class SecureStorageRecoveryUiTest {
                 }
             }
         }
+        awaitPage()
         compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput("synthetic-foreground-password")
         compose.onNodeWithTag("secure_startup_recover").performClick()
         compose.onNodeWithTag("secure_startup_recovery_confirm").performClick()

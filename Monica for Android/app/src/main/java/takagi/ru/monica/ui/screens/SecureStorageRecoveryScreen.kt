@@ -30,11 +30,13 @@ internal fun SecureStorageRecoveryScreen(
     onCopyDiagnostic: () -> Unit,
     onExit: () -> Unit,
     onRecover: (suspend (String) -> Boolean)? = null,
+    onRecoverWithoutKeystore: (suspend (String) -> Boolean)? = null,
     failureReason: String? = null,
     recoveryMaterial: takagi.ru.monica.security.RecoveryMaterialState = takagi.ru.monica.security.RecoveryMaterialState.NOT_CHECKED,
 ) {
     var password by remember { mutableStateOf("") }
     var confirmationPassword by remember { mutableStateOf<String?>(null) }
+    var independentRecovery by remember { mutableStateOf(false) }
     var recovering by remember { mutableStateOf(false) }
     var failed by remember { mutableStateOf(false) }
     var recoveryJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
@@ -42,6 +44,17 @@ internal fun SecureStorageRecoveryScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
+    val passwordStore = failureReason == "PASSWORD_RECOVERY_REQUIRED"
+    fun recover(attempt: String, action: suspend (String) -> Boolean) {
+        recovering = true
+        failed = false
+        recoveryJob = scope.launch {
+            try { failed = !action(attempt) }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { failed = true }
+            finally { recovering = false; recoveryJob = null }
+        }
+    }
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
@@ -58,24 +71,19 @@ internal fun SecureStorageRecoveryScreen(
             recoveryJob?.cancel()
         }
     }
-    if (confirmationPassword != null && onRecover != null) {
+    if (confirmationPassword != null && (onRecover != null || onRecoverWithoutKeystore != null)) {
         AlertDialog(
             onDismissRequest = { confirmationPassword = null },
-            title = { Text(stringResource(R.string.local_recovery_confirm_title)) },
-            text = { Text(stringResource(R.string.local_recovery_confirm_description)) },
+            title = { Text(stringResource(if (independentRecovery) R.string.password_recovery_action else R.string.local_recovery_confirm_title)) },
+            text = { Text(stringResource(if (independentRecovery) R.string.password_recovery_details else R.string.local_recovery_confirm_description),
+                Modifier.verticalScroll(rememberScrollState())) },
             confirmButton = {
                 TextButton(onClick = confirm@{
                     val attempt = confirmationPassword ?: return@confirm
                     if (recovering) return@confirm
+                    val action = (if (independentRecovery) onRecoverWithoutKeystore else onRecover) ?: return@confirm
                     confirmationPassword = null
-                    recovering = true
-                    failed = false
-                    recoveryJob = scope.launch {
-                        try { failed = !onRecover(attempt) }
-                        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                        catch (_: Exception) { failed = true }
-                        finally { recovering = false; recoveryJob = null }
-                    }
+                    recover(attempt, action)
                 }, modifier = Modifier.testTag("secure_startup_recovery_confirm")) {
                     Text(stringResource(R.string.local_recovery_confirm_action))
                 }
@@ -89,25 +97,27 @@ internal fun SecureStorageRecoveryScreen(
             properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn)
         )
     }
-    Scaffold(topBar = { SettingsSubpageTopBar(stringResource(R.string.secure_startup_title), onExit) },
+    Scaffold(topBar = { SettingsSubpageTopBar(stringResource(if (passwordStore) R.string.password_recovery_unlock else R.string.secure_startup_title), onExit) },
         bottomBar = {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().imePadding().padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (onRecover != null) {
                     Button(onClick = request@{
                         if (recovering || confirmationPassword != null || password.isEmpty()) return@request
-                        confirmationPassword = password
+                        val submitted = password
                         password = ""
                         focusManager.clearFocus()
                         keyboard?.hide()
                         failed = false
+                        independentRecovery = false
+                        if (passwordStore) recover(submitted, onRecover) else confirmationPassword = submitted
                     }, enabled = password.isNotEmpty() && !recovering && confirmationPassword == null,
                         modifier = Modifier.fillMaxWidth().testTag("secure_startup_recover")) {
                         if (recovering) {
                             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                             Spacer(Modifier.width(8.dp))
                         }
-                        Text(stringResource(R.string.local_recovery_action))
+                        Text(stringResource(if (passwordStore) R.string.password_recovery_unlock else R.string.local_recovery_action))
                     }
                 }
                 Button(onClick = onRetry, enabled = !recovering, modifier = Modifier.fillMaxWidth().testTag("secure_startup_retry")) {
@@ -124,7 +134,7 @@ internal fun SecureStorageRecoveryScreen(
             Surface(shape = settingsSectionItemShape(0, 1), color = MaterialTheme.colorScheme.secondaryContainer) {
                 Column(Modifier.fillMaxWidth().padding(16.dp)) {
                     Text(stringResource(R.string.secure_startup_preserved), style = MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.secure_startup_description), modifier = Modifier.padding(top = 8.dp),
+                    Text(stringResource(if (passwordStore) R.string.password_recovery_unlock_details else R.string.secure_startup_description), modifier = Modifier.padding(top = 8.dp),
                         style = MaterialTheme.typography.bodyMedium)
                 }
             }
@@ -152,7 +162,20 @@ internal fun SecureStorageRecoveryScreen(
                     color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("secure_startup_recovery_error"))
                 Text(stringResource(R.string.local_recovery_limits), style = MaterialTheme.typography.bodySmall)
             }
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            if (onRecoverWithoutKeystore != null && !passwordStore) {
+                OutlinedButton(onClick = {
+                    independentRecovery = true
+                    confirmationPassword = password
+                    password = ""
+                    focusManager.clearFocus()
+                    keyboard?.hide()
+                    failed = false
+                }, enabled = password.isNotEmpty() && !recovering && confirmationPassword == null,
+                    modifier = Modifier.fillMaxWidth().testTag("secure_startup_recover_without_keystore")) {
+                    Text(stringResource(R.string.password_recovery_action))
+                }
+            }
+            if (!passwordStore) Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 listOf(R.string.secure_startup_restart,
                     if (failureReason == "MISSING_MASTER_KEY") R.string.secure_startup_environment_omk else R.string.secure_startup_environment,
                     R.string.secure_startup_no_reset)

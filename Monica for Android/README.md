@@ -17,6 +17,13 @@
 
 ---
 
+> [!IMPORTANT]
+> **Android key environment and backups**: Before enabling or switching OMK / OhMyKeymint, replacing Keystore / KeyMint components, flashing a ROM, or migrating the system on a device that holds vault data, export an independent encrypted backup and verify restoration without overwriting the original vault. Knowing the master password or copying the app data directory alone does not guarantee that every historical record will remain decryptable after such changes.
+
+Version 1.0.331 adds an explicitly confirmed recovery path using the original master password: valid existing recovery material can restore the original MDK and encrypted configuration even when Android Keystore is unavailable. Normal use does not automatically switch backends, and original files and system aliases are retained. This cannot recreate permanently lost keys or prove recovery of hardware-bound or unmigrated historical data.
+>
+> If records are already unreadable, preserve the app data and recovery material. Avoid clearing app data, uninstalling the app, or regenerating keys. See [Android key environments and data recovery](docs/security/keystore-environment.md) for details and limitations.
+
 ## 📖 Overview
 
 **Monica for Android** manages passwords, authenticators, cards and notes, with local storage and optional connections to Bitwarden/Vaultwarden, KeePass and cloud backup providers. Sensitive local fields use AES-GCM; connected vaults retain their own encryption and storage formats.
@@ -209,8 +216,8 @@ On multi-user devices, Shizuku may also require Monica to be installed for the o
 
 ## ImageToolbox slider attribution
 
-The filled slider track and rotating floral thumb are adapted from [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox), specifically `FancySlider.kt` and `MaterialStarShape.kt`, by T8RIN (Malik Mukhametzyanov), under Apache-2.0. Monica uses Material3 input handling, distance-based rotation in either direction, and drag haptics that respect app/system preferences. The [attribution notice](app/src/main/assets/licenses/ImageToolbox.txt) records the revision and modifications; the complete [Apache-2.0 license](app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt) is bundled with the app.
+The filled slider track and rotating floral thumb are adapted from [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox), specifically `FancySlider.kt` and `MaterialStarShape.kt`, by T8RIN (Malik Mukhametzyanov), under Apache-2.0. Monica uses Material3 input handling, distance-based rotation in either direction, and drag haptics controlled by Monica’s feedback preference. The [attribution notice](app/src/main/assets/licenses/ImageToolbox.txt) records the revision and modifications; the complete [Apache-2.0 license](app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt) is bundled with the app.
 
-Interaction strength also follows ImageToolbox’s 1/light (CONTEXT_CLICK) and 2/strong (LONG_PRESS) choices. Monica adds a test button and one touch-attributed fallback for rejected requests, while respecting the system feedback setting.
+Interaction strength references ImageToolbox’s light/strong choices and public View global-setting override. Monica’s own toggle controls feedback without a system-touch-setting prerequisite; supported CONTEXT_CLICK/LONG_PRESS effects are shared by switches, previews and slider steps. Platform policy may still restrict output on some Android variants, and API acceptance alone does not prove physical motor output.
 
-多选菜单的圆形实色图标按钮也参考 ImageToolbox 的视觉处理；主题对比度与窄屏布局由 Monica 独立实现。
+Selection toolbars use compact unfilled icons; their theme contrast and narrow-screen layout are independently implemented by Monica.

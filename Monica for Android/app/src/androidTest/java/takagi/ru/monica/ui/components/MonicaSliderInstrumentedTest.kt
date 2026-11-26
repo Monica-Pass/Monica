@@ -48,9 +48,10 @@ class MonicaSliderInstrumentedTest {
                              onValueChangeFinished = { finished++ })
                      }) {
         val host = object : View(context) {
-            override fun performHapticFeedback(feedbackConstant: Int): Boolean {
+            override fun performHapticFeedback(feedbackConstant: Int, flags: Int): Boolean {
+                org.junit.Assert.assertEquals(HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING, flags)
                 requests += feedbackConstant
-                return false // A declined system request must not trigger a second path.
+                return true // Record submission only; service completion has a separate integration test.
             }
         }
         compose.setContent {
@@ -83,7 +84,7 @@ class MonicaSliderInstrumentedTest {
         slider.performTouchInput { up() }
         compose.runOnIdle {
             assertEquals(1, finished)
-            assertTrue(requests.all { it == HapticFeedbackConstants.TEXT_HANDLE_MOVE })
+            assertTrue(requests.all { it == HapticFeedbackConstants.CONTEXT_CLICK })
         }
         capture("slider-wheel-dragged")
     }

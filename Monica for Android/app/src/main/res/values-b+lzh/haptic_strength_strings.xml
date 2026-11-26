@@ -3,6 +3,5 @@
     <string name="haptic_strength">触动强度</string>
     <string name="haptic_strength_description">0 止 · 1 轻 · 2 强</string>
     <string name="haptic_test">试震</string>
-    <string name="haptic_system_disabled">请先于系统设置启用触动回馈，再试震。</string>
     <string name="haptic_unavailable">此机不支持震动，或系统未受震动之请。</string>
 </resources>

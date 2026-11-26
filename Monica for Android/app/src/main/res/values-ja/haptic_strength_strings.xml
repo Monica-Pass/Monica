@@ -3,6 +3,5 @@
     <string name="haptic_strength">振動の強さ</string>
     <string name="haptic_strength_description">0 = オフ · 1 = 弱 · 2 = 強</string>
     <string name="haptic_test">振動を試す</string>
-    <string name="haptic_system_disabled">システム設定でタッチ操作の振動をオンにしてください。</string>
     <string name="haptic_unavailable">この端末では振動を利用できないか、システムが振動の要求を拒否しました。</string>
 </resources>

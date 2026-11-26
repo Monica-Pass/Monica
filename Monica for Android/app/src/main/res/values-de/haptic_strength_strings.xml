@@ -3,6 +3,5 @@
     <string name="haptic_strength">Vibrationsstärke</string>
     <string name="haptic_strength_description">0 = Aus · 1 = Leicht · 2 = Stark</string>
     <string name="haptic_test">Vibration testen</string>
-    <string name="haptic_system_disabled">Aktiviere das haptische Feedback in den Systemeinstellungen, um Vibrationen zu spüren.</string>
     <string name="haptic_unavailable">Vibration ist auf diesem Gerät nicht verfügbar oder wurde vom System abgelehnt.</string>
 </resources>

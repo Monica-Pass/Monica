@@ -32,7 +32,7 @@ import takagi.ru.monica.ui.screens.Setting
 import takagi.ru.monica.ui.screens.SettingsItemWithSwitch
 import takagi.ru.monica.ui.theme.MonicaTheme
 
-/** Real Compose input handlers; recording the View request does not measure a physical motor. */
+/** Real input handlers with a recording host; Android service output is tested separately. */
 class SwitchHapticsInstrumentedTest {
     @get:Rule val compose = createComposeRule()
     private var checked by mutableStateOf(false)
@@ -45,7 +45,8 @@ class SwitchHapticsInstrumentedTest {
 
     private fun show(content: @Composable () -> Unit) {
         val host = object : View(InstrumentationRegistry.getInstrumentation().targetContext) {
-            override fun performHapticFeedback(feedbackConstant: Int): Boolean {
+            override fun performHapticFeedback(feedbackConstant: Int, flags: Int): Boolean {
+                org.junit.Assert.assertEquals(HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING, flags)
                 requests += feedbackConstant
                 return accepted
             }

@@ -131,6 +131,37 @@ class LocalPasswordCrossProcessInstrumentedTest {
         assertEquals(context.packageName + ":ime", reply.getString("process"))
     }
 
+    @Test fun passwordRecoveryInRealImeRequiresItsOwnPasswordAndRejectsRetiredCredentials() {
+        val fixture = LocalKdfProcessFixture(context, UUID.randomUUID().toString())
+        fixture.seedLegacy()
+        try {
+            val baseline = fixture.freshManager()
+            assertTrue(baseline.unlockVaultWithPassword(fixture.password))
+            val recovery = LocalVaultRecovery(fixture.context)
+            assertTrue(recovery.recoverWithoutKeystore(fixture.password))
+            val main = fixture.freshManager()
+            assertTrue(main.unlockVaultWithPassword(fixture.password))
+            val bytes = fixture.recordFile.readBytes()
+            Remote(fixture.id).use { remote ->
+                val blocked = remote.call(LocalKdfProcessTestService.OPEN)
+                assertRemote(blocked); assertFalse(blocked.getBoolean("success"))
+                val opened = remote.call(LocalKdfProcessTestService.OPEN_PASSWORD_RECOVERY)
+                assertRemote(opened); assertTrue(opened.getBoolean("success"))
+                main.putProtectedString("main_recovered_setting", "retained")
+                assertTrue(remote.call(LocalKdfProcessTestService.WRITE_PASSWORD_SETTING).getBoolean("success"))
+                recovery.refreshPreferenceCache()
+                assertEquals("retained", main.getProtectedString("ime_recovered_setting"))
+                assertEquals("retained", main.getProtectedString("main_recovered_setting"))
+                assertTrue(main.resetMasterPassword(fixture.password, fixture.password + "changed"))
+                assertFalse(remote.call(LocalKdfProcessTestService.READ_EXISTING).getBoolean("success"))
+                assertFalse(remote.call(LocalKdfProcessTestService.OPEN_PASSWORD_RECOVERY).getBoolean("success"))
+                assertArrayEquals(bytes, fixture.recordFile.readBytes())
+                receipt("password-recovery-331", opened, JSONObject().put("ownPasswordRequired", true)
+                    .put("concurrentSettingsRetained", true).put("staleCredentialRejected", true))
+            }
+        } finally { LocalVaultRecovery(fixture.context).forgetPasswordSession(); fixture.cleanup() }
+    }
+
     private fun receipt(name: String, reply: Bundle, detail: JSONObject) {
         val dir = File(context.filesDir, "local-password-kdf-327").apply { mkdirs() }
         File(dir, "process-$name.json").writeText(detail.put("mainPid", Process.myPid())

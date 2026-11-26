@@ -4893,6 +4893,9 @@ class PasswordViewModel internal constructor(
         clearBankCards: Boolean = true,
         clearGeneratorHistory: Boolean = true
     ) {
+        // Reject before deleting any category when the canonical password document is
+        // the installation's only unlock path. The UI explains the backup requirement.
+        if (securityManager.isPasswordRecoveryMode) return
         viewModelScope.launch {
             try {
                 // Clear selected data categories

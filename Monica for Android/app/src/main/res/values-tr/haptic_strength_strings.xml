@@ -3,6 +3,5 @@
     <string name="haptic_strength">Titreşim gücü</string>
     <string name="haptic_strength_description">0 = Kapalı · 1 = Hafif · 2 = Güçlü</string>
     <string name="haptic_test">Titreşimi dene</string>
-    <string name="haptic_system_disabled">Titreşimi hissetmek için sistem ayarlarında dokunsal geri bildirimi açın.</string>
     <string name="haptic_unavailable">Bu cihazda titreşim kullanılamıyor veya sistem titreşim isteğini reddetti.</string>
 </resources>

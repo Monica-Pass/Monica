@@ -48,7 +48,8 @@ class HapticStrengthInstrumentedTest {
 
     private fun show(large: Boolean = false, recording: Boolean = true) {
         host = object : View(context) {
-            override fun performHapticFeedback(constant: Int): Boolean {
+            override fun performHapticFeedback(constant: Int, flags: Int): Boolean {
+                assertEquals(HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING, flags)
                 // Reproduce a host that refuses feedback unless explicitly enabled.
                 if (!isHapticFeedbackEnabled) return false
                 requests += constant; return true
@@ -184,7 +185,7 @@ class HapticStrengthInstrumentedTest {
         } finally { runBlocking { manager.importPageAdjustmentSettings(original) } }
     }
 
-    @Test fun systemOffExplainsWhyPreviewHasNoVibration() {
+    @Test fun systemTouchOffStillSubmitsAppControlledFeedback() {
         val user = InstrumentationRegistry.getArguments().getString("localeTestUser")!!.toInt()
         require(user > 0 && context.packageName.contains("hapticstrength"))
         fun shell(command: String): String = instrumentation.uiAutomation.executeShellCommand(command)
@@ -194,8 +195,8 @@ class HapticStrengthInstrumentedTest {
             shell("settings --user $user put system haptic_feedback_enabled 0")
             show()
             compose.onNodeWithTag("haptic_test").performClick()
-            compose.onNodeWithText(context.getString(R.string.haptic_system_disabled)).assertIsDisplayed()
-            compose.runOnIdle { assertTrue(requests.isEmpty()) }
+            compose.runOnIdle { assertEquals(listOf(HapticFeedbackConstants.CONTEXT_CLICK), requests) }
+            assertEquals("0", shell("settings --user $user get system haptic_feedback_enabled"))
         } finally {
             shell(if (before == "null") "settings --user $user delete system haptic_feedback_enabled"
                 else "settings --user $user put system haptic_feedback_enabled $before")

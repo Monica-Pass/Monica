@@ -51,9 +51,9 @@ internal object PortableLocalCipherMigration {
                 require(column.matches(Regex("[a-zA-Z_]+")))
                 val inspectJson = table == "secure_items" && column == "itemData"
                 val inspectDeviceKey = table == "local_mdbx_databases" && column == "encrypted_password"
-                val predicate = if (inspectJson) "`$column` != ''" else
-                    "(substr(`$column`,1,3) = 'C2|' OR substr(`$column`,1,3) = 'V2|'" +
-                        (if (inspectDeviceKey) " OR `$column` LIKE 'mdbx2-device-key:v1:%'" else "") + ")"
+                // SQLite trim and Kotlin whitespace detection have different character sets.
+                // Page nonempty values, then use the same format classifier as the reader.
+                val predicate = "`$column` != ''"
                 var after = Long.MIN_VALUE
                 while (security.isVaultRuntimeUnlocked()) {
                     currentCoroutineContext().ensureActive()
@@ -75,7 +75,8 @@ internal object PortableLocalCipherMigration {
                                 val portable = portableCipher(cipher, security) ?: return@runCatching null
                                 return@runCatching prefix + portable
                             }
-                            val deviceCipher = oldValue.startsWith("C2|") || oldValue.startsWith("V2|")
+                            val deviceCipher = LocalCipherEnvelope.isDeviceBound(oldValue)
+                            if (!deviceCipher && !inspectJson) return@runCatching null
                             val plain = security.decryptData(oldValue)
                             val nested = if (inspectJson) migrateNestedJson(plain, security) else null
                             if (!deviceCipher && nested == null) return@runCatching null
@@ -99,7 +100,7 @@ internal object PortableLocalCipherMigration {
     }
 
     internal fun portableCipher(value: String, security: SecurityManager): String? {
-        if (!value.startsWith("C2|") && !value.startsWith("V2|")) return null
+        if (!LocalCipherEnvelope.isDeviceBound(value)) return null
         val plain = security.decryptData(value)
         val replacement = security.encryptData(plain)
         check(replacement.startsWith("MDK|") && security.decryptData(replacement) == plain)
@@ -117,13 +118,10 @@ internal object PortableLocalCipherMigration {
             return when (value) {
                 is JSONObject -> value.apply { keys().asSequence().toList().forEach { put(it, rewrite(get(it), depth + 1)) } }
                 is JSONArray -> value.apply { for (i in 0 until length()) put(i, rewrite(get(i), depth + 1)) }
-                is String -> if (value.startsWith("C2|") || value.startsWith("V2|")) {
-                    val decoded = security.decryptData(value)
-                    val replacement = security.encryptData(decoded)
-                    check(replacement.startsWith("MDK|") && security.decryptData(replacement) == decoded)
+                is String -> portableCipher(value, security)?.let { replacement ->
                     changed = true
                     replacement
-                } else value
+                } ?: value
                 else -> value
             }
         }

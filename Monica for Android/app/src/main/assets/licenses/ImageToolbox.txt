@@ -16,10 +16,12 @@ rotating thumb, using the existing Material3 input engine and 48dp touch target.
 Rotation follows physical travel and reverses for RTL. Existing value ranges,
 commit callbacks, keyboard and accessibility actions remain with Material3.
 SliderWheelShape.kt retains the upstream shape path; package/symbol renamed.
-Haptics run only on user value changes, are throttled, and honor Monica and
-system settings. Reduced motion disables wheel rotation. EnhancedSlider and
-EnhancedHapticFeedback were references only; their state-observer vibration
-and global-setting override are not copied.
+Haptics run only on user value changes and are throttled. Monica controls them
+with its own switch and strength setting. Reduced motion disables wheel rotation.
+EnhancedSlider and EnhancedHapticFeedback remain references only; no source from
+them was copied. On 2026-11-26 Monica adopted the same public View global-setting
+override and light/strong constants, so it no longer requires system touch feedback
+to be enabled. Device policy may still restrict output on some Android variants.
 
 The upstream checkout has no top-level NOTICE file. Original copyright/license
 headers are retained for the adapted source and copied shape. This notice and

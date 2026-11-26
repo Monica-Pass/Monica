@@ -39,6 +39,9 @@ public class AutofillFormFixtureActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        if (getIntent().getBooleanExtra("retainedRecoveryFixture", false) && getActionBar() != null) {
+            getActionBar().hide();
+        }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         String scenario = getIntent().getStringExtra("scenario");
         render(scenario == null ? "standard" : scenario);

@@ -69,8 +69,7 @@ internal object PreparedSecureStore {
         val before = selector(directory)
         val opened = SecurePreferencesStore.open(context, SecurePreferencesStore.MONICA)
         check(before == selector(directory)) { "Secure storage changed while opening" }
-        val name = LocalVaultRecovery(context).activeStore()?.first ?: SecurePreferencesStore.MONICA
-        val raw = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+        val raw = opened.rawPreferences
         return opened.copy(preferences = CheckedPreferences(opened.preferences, directory, before, raw))
     }
 
@@ -80,6 +79,10 @@ internal object PreparedSecureStore {
     }
 
     fun invalidate() { accepted = null }
+
+    /** Non-authenticating identity for caches bound to one selected preference store. */
+    internal fun selectionIdentity(context: Context): Pair<String?, Any?> =
+        selector(context.applicationInfo.dataDir) to LocalVaultRecovery(context).passwordSessionIdentity()
 
     fun unwrap(preferences: SharedPreferences): SharedPreferences {
         val checked = preferences as? CheckedPreferences ?: return preferences
@@ -113,7 +116,8 @@ internal object PreparedSecureStore {
     /** Inspect only the publication header. Never wait for the recovery writer or read its
      * encrypted snapshot on a foreground access check. Writers keep this header first. */
     private fun recoveryHeader(directory: String): RecoveryHeader? {
-        val base = File(directory, "files/local-vault-recovery/recovery.json")
+        val recoveryDirectory = File(directory, "files/local-vault-recovery")
+        val base = RecoveryStoreSelectors.envelope(recoveryDirectory, RecoveryStoreSelectors.read(recoveryDirectory))
         val backup = File(base.path + ".bak")
         val file = if (backup.exists()) backup else base
         if (!file.exists()) return null

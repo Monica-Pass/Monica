@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,7 +18,7 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.RemoveCircleOutline
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material3.Icon
-import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -66,14 +63,14 @@ fun SelectionActionBar(
     val countDescription = stringResource(R.string.selected_items, selectedCount)
     Surface(
         modifier = modifier.testTag("selection_action_bar"),
-        shape = RoundedCornerShape(32.dp),
+        shape = RoundedCornerShape(28.dp),
         tonalElevation = 0.dp,
         shadowElevation = 8.dp,
         color = colors.container,
         contentColor = colors.content,
     ) {
         Row(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
@@ -83,14 +80,12 @@ fun SelectionActionBar(
                 color = scheme.primary,
                 contentColor = readableSelectionContent(scheme.onPrimary, scheme.primary),
             ) {
-                Box(Modifier.widthIn(min = 36.dp).heightIn(min = 40.dp)
-                    .padding(horizontal = 8.dp, vertical = 4.dp), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = selectedCount.toString(),
-                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                        maxLines = 1,
-                    )
-                }
+                Text(
+                    text = selectedCount.toString(),
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                    maxLines = 1,
+                )
             }
             // Keep the count and close action visible; only actions scroll on narrow screens.
             Row(
@@ -180,12 +175,11 @@ private fun ActionIcon(
     colors: SelectionBarColors,
     destructive: Boolean = false,
 ) {
-    FilledIconButton(
+    IconButton(
         onClick = onClick,
-        modifier = Modifier.size(48.dp),
-        shape = CircleShape,
-        colors = IconButtonDefaults.filledIconButtonColors(
-            containerColor = if (destructive) colors.deleteContainer else colors.actionContainer,
+        modifier = Modifier.size(40.dp),
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Color.Transparent,
             contentColor = if (destructive) colors.deleteContent else colors.actionContent,
         ),
     ) {
@@ -197,9 +191,7 @@ private fun ActionIcon(
 internal data class SelectionBarColors(
     val container: Color,
     val content: Color,
-    val actionContainer: Color,
     val actionContent: Color,
-    val deleteContainer: Color,
     val deleteContent: Color,
 )
 
@@ -226,12 +218,10 @@ internal fun selectionBarColors(
     val preferred = if (container.isSpecified) container
         else lerp(scheme.surfaceContainerHighest, scheme.primary, 0.18f)
     val surface = separateSelectionSurface(preferred, scheme.surfaceContainerHighest)
-    val action = separateSelectionSurface(scheme.secondaryContainer, surface)
-    val delete = separateSelectionSurface(scheme.errorContainer, surface)
     return SelectionBarColors(
         surface, readableSelectionContent(content, surface),
-        action, readableSelectionContent(scheme.onSecondaryContainer, action),
-        delete, readableSelectionContent(scheme.onErrorContainer, delete),
+        readableSelectionContent(scheme.onSurfaceVariant, surface),
+        readableSelectionContent(scheme.error, surface),
     )
 }
 

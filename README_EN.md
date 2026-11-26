@@ -31,6 +31,13 @@ Website: https://monica-pass.github.io/MonicaDocs/
 
 ---
 
+> [!IMPORTANT]
+> **Android key environment and backups**: Before enabling or switching OMK / OhMyKeymint, replacing Keystore / KeyMint components, flashing a ROM, or migrating the system on a device that holds vault data, export an independent encrypted backup and verify restoration without overwriting the original vault. Knowing the master password or copying the app data directory alone does not guarantee that every historical record will remain decryptable after such changes.
+
+Version 1.0.331 adds an explicitly confirmed recovery path using the original master password: valid existing recovery material can restore the original MDK and encrypted configuration even when Android Keystore is unavailable. Normal use does not automatically switch backends, and original files and system aliases are retained. This cannot recreate permanently lost keys or prove recovery of hardware-bound or unmigrated historical data.
+>
+> If records are already unreadable, preserve the app data and recovery material. Avoid clearing app data, uninstalling the app, or regenerating keys. See [Android key environments and data recovery](Monica%20for%20Android/docs/security/keystore-environment.md) for details and limitations.
+
 ## User First
 
 ### Who Monica is for

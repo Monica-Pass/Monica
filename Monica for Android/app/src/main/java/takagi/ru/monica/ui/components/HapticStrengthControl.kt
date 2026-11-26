@@ -63,7 +63,6 @@ fun HapticStrengthControl(
             Text(stringResource(R.string.haptic_test))
         }
         val message = when (result) {
-            InteractionHapticResult.SYSTEM_DISABLED -> R.string.haptic_system_disabled
             InteractionHapticResult.UNAVAILABLE -> R.string.haptic_unavailable
             else -> null
         }

@@ -8,14 +8,15 @@ import org.json.JSONObject
 /** Only UI/sync options live here; vaults and queued edits remain in their original database. */
 internal object RecoverableBitwardenSettings {
     private val lock = Any()
-    private const val SNAPSHOT = "bitwarden_settings_recovery_v1"
-    private val longs = setOf("active_vault_id", "last_sync_time")
-    private val booleans = setOf("auto_sync_enabled", "sync_on_wifi_only", "never_lock_bitwarden")
+    internal const val SNAPSHOT = "bitwarden_settings_recovery_v1"
+    internal val longs = setOf("active_vault_id", "last_sync_time")
+    internal val booleans = setOf("auto_sync_enabled", "sync_on_wifi_only", "never_lock_bitwarden")
 
     fun open(context: Context): SharedPreferences = synchronized(lock) {
         val recovery = LocalVaultRecovery(context)
-        val active = recovery.activeStore()
         val security = SecurityManager(context)
+        if (recovery.usesPasswordStore()) return@synchronized PasswordBitwardenSettings(security)
+        val active = recovery.activeStore()
         val prefs = try {
             if (active != null) {
                 // Use the same recovered Keystore generation, never recreate the lost legacy key.
@@ -56,6 +57,12 @@ internal object RecoverableBitwardenSettings {
                 }
             }
         }
+    }
+
+    internal fun disableRecoveredAutomation(values: MutableMap<String, Any>) {
+        val snapshot = (values[SNAPSHOT] as? String)?.let(::JSONObject) ?: JSONObject()
+        snapshot.put("auto_sync_enabled", false).put("never_lock_bitwarden", false)
+        values[SNAPSHOT] = snapshot.toString()
     }
 
     private fun openRecovered(context: Context, active: Pair<String, String>, security: SecurityManager): SharedPreferences {

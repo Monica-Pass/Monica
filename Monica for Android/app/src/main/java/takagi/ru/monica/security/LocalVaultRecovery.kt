@@ -23,7 +23,7 @@ import javax.crypto.spec.SecretKeySpec
 /** Independent password recovery. Files here contain authenticated ciphertext, never plaintext keys. */
 internal class LocalVaultRecovery(private val context: Context) {
     private val directory = File(context.applicationInfo.dataDir, "files/local-vault-recovery")
-    private val envelope = AtomicFile(File(directory, "recovery.json"))
+    private val envelope get() = AtomicFile(selectedEnvelopeFile())
     private val selector = AtomicFile(File(directory, "active-store.json"))
     private val lock = locks.getOrPut(directory.absolutePath) { RecoveryLock() }
 
@@ -44,7 +44,7 @@ internal class LocalVaultRecovery(private val context: Context) {
     }
 
     companion object {
-        private data class CheckRecord(val digest: String, val selector: Pair<String, String>?,
+        private data class CheckRecord(val digest: String, val selector: RecoveryStoreSelection,
             val session: Long, val verifiedAtMillis: Long?)
         private val checks = ConcurrentHashMap<String, CheckRecord>()
         private val changes = kotlinx.coroutines.flow.MutableStateFlow(0L)
@@ -60,6 +60,7 @@ internal class LocalVaultRecovery(private val context: Context) {
         private const val ROUNDS = 600_000
         private const val MAX_BYTES = 64 * 1024 * 1024
         private val locks = ConcurrentHashMap<String, RecoveryLock>()
+        private val passwordPreferences = ConcurrentHashMap<String, PasswordRecoveryPreferences>()
         private val legacyCredentialKeys = listOf("master_password_hash", "master_password_salt", "mdk_password_blob", "mdk_password_salt")
         private val credentialKeys = legacyCredentialKeys + PasswordKdf.METADATA_KEY
         private fun encode(bytes: ByteArray) = Base64.encodeToString(bytes, Base64.NO_WRAP)
@@ -228,7 +229,7 @@ internal class LocalVaultRecovery(private val context: Context) {
         val material = materialStateLocked()
         if (material != RecoveryMaterialState.AVAILABLE) return@locked RecoveryProtectionStatus(material)
         val record = checks[directory.absolutePath]?.takeIf {
-            it.session == session && it.digest == digest(readEnvelope()) && it.selector == activeStore()
+            it.session == session && it.digest == digest(readEnvelope()) && it.selector == selection()
         }
         RecoveryProtectionStatus(material, record?.verifiedAtMillis, record != null && record.verifiedAtMillis == null)
     }
@@ -250,7 +251,7 @@ internal class LocalVaultRecovery(private val context: Context) {
                 val doc = readEnvelope()
                 checkMirror(prefs, doc)
                 check(fingerprint(prefs.all, doc.getInt("version")) == doc.getString("credentials"))
-                proof = CheckRecord(digest(doc), activeStore(), session, null)
+                proof = CheckRecord(digest(doc), selection(), session, null)
                 doc to prefs.all.toMap()
             }
             val captured = checkNotNull(proof)
@@ -267,7 +268,7 @@ internal class LocalVaultRecovery(private val context: Context) {
             require(MessageDigest.isEqual(expectedMdk, recoveredMdk))
             locked {
                 ensureCurrent()
-                check(prefs.all == current && digest(readEnvelope()) == captured.digest && activeStore() == captured.selector)
+                check(prefs.all == current && digest(readEnvelope()) == captured.digest && selection() == captured.selector)
                 val verified = captured.copy(verifiedAtMillis = System.currentTimeMillis())
                 publish { checks[directory.absolutePath] = verified }
             }
@@ -276,7 +277,7 @@ internal class LocalVaultRecovery(private val context: Context) {
             // A cancelled/retired attempt must not publish either success or failure.
             runCatching { locked {
                 ensureCurrent()
-                proof?.takeIf { it.digest == digest(readEnvelope()) && it.selector == activeStore() }
+                proof?.takeIf { it.digest == digest(readEnvelope()) && it.selector == selection() }
                     ?.let { record -> publish { checks[directory.absolutePath] = record } }
             } }
             return false
@@ -286,15 +287,64 @@ internal class LocalVaultRecovery(private val context: Context) {
         }
     }
 
-    fun activeStore(): Pair<String, String>? = locked {
-        if (!exists(selector)) return@locked null
+    internal fun selection(): RecoveryStoreSelection = locked {
         try {
-            val id = UUID.fromString(read(selector).getString("id")).toString()
-            "monica_recovered_$id" to "monica_recovered_key_$id"
+            RecoveryStoreSelectors.read(directory)
         } catch (error: Exception) {
             throw SecureStorageUnavailableException(SecurePreferencesStore.MONICA, "INVALID_RECOVERY_SELECTOR", error)
         }
     }
+
+    /** Keystore-only compatibility boundary. A password store must never look like a new install. */
+    fun activeStore(): Pair<String, String>? = when (val selected = selection()) {
+        RecoveryStoreSelection.Original -> null
+        is RecoveryStoreSelection.Keystore -> selected.name to selected.alias
+        is RecoveryStoreSelection.Password -> throw SecureStorageUnavailableException(
+            SecurePreferencesStore.MONICA, "PASSWORD_RECOVERY_ACTIVE")
+    }
+
+    internal fun selectedEnvelopeFile(): File = RecoveryStoreSelectors.envelope(directory, selection())
+
+    internal fun usesPasswordStore(): Boolean = selection() is RecoveryStoreSelection.Password
+
+    internal fun passwordRawPreferences(): PasswordRecoveryPreferences = locked {
+        val selected = selection() as? RecoveryStoreSelection.Password
+            ?: error("Password recovery store is not selected")
+        refreshPasswordPreferences(selected)
+    }
+
+    internal fun forgetPasswordSession() { passwordPreferences.remove(directory.absolutePath)?.retire() }
+
+    internal fun passwordSessionIdentity(): Any? = passwordPreferences[directory.absolutePath]
+
+    private fun refreshPasswordPreferences(selected: RecoveryStoreSelection.Password): PasswordRecoveryPreferences {
+        val raw = passwordPreferences[directory.absolutePath]?.takeIf { it.selection == selected }
+            ?: throw SecureStorageUnavailableException(SecurePreferencesStore.MONICA, "PASSWORD_RECOVERY_REQUIRED")
+        val doc = readEnvelope()
+        val before = raw.all
+        if (before[GENERATION] != doc.getString("generation") ||
+            fingerprint(before, doc.getInt("version")) != doc.getString("credentials")) {
+            passwordPreferences.remove(directory.absolutePath, raw)
+            raw.retire()
+            throw SecureStorageUnavailableException(SecurePreferencesStore.MONICA, "PASSWORD_RECOVERY_REQUIRED")
+        }
+        val key = decode(before[KEY] as String)
+        try {
+            val bytes = unseal(key, doc.getString("snapshot"), snapshotAad(doc))
+            val values = try { deserialize(bytes) } finally { bytes.fill(0) }
+            check(sameCredentials(before, values)) { "Password recovery credentials changed" }
+            check(selection() == selected)
+            raw.replace(withRecoveryMetadata(values, doc, key))
+            PreparedSecureStore.clearMirrorPending(context.applicationInfo.dataDir)
+        } finally { key.fill(0) }
+        return raw
+    }
+
+    private fun withRecoveryMetadata(values: Map<String, *>, doc: JSONObject, key: ByteArray): Map<String, Any> =
+        values.filterValues { it != null }.mapValues { requireNotNull(it.value) }.toMutableMap().apply {
+            put(KEY, encode(key)); put(GENERATION, doc.getString("generation"))
+            if (doc.has("revision")) put(REVISION, doc.getString("revision")) else remove(REVISION)
+        }
 
     /** A newer credential transaction must not fall back to an older password verifier. */
     private fun checkMirror(prefs: SharedPreferences, doc: JSONObject) {
@@ -333,9 +383,13 @@ internal class LocalVaultRecovery(private val context: Context) {
     /** SharedPreferences caches are process-local. Reload the exact encrypted disk map under
      * the writer lock; MODE_MULTI_PROCESS's timestamp heuristic is not an integrity check. */
     fun refreshPreferenceCache(preserveSessionIfSameCredentials: Boolean = true) = locked {
-        val sourceStore = activeStore()
-        val name = sourceStore?.first ?: SecurePreferencesStore.MONICA
-        val alias = sourceStore?.second ?: androidx.security.crypto.MasterKey.DEFAULT_MASTER_KEY_ALIAS
+        val sourceStore = selection()
+        if (sourceStore is RecoveryStoreSelection.Password) {
+            refreshPasswordPreferences(sourceStore)
+            return@locked
+        }
+        val name = (sourceStore as? RecoveryStoreSelection.Keystore)?.name ?: SecurePreferencesStore.MONICA
+        val alias = (sourceStore as? RecoveryStoreSelection.Keystore)?.alias ?: androidx.security.crypto.MasterKey.DEFAULT_MASTER_KEY_ALIAS
         val base = File(context.applicationInfo.dataDir, "shared_prefs/$name.xml")
         val backup = File(base.path + ".bak")
         val file = if (backup.exists()) backup else base
@@ -405,7 +459,7 @@ internal class LocalVaultRecovery(private val context: Context) {
                 val doc = currentEnvelope()
                 if (doc != null) checkMirror(checked, doc)
                 if (preservedCredentials != null) {
-                    check(activeStore() == sourceStore && doc != null &&
+                    check(selection() == sourceStore && doc != null &&
                         checked.getString(GENERATION, null) == preservedCredentials[GENERATION] &&
                         sameCredentials(checked.all, preservedCredentials) &&
                         fingerprint(checked.all, doc.getInt("version")) == doc.getString("credentials"))
@@ -473,9 +527,9 @@ internal class LocalVaultRecovery(private val context: Context) {
         val profile = outerProfile(values)
         val current = currentEnvelope()
         val source = current?.toString()
-        val sourceStore = activeStore()
+        val sourceStore = selection()
         val authorizeCommit = {
-            check(raw.all == before && activeStore() == sourceStore && currentEnvelope()?.toString() == source) {
+            check(raw.all == before && selection() == sourceStore && currentEnvelope()?.toString() == source) {
                 "Secure preferences changed during credential preparation"
             }
             check(expectedCredentials == null || sameCredentials(raw.all, expectedCredentials)) {
@@ -516,6 +570,30 @@ internal class LocalVaultRecovery(private val context: Context) {
         } finally { key.fill(0); passwordKey.fill(0) }
     }
 
+    private fun canonicalDocument(values: Map<String, *>, source: JSONObject, key: ByteArray): JSONObject {
+        val doc = JSONObject()
+        source.keys().asSequence().filter { it != "snapshot" && it != "revision" }
+            .forEach { doc.put(it, source.get(it)) }
+        doc.put("revision", UUID.randomUUID().toString())
+        val plain = serialize(values)
+        try {
+            val aad = snapshotAad(doc)
+            doc.put("snapshot", seal(key, plain, aad))
+            val verified = unseal(key, doc.getString("snapshot"), aad)
+            try { check(MessageDigest.isEqual(plain, verified)) } finally { verified.fill(0) }
+            return doc
+        } finally { plain.fill(0) }
+    }
+
+    private fun verifyWrittenSnapshot(file: AtomicFile, expected: JSONObject, key: ByteArray, values: Map<String, *>) {
+        val stored = read(file)
+        check(stored.toString() == expected.toString()) { "Recovery write could not be read back" }
+        val bytes = unseal(key, stored.getString("snapshot"), snapshotAad(stored))
+        try {
+            check(deserialize(bytes) == values.filterKeys { it != KEY && it != GENERATION && it != REVISION })
+        } finally { bytes.fill(0) }
+    }
+
     private fun persist(
         raw: SharedPreferences,
         values: Map<String, *>,
@@ -524,18 +602,10 @@ internal class LocalVaultRecovery(private val context: Context) {
         beforeCommit: () -> Unit = {},
     ) {
         // Keep the bounded publication header before the potentially large snapshot.
-        val doc = JSONObject()
-        source.keys().asSequence().filter { it != "snapshot" && it != "revision" }
-            .forEach { doc.put(it, source.get(it)) }
-        val revision = UUID.randomUUID().toString()
-        doc.put("revision", revision)
-        val plain = serialize(values)
+        val doc = canonicalDocument(values, source, key)
+        val revision = doc.getString("revision")
         var inFlight: PreparedSecureStore.MirrorCommit? = null
         try {
-            val aad = snapshotAad(doc)
-            doc.put("snapshot", seal(key, plain, aad))
-            val verified = unseal(key, doc.getString("snapshot"), aad)
-            try { check(MessageDigest.isEqual(plain, verified)) } finally { verified.fill(0) }
             // Canonical recovery credentials first. A crash before the mirror commits is
             // detected by validate(), rather than accepting the old master password.
             write(envelope, doc) {
@@ -546,6 +616,12 @@ internal class LocalVaultRecovery(private val context: Context) {
                 )
             }
             try {
+                if (raw is PasswordRecoveryPreferences) {
+                    check(selection() == raw.selection)
+                    verifyWrittenSnapshot(envelope, doc, key, values)
+                    raw.replace(withRecoveryMetadata(values, doc, key))
+                    return
+                }
                 val before = raw.all
                 val editor = raw.edit()
                 before.keys.filter { it !in values }.forEach(editor::remove)
@@ -559,29 +635,94 @@ internal class LocalVaultRecovery(private val context: Context) {
             }
         } finally {
             inFlight?.let(PreparedSecureStore::finishMirrorCommit)
-            plain.fill(0)
             checks.remove(directory.absolutePath)
             changed()
         }
     }
 
-    /** Preserve originals; switch only after authenticating and reading back a separate new store. */
-    fun recover(password: String, publish: (() -> Unit) -> Unit = { it() }): Boolean = runCatching { locked {
-        var recoveryKey: ByteArray? = null
+    /** Authentication itself needs no AndroidKeyStore. Callers must retain this source check
+     * through their final publication; a stale password snapshot is never a recovery permit. */
+    internal fun authenticatePasswordMaterial(password: String, ensureActive: () -> Unit = {}): PasswordRecoveryMaterial {
+        val (doc, sourceStore) = locked { ensureActive(); readEnvelope() to selection() }
+        val sourceDocument = doc.toString()
+        fun current() {
+            ensureActive()
+            locked {
+                check(readEnvelope().toString() == sourceDocument && selection() == sourceStore) {
+                    "Recovery source changed"
+                }
+            }
+            ensureActive()
+        }
         var passwordKey: ByteArray? = null
+        var recoveryKey: ByteArray? = null
+        var mdk: ByteArray? = null
         try {
-            val doc = readEnvelope()
-            val sourceDocument = doc.toString()
-            val sourceStore = activeStore()
-            val generation = doc.getString("generation")
             passwordKey = PasswordKdf.derive(password, decode(doc.getString("salt")), documentProfile(doc))
+            ensureActive()
             recoveryKey = unseal(passwordKey, doc.getString("key"), keyAad(doc))
             require(recoveryKey.size == 32)
             val bytes = unseal(recoveryKey, doc.getString("snapshot"), snapshotAad(doc))
-            val values = try { deserialize(bytes).toMutableMap() } finally { bytes.fill(0) }
+            val values = try { deserialize(bytes) } finally { bytes.fill(0) }
             require(fingerprint(values, doc.getInt("version")) == doc.getString("credentials"))
             require(outerProfile(values).encoded == documentProfile(doc).encoded)
-            validateMdk(password, values)
+            mdk = LocalPasswordCredentials.unwrap(password, values)
+            current()
+            val result = PasswordRecoveryMaterial(values, mdk, recoveryKey, ::current)
+            mdk = null; recoveryKey = null // Ownership passes to the closeable material.
+            return result
+        } finally { passwordKey?.fill(0); recoveryKey?.fill(0); mdk?.fill(0) }
+    }
+
+    /** Explicit fallback only. No database, legacy store or alias is overwritten. */
+    internal fun recoverWithoutKeystore(password: String, publish: (() -> Unit) -> Unit = { it() }): Boolean =
+        runCatching {
+            authenticatePasswordMaterial(password).use { material ->
+                val key = material.copyRecoveryKey()
+                try { locked {
+                    material.checkCurrent()
+                    val sourceSelection = selection()
+                    val source = readEnvelope()
+                    val values = material.preferenceSnapshot().toMutableMap()
+                    values.remove("mdk_keystore_blob")
+                    values.remove(BiometricMdkBinding.ACTIVE)
+                    values["biometric_enabled"] = false
+                    RecoverableBitwardenSettings.disableRecoveredAutomation(values)
+                    val selected = sourceSelection as? RecoveryStoreSelection.Password
+                        ?: RecoveryStoreSelection.Password(UUID.randomUUID().toString())
+                    // A cold unlock of an existing fallback does not rewrite its credentials.
+                    val doc = if (sourceSelection == selected) source else canonicalDocument(values, source, key)
+                    val actualValues = if (sourceSelection == selected) material.preferenceSnapshot() else values
+                    val target = AtomicFile(RecoveryStoreSelectors.envelope(directory, selected))
+                    if (sourceSelection != selected) write(target, doc) { material.checkCurrent() }
+                    verifyWrittenSnapshot(target, doc, key, actualValues)
+                    val raw = PasswordRecoveryPreferences(selected, withRecoveryMetadata(actualValues, doc, key))
+                    publish {
+                        material.checkCurrent()
+                        if (sourceSelection != selected) write(selector, RecoveryStoreSelectors.encode(selected))
+                        passwordPreferences.put(directory.absolutePath, raw)?.retire()
+                        PreparedSecureStore.invalidate()
+                    }
+                    SecurityManager.clearRuntimeUnlockCache()
+                    SessionManager.markLocked()
+                    true
+                } } finally { key.fill(0) }
+            }
+        }.getOrDefault(false)
+
+    /** Preserve originals; switch only after authenticating and reading back a separate new store. */
+    fun recover(password: String, publish: (() -> Unit) -> Unit = { it() }): Boolean = runCatching { locked {
+        if (selection() is RecoveryStoreSelection.Password) return@locked recoverWithoutKeystore(password, publish)
+        var recoveryKey: ByteArray? = null
+        var material: PasswordRecoveryMaterial? = null
+        try {
+            val doc = readEnvelope()
+            val sourceDocument = doc.toString()
+            val sourceStore = selection()
+            val generation = doc.getString("generation")
+            material = authenticatePasswordMaterial(password)
+            recoveryKey = material.copyRecoveryKey()
+            val values = material.preferenceSnapshot().toMutableMap()
             val id = UUID.randomUUID().toString()
             val opened = SecurePreferencesStore.openRaw(context, "monica_recovered_$id", "monica_recovered_key_$id")
             values.remove("mdk_keystore_blob")
@@ -601,7 +742,7 @@ internal class LocalVaultRecovery(private val context: Context) {
                 if (doc.has("revision")) doc.getString("revision") else null)
             // The production caller withdraws this permission on timeout or cancellation.
             publish {
-                check(readEnvelope().toString() == sourceDocument && activeStore() == sourceStore) {
+                check(readEnvelope().toString() == sourceDocument && selection() == sourceStore) {
                     "Recovery source changed; try again"
                 }
                 write(selector, JSONObject().put("id", id))
@@ -612,29 +753,13 @@ internal class LocalVaultRecovery(private val context: Context) {
             true
         } catch (_: Exception) {
             false
-        } finally { recoveryKey?.fill(0); passwordKey?.fill(0) }
+        } finally { recoveryKey?.fill(0); material?.close() }
     } }.getOrDefault(false)
 
-    private fun validateMdk(password: String, values: Map<String, Any>) {
-        val saltHex = values["mdk_password_salt"] as String
-        require(saltHex.length == 64 && saltHex.all { it in "0123456789abcdefABCDEF" })
-        val profile = PasswordKdf.fromValues(values)
-        val key = PasswordKdf.derive(password, saltHex.chunked(2).map { it.toInt(16).toByte() }.toByteArray(), profile)
-        try {
-            val bytes = decode(values["mdk_password_blob"] as String)
-            require(bytes.size == 60)
-            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-            cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(128, bytes.copyOfRange(0, 12)))
-            PasswordKdf.mdkAad(profile)?.let(cipher::updateAAD)
-            val mdk = cipher.doFinal(bytes, 12, bytes.size - 12)
-            try { require(mdk.size == 32) } finally { mdk.fill(0) }
-        } finally { key.fill(0) }
-    }
-
     private inner class MirroredPreferences(val delegate: SharedPreferences) : SharedPreferences by delegate {
-        private val storeAtOpen = activeStore()
+        private val storeAtOpen = selection()
         fun checkActive() {
-            check(activeStore() == storeAtOpen) { "Secure preference store changed; reopen required" }
+            check(selection() == storeAtOpen) { "Secure preference store changed; reopen required" }
         }
         override fun edit(): SharedPreferences.Editor = object : SharedPreferences.Editor {
             private val changes = linkedMapOf<String, Any?>()
@@ -667,6 +792,9 @@ internal class LocalVaultRecovery(private val context: Context) {
                         val verifiedKey = checkNotNull(key)
                         try {
                             if ("master_password_hash" !in values) {
+                                check(delegate !is PasswordRecoveryPreferences) {
+                                    "A password recovery store cannot revoke its only unlock path"
+                                }
                                 // Explicit full reset only. Revoke recoverability before clearing credentials.
                                 write(envelope, JSONObject().put("version", 0).put("reason", "explicit_reset"))
                                 val editor = delegate.edit().clear()
@@ -701,5 +829,13 @@ internal class LocalVaultRecovery(private val context: Context) {
         (prefs as? MirroredPreferences)?.checkActive()
         if (prefs.getString(name, null) != expected) return@locked false
         prefs.edit().putString(name, replacement).commit()
+    }
+
+    /** Read/merge/write under the same cross-process lock as the canonical document. */
+    internal fun updateProtectedObject(prefs: SharedPreferences, name: String, update: (JSONObject) -> Unit): Boolean = locked {
+        validate(prefs)
+        val snapshot = prefs.getString(name, null)?.let(::JSONObject) ?: JSONObject()
+        update(snapshot)
+        prefs.edit().putString(name, snapshot.toString()).commit()
     }
 }

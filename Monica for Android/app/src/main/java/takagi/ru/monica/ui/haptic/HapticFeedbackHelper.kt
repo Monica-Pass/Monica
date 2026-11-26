@@ -85,12 +85,12 @@ class HapticFeedbackHelper(
     
     // ==================== 标准触觉反馈 ====================
 
-    /** UI feedback has a bounded compatibility path when the host rejects it. */
+    /** App-controlled feedback uses the same supported light/strong effects for all interactions. */
     fun performSliderTick(): InteractionHapticResult = dispatchInteractionHaptic(
-        enabled, strength, tick = true, AndroidInteractionHapticDevice(context, view))
+        enabled, strength, AndroidInteractionHapticDevice(context, view))
 
     fun performSwitchToggle(): InteractionHapticResult = dispatchInteractionHaptic(
-        enabled, strength, tick = false, AndroidInteractionHapticDevice(context, view))
+        enabled, strength, AndroidInteractionHapticDevice(context, view))
 
     /**
      * 轻量点击反馈
@@ -102,11 +102,7 @@ class HapticFeedbackHelper(
      * - 列表项点击
      */
     fun performLightClick() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            performViewHaptic(HapticFeedbackConstants.CLOCK_TICK)
-        } else {
-            performCustomVibration(10)  // 10ms 短震动
-        }
+        performSliderTick()
     }
 
     /**

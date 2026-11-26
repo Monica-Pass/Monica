@@ -3,6 +3,5 @@
     <string name="haptic_strength">Intensidad de vibración</string>
     <string name="haptic_strength_description">0 = Desactivada · 1 = Suave · 2 = Fuerte</string>
     <string name="haptic_test">Probar vibración</string>
-    <string name="haptic_system_disabled">Activa la respuesta táctil en los ajustes del sistema para sentir las vibraciones.</string>
     <string name="haptic_unavailable">La vibración no está disponible en este dispositivo o el sistema la ha rechazado.</string>
 </resources>

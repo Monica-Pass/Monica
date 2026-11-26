@@ -449,6 +449,12 @@ class MainActivity : BaseMonicaActivity() {
                                     .setPrimaryClip(android.content.ClipData.newPlainText("Monica diagnostic", diagnostic))
                             },
                             onExit = { finish() },
+                            onRecoverWithoutKeystore = if (canRecover) { password ->
+                                val recovered = takagi.ru.monica.security.ConfirmedStorageRecovery.recover(
+                                    this@MainActivity, password, withoutKeystore = true)
+                                if (recovered) withContext(Dispatchers.Main.immediate) { recreate() }
+                                recovered
+                            } else null,
                             onRecover = if (canRecover) { password ->
                                 val recovered = takagi.ru.monica.security.ConfirmedStorageRecovery.recover(this@MainActivity, password)
                                 if (recovered) withContext(Dispatchers.Main.immediate) { recreate() }

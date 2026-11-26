@@ -24,6 +24,7 @@ fun ForgotPasswordScreen(
     onResetComplete: () -> Unit
 ) {
     val context = LocalContext.current
+    val passwordRecovery = remember(context) { takagi.ru.monica.security.SecurityManager(context).isPasswordRecoveryMode }
     var showConfirmDialog by remember { mutableStateOf(false) }
     var isResetting by remember { mutableStateOf(false) }
     
@@ -194,6 +195,8 @@ fun ForgotPasswordScreen(
             val hasSelection = clearPasswords || clearAuthenticators || clearDocuments || 
                               clearBankCards || clearGeneratorHistory
             
+            if (passwordRecovery) Text(context.getString(R.string.password_recovery_reset_unavailable),
+                style = MaterialTheme.typography.bodyMedium)
             // Reset Button
             Button(
                 onClick = { showConfirmDialog = true },
@@ -201,7 +204,7 @@ fun ForgotPasswordScreen(
                     containerColor = MaterialTheme.colorScheme.error
                 ),
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !isResetting && hasSelection
+                enabled = !passwordRecovery && !isResetting && hasSelection
             ) {
                 if (isResetting) {
                     CircularProgressIndicator(

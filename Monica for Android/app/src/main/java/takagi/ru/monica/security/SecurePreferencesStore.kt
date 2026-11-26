@@ -34,7 +34,11 @@ internal object SecurePreferencesStore {
     private const val KEY_KEYSET = "__androidx_security_crypto_encrypted_prefs_key_keyset__"
     private const val VALUE_KEYSET = "__androidx_security_crypto_encrypted_prefs_value_keyset__"
 
-    data class Opened(val masterKey: MasterKey, val preferences: SharedPreferences)
+    data class Opened(
+        val masterKey: MasterKey?,
+        val preferences: SharedPreferences,
+        val rawPreferences: SharedPreferences = preferences,
+    )
 
     @Synchronized
     fun preflight(context: Context, name: String, alias: String = MasterKey.DEFAULT_MASTER_KEY_ALIAS) {
@@ -70,6 +74,12 @@ internal object SecurePreferencesStore {
         if (name == MONICA && alias == MasterKey.DEFAULT_MASTER_KEY_ALIAS) {
             RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.ACTIVE_STORE)
             val recovery = LocalVaultRecovery(context)
+            if (recovery.usesPasswordStore()) {
+                val raw = recovery.passwordRawPreferences()
+                val preferences = recovery.wrap(raw)
+                recovery.validate(preferences)
+                return Opened(null, preferences, raw)
+            }
             val active = recovery.activeStore()
             val opened = openRaw(context, active?.first ?: name, active?.second ?: alias)
             try {
@@ -106,7 +116,7 @@ internal object SecurePreferencesStore {
             phase = SecureStoragePhase.VALUE_READ
             RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.VALUE_READ)
             prefs.all
-            return Opened(masterKey, prefs)
+            return Opened(masterKey, prefs, context.getSharedPreferences(name, Context.MODE_PRIVATE))
         } catch (error: SecureStorageUnavailableException) {
             throw error
         } catch (cancelled: CancellationException) {
@@ -316,7 +326,7 @@ internal object SecureStorageStartup {
             RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.ACTIVE_STORE)
             // Do not create the shared legacy alias over an existing Bitwarden store.
             // An unreadable Bitwarden settings store must not block a healthy local vault.
-            if (LocalVaultRecovery(context).activeStore() == null &&
+            if (!LocalVaultRecovery(context).usesPasswordStore() && LocalVaultRecovery(context).activeStore() == null &&
                 context.getSharedPreferences(SecurePreferencesStore.MONICA, Context.MODE_PRIVATE).all.isEmpty()) {
                 RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.PREFLIGHT)
                 SecurePreferencesStore.preflight(context, SecurePreferencesStore.BITWARDEN)

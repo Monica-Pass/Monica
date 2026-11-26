@@ -3,6 +3,5 @@
     <string name="haptic_strength">Cường độ rung</string>
     <string name="haptic_strength_description">0 = Tắt · 1 = Nhẹ · 2 = Mạnh</string>
     <string name="haptic_test">Thử rung</string>
-    <string name="haptic_system_disabled">Bật phản hồi cảm ứng trong cài đặt hệ thống để cảm nhận rung.</string>
     <string name="haptic_unavailable">Thiết bị này không hỗ trợ rung hoặc hệ thống đã từ chối yêu cầu rung.</string>
 </resources>

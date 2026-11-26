@@ -37,12 +37,19 @@ internal fun ComponentActivity.showSecureStorageBlocked(result: SecureStartupRes
     setContent {
         MonicaTheme {
             SecureStorageRecoveryScreen(
+                failureReason = result.failure.reason,
+                recoveryMaterial = result.recoveryMaterial,
                 onRetry = { recreate() },
                 onCopyDiagnostic = {
                     getSystemService(ClipboardManager::class.java)
                         .setPrimaryClip(ClipData.newPlainText("Monica diagnostic", diagnostic))
                 },
                 onExit = { finish() },
+                onRecoverWithoutKeystore = if (result.recoveryAvailable) { password ->
+                    val recovered = ConfirmedStorageRecovery.recover(this, password, withoutKeystore = true)
+                    if (recovered) recreate()
+                    recovered
+                } else null,
                 onRecover = if (result.recoveryAvailable) { password ->
                     val recovered = ConfirmedStorageRecovery.recover(this, password)
                     if (recovered) recreate()

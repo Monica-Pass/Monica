@@ -1,0 +1,461 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=screenshotProtectionCardTogglesPersistsAndVibratesOnce
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: screenshot-card-1 expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce$lambda$0(GeneratorFeedbackInstrumentedTest.kt:107)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda33.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce(GeneratorFeedbackInstrumentedTest.kt:89)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in screenshotProtectionCardTogglesPersistsAndVibratesOnce(takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest):
+
+java.lang.AssertionError: screenshot-card-1 expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce$lambda$0(GeneratorFeedbackInstrumentedTest.kt:107)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda33.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce(GeneratorFeedbackInstrumentedTest.kt:89)
+
+
+
+INSTRUMENTATION_STATUS: test=screenshotProtectionCardTogglesPersistsAndVibratesOnce
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=generatorLengthDragTicksInBothDirectionsForAllTextModes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: PASSWORD-drag-right expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes$lambda$0(GeneratorFeedbackInstrumentedTest.kt:153)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda36.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes(GeneratorFeedbackInstrumentedTest.kt:129)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in generatorLengthDragTicksInBothDirectionsForAllTextModes(takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest):
+
+java.lang.AssertionError: PASSWORD-drag-right expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes$lambda$0(GeneratorFeedbackInstrumentedTest.kt:153)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda36.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes(GeneratorFeedbackInstrumentedTest.kt:129)
+
+
+
+INSTRUMENTATION_STATUS: test=generatorLengthDragTicksInBothDirectionsForAllTextModes
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.GeneratorResultMotionTest:
+
+INSTRUMENTATION_STATUS: test=stickyCompactTransitionHasIntermediateHeight
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Sticky compact must shrink smoothly
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.stickyCompactTransitionHasIntermediateHeight(GeneratorResultMotionTest.kt:100)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in stickyCompactTransitionHasIntermediateHeight(takagi.ru.monica.ui.GeneratorResultMotionTest):
+
+java.lang.AssertionError: Sticky compact must shrink smoothly
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.stickyCompactTransitionHasIntermediateHeight(GeneratorResultMotionTest.kt:100)
+
+
+
+INSTRUMENTATION_STATUS: test=stickyCompactTransitionHasIntermediateHeight
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=reducedMotionAndRemovalAreImmediate
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertTrue(Assert.java:53)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.reducedMotionAndRemovalAreImmediate(GeneratorResultMotionTest.kt:118)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in reducedMotionAndRemovalAreImmediate(takagi.ru.monica.ui.GeneratorResultMotionTest):
+
+java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertTrue(Assert.java:53)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.reducedMotionAndRemovalAreImmediate(GeneratorResultMotionTest.kt:118)
+
+
+
+INSTRUMENTATION_STATUS: test=reducedMotionAndRemovalAreImmediate
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=largeTextDarkResultsResizeSmoothly
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Collapse needs measured intermediate heights: [397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.largeTextDarkResultsResizeSmoothly(GeneratorResultMotionTest.kt:90)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in largeTextDarkResultsResizeSmoothly(takagi.ru.monica.ui.GeneratorResultMotionTest):
+
+java.lang.AssertionError: Collapse needs measured intermediate heights: [397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.largeTextDarkResultsResizeSmoothly(GeneratorResultMotionTest.kt:90)
+
+
+
+INSTRUMENTATION_STATUS: test=largeTextDarkResultsResizeSmoothly
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=longAndShortResultsResizeSmoothly
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.GeneratorResultMotionTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=6
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Collapse needs measured intermediate heights: [350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.longAndShortResultsResizeSmoothly(GeneratorResultMotionTest.kt:89)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in longAndShortResultsResizeSmoothly(takagi.ru.monica.ui.GeneratorResultMotionTest):
+
+java.lang.AssertionError: Collapse needs measured intermediate heights: [350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.longAndShortResultsResizeSmoothly(GeneratorResultMotionTest.kt:89)
+
+
+
+INSTRUMENTATION_STATUS: test=longAndShortResultsResizeSmoothly
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 9.773
+
+There were 6 failures:
+
+1) screenshotProtectionCardTogglesPersistsAndVibratesOnce(takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest)
+
+java.lang.AssertionError: screenshot-card-1 expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce$lambda$0(GeneratorFeedbackInstrumentedTest.kt:107)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda33.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.screenshotProtectionCardTogglesPersistsAndVibratesOnce(GeneratorFeedbackInstrumentedTest.kt:89)
+
+2) generatorLengthDragTicksInBothDirectionsForAllTextModes(takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest)
+
+java.lang.AssertionError: PASSWORD-drag-right expected:<1> but was:<0>
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+
+	at org.junit.Assert.assertEquals(Assert.java:120)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.verifyOutput(GeneratorFeedbackInstrumentedTest.kt:65)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes$lambda$0(GeneratorFeedbackInstrumentedTest.kt:153)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest$$ExternalSyntheticLambda36.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.withSystemTouchOff(GeneratorFeedbackInstrumentedTest.kt:80)
+
+	at takagi.ru.monica.ui.GeneratorFeedbackInstrumentedTest.generatorLengthDragTicksInBothDirectionsForAllTextModes(GeneratorFeedbackInstrumentedTest.kt:129)
+
+3) stickyCompactTransitionHasIntermediateHeight(takagi.ru.monica.ui.GeneratorResultMotionTest)
+
+java.lang.AssertionError: Sticky compact must shrink smoothly
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.stickyCompactTransitionHasIntermediateHeight(GeneratorResultMotionTest.kt:100)
+
+4) reducedMotionAndRemovalAreImmediate(takagi.ru.monica.ui.GeneratorResultMotionTest)
+
+java.lang.AssertionError
+
+	at org.junit.Assert.fail(Assert.java:87)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at org.junit.Assert.assertTrue(Assert.java:53)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.reducedMotionAndRemovalAreImmediate(GeneratorResultMotionTest.kt:118)
+
+5) largeTextDarkResultsResizeSmoothly(takagi.ru.monica.ui.GeneratorResultMotionTest)
+
+java.lang.AssertionError: Collapse needs measured intermediate heights: [397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0, 397.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.largeTextDarkResultsResizeSmoothly(GeneratorResultMotionTest.kt:90)
+
+6) longAndShortResultsResizeSmoothly(takagi.ru.monica.ui.GeneratorResultMotionTest)
+
+java.lang.AssertionError: Collapse needs measured intermediate heights: [350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0, 350.0]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.resize(GeneratorResultMotionTest.kt:76)
+
+	at takagi.ru.monica.ui.GeneratorResultMotionTest.longAndShortResultsResizeSmoothly(GeneratorResultMotionTest.kt:89)
+
+
+
+FAILURES!!!
+
+Tests run: 6,  Failures: 6
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

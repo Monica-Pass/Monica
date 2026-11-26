@@ -3,6 +3,5 @@
     <string name="haptic_strength">Сила вибрации</string>
     <string name="haptic_strength_description">0 = Выкл. · 1 = Слабая · 2 = Сильная</string>
     <string name="haptic_test">Проверить вибрацию</string>
-    <string name="haptic_system_disabled">Включите тактильный отклик в системных настройках, чтобы почувствовать вибрацию.</string>
     <string name="haptic_unavailable">Вибрация недоступна на этом устройстве или отклонена системой.</string>
 </resources>

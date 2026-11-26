@@ -82,7 +82,7 @@ class KeePassKeyFileStore(
             if (target.length() > 4 * 1024 * 1024) return@forEach
             runCatching {
                 val original = target.readText(Charsets.UTF_8)
-                if (!original.startsWith("C2|") && !original.startsWith("V2|")) return@runCatching
+                if (!takagi.ru.monica.security.LocalCipherEnvelope.isDeviceBound(original)) return@runCatching
                 val plain = securityManager.decryptData(original)
                 require(Base64.decode(plain, Base64.NO_WRAP).isNotEmpty())
                 val replacement = securityManager.encryptData(plain)

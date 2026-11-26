@@ -16,6 +16,7 @@ import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.repository.MdbxRepository
 import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.PreparedSecureStore
 import takagi.ru.monica.utils.KeePassKdbxService
 
 /**
@@ -42,6 +43,7 @@ object AttachmentContainer {
     }
 
     @Volatile private var appContext: Context? = null
+    private var secureStoreIdentity: Pair<String?, Any?>? = null
 
     @Volatile private var repositoryCache: AttachmentRepository? = null
     @Volatile private var storageCache: AttachmentStorage? = null
@@ -218,12 +220,24 @@ object AttachmentContainer {
 
     private fun ensureContext(context: Context): Context {
         val app = context.applicationContext
-        if (appContext !== app) {
-            synchronized(this) {
-                if (appContext !== app) {
-                    appContext = app
-                }
+        synchronized(this) {
+            val identity = PreparedSecureStore.selectionIdentity(app)
+            if (appContext != null && (appContext !== app || secureStoreIdentity != identity)) {
+                // A confirmed recovery publishes a different preference store. New
+                // operations must resolve fresh handles; already-running operations
+                // retain their old handles and are rejected by the normal lock checks.
+                keyVaultCache = null
+                localExecutorCache = null
+                bitwardenExecutorCache = null
+                keepassExecutorCache = null
+                keepassReconcilerCache = null
+                facadeCache = null
+                mdbxVaultStoreCache = null
+                defaultKeePassServiceCache = null
+                keepassServiceOverride = null
             }
+            appContext = app
+            secureStoreIdentity = identity
         }
         return app
     }

@@ -22,7 +22,8 @@ internal object ConfirmedStorageRecovery {
     }
     internal val inProgress: Boolean get() = synchronized(lock) { running != null }
 
-    suspend fun recover(context: Context, password: String, timeoutMillis: Long = 15_000): Boolean {
+    suspend fun recover(context: Context, password: String, timeoutMillis: Long = 15_000,
+        withoutKeystore: Boolean = false): Boolean {
         require(timeoutMillis > 0)
         currentCoroutineContext().ensureActive()
         val work = synchronized(lock) {
@@ -36,9 +37,12 @@ internal object ConfirmedStorageRecovery {
                 try {
                     work.guard.checkActive()
                     val recovery = LocalVaultRecovery(work.guard.context)
-                    work.result.complete(recovery.recover(checkNotNull(work.password)) { publish ->
+                    val publishWhileActive: (() -> Unit) -> Unit = { publish ->
                         work.guard.publishWhileActive(publish)
-                    })
+                    }
+                    work.result.complete(if (withoutKeystore)
+                        recovery.recoverWithoutKeystore(checkNotNull(work.password), publishWhileActive)
+                    else recovery.recover(checkNotNull(work.password), publishWhileActive))
                 } catch (_: Exception) {
                     work.result.complete(false)
                 } finally {

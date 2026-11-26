@@ -95,13 +95,11 @@ class SelectionActionBarInstrumentedTest {
             compose.waitForIdle()
             compose.runOnIdle {
                 val c = selectionBarColors(scheme)
-                val ordinary = contrast(c.actionContent, c.actionContainer)
-                val destructive = contrast(c.deleteContent, c.deleteContainer)
+                val ordinary = contrast(c.actionContent, c.container)
+                val destructive = contrast(c.deleteContent, c.container)
                 assertTrue("$choice/$night ordinary $ordinary", ordinary >= 4.5)
                 assertTrue("$choice/$night delete $destructive", destructive >= 4.5)
                 assertTrue(contrast(c.container, scheme.surfaceContainerHighest) >= 1.249)
-                assertTrue(contrast(c.actionContainer, c.container) >= 1.249)
-                assertTrue(contrast(c.deleteContainer, c.container) >= 1.249)
                 assertTrue(contrast(readableSelectionContent(scheme.onPrimary, scheme.primary), scheme.primary) >= 4.5)
                 record += "$choice dark=$night ordinary=$ordinary destructive=$destructive"
             }
@@ -115,19 +113,20 @@ class SelectionActionBarInstrumentedTest {
         File(context.filesDir, "selection-contrast.txt").writeText(record.joinToString("\n"))
     }
 
-    @Test fun filledCirclesRenderAndActionsKeepTheirCallbacks() {
+    @Test fun compactUnfilledActionsKeepTheirCallbacks() {
         show()
         val all = compose.onNodeWithContentDescription(label(R.string.select_all))
-        all.assertWidthIsAtLeast(48.dp).assertHeightIsAtLeast(48.dp)
+        all.assertWidthIsEqualTo(40.dp).assertHeightIsEqualTo(40.dp)
         val bitmap = all.captureToImage().asAndroidBitmap()
         val expected = compose.runOnIdle {
-            selectionBarColors(scheme).actionContainer.toArgb()
+            selectionBarColors(scheme).container.toArgb()
         }
         var filled = 0
         for (y in 0 until bitmap.height) for (x in 0 until bitmap.width) {
             if (bitmap.getPixel(x, y) == expected) filled++
         }
-        assertTrue("A solid circular fill must be visible", filled > bitmap.width * bitmap.height / 3)
+        assertTrue("The toolbar surface must remain visible around the unfilled icon",
+            filled > bitmap.width * bitmap.height * 0.7)
         for (id in listOf(R.string.select_all, R.string.favorite, R.string.move_to_category,
             R.string.batch_stack, R.string.delete)) {
             compose.onNodeWithContentDescription(label(id)).performScrollTo().performTouchInput { click() }
@@ -140,7 +139,7 @@ class SelectionActionBarInstrumentedTest {
         selected = 12345
         show(narrow = true, rtl = true)
         val close = compose.onNodeWithContentDescription(label(R.string.close))
-        close.assertIsDisplayed().assertWidthIsAtLeast(48.dp).assertHeightIsAtLeast(48.dp)
+        close.assertIsDisplayed().assertWidthIsEqualTo(40.dp).assertHeightIsEqualTo(40.dp)
         compose.onNodeWithContentDescription(label(R.string.delete)).performScrollTo().assertIsDisplayed().performClick()
         close.assertIsDisplayed().performClick()
         compose.onNodeWithContentDescription(label(R.string.select_all)).performScrollTo().assertIsDisplayed().performClick()

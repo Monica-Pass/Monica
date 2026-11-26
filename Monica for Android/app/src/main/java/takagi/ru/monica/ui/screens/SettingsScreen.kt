@@ -490,9 +490,10 @@ fun SettingsScreen(
                             icon = Icons.Default.Security,
                             setting = Setting.SCREENSHOT_PROTECTION,
                             subtitle = screenshotProtectionSubtitle,
-                            onClick = {
-                                viewModel.updateScreenshotProtectionEnabled(!settings.screenshotProtectionEnabled)
-                            },
+                            onClick = switchClick(
+                                checked = settings.screenshotProtectionEnabled,
+                                onCheckedChange = viewModel::updateScreenshotProtectionEnabled
+                            ),
                             sectionShape = settingsSectionItemShape(
                                 visibleSettingsIndex(showMasterPasswordLockingItem),
                                 securityItemCount

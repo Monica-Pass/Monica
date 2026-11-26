@@ -41,7 +41,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicReference
 
 /**
- * Operates an existing, host-proven TEE-to-OMK recovered synthetic vault. Never creates a vault,
+ * Operates an explicitly owned TEE-to-OMK or password-fallback synthetic vault. Never creates a vault,
  * replaces an alias, changes a module or deletes a row. Explicit UI edits remain as evidence.
  */
 class MuMuRecoveredEntryFixtureTest {
@@ -50,7 +50,55 @@ class MuMuRecoveredEntryFixtureTest {
     private val context get() = instrumentation.targetContext
     private val dao get() = PasswordDatabase.getDatabase(context).passwordEntryDao()
     private val ui: UiAutomation get() = instrumentation.uiAutomation
-    private val fixtureRoot get() = File(context.filesDir, "mumu-omk-module-fixture-325")
+    private val passwordFallback get() = InstrumentationRegistry.getArguments().getString("passwordFallbackUser") != null
+    private val fixturePassword get() = if (passwordFallback) "Synthetic-independent-recovery-331!" else MASTER_PASSWORD
+    private val fixtureRoot get() = File(context.filesDir, if (passwordFallback) "password-fallback-entry-331" else "mumu-omk-module-fixture-325")
+
+    @Test fun seedExplicitPasswordFallbackEntries() = runBlocking {
+        check(passwordFallback)
+        val user = InstrumentationRegistry.getArguments().getString("passwordFallbackUser")!!.toInt()
+        check(user == Process.myUid() / 100_000 && user > 10)
+        check(context.packageName.startsWith("takagi.ru.monica.resilience"))
+        check(File(context.filesDir, "password-fallback-activity-331").isFile)
+        check(!fixtureRoot.exists())
+        val recovery = LocalVaultRecovery(context)
+        assertTrue(recovery.usesPasswordStore())
+        assertTrue(recovery.recoverWithoutKeystore(fixturePassword))
+        assertTrue(SecureStorageStartup.prepareWithRetry(context) is SecureStartupResult.Ready)
+        val security = SecurityManager(context)
+        assertTrue(security.unlockVaultWithPassword(fixturePassword))
+        check(dao.getAllPasswordEntriesSync().isEmpty())
+        suspend fun row(title: String, secret: String) = dao.insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
+            title = title, website = "https://example.invalid", username = "synthetic-omk-original-user",
+            password = security.encryptData(secret)))
+        val secret = "Synthetic fallback original secret"
+        val originalId = row("Recovered entry fixture", secret)
+        val newId = row("New entry fixture", "Synthetic-new-OMK-row-325!Read-Back")
+        val coldId = row("Cold entry fixture", "Synthetic-cold-OMK-row-325!Read-Back")
+        val marker = JSONObject().put("uid", Process.myUid()).put("packageName", context.packageName)
+            .put("phase", "cold_restart_write_verified").put("usedConfirmedRecovery", true)
+            .put("rowId", originalId).put("newRowId", newId).put("coldRowId", coldId).put("rowSecret", secret)
+            .put("mdkPasswordBlob", security.getProtectedString("mdk_password_blob"))
+            .put("protectedKey", "independent_activity_secret").put("protectedSecret", "Preserved synthetic secret 中文")
+        check(fixtureRoot.mkdirs()); File(fixtureRoot, "fixture.json").writeText(marker.toString())
+        assertOriginalSecrets(marker, security)
+    }
+
+    private fun unlockSecondaryPasswordStoreIfNeeded() {
+        if (!passwordFallback) return
+        val page = waitNode { node -> node.text?.toString() in setOf(
+            context.getString(R.string.password_recovery_unlock), context.getString(R.string.unlock)) }
+        if (page.text?.toString() == context.getString(R.string.unlock)) return
+        val input = waitNode { it.packageName?.toString() == context.packageName && it.isEditable }
+        setText(input, fixturePassword)
+        val label = waitNode { node ->
+            if (node.text?.toString() != context.getString(R.string.password_recovery_unlock)) false
+            else generateSequence(node) { it.parent }.any { it.isClickable && it.isEnabled }
+        }
+        val button = generateSequence(label) { it.parent }.first { it.isClickable && it.isEnabled }
+        assertTrue(button.performAction(AccessibilityNodeInfo.ACTION_CLICK))
+        waitNode { it.text?.toString() == context.getString(R.string.unlock) }
+    }
 
     @Test fun recoverRetainedVaultAfterActualTransition() = runBlocking {
         val requested = InstrumentationRegistry.getArguments().getString("syntheticOmkUser")
@@ -77,7 +125,7 @@ class MuMuRecoveredEntryFixtureTest {
             awaitActivityFocus(scenario)
             assertArrayEquals(originalPrefs, prefs.readBytes())
             assertArrayEquals(originalEnvelope, envelope.readBytes())
-            compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput(MASTER_PASSWORD)
+            compose.onNodeWithTag("secure_startup_password").performScrollTo().performTextInput(fixturePassword)
             compose.onNodeWithTag("secure_startup_recover").performClick()
             compose.onNodeWithTag("secure_startup_recovery_confirm").assertIsDisplayed().performClick()
             compose.waitUntil(25_000) {
@@ -89,7 +137,7 @@ class MuMuRecoveredEntryFixtureTest {
             assertArrayEquals(originalPrefs, prefs.readBytes())
             assertArrayEquals(originalEnvelope, envelope.readBytes())
             assertFalse(SessionManager.isUnlocked.value)
-            compose.onNode(hasSetTextAction()).performTextInput(MASTER_PASSWORD)
+            compose.onNode(hasSetTextAction()).performTextInput(fixturePassword)
             compose.onNode(hasSetTextAction()).performImeAction()
             compose.waitUntil(25_000) { SessionManager.isUnlocked.value }
             assertOriginalSecrets(marker, SecurityManager(context))
@@ -106,20 +154,22 @@ class MuMuRecoveredEntryFixtureTest {
     }
 
     private suspend fun existingRecoveredVault(): JSONObject {
-        val requested = InstrumentationRegistry.getArguments().getString("syntheticOmkUser")
+        val requested = InstrumentationRegistry.getArguments().getString(if (passwordFallback) "passwordFallbackUser" else "syntheticOmkUser")
         assumeTrue("Requires an explicitly selected retained synthetic vault", requested != null)
         check(requested!!.toIntOrNull() == Process.myUid() / 100_000 && Process.myUid() / 100_000 > 0)
         val marker = JSONObject(File(fixtureRoot, "fixture.json").readText())
         check(marker.getInt("uid") == Process.myUid() && marker.getString("packageName") == context.packageName)
         check(marker.getString("phase") == "cold_restart_write_verified" && marker.getBoolean("usedConfirmedRecovery"))
+        if (passwordFallback) assertTrue(LocalVaultRecovery(context).recoverWithoutKeystore(fixturePassword))
         delay(3_000)
         withTimeout(20_000) { while (SecureStorageStartup.operationInProgress) delay(20) }
         assertTrue(SecureStorageStartup.prepareWithRetry(context) is SecureStartupResult.Ready)
         val security = SecurityManager(context)
         assertTrue(security.isMasterPasswordSet())
-        assertTrue(security.unlockVaultWithPassword(MASTER_PASSWORD))
+        assertTrue(security.unlockVaultWithPassword(fixturePassword))
         assertOriginalSecrets(marker, security)
-        assertNotNull(LocalVaultRecovery(context).activeStore())
+        if (passwordFallback) assertTrue(LocalVaultRecovery(context).usesPasswordStore())
+        else assertNotNull(LocalVaultRecovery(context).activeStore())
         return marker
     }
 
@@ -143,7 +193,7 @@ class MuMuRecoveredEntryFixtureTest {
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
             compose.waitUntil(25_000) { compose.onAllNodes(hasSetTextAction()).fetchSemanticsNodes(false).isNotEmpty() }
             awaitActivityFocus(scenario)
-            compose.onNode(hasSetTextAction()).performTextInput(MASTER_PASSWORD)
+            compose.onNode(hasSetTextAction()).performTextInput(fixturePassword)
             compose.onNode(hasSetTextAction()).performImeAction()
             compose.waitUntil(25_000) { SessionManager.isUnlocked.value }
             compose.waitUntil(15_000) {
@@ -194,15 +244,16 @@ class MuMuRecoveredEntryFixtureTest {
             SecondarySessionManager.markLocked()
             ui.serviceInfo = ui.serviceInfo.apply { flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS }
             context.startActivity(Intent(context, ImeUnlockActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            unlockSecondaryPasswordStoreIfNeeded()
             val input = waitNode { it.packageName?.toString() == context.packageName && it.isEditable }
             assertNull("The IME must require the original password", received.get())
-            setText(input, MASTER_PASSWORD)
+            setText(input, fixturePassword)
             tap(waitNode { it.text?.toString() == context.getString(R.string.unlock) })
             withTimeout(25_000) { while (received.get() == null) delay(50) }
             assertTrue(received.get()!!.getBooleanExtra(MonicaInputMethodService.EXTRA_IME_BIOMETRIC_SUCCESS, false))
             assertNull(received.get()!!.getStringExtra(MonicaInputMethodService.EXTRA_IME_BIOMETRIC_ERROR))
             assertFalse("Secondary authentication must not unlock the main process", SessionManager.isUnlocked.value)
-            assertTrue(SecurityManager(context).unlockVaultWithPassword(MASTER_PASSWORD))
+            assertTrue(SecurityManager(context).unlockVaultWithPassword(fixturePassword))
             assertOriginalSecrets(marker, SecurityManager(context))
         } finally {
             context.unregisterReceiver(receiver)
@@ -253,13 +304,13 @@ class MuMuRecoveredEntryFixtureTest {
             val manual = context.getString(R.string.autofill_manual_entry_title)
             tap(waitNode { it.text?.toString() == manual || it.contentDescription?.toString() == manual })
             compose.waitUntil(25_000) { compose.onAllNodes(hasSetTextAction()).fetchSemanticsNodes(false).isNotEmpty() }
-            compose.onNode(hasSetTextAction()).performTextInput(MASTER_PASSWORD)
+            compose.onNode(hasSetTextAction()).performTextInput(fixturePassword)
             compose.onNodeWithText(context.getString(R.string.confirm)).performClick()
             compose.waitUntil(25_000) { compose.onAllNodesWithText(original.title).fetchSemanticsNodes(false).isNotEmpty() }
             compose.onNodeWithText(original.title).performClick()
             compose.onNodeWithText(context.getString(R.string.autofill)).performClick()
             waitNode { it.contentDescription?.toString() == "fixture-status" && it.text?.contains("user=OK password=OK") == true }
-            assertTrue(SecurityManager(context).unlockVaultWithPassword(MASTER_PASSWORD))
+            assertTrue(SecurityManager(context).unlockVaultWithPassword(fixturePassword))
             assertOriginalSecrets(marker, SecurityManager(context))
         } finally {
             ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
@@ -308,6 +359,7 @@ class MuMuRecoveredEntryFixtureTest {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 putExtra("scenario", "standard")
                 putExtra("accessibilityOnly", true)
+                putExtra("retainedRecoveryFixture", true)
                 putExtra("fixtureInstance", instance)
                 putExtra("expectedUsername", original.username)
                 putExtra("expectedPassword", marker.getString("rowSecret"))
@@ -334,8 +386,9 @@ class MuMuRecoveredEntryFixtureTest {
             var toolbarAction = toolbar
             while (!toolbarAction.isClickable) toolbarAction = checkNotNull(toolbarAction.parent)
             assertTrue("Activate the actual keyboard toolbar", toolbarAction.performAction(AccessibilityNodeInfo.ACTION_CLICK))
+            unlockSecondaryPasswordStoreIfNeeded()
             val input = waitNode { it.packageName?.toString() == context.packageName && it.isEditable }
-            setText(input, MASTER_PASSWORD)
+            setText(input, fixturePassword)
             val hideKeyboard = waitNode { node ->
                 node.contentDescription?.toString() == context.getString(R.string.ime_hide_keyboard) &&
                     ui.windows.any { it.type == android.view.accessibility.AccessibilityWindowInfo.TYPE_INPUT_METHOD && it.id == node.windowId }
@@ -378,12 +431,22 @@ class MuMuRecoveredEntryFixtureTest {
                 while (!action.isClickable) action = checkNotNull(action.parent)
                 assertTrue(action.performAction(AccessibilityNodeInfo.ACTION_CLICK))
             }
-            clickImeText(original.username)
+            // The retained, new and cold-write fixtures deliberately share a
+            // username. Select the original record by its unique current title.
+            clickImeText(original.title)
             clickImeText(context.getString(R.string.username))
             tap(waitNode { it.contentDescription?.toString() == "fixture-field-1" })
             clickImeText(context.getString(R.string.password))
+            // Landscape MuMu can let the IME cover the entire form. Verify the
+            // fixture's actual field values after dismissing that real keyboard.
+            var dismiss = waitNode { node ->
+                node.contentDescription?.toString() == context.getString(R.string.ime_hide_keyboard) &&
+                    ui.windows.any { it.type == android.view.accessibility.AccessibilityWindowInfo.TYPE_INPUT_METHOD && it.id == node.windowId }
+            }
+            while (!dismiss.isClickable) dismiss = checkNotNull(dismiss.parent)
+            assertTrue(dismiss.performAction(AccessibilityNodeInfo.ACTION_CLICK))
             waitNode { it.contentDescription?.toString() == "fixture-status" && it.text?.contains("user=OK password=OK") == true }
-            assertTrue(SecurityManager(context).unlockVaultWithPassword(MASTER_PASSWORD))
+            assertTrue(SecurityManager(context).unlockVaultWithPassword(fixturePassword))
             assertOriginalSecrets(marker, SecurityManager(context))
         } finally {
             ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
@@ -437,7 +500,8 @@ class MuMuRecoveredEntryFixtureTest {
         }
         fun describe(node: AccessibilityNodeInfo, depth: Int = 0) {
             if (depth > 12) return
-            if (node.isVisibleToUser && !node.isEditable && node.packageName?.toString() == context.packageName) {
+            if (node.isVisibleToUser && !node.isEditable &&
+                (node.packageName?.toString() == context.packageName || node.contentDescription?.toString() == "fixture-status")) {
                 android.util.Log.i("RetainedEntryFixture", "node class=${node.className} click=${node.isClickable} text=${node.text} description=${node.contentDescription}")
             }
             for (index in 0 until node.childCount) node.getChild(index)?.let { describe(it, depth + 1) }

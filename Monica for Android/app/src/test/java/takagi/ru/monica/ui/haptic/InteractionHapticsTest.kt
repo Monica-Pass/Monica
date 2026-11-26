@@ -5,47 +5,43 @@ import org.junit.Test
 
 class InteractionHapticsTest {
     private class Device : InteractionHapticDevice {
-        var system = true
         var accepted = true
-        var fallbackAvailable = true
-        val requests = mutableListOf<Pair<Boolean, Boolean>>()
-        val fallbacks = mutableListOf<Pair<Boolean, Boolean>>()
-        override fun systemEnabled() = system
-        override fun viewFeedback(strong: Boolean, tick: Boolean): Boolean {
-            requests += strong to tick; return accepted
+        var motorAvailable = true
+        val requests = mutableListOf<Boolean>()
+        val motorRequests = mutableListOf<Boolean>()
+        override fun viewFeedback(strong: Boolean): Boolean {
+            requests += strong; return accepted
         }
-        override fun fallback(strong: Boolean, tick: Boolean): Boolean {
-            fallbacks += strong to tick; return fallbackAvailable
+        override fun vibrate(strong: Boolean): Boolean {
+            motorRequests += strong; return motorAvailable
         }
     }
-    @Test fun acceptedRequestNeverVibratesTwice() {
+    @Test fun submittedViewRequestNeverSubmitsASecondVibration() {
         val d = Device()
-        assertEquals(InteractionHapticResult.REQUESTED, dispatchInteractionHaptic(true, 1, false, d))
-        assertEquals(listOf(false to false), d.requests)
-        assertTrue(d.fallbacks.isEmpty())
+        assertEquals(InteractionHapticResult.REQUESTED, dispatchInteractionHaptic(true, 1, d))
+        assertEquals(listOf(false), d.requests)
+        assertTrue(d.motorRequests.isEmpty())
     }
-    @Test fun rejectedHostGetsOneMatchingFallback() {
+    @Test fun rejectedViewGetsOneMatchingMotorRequest() {
         val d = Device().apply { accepted = false }
-        assertEquals(InteractionHapticResult.REQUESTED, dispatchInteractionHaptic(true, 2, true, d))
-        assertEquals(listOf(true to true), d.requests)
-        assertEquals(listOf(true to true), d.fallbacks)
+        assertEquals(InteractionHapticResult.REQUESTED, dispatchInteractionHaptic(true, 2, d))
+        assertEquals(listOf(true), d.requests)
+        assertEquals(listOf(true), d.motorRequests)
     }
-    @Test fun appAndSystemOffNeverReachEitherOutput() {
+    @Test fun appOffNeverReachesEitherOutput() {
         val d = Device()
-        assertEquals(InteractionHapticResult.DISABLED, dispatchInteractionHaptic(false, 2, false, d))
-        d.system = false
-        assertEquals(InteractionHapticResult.SYSTEM_DISABLED, dispatchInteractionHaptic(true, 1, false, d))
-        assertTrue(d.requests.isEmpty()); assertTrue(d.fallbacks.isEmpty())
+        assertEquals(InteractionHapticResult.DISABLED, dispatchInteractionHaptic(false, 2, d))
+        assertTrue(d.requests.isEmpty()); assertTrue(d.motorRequests.isEmpty())
     }
     @Test fun unavailableMotorIsReportedInsteadOfClaimingSuccess() {
-        val d = Device().apply { accepted = false; fallbackAvailable = false }
-        assertEquals(InteractionHapticResult.UNAVAILABLE, dispatchInteractionHaptic(true, 1, true, d))
-        assertEquals(1, d.fallbacks.size)
+        val d = Device().apply { accepted = false; motorAvailable = false }
+        assertEquals(InteractionHapticResult.UNAVAILABLE, dispatchInteractionHaptic(true, 1, d))
+        assertEquals(1, d.motorRequests.size)
     }
     @Test fun malformedStrengthIsBounded() {
         val d = Device()
-        dispatchInteractionHaptic(true, -100, false, d)
-        dispatchInteractionHaptic(true, 100, false, d)
-        assertEquals(listOf(false to false, true to false), d.requests)
+        dispatchInteractionHaptic(true, -100, d)
+        dispatchInteractionHaptic(true, 100, d)
+        assertEquals(listOf(false, true), d.requests)
     }
 }

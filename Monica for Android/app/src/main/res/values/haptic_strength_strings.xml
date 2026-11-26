@@ -3,6 +3,5 @@
     <string name="haptic_strength">Haptic strength</string>
     <string name="haptic_strength_description">0 = Off · 1 = Light · 2 = Strong</string>
     <string name="haptic_test">Test vibration</string>
-    <string name="haptic_system_disabled">Turn on touch feedback in system settings to feel vibrations.</string>
     <string name="haptic_unavailable">Vibration is unavailable on this device or was rejected by the system.</string>
 </resources>

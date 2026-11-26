@@ -38,6 +38,17 @@ class LocalKdfProcessTestService : Service() {
                         current.unlockVaultWithPassword(f.password) && f.verifyContents(current)
                     }
                     READ_EXISTING -> f.verifyContents(checkNotNull(manager))
+                    OPEN_PASSWORD_RECOVERY -> {
+                        val recovery = LocalVaultRecovery(f.context)
+                        check(recovery.recoverWithoutKeystore(f.password))
+                        manager = f.freshManager()
+                        val current = checkNotNull(manager)
+                        current.unlockVaultWithPassword(f.password) && f.verifyContents(current)
+                    }
+                    WRITE_PASSWORD_SETTING -> {
+                        checkNotNull(manager).putProtectedString("ime_recovered_setting", "retained")
+                        true
+                    }
                     OPEN_BIOMETRIC -> {
                         manager = f.freshManager()
                         val current = checkNotNull(manager)
@@ -51,7 +62,10 @@ class LocalKdfProcessTestService : Service() {
                             if (++callbacks == 2) f.waitForOtherWriter("ime")
                         }
                     }
-                    CLOSE -> { manager = null; fixture = null; SecurityManager.clearRuntimeUnlockCache(); true }
+                    CLOSE -> {
+                        LocalVaultRecovery(f.context).forgetPasswordSession()
+                        manager = null; fixture = null; SecurityManager.clearRuntimeUnlockCache(); true
+                    }
                     else -> false
                 }
                 reply.putBoolean("success", success)
@@ -73,5 +87,7 @@ class LocalKdfProcessTestService : Service() {
         const val RACE = 3
         const val CLOSE = 4
         const val OPEN_BIOMETRIC = 5
+        const val OPEN_PASSWORD_RECOVERY = 6
+        const val WRITE_PASSWORD_SETTING = 7
     }
 }

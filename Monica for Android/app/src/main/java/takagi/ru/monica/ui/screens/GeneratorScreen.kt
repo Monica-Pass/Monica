@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.components.animateMonicaContentSize
 import takagi.ru.monica.ui.components.MonicaSlider as Slider
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 
@@ -1888,6 +1889,9 @@ internal fun ResultCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                // Animate measured height once, inside the surface so its corners follow it.
+                // Text is replaced immediately; no outgoing password composition is retained.
+                .animateMonicaContentSize()
                 .padding(cardPadding)
         ) {
                 Row(

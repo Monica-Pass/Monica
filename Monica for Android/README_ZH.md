@@ -19,6 +19,13 @@
 
 ---
 
+> [!IMPORTANT]
+> **Android 密钥环境与备份**：在已有数据的设备上使用或切换 OMK / OhMyKeymint、Keystore / KeyMint 替换模块，或刷机、迁移系统前，请先导出独立的加密备份，并在不覆盖原库的环境中验证恢复。仅记住主密码或复制应用数据目录，不能保证所有历史数据都能在密钥环境变化后解密。
+
+1.0.331 增加需原主密码和明确确认的独立恢复路径：已有恢复材料有效时，即使 Android Keystore 不可用，也可恢复原 MDK 和加密配置。正常使用不自动切换后端，原文件与系统 alias 保留。它不补造永久丢失的旧密钥，也不代表硬件绑定项目或未迁移历史数据已全部可恢复。
+>
+> 若已出现读取失败，请保留原应用数据与恢复材料，避免清除数据、卸载应用或重建密钥。说明与处理边界见[Android 密钥环境与数据恢复](docs/security/keystore-environment.md)。
+
 ## ✨ 功能特性
 
 ### 🔒 核心功能
@@ -393,8 +400,8 @@ On multi-user devices, Shizuku may also require Monica to be installed for the o
 
 ## ImageToolbox 滑块来源
 
-滑块的圆润填充轨道与旋转花形滑钮改编自 [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox)（Apache-2.0），使用 `FancySlider.kt` 和 `MaterialStarShape.kt`，原作者为 T8RIN（Malik Mukhametzyanov）。Monica 适配了 Material3 交互、按移动距离正反滚动、拖动轻触觉反馈与应用／系统设置。参考版本、文件及修改范围见[来源说明](app/src/main/assets/licenses/ImageToolbox.txt)，完整 [Apache-2.0 许可证](app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt)随应用保留。
+滑块的圆润填充轨道与旋转花形滑钮改编自 [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox)（Apache-2.0），使用 `FancySlider.kt` 和 `MaterialStarShape.kt`，原作者为 T8RIN（Malik Mukhametzyanov）。Monica 适配了 Material3 交互、按移动距离正反滚动、拖动轻触觉反馈与应用内设置。参考版本、文件及修改范围见[来源说明](app/src/main/assets/licenses/ImageToolbox.txt)，完整 [Apache-2.0 许可证](app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt)随应用保留。
 
-交互强度另参考 ImageToolbox 的 1 轻（CONTEXT_CLICK）／2 强（LONG_PRESS）档位。Monica 增加测试按钮与请求被拒时的一次触摸用途短震兼容处理，继续遵循系统触觉设置。
+交互强度另参考 ImageToolbox 的轻／强档位和公开的 View 全局设置覆盖标志。Monica 由应用内开关控制反馈，取消系统触觉开关的前置限制，开关、预览与滑块刻度共用 CONTEXT_CLICK／LONG_PRESS 效果。部分 Android 系统仍可能限制输出；接口接受请求不等于物理马达已经响应。
 
-多选菜单的圆形实色图标按钮也参考 ImageToolbox 的视觉处理；主题对比度与窄屏布局由 Monica 独立实现。
+多选菜单采用紧凑的无背景图标按钮；主题对比度与窄屏布局由 Monica 独立实现。

@@ -54,7 +54,7 @@ class DeviceVaultProviderTest {
             System.setProperty("monica.lan.native.path",path.absolutePath)
         }
     }
-    private val databases = mutableListOf<PasswordDatabase>()
+    private val databases = mutableListOf<androidx.room.RoomDatabase>()
     @Before fun dispatchers() { Dispatchers.setMain(Dispatchers.Unconfined) }
     @After fun close() { databases.forEach { it.close() }; SessionManager.markLocked(); Dispatchers.resetMain() }
 
@@ -64,10 +64,13 @@ class DeviceVaultProviderTest {
         if (synchronousInvalidation) builder.setQueryExecutor { it.run() }
         val database = builder.build()
         databases += database
+        val steam = Room.inMemoryDatabaseBuilder(context, takagi.ru.monica.steam.data.SteamDatabase::class.java)
+            .allowMainThreadQueries().build()
+        databases += steam
         val security = SecurityManager(context)
         val preferences = DeviceSyncPreferenceStore(context,security,"provider-${UUID.randomUUID()}").also { it.save(DeviceSyncPreferences()) }
         return database to DevicePasswordSyncProvider(context,security,preferences,database,
-            File(context.filesDir,"fixture-${UUID.randomUUID()}.replica"))
+            File(context.filesDir,"fixture-${UUID.randomUUID()}.replica"), steam)
     }
 
     @Test fun receiving_deletions_waits_for_consent_and_keep_accepts_only_live_changes() = runBlocking { withTimeout(90000) {

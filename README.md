@@ -32,6 +32,13 @@ Monica 是一个聚合 **Bitwarden** 与 **KeePass** 的本地密码库（Local 
 
 ---
 
+> [!IMPORTANT]
+> **Android 密钥环境与备份**：在已有数据的设备上使用或切换 OMK / OhMyKeymint、Keystore / KeyMint 替换模块，或刷机、迁移系统前，请先导出独立的加密备份，并在不覆盖原库的环境中验证恢复。仅记住主密码或复制应用数据目录，不能保证所有历史数据都能在密钥环境变化后解密。
+
+1.0.331 增加需原主密码和明确确认的独立恢复路径：已有恢复材料有效时，即使 Android Keystore 不可用，也可恢复原 MDK 和加密配置。正常使用不自动切换后端，原文件与系统 alias 保留。它不补造永久丢失的旧密钥，也不代表硬件绑定项目或未迁移历史数据已全部可恢复。
+>
+> 若已出现读取失败，请保留原应用数据与恢复材料，避免清除数据、卸载应用或重建密钥。说明与处理边界见[Android 密钥环境与数据恢复](Monica%20for%20Android/docs/security/keystore-environment.md)。
+
 ## 用户先看
 
 ### Monica 适合谁
