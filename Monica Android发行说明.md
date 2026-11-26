@@ -1,6 +1,6 @@
 # Monica Android 1.0.331 · 千石抚子（SengokuNadeko）
 
-未发布 / Unreleased
+发布日期 / Released: 2026-11-26
 
 ## 中文
 
