@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
@@ -182,7 +183,7 @@ fun ChangePasswordScreen(
                 navigationIcon = {
                     IconButton(onClick = ::leave) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.return_text)
                         )
                     }

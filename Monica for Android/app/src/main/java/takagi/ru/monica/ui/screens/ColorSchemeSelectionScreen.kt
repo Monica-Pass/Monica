@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -110,7 +111,7 @@ fun ColorSchemeSelectionScreen(
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)
                         )
                     }

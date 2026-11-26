@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">الاستخدام عبر الأجهزة</string>
+    <string name="passkey_portability_checking">جارٍ التحقق…</string>
+    <string name="passkey_portability_exportable">يمكن تصدير المفتاح</string>
+    <string name="passkey_portability_local_only">محلي فقط</string>
+    <string name="passkey_portability_key_unavailable">المفتاح غير متوفر</string>
+    <string name="passkey_portability_invalid">بيانات التعريف المتعارضة</string>
+    <string name="passkey_portability_unknown">لم يتم التحقق</string>
+    <string name="passkey_portability_restricted">النقل محدود</string>
+    <string name="passkey_portability_exportable_hint">يمكن تصدير المفتاح بتنسيق مشفر مدعوم. يجب أن تحتفظ الوجهة بمعرفها ومفتاحها وخصائص التسجيل الخاصة بها؛ لا يزال توافق موقع الويب يعتمد على العميل الوجهة.</string>
+    <string name="passkey_portability_local_hint">المفتاح الخاص مرتبط بهذا الجهاز ولا يمكن تصديره. لن يؤدي نسخ قاعدة البيانات وحدها إلى تمكين تسجيل الدخول على جهاز آخر.</string>
+    <string name="passkey_portability_missing_hint">لم يتم العثور على مفتاح خاص قابل للاستخدام على هذا الجهاز. لا يمكن لهذا السجل وحده تسجيل الدخول هنا أو على جهاز آخر.</string>
+    <string name="passkey_portability_backup_hint">تم وضع علامة على بيانات الاعتماد هذه على أنها غير مؤهلة للنسخ الاحتياطي. فقط الوجهة التي تحافظ على تلك الخاصية يمكنها استخدامها؛ تم حظر التحويل إلى Bitwarden أو تبادل بيانات الاعتماد.</string>
+    <string name="passkey_portability_counter_hint">تحتوي بيانات الاعتماد هذه على سجل عداد توقيع غير صفري. يستخدم Monica عدادات صفرية؛ قد يتم رفض الاستخدام عبر الأجهزة من خلال موقع ويب يتحقق من العدادات السابقة.</string>
+    <string name="passkey_portability_algorithm_hint">يجب أن تدعم الوجهة نفس خوارزمية المفتاح. يدعم النقل الحالي Bitwarden ES256 فقط.</string>
+    <string name="passkey_portability_invalid_hint">تعارض خصائص النسخ الاحتياطي. يجب ألا يؤدي التوقيع إلى تغيير الخصائص المسجلة بصمت؛ احتفظ ببيانات اعتماد المصدر للاسترداد.</string>
+    <string name="passkey_portability_unknown_hint">لا يمكن التحقق من القدرة الأساسية. افتح قاعدة البيانات المصدر وحاول مرة أخرى.</string>
+</resources>

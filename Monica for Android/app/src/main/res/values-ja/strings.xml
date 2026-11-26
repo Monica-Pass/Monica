@@ -1279,7 +1279,7 @@
     <string name="permission_biometric_description">用途：指紋/顔認証によるロック解除</string>
     <string name="permission_camera_description">用途：TOTP認証用のQRコードスキャン</string>
     <string name="permission_storage_description">用途：エクスポートデータと画像の保存</string>
-    <string name="permission_internet_description">用途：WebDavバックアップと同期</string>
+    <string name="permission_internet_description">用途：WebDAVバックアップと同期</string>
     <string name="permission_network_state_description">用途：ネットワーク接続の確認</string>
     <string name="permission_vibrate_description">用途：認証時の触覚フィードバック</string>
     <string name="permission_phone_state_description">用途：デバイス識別</string>
@@ -2129,7 +2129,7 @@
     <string name="otp_type">OTPタイプ</string>
     <string name="otp_type_totp">時間ベース (TOTP)</string>
     <string name="otp_type_hotp">カウンターベース (HOTP)</string>
-    <string name="otp_type_steam">スチームガード</string>
+    <string name="otp_type_steam">Steam Guard</string>
     <string name="otp_type_yandex">ヤンデックス</string>
     <string name="otp_type_motp">モバイルOTP</string>
     <string name="initial_counter">初期カウンター</string>
@@ -2994,7 +2994,7 @@
     <string name="import_data_keepass_tip_format_unsupported">サポートされていない形式/暗号、またはファイルが破損しています。 KeePassDX/KeePassXCでご確認ください。</string>
     <string name="import_data_keepass_tip_io_failed">ファイルの読み取り中に I/O が失敗しました。ファイルの整合性とストレージの可用性を確認して、再試行してください。</string>
     <string name="import_type_steam_mode_title">Steamインポート方法</string>
-    <string name="import_type_steam_mode_mafile">maファイル</string>
+    <string name="import_type_steam_mode_mafile">maFile</string>
     <string name="import_type_steam_mode_coexist">Steamアプリの共存</string>
     <string name="import_type_steam_mode_login">Steam ログイン</string>
     <string name="import_type_steam_coexist_desc">デバイス ID と SteamGuard JSON を貼り付けて、共存インポートします。</string>

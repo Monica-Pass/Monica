@@ -1,0 +1,109 @@
+VibratorManagerService:
+
+  VibrationSettings:
+
+    vibrateOn = true
+
+    vibrateInputDevices = false
+
+    batterySaverMode = false
+
+    ringerMode = normal
+
+    onWirelessCharger = false
+
+    processStateCache size = 22
+
+    VibrationIntensities:
+
+      UNKNOWN = MEDIUM, default: MEDIUM
+
+      ALARM = MEDIUM, default: MEDIUM
+
+      TOUCH = MEDIUM, default: MEDIUM
+
+      MEDIA = MEDIUM, default: MEDIUM
+
+      RINGTONE = MEDIUM, default: MEDIUM
+
+      PHYSICAL_EMULATION = MEDIUM, default: MEDIUM
+
+      NOTIFICATION = MEDIUM, default: MEDIUM
+
+      HARDWARE_FEEDBACK = MEDIUM, default: MEDIUM
+
+      COMMUNICATION_REQUEST = MEDIUM, default: MEDIUM
+
+      ACCESSIBILITY = MEDIUM, default: MEDIUM
+
+      IME = MEDIUM, default: MEDIUM
+
+    VibrationConfig:
+
+      ignoreVibrationsOnWirelessCharger = false
+
+      defaultVibrationAmplitude = 255
+
+      hapticChannelMaxAmplitude = 0.0
+
+      rampStepDurationMs = 5
+
+      rampDownDurationMs = 0
+
+      requestVibrationParamsForUsages = [ALARM, RINGTONE, NOTIFICATION, COMMUNICATION_REQUEST]
+
+      requestVibrationParamsTimeoutMs = 50
+
+
+
+  VibrationScaler:
+
+    ScaleLevels:
+
+      VERY_LOW = 0.6
+
+      LOW = 0.8
+
+      NONE = 1.0
+
+      HIGH = 1.2
+
+      VERY_HIGH = 1.4
+
+    AdaptiveHapticsScales:
+
+
+
+
+
+switch-light
+
+11-26 11:13:55.008 |   effect |             finished | duration:    11ms | start: 11:13:55.009 | end: 11:13:55.020 | scale:     NONE (adaptive=1.00) | flags:   10 | usage: TOUCH | takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug (uid=2010124, deviceId=0) | reason: performHapticFeedback(constant=6): ViewRootImpl#performHapticFeedback | played: Prebaked=TICK(MEDIUM, with fallback) | original: null
+
+slider-light
+
+11-26 11:13:55.168 |   effect |             finished | duration:    12ms | start: 11:13:55.169 | end: 11:13:55.180 | scale:     NONE (adaptive=1.00) | flags:   10 | usage: TOUCH | takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug (uid=2010124, deviceId=0) | reason: performHapticFeedback(constant=6): ViewRootImpl#performHapticFeedback | played: Prebaked=TICK(MEDIUM, with fallback) | original: null
+
+select-strong
+
+11-26 11:13:55.285 |   effect |             finished | duration:    31ms | start: 11:13:55.286 | end: 11:13:55.316 | scale:     NONE (adaptive=1.00) | flags:   10 | usage: TOUCH | takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug (uid=2010124, deviceId=0) | reason: performHapticFeedback(constant=0): ViewRootImpl#performHapticFeedback | played: Prebaked=HEAVY_CLICK(MEDIUM, with fallback) | original: null
+
+slider-strong
+
+11-26 11:13:55.403 |   effect |             finished | duration:    31ms | start: 11:13:55.404 | end: 11:13:55.434 | scale:     NONE (adaptive=1.00) | flags:   10 | usage: TOUCH | takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug (uid=2010124, deviceId=0) | reason: performHapticFeedback(constant=0): ViewRootImpl#performHapticFeedback | played: Prebaked=HEAVY_CLICK(MEDIUM, with fallback) | original: null
+
+disable
+
+
+
+disabled-switch
+
+
+
+disabled-slider
+
+
+
+reenable-light
+
+11-26 11:13:56.285 |   effect |             finished | duration:    11ms | start: 11:13:56.286 | end: 11:13:56.296 | scale:     NONE (adaptive=1.00) | flags:   10 | usage: TOUCH | takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug (uid=2010124, deviceId=0) | reason: performHapticFeedback(constant=6): ViewRootImpl#performHapticFeedback | played: Prebaked=TICK(MEDIUM, with fallback) | original: null

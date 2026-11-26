@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_message_delete_queue_failed">تعذر وضع الحذف Bitwarden في قائمة الانتظار</string>
+    <string name="bitwarden_message_conflict_detail">تم تغيير هذا الإدخال محليًا وعلى الخادم</string>
+    <string name="bitwarden_message_empty_vault">لم يُرجع الخادم أي بيانات، ولكن تظل إدخالات %1$d المحلية. تم إيقاف المزامنة مؤقتًا لحماية بياناتك. تحقق من الخادم والحساب قبل المتابعة.</string>
+    <string name="runtime_kdbx_decode_failed">تعذر قراءة قاعدة بيانات KDBX</string>
+</resources>

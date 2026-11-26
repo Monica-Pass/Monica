@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totp_temporarily_unavailable">مفتاح المصادقة هذا غير قابل للقراءة مؤقتًا. افتح قفل Monica وحاول مرة أخرى. تم الاحتفاظ بالبيانات الأصلية.</string>
+</resources>

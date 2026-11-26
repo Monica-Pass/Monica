@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import takagi.ru.monica.ui.components.WalletSplitNameFields
 import takagi.ru.monica.ui.components.WalletContactGroup
 import takagi.ru.monica.ui.components.WalletProfileField
@@ -1160,7 +1161,7 @@ fun AddEditDocumentScreen(
                             title = { Text(stringResource(passTemplate?.labelRes() ?: if (documentId == null && embeddedDraft == null) R.string.add_document_title else R.string.edit_document_title)) },
                             navigationIcon = {
                                 IconButton(onClick = onNavigateBack) {
-                                    Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                                 }
                             },
                             actions = {

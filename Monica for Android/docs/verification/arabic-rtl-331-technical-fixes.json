@@ -1,0 +1,562 @@
+[
+  {
+    "edition": "main",
+    "locale": "values-ar",
+    "file": "strings.xml",
+    "key": "import_type_aegis_title",
+    "before": "برنامج إيجيس للتوثيق",
+    "after": "أداة المصادقة Aegis"
+  },
+  {
+    "edition": "main",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "Fichier maFichier Steam",
+    "after": "Fichier maFile Steam"
+  },
+  {
+    "edition": "main",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "steam_mafile_title",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "steam_mafile_button",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "CSV Passe Proton",
+    "after": "CSV Proton Pass"
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "database_transfer.xml",
+    "key": "steam_mafile_export_title",
+    "before": "File maSteam",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "import_photo_strings.xml",
+    "key": "export_message_empty_mafile",
+    "before": "MaFile yang diekspor kosong",
+    "after": "maFile yang diekspor kosong"
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "legacy_ui_strings.xml",
+    "key": "legacy_ui_report_count_steammafiles",
+    "before": "\\u0020\\u0020MaFile uap: %1$d/%2$d",
+    "after": "\\u0020\\u0020Steam maFile: %1$d/%2$d"
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "File maSteam",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_mafile_export_confirm_message",
+    "before": "Anda mengekspor akun pengautentikasi %1$d Steam. MaFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor.",
+    "after": "Anda mengekspor akun pengautentikasi %1$d Steam. maFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor."
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_mafile_missing_steamid_message",
+    "before": "MaFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi.",
+    "after": "maFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi."
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_steamid_completion_desc",
+    "before": "MaFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi.",
+    "after": "maFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi."
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_steamid_completion_code_only_desc",
+    "before": "MaFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia.",
+    "after": "maFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia."
+  },
+  {
+    "edition": "main",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "Proton Lulus CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "permission_internet_description",
+    "before": "用途：WebDavバックアップと同期",
+    "after": "用途：WebDAVバックアップと同期"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "otp_type_steam",
+    "before": "スチームガード",
+    "after": "Steam Guard"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maファイル",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ko",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "프로톤 패스 CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ko",
+    "file": "strings.xml",
+    "key": "local_keepass_kdf_argon2id",
+    "before": "아르곤2id",
+    "after": "Argon2id"
+  },
+  {
+    "edition": "main",
+    "locale": "values-ru",
+    "file": "strings.xml",
+    "key": "import_type_csv_data_desc",
+    "before": "Импорт CSV из Monica / KeePass / Bitwarden / Password Keyboard",
+    "after": "Импорт CSV из Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "database_transfer.xml",
+    "key": "steam_mafile_export_title",
+    "before": "Steam maDosyası",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "legacy_ui_strings.xml",
+    "key": "legacy_ui_report_count_steammafiles",
+    "before": "\\u0020\\u0020Steam maDosyası: %1$d/%2$d",
+    "after": "\\u0020\\u0020Steam maFile: %1$d/%2$d"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "Steam maDosyası",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_export_success_single",
+    "before": "Steam maDosyası dışa aktarıldı",
+    "after": "Steam maFile dışa aktarıldı"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_title",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_button",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_no_mafile_selected",
+    "before": "MaFile seçilmedi",
+    "after": "maFile seçilmedi"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "main",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "Proton Geçişi CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "main",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_csv_data_desc",
+    "before": "Nhap CSV xuat tu Monica / KeePass / Bitwarden / Password Keyboard",
+    "after": "Nhập CSV xuất từ Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard"
+  },
+  {
+    "edition": "main",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_title",
+    "before": "Phương pháp nhập khẩu hơi nước",
+    "after": "Phương thức nhập Steam"
+  },
+  {
+    "edition": "main",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_login",
+    "before": "Đăng nhập hơi nước",
+    "after": "Đăng nhập Steam"
+  },
+  {
+    "edition": "main",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_login_username_label",
+    "before": "Tài khoản hơi nước",
+    "after": "Tài khoản Steam"
+  },
+  {
+    "edition": "main",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_login_password_label",
+    "before": "Mật khẩu hơi nước",
+    "after": "Mật khẩu Steam"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ar",
+    "file": "strings.xml",
+    "key": "import_type_aegis_title",
+    "before": "برنامج إيجيس للتوثيق",
+    "after": "أداة المصادقة Aegis"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "Fichier maFichier Steam",
+    "after": "Fichier maFile Steam"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "steam_mafile_title",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "steam_mafile_button",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maFichier",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-fr",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "CSV Passe Proton",
+    "after": "CSV Proton Pass"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "database_transfer.xml",
+    "key": "steam_mafile_export_title",
+    "before": "File maSteam",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "import_photo_strings.xml",
+    "key": "export_message_empty_mafile",
+    "before": "MaFile yang diekspor kosong",
+    "after": "maFile yang diekspor kosong"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "legacy_ui_strings.xml",
+    "key": "legacy_ui_report_count_steammafiles",
+    "before": "\\u0020\\u0020MaFile uap: %1$d/%2$d",
+    "after": "\\u0020\\u0020Steam maFile: %1$d/%2$d"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "File maSteam",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_mafile_export_confirm_message",
+    "before": "Anda mengekspor akun pengautentikasi %1$d Steam. MaFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor.",
+    "after": "Anda mengekspor akun pengautentikasi %1$d Steam. maFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor."
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_mafile_missing_steamid_message",
+    "before": "MaFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi.",
+    "after": "maFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi."
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_steamid_completion_desc",
+    "before": "MaFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi.",
+    "after": "maFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi."
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "steam_steamid_completion_code_only_desc",
+    "before": "MaFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia.",
+    "after": "maFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia."
+  },
+  {
+    "edition": "fd",
+    "locale": "values-in",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "Proton Lulus CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "permission_internet_description",
+    "before": "用途：WebDavバックアップと同期",
+    "after": "用途：WebDAVバックアップと同期"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "otp_type_steam",
+    "before": "スチームガード",
+    "after": "Steam Guard"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ja",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maファイル",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ko",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "프로톤 패스 CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ko",
+    "file": "strings.xml",
+    "key": "local_keepass_kdf_argon2id",
+    "before": "아르곤2id",
+    "after": "Argon2id"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-ru",
+    "file": "strings.xml",
+    "key": "import_type_csv_data_desc",
+    "before": "Импорт CSV из Monica / KeePass / Bitwarden / Password Keyboard",
+    "after": "Импорт CSV из Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "database_transfer.xml",
+    "key": "steam_mafile_export_title",
+    "before": "Steam maDosyası",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "legacy_ui_strings.xml",
+    "key": "legacy_ui_report_count_steammafiles",
+    "before": "\\u0020\\u0020Steam maDosyası: %1$d/%2$d",
+    "after": "\\u0020\\u0020Steam maFile: %1$d/%2$d"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "export_option_steam_mafile",
+    "before": "Steam maDosyası",
+    "after": "Steam maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_export_success_single",
+    "before": "Steam maDosyası dışa aktarıldı",
+    "after": "Steam maFile dışa aktarıldı"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_title",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_mafile_button",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "steam_no_mafile_selected",
+    "before": "MaFile seçilmedi",
+    "after": "maFile seçilmedi"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_mafile",
+    "before": "maDosyası",
+    "after": "maFile"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-tr",
+    "file": "strings.xml",
+    "key": "import_type_csv_proton_pass_title",
+    "before": "Proton Geçişi CSV",
+    "after": "Proton Pass CSV"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_csv_data_desc",
+    "before": "Nhap CSV xuat tu Monica / KeePass / Bitwarden / Password Keyboard",
+    "after": "Nhập CSV xuất từ Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_title",
+    "before": "Phương pháp nhập khẩu hơi nước",
+    "after": "Phương thức nhập Steam"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_mode_login",
+    "before": "Đăng nhập hơi nước",
+    "after": "Đăng nhập Steam"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_login_username_label",
+    "before": "Tài khoản hơi nước",
+    "after": "Tài khoản Steam"
+  },
+  {
+    "edition": "fd",
+    "locale": "values-vi",
+    "file": "strings.xml",
+    "key": "import_type_steam_login_password_label",
+    "before": "Mật khẩu hơi nước",
+    "after": "Mật khẩu Steam"
+  }
+]

@@ -28,7 +28,7 @@
     <string name="transfer_password_mismatch">Kata sandi tidak cocok.</string>
     <string name="transfer_kdbx_password_description">Tetapkan kata sandi untuk melindungi database KDBX yang diekspor.</string>
     <string name="transfer_unsupported_token">Format token ini tidak dapat dikonversi. Gunakan cadangan ZIP.</string>
-    <string name="steam_mafile_export_title">File maSteam</string>
+    <string name="steam_mafile_export_title">Steam maFile</string>
     <string name="steam_mafile_export_desc">Ekspor akun Steam yang dipilih dari database ini.</string>
     <string name="transfer_kdbx_description">Kata sandi, pengautentikasi, Kunci Sandi, dan lampiran dalam format KeePass.</string>
     <string name="transfer_unsupported_records">Basis data ini berisi tipe item yang tidak didukung. Simpan salinan database asli sebagai gantinya.</string>

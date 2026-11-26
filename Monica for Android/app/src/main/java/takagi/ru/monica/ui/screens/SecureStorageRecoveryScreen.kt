@@ -44,6 +44,13 @@ internal fun SecureStorageRecoveryScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
+    val pageDensity = androidx.compose.ui.platform.LocalDensity.current
+    val pageDirection = androidx.compose.ui.platform.LocalLayoutDirection.current
+    // AlertDialog creates a new window; preserve the page's interface scale and direction.
+    val dialogSlot: @Composable (@Composable () -> Unit) -> Unit = { content ->
+        CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides pageDensity,
+            androidx.compose.ui.platform.LocalLayoutDirection provides pageDirection, content = content)
+    }
     val passwordStore = failureReason == "PASSWORD_RECOVERY_REQUIRED"
     fun recover(attempt: String, action: suspend (String) -> Boolean) {
         recovering = true
@@ -74,10 +81,10 @@ internal fun SecureStorageRecoveryScreen(
     if (confirmationPassword != null && (onRecover != null || onRecoverWithoutKeystore != null)) {
         AlertDialog(
             onDismissRequest = { confirmationPassword = null },
-            title = { Text(stringResource(if (independentRecovery) R.string.password_recovery_action else R.string.local_recovery_confirm_title)) },
-            text = { Text(stringResource(if (independentRecovery) R.string.password_recovery_details else R.string.local_recovery_confirm_description),
-                Modifier.verticalScroll(rememberScrollState())) },
-            confirmButton = {
+            title = { dialogSlot { Text(stringResource(if (independentRecovery) R.string.password_recovery_action else R.string.local_recovery_confirm_title)) } },
+            text = { dialogSlot { Text(stringResource(if (independentRecovery) R.string.password_recovery_details else R.string.local_recovery_confirm_description),
+                Modifier.verticalScroll(rememberScrollState())) } },
+            confirmButton = { dialogSlot {
                 TextButton(onClick = confirm@{
                     val attempt = confirmationPassword ?: return@confirm
                     if (recovering) return@confirm
@@ -87,13 +94,13 @@ internal fun SecureStorageRecoveryScreen(
                 }, modifier = Modifier.testTag("secure_startup_recovery_confirm")) {
                     Text(stringResource(R.string.local_recovery_confirm_action))
                 }
-            },
-            dismissButton = {
+            } },
+            dismissButton = { dialogSlot {
                 TextButton(onClick = { confirmationPassword = null },
                     modifier = Modifier.testTag("secure_startup_recovery_cancel")) {
                     Text(stringResource(R.string.cancel))
                 }
-            },
+            } },
             properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn)
         )
     }

@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.ui
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import takagi.ru.monica.ui.components.animateMonicaContentSize
 import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import android.content.Context
@@ -1881,7 +1882,7 @@ private fun SteamDetailTopBar(
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )

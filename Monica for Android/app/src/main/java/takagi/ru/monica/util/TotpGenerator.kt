@@ -161,7 +161,7 @@ object TotpGenerator {
         val otp = binary.toLong() % 10.0.pow(safeDigits).toLong()
         
         // 格式化为指定位数的字符串（前导零）
-        return String.format("%0${safeDigits}d", otp)
+        return otp.toString().padStart(safeDigits, '0')
     }
 
     private fun zeroCode(digits: Int): String {

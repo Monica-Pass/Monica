@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.components
 
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
@@ -314,7 +315,7 @@ fun ExpressiveTopBar(
 
                                 IconButton(onClick = { closeSearch() }) {
                                     Icon(
-                                        imageVector = Icons.Default.ArrowForward, // 使用向右的箭头，表示收回方向
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowForward, // 使用向右的箭头，表示收回方向
                                         contentDescription = stringResource(R.string.topbar_close_search),
                                         tint = MaterialTheme.colorScheme.onSurface
                                     )

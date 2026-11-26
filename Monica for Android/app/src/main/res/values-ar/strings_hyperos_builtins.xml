@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">تشخيص التكوين</string>
+    <string name="hyperos_diagnostics_note">يتحقق من إعلانات الخدمة واختيارها، وليس توجيه مفتاح المرور بنجاح. تتطلب الإعدادات الآمنة استخدام Shizuku أو الجذر المعتمد.</string>
+    <string name="hyperos_diag_declaration">خدمة Monica صالحة وإمكانية مفتاح المرور</string>
+    <string name="hyperos_diag_feature">تتوفر ميزة نظام بيانات الاعتماد</string>
+    <string name="hyperos_diag_unrestricted">تم السماح بالملء التلقائي لمستخدم Android هذا</string>
+    <string name="hyperos_diag_framework">يتعرف الإطار على Monica على أنه ممكّن</string>
+    <string name="hyperos_diag_registered">Monica في خدمات بيانات الاعتماد الممكّنة</string>
+    <string name="hyperos_drift_title">كشف التغييرات بعد الإصلاح</string>
+    <string name="hyperos_drift_note">يتم التحقق كل 30 ثانية أثناء ظهور هذه الصفحة وعند إعادة فتحها. لا يكتب الإعدادات تلقائيًا أبدًا.</string>
+    <string name="hyperos_drift_result">مقارنة بآخر عملية إصلاح تم التحقق منها</string>
+    <string name="hyperos_drift_off">تم إيقاف الكشف</string>
+    <string name="hyperos_drift_no_baseline">قم بتطبيق التكوين أولاً لإنشاء خط الأساس.</string>
+    <string name="hyperos_drift_unchanged">لم يتغير التكوين</string>
+    <string name="hyperos_drift_changed">تم تغيير التكوين. ربما قمت بتغيير المديرين بنفسك؛ المراجعة قبل الاستعادة.</string>
+    <string name="hyperos_update_failed">لا يمكن الحفظ. قم بالتحديث والتحقق من الحالة الحالية.</string>
+    <string name="hyperos_check_yes">نعم</string>
+    <string name="hyperos_check_no">لا</string>
+    <string name="hyperos_check_unsupported">غير مدعوم</string>
+    <string name="hyperos_module_title">وحدة التوافق الاختيارية</string>
+    <string name="hyperos_module_requirements">يتطلب LSPosed API 102+ وAndroid 14–16 ومستخدم مالك Xiaomi/Redmi/POCO. تمكين Monica والنطاقات المطلوبة في الإطار. تم إيقاف جميع الخيارات بشكل افتراضي.</string>
+    <string name="hyperos_module_connected">الإطار متصل؛ هذا لا يثبت عمل الخطافات.</string>
+    <string name="hyperos_module_disconnected">الإطار المتوافق غير متوفر</string>
+    <string name="hyperos_module_scope">النطاقات الممنوحة: %1$s</string>
+    <string name="hyperos_hook_reset">منع إعادة تعيين مركز الأمان</string>
+    <string name="hyperos_hook_reset_note">اعتراض طرق تكوين بيانات الاعتماد المحددة فقط.</string>
+    <string name="hyperos_hook_settings">توافق صفحة اختيار النظام</string>
+    <string name="hyperos_hook_settings_note">ضبط وحدات تحكم الإعدادات المحددة؛ الأساليب غير المتوافقة تحافظ على سلوك النظام.</string>
+    <string name="hyperos_hook_chooser">منتقي بيانات الاعتماد Google</string>
+    <string name="hyperos_hook_chooser_note">يتطلب منتقي خدمات تشغيل النظام Google.</string>
+    <string name="hyperos_hook_hybrid">توافق بيانات الاعتماد عبر الأجهزة</string>
+    <string name="hyperos_hook_hybrid_note">استخدم خدمة Google الهجينة ومسار الماسح الضوئي Xiaomi.</string>
+    <string name="hyperos_module_restart">يتطلب التمكين إعادة تشغيل العمليات المتأثرة أو الجهاز بنفسك. يؤدي تعطيل عمليات التوقف إلى تجاوز الخطافات المحملة عندما يقوم الإطار بتسليم التغيير. لا يوجد إعادة تشغيل تلقائية.</string>
+    <string name="hyperos_physical_feedback">لم يتم اختباره على أجهزة HyperOS المادية. الرجاء الإبلاغ عن إصدار ROM الخاص بك وخطوات النسخ في مشكلة GitHub؛ حذف كلمات المرور والمفاتيح.</string>
+    <string name="hyperos_reference_projects">مرجع المشروع والترخيص</string>
+    <string name="hyperos_module_confirmation">هل تريد تغيير سلوك النظام التجريبي هذا؟ مطلوب إطار متوافق والمكونات المستهدفة. وقد يؤثر ذلك على مديري كلمات المرور الآخرين. يمكنك تعطيله هنا أو في الإطار.</string>
+    <string name="hyperos_feedback_action">الإبلاغ عن مشكلة التوافق</string>
+    <string name="hyperos_module_entry_note">إيقاف التشغيل الافتراضي · يتطلب LSPosed متوافقًا</string>
+</resources>

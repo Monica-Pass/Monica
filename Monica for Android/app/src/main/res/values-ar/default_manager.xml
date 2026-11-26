@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="default_manager_title">مدير كلمات المرور الافتراضي</string>
+    <string name="default_manager_entry_hint">قم بتعيين Monica باستخدام Shizuku أو Root عندما يقوم HyperOS بإخفاء إعدادات مدير كلمات المرور التابعة لجهة خارجية</string>
+    <string name="default_manager_description">قم بتعيين المدير الافتراضي لمستخدم Android الحالي. يتطلب Android 14 أو إصدارًا أحدث وتفويض Shizuku أو Root. لا يضمن التحقق الناجح من الإعدادات كل تدفق لمفتاح مرور HyperOS.</string>
+    <string name="default_manager_denied">تم رفض الإذن. اسمح بـ Monica في Shizuku وأعد المحاولة</string>
+    <string name="default_manager_read_failed">لا يمكن قراءة إعدادات النظام. قم بالتحديث ثم أعد المحاولة</string>
+    <string name="default_manager_unset">غير محدد</string>
+    <string name="default_manager_unknown">لم أقرأ بعد</string>
+    <string name="default_manager_restore">استعادة الإعدادات السابقة</string>
+    <string name="default_manager_apply">اضبط على Monica</string>
+    <string name="default_manager_restore_confirm">استعادة تكوين النظام الذي تم حفظه قبل التبديل الأخير.</string>
+    <string name="default_manager_confirm">قم بتغيير مدير كلمات المرور الافتراضي لهذا المستخدم. سيتم أولاً حفظ التكوين الحالي محليًا لاستعادته.</string>
+    <string name="default_manager_credential">موفر بيانات الاعتماد الأساسي</string>
+    <string name="default_manager_autofill">خدمة الملء التلقائي</string>
+    <string name="default_manager_replace_warning">سيتم تعطيل موفري بيانات الاعتماد الآخرين. لن يتم حذف بياناتهم.</string>
+    <string name="default_manager_restored">تمت استعادة إعدادات النظام السابقة والتحقق منها</string>
+    <string name="default_manager_applied">تم تحديد Monica والتحقق من إعدادات النظام</string>
+    <string name="default_manager_write_failed">تعذر إكمال التغيير أو التحقق منه. قم بالتحديث للتحقق من الحالة؛ التكوين المحفوظ متاح للاستعادة.</string>
+    <string name="default_manager_ready">متصل ومرخص</string>
+    <string name="default_manager_permission">التفويض مطلوب</string>
+    <string name="default_manager_stopped">تثبيت وبدء تشغيل Shizuku</string>
+    <string name="default_manager_unsupported">يتطلب Android 14+ وShizuku 13+</string>
+    <string name="default_manager_grant">تفويض Shizuku</string>
+    <string name="default_manager_open_shizuku">افتح Shizuku</string>
+    <string name="default_manager_include_autofill">قم أيضًا بتعيين الملء التلقائي</string>
+    <string name="default_manager_include_autofill_hint">قم بتبديل خدمة الملء التلقائي إلى Monica</string>
+    <string name="default_manager_keep_others">احتفظ بموفري بيانات الاعتماد الآخرين</string>
+    <string name="default_manager_keep_others_hint">احتفظ بالموفرين الممكّنين واجعل Monica هو الموفر الأساسي</string>
+    <string name="default_manager_refresh">تحديث الحالة</string>
+    <string name="default_manager_source">استنادًا إلى cr-zhichen/password-manager-switch · معهد ماساتشوستس للتكنولوجيا</string>
+</resources>

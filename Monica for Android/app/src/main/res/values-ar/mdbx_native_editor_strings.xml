@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_add_login">إضافة معلومات تسجيل الدخول</string>
+    <string name="mdbx_native_username">اسم المستخدم</string>
+    <string name="mdbx_native_password">كلمة المرور</string>
+    <string name="mdbx_native_website">موقع الكتروني</string>
+    <string name="mdbx_native_notes">الملاحظات</string>
+    <string name="mdbx_native_json_description">يتم تحرير أنواع الإدخال الأخرى كـ JSON. احتفظ بحقولهم ومخططاتهم الأصلية.</string>
+    <string name="mdbx_native_add_attachment">إضافة المرفقات</string>
+    <string name="mdbx_native_attachment_limits">ما يصل إلى 16 مرفقًا؛ يبلغ إجمالي التحميلات الجديدة 16 ميجابايت على الأكثر. يمكن معاينة النص والصور في الذاكرة.</string>
+    <string name="mdbx_native_attachment_failed">لا يمكن قراءة هذا المرفق أو فشل التحقق من سلامته.</string>
+    <string name="mdbx_native_attachment_verified">تم التحقق من سلامة المرفقات</string>
+    <string name="mdbx_native_attachment_no_preview">لا يحتوي هذا النوع من الملفات على معاينة داخل التطبيق. لا يتوفر تصدير المرفقات التي تم فك تشفيرها في وضع الحماية هذا.</string>
+    <string name="mdbx_native_delete_confirm">هل تريد حذف هذا الإدخال ومرفقاته؟</string>
+    <string name="mdbx_native_editable">تتم كتابة التغييرات مباشرة على قاعدة البيانات المشفرة هذه.</string>
+    <string name="mdbx_native_app_locked">قم بإلغاء تأمين Monica من خلال تدفق التطبيق العادي للمتابعة.</string>
+    <string name="mdbx_client_mode_unsupported_title">اللمعان غير مدعوم حتى الآن</string>
+    <string name="mdbx_client_mode_unsupported">عميل Android لا يدعم Glitter حتى الآن. اختر Sky أو ​​Multi أو Power. يتم الاحتفاظ بملفات وسجلات قاعدة البيانات الموجودة دون الرجوع إلى إصدار سابق أو تحويل تلقائي. استخدم عميلًا يدعم Glitter للوصول إليه.</string>
+</resources>

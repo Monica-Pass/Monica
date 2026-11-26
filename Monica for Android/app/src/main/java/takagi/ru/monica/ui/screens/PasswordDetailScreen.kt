@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.data.model.CredentialExchangeMetadata
 
 import takagi.ru.monica.ui.components.DetailSectionLayout
@@ -2014,7 +2015,7 @@ private fun OtherStorageLocationRow(
                 )
             }
             Icon(
-                imageVector = Icons.Default.ChevronRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = stringResource(R.string.password_detail_open_location),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(18.dp)
@@ -2758,6 +2759,7 @@ internal fun PasswordItemRow(
                 else -> "•".repeat(8)
             },
             style = MaterialTheme.typography.bodyLarge.copy(
+                textDirection = if (hasPasswordValue && !isUnavailable) androidx.compose.ui.text.style.TextDirection.Ltr else androidx.compose.ui.text.style.TextDirection.Content,
                 fontFamily = if (visible && hasPasswordValue) androidx.compose.ui.text.font.FontFamily.Monospace else androidx.compose.ui.text.font.FontFamily.Default
             ),
             maxLines = if (visible || isUnavailable || !hasPasswordValue) Int.MAX_VALUE else 1,

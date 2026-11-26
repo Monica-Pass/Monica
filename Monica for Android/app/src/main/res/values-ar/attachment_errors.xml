@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_error_bitwarden_locked">تم قفل قبو Bitwarden أو انتهت صلاحية الجلسة. افتحه أو قم بتسجيل الدخول مرة أخرى.</string>
+    <string name="attachment_error_remote_data">قام الخادم بإرجاع معلومات مرفقات غير كاملة. قم بمزامنة المخزن وحاول مرة أخرى.</string>
+    <string name="attachment_error_unsupported_encryption">يستخدم هذا المرفق تنسيق تشفير غير مدعوم (النوع %1$d). قم بتصديره مع العميل الرسمي وتحميله مرة أخرى.</string>
+    <string name="attachment_error_unknown">فشلت عملية الإرفاق. يرجى المحاولة مرة أخرى.</string>
+    <string name="attachment_error_decryption_failed">فشل فك تشفير المرفقات أو التحقق من سلامتها. قم بمزامنة المخزن وحاول مرة أخرى.</string>
+    <string name="password_batch_attachment_failure">لا يمكن نقل المرفقات لعنصر (عناصر) %1$d. %2$s</string>
+</resources>

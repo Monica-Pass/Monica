@@ -3436,7 +3436,7 @@
     <string name="import_type_csv_bitwarden_title">Bitwarden CSV</string>
     <string name="import_type_csv_bitwarden_desc">다음에서 내보낸 CSV 가져오기 Bitwarden</string>
     <string name="import_type_csv_bitwarden_file_hint">Bitwarden .csv 파일 선택</string>
-    <string name="import_type_csv_proton_pass_title">프로톤 패스 CSV</string>
+    <string name="import_type_csv_proton_pass_title">Proton Pass CSV</string>
     <string name="import_type_csv_proton_pass_desc">Proton Pass에서 내보낸 CSV 가져오기</string>
     <string name="import_type_csv_proton_pass_file_hint">Proton Pass .csv 파일 선택</string>
     <string name="import_type_csv_chrome_title">크롬 CSV</string>
@@ -3676,7 +3676,7 @@
     <string name="local_keepass_kdf_algorithm">키 파생 함수</string>
     <string name="local_keepass_kdf_aes">AES-KDF</string>
     <string name="local_keepass_kdf_argon2d">아르곤2d</string>
-    <string name="local_keepass_kdf_argon2id">아르곤2id</string>
+    <string name="local_keepass_kdf_argon2id">Argon2id</string>
     <string name="local_keepass_transform_rounds">변형 라운드/반복</string>
     <string name="local_keepass_kdf_memory_mb">메모리 사용량(MB)</string>
     <string name="local_keepass_kdf_memory_mb_value">%1$dMB</string>

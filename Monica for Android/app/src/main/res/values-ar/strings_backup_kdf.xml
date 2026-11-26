@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">تنسيق النسخ الاحتياطي المشفر</string>
+    <string name="backup_kdf_compatible">متوافق مع الإصدار 1 · 100000 طلقة</string>
+    <string name="backup_kdf_enhanced">الإصدار الثاني المحسن · 600000 طلقة</string>
+    <string name="backup_kdf_scope">فقط النسخ الاحتياطية المشفرة ZIP التي تم إنشاؤها حديثًا تستخدم هذا الاختيار. النسخ الاحتياطية الموجودة لم تتغير.</string>
+    <string name="backup_kdf_compatibility_warning">يتطلب الإصدار 2 قارئًا متوافقًا. قد لا تتمكن الإضافات القديمة أو عملاء سطح المكتب من استعادتها. احتفظ بنسخ احتياطية سابقة.</string>
+</resources>

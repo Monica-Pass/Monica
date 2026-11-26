@@ -1,0 +1,81 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=1
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest:
+
+INSTRUMENTATION_STATUS: test=dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=1
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Finger drag must show intermediate wheel frames: [1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease(MonicaSliderInstrumentedTest.kt:177)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease(takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest):
+
+java.lang.AssertionError: Finger drag must show intermediate wheel frames: [1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease(MonicaSliderInstrumentedTest.kt:177)
+
+
+
+INSTRUMENTATION_STATUS: test=dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 2.071
+
+There was 1 failure:
+
+1) dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease(takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest)
+
+java.lang.AssertionError: Finger drag must show intermediate wheel frames: [1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624, 1091917624]
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest.dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease(MonicaSliderInstrumentedTest.kt:177)
+
+
+
+FAILURES!!!
+
+Tests run: 1,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

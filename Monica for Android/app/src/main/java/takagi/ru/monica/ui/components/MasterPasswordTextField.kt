@@ -61,6 +61,7 @@ fun MasterPasswordTextField(
         },
         modifier = fieldModifier,
         label = label,
+        textStyle = androidx.compose.ui.text.TextStyle(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
         placeholder = placeholder,
         singleLine = true,
         enabled = enabled,

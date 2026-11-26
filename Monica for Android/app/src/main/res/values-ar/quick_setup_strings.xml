@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="qs_step_presets_title">ابدأ بإعداد مسبق</string>
+    <string name="qs_step_presets_subtitle">اختر تخطيطًا. ويمكنك تعديله في الخطوات التالية.</string>
+    <string name="qs_dock_subtitle">اختر صفحات Dock الخاصة بك وترتيبها.</string>
+    <string name="qs_step_customize_title">قم بضبط صفحاتك</string>
+    <string name="qs_step_customize_subtitle">قم بتوسيع ما تريد تغييره فقط. هذه الخيارات منفصلة عن Dock.</string>
+    <string name="qs_step_protect_title">الملء التلقائي للأمان &amp;</string>
+    <string name="qs_step_protect_subtitle">قم بحماية مخزنك، ثم قم بتسهيل عملية تسجيل الدخول.</string>
+    <string name="qs_ready_title">جاهز للانطلاق</string>
+    <string name="qs_ready_subtitle">هذا هو التصميم الخاص بك. ويمكنك تغييره في أي وقت في الإعدادات.</string>
+    <string name="qs_save_failed">لا يمكن حفظ إعداداتك. يرجى المحاولة مرة أخرى.</string>
+    <string name="qs_use_preset">استخدم الإعداد المسبق</string>
+    <string name="qs_enter_monica">افتح Monica</string>
+    <string name="qs_current_layout">التخطيط الحالي</string>
+    <string name="qs_data_optional">يمكنك الاتصال بقاعدة بيانات أو استيراد البيانات الآن، أو القيام بذلك لاحقًا في الإعدادات.</string>
+    <string name="qs_preset_bitwarden_preview">Bitwarden · المعاينة</string>
+    <string name="qs_preset_bitwarden_preview_desc">افتح النظرة العامة على المخزن، مع إرسال وGenerator في Dock.</string>
+    <string name="qs_preset_bitwarden_list">Bitwarden · القائمة</string>
+    <string name="qs_preset_bitwarden_list_desc">انتقل مباشرة إلى قائمة الخزنة، مع إرسال وGenerator في Dock.</string>
+    <string name="qs_preset_authenticator">رموز التحقق</string>
+    <string name="qs_preset_authenticator_desc">Authenticator وSteam، يركزان على رموز التحقق.</string>
+    <string name="qs_preset_paged">صفحات منفصلة</string>
+    <string name="qs_preset_paged_desc">كلمات المرور وأداة المصادقة والمحفظة والملاحظات على الصفحات الخاصة بهم.</string>
+    <string name="qs_preset_everyday">كل يوم</string>
+    <string name="qs_preset_everyday_desc">احتفظ بكلمات المرور وأداة المصادقة والمولد في متناول يدك.</string>
+    <string name="qs_preset_minimal">الحد الأدنى</string>
+    <string name="qs_preset_minimal_desc">مجرد كلمات مرور ومولد لمنصة أبسط.</string>
+    <string name="qs_keep_layout">احتفظ بالتخطيط الحالي</string>
+    <string name="qs_keep_layout_desc">تابع التخطيط الحالي وقم بتعديله حسب الحاجة.</string>
+    <string name="qs_presets_hint">تظل الإعدادات في Dock. تعمل الإعدادات المسبقة مع أي قاعدة بيانات؛ ربط لك في خطوة البيانات.</string>
+    <string name="qs_move_up">تحرك للأعلى</string>
+    <string name="qs_move_down">تحرك للأسفل</string>
+    <string name="qs_settings_kept">متاح دائمًا</string>
+    <string name="qs_vault_overview">ابدأ الخزنة بالنظرة العامة</string>
+    <string name="qs_import_from_apps">استيراد من تطبيق آخر</string>
+    <string name="qs_import_from_apps_desc">قم بنقل كلمات المرور ومفاتيح المرور، ثم العودة إلى الإعداد.</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_error_read_only">قاعدة البيانات هذه للقراءة فقط. قم بإيقاف تشغيل وضع القراءة فقط في إعداداته قبل التحرير.</string>
+    <string name="keepass_error_write_permission">الوصول للكتابة KDBX مفقود. امنح حق الوصول مرة أخرى في إعدادات قاعدة البيانات قبل الحفظ أو الحذف.</string>
+    <string name="keepass_error_memory">تتطلب إعدادات KDF ذاكرة أكبر مما يمكن أن يوفره هذا الجهاز. تقليل استخدام الذاكرة أو التوازي.</string>
+    <string name="keepass_error_credentials">كلمة مرور قاعدة البيانات أو ملف المفتاح غير صحيح</string>
+    <string name="keepass_error_legacy">قواعد البيانات القديمة .kdb (KeePass 1.x) غير مدعومة. احفظ قاعدة البيانات باسم .kdbx في KeePassDX أو KeePassXC، ثم قم باستيرادها.</string>
+    <string name="keepass_error_format">تنسيق قاعدة بيانات غير مدعوم أو ملف تالف</string>
+    <string name="keepass_error_io">تعذر قراءة أو كتابة ملف KeePass</string>
+    <string name="keepass_error_operation">فشلت عملية KeePass</string>
+    <string name="onedrive_error_redirect">يعترض إصدار Monica Steam الأقدم تسجيل الدخول إلى OneDrive. قم بتحديث Monica Steam وحاول مرة أخرى. ملف قاعدة البيانات غير تالف.</string>
+    <string name="onedrive_error_power">لا يمكن لـ OneDrive تحديث جلسة تسجيل الدخول الآن. قم بتعطيل تحسين البطارية، أو قم بتشغيل الشاشة وأعد فتح Monica قبل إعادة المحاولة.</string>
+    <string name="onedrive_error_operation">فشلت عملية OneDrive</string>
+    <string name="keepass_error_not_remote">لا تحتوي قاعدة البيانات هذه على مصدر بعيد</string>
+    <string name="keepass_error_remote_source_missing">لم يتم العثور على المصدر البعيد</string>
+    <string name="keepass_error_working_copy_missing">لم يتم العثور على نسخة العمل المحلية</string>
+    <string name="keepass_sync_pulled">تم تنزيل أحدث إصدار عن بعد</string>
+    <string name="keepass_sync_both_changed">تم تغيير كل من الملف البعيد ونسخة العمل المحلية. حل التعارض قبل المزامنة.</string>
+    <string name="keepass_sync_up_to_date">قاعدة البيانات البعيدة محدثة</string>
+    <string name="keepass_sync_remote_changed">تم تغيير الملف البعيد. قم بالمزامنة مرة أخرى قبل المتابعة.</string>
+    <string name="keepass_sync_complete">اكتملت المزامنة عن بعد</string>
+    <string name="keepass_error_group_name_required">أدخل اسم المجموعة</string>
+    <string name="keepass_error_group_path">مسار المجموعة غير صالح</string>
+    <string name="keepass_error_group_missing">لم يتم العثور على المجموعة: %1$s</string>
+    <string name="keepass_error_group_child">لا يمكن نقل المجموعة إلى نفسها أو إلى إحدى مجموعاتها الفرعية</string>
+    <string name="keepass_error_group_uuid">الوجهة لديها بالفعل مجموعة مختلفة بنفس UUID: %1$s</string>
+    <string name="keepass_error_select_folder">حدد مجلدًا واحدًا على الأقل</string>
+    <string name="keepass_group_unnamed">مجموعة بدون اسم</string>
+    <string name="keepass_error_parent_group">لم يتم العثور على المجموعة الأصلية: %1$s</string>
+    <string name="keepass_error_group_exists">توجد مجموعة بهذا الاسم هنا بالفعل</string>
+    <string name="keepass_error_no_credentials">لا توجد بيانات اعتماد لقاعدة البيانات متوفرة</string>
+    <string name="keepass_error_source_type">نوع المصدر البعيد غير المدعوم: %1$s</string>
+    <string name="keepass_error_upload_verification">فشل التحقق عن بعد: يختلف المحتوى الذي تم تحميله (%1$d/%2$d بايت)</string>
+    <string name="storage_error_invalid_path">مسار الملف غير صالح</string>
+    <string name="storage_error_create_directory">تعذر إنشاء دليل قاعدة البيانات</string>
+    <string name="storage_error_read_database">تعذر قراءة ملف قاعدة البيانات</string>
+    <string name="storage_error_open_database">تعذر فتح ملف قاعدة البيانات</string>
+    <string name="storage_error_recovery_copy">تعذر إنشاء نسخة استرداد KeePass</string>
+    <string name="storage_error_verify_database">تعذر التحقق من ملف قاعدة البيانات</string>
+    <string name="storage_error_write_verification">فشل التحقق بعد كتابة ملف KeePass الخارجي</string>
+    <string name="storage_error_rollback_verification">فشل التحقق بعد استعادة ملف KeePass الخارجي</string>
+    <string name="storage_error_write_database">تعذر كتابة ملف قاعدة البيانات</string>
+    <string name="keepass_error_conflict_cache_missing">النسخة المخزنة مؤقتًا اللازمة لحل التعارضات مفقودة</string>
+    <string name="onedrive_error_session_expired">انتهت صلاحية جلسة حساب OneDrive. قم بتسجيل الدخول مرة أخرى.</string>
+</resources>

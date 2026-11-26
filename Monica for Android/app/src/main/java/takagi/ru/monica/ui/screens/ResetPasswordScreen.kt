@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.*
@@ -167,7 +168,7 @@ internal fun ResetPasswordScreenContent(
                 title = { Text(context.getString(R.string.reset_password_title)) },
                 navigationIcon = {
                     IconButton(onClick = ::leave, modifier = Modifier.testTag("reset-password-back")) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = context.getString(R.string.back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = context.getString(R.string.back))
                     }
                 }
             )

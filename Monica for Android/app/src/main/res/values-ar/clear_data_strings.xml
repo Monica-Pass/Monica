@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clear_data_completed">اكتملت عملية التصفية</string>
+    <string name="clear_data_failed">لا يمكن مسح كافة البيانات المحددة</string>
+    <string name="clear_data_preparing">جارٍ حساب الإدخالات المحددة...</string>
+    <string name="clear_data_passwords">مسح كلمات المرور...</string>
+    <string name="clear_data_totp">مسح المصادقين…</string>
+    <string name="clear_data_notes">مسح الملاحظات…</string>
+    <string name="clear_data_documents">تخليص المستندات…</string>
+    <string name="clear_data_bank_cards">تخليص البطاقات البنكية…</string>
+    <string name="clear_data_generator_history">مسح سجل إنشاء كلمة المرور…</string>
+    <string name="clear_data_count">تم مسح إدخالات %1$d / %2$d</string>
+    <string name="clear_data_wait">الرجاء الانتظار حتى تنتهي هذه العملية.</string>
+    <string name="clear_data_completed_hint">تم مسح البيانات المحددة.</string>
+    <string name="clear_data_failed_hint">توقف التصفية. لن تتم استعادة الإدخالات التي تم مسحها بالفعل. تحقق من اتصال قاعدة البيانات وحاول مرة أخرى.</string>
+    <string name="clear_data_verifying">التحقق…</string>
+</resources>

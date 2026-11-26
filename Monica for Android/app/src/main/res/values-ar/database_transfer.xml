@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="transfer_zip_title">نسخة احتياطية ZIP</string>
+    <string name="transfer_zip_description">قم بعمل نسخة احتياطية لقاعدة البيانات المحددة فقط.</string>
+    <string name="transfer_contents">تضمين</string>
+    <string name="transfer_images_attachments">الصور والمرفقات</string>
+    <string name="transfer_encrypt_backup">تشفير النسخة الاحتياطية</string>
+    <string name="transfer_encryption_hint">تتطلب مفاتيح المرور والمرفقات نسخة احتياطية مشفرة.</string>
+    <string name="transfer_choose_location">اختر مكان الحفظ</string>
+    <string name="transfer_background_continue">الاستمرار في الخلفية</string>
+    <string name="transfer_background_hint">يمكنك مغادرة هذه الصفحة. سوف يظهر التقدم في الإخطار.</string>
+    <string name="transfer_reading">قراءة الملف...</string>
+    <string name="transfer_decrypting">جارٍ فك تشفير النسخة الاحتياطية...</string>
+    <string name="transfer_preparing">تحضير العناصر…</string>
+    <string name="transfer_writing">جاري الكتابة إلى قاعدة البيانات...</string>
+    <string name="transfer_attachments">جارٍ نسخ المرفقات…</string>
+    <string name="transfer_packing">جارٍ إنشاء الأرشيف...</string>
+    <string name="transfer_encrypting">جارٍ تشفير الملف...</string>
+    <string name="transfer_saving">جاري حفظ الملف...</string>
+    <string name="transfer_items_progress">%1$d / %2$d</string>
+    <string name="transfer_export_complete">تصدير عناصر %1$d.</string>
+    <string name="transfer_export_done">اكتمل التصدير</string>
+    <string name="transfer_channel">الواردات والصادرات</string>
+    <string name="transfer_open_result">افتح Monica لرؤية النتيجة.</string>
+    <string name="transfer_background_start_failed">تعذر بدء التصدير. حاول مرة أخرى مع فتح Monica.</string>
+    <string name="transfer_cancelled">تم إلغاء التصدير.</string>
+    <string name="transfer_attachment_encryption">تشفير النسخة الاحتياطية لتشمل المرفقات.</string>
+    <string name="transfer_password_mismatch">كلمات المرور غير متطابقة.</string>
+    <string name="transfer_kdbx_password_description">قم بتعيين كلمة مرور لحماية قاعدة بيانات KDBX المصدرة.</string>
+    <string name="transfer_unsupported_token">لا يمكن تحويل تنسيق الرمز المميز هذا. استخدم نسخة احتياطية ZIP.</string>
+    <string name="steam_mafile_export_title">Steam maFile</string>
+    <string name="steam_mafile_export_desc">قم بتصدير حسابات Steam المحددة من قاعدة البيانات هذه.</string>
+    <string name="transfer_kdbx_description">كلمات المرور والمصادقات ومفاتيح المرور والمرفقات بتنسيق KeePass.</string>
+    <string name="transfer_unsupported_records">تحتوي قاعدة البيانات هذه على أنواع عناصر غير مدعومة. احفظ نسخة قاعدة البيانات الأصلية بدلاً من ذلك.</string>
+    <string name="transfer_zip_password_title">فتح النسخة الاحتياطية ZIP</string>
+    <string name="transfer_zip_password_description">أدخل كلمة المرور المستخدمة لإنشاء النسخة الاحتياطية ZIP.</string>
+    <string name="transfer_attachment_export_failed">تعذر تصدير المرفق \"%2$s\" من \"%1$s\". %3$s</string>
+    <string name="transfer_attachment_key_unavailable">لا يمكن فك تشفير مفتاح المرفق. قم بفتح Monica وحاول فتح المرفق في العنصر الخاص به. إذا استمر الفشل، فأعد استيراده من الجهاز الأصلي أو نسخة احتياطية قابلة للقراءة.</string>
+    <string name="transfer_attachment_content_unreadable">فشل المرفق في التحقق من سلامته، لذلك تم إيقاف التصدير. التحقق من الملف الأصلي أو استعادة المرفق من نسخة احتياطية قابلة للقراءة.</string>
+    <string name="transfer_incomplete_export_file">لا يمكن إزالة ملف التصدير غير المكتمل تلقائيًا. احذف هذا الملف الفارغ أو غير الكامل يدويًا؛ إنها ليست نسخة احتياطية قابلة للاستخدام.</string>
+</resources>

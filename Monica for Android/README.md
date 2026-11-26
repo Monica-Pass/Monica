@@ -78,6 +78,7 @@ Monica embraces **Material Design 3** (Material You) to offer a visually stunnin
 *   **Dark Mode**: Hand-crafted dark theme for OLED efficiency and eye comfort.
 *   **Smooth Animations**: Fluid transitions powered by Jetpack Compose.
 *   **Icon Support**: Visual icons for password cards for easier recognition.
+*   **Languages**: Includes العربية (Arabic) with right-to-left navigation; passwords, OTP codes and Latin keyboard keys retain their intended order. See the app language selector for all options.
 
 The vault scrollbar style is inspired by [PixelPlayer](https://github.com/PixelPlayerHQ/PixelPlayer).
 
@@ -221,3 +222,5 @@ The filled slider track and rotating floral thumb are adapted from [T8RIN/ImageT
 Interaction strength references ImageToolbox’s light/strong choices and public View global-setting override. Monica’s own toggle controls feedback without a system-touch-setting prerequisite; supported CONTEXT_CLICK/LONG_PRESS effects are shared by switches, previews and slider steps. Platform policy may still restrict output on some Android variants, and API acceptance alone does not prove physical motor output.
 
 Selection toolbars use compact unfilled icons; their theme contrast and narrow-screen layout are independently implemented by Monica.
+
+Interface scaling and setting-card size transitions also reference the project’s continuous layout motion. They are implemented independently using Monica’s existing components; no additional upstream source was copied for this behavior.

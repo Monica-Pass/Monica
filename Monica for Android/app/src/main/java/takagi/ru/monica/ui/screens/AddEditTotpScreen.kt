@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.components.MonicaExpandableCard
 import takagi.ru.monica.ui.components.MonicaExpandableContent
 import android.widget.Toast
@@ -980,7 +981,7 @@ InfoCard(title = stringResource(R.string.section_notes)) {
                                     Spacer(modifier = Modifier.width(16.dp))
                                     Text(if (boundPasswordId != null) stringResource(R.string.bound_password_change) else stringResource(R.string.bind_password),
                                         modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
-                                    Icon(Icons.Default.ChevronRight, contentDescription = null)
+                                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null)
                                 }
 
                                 if (boundPasswordId != null) {

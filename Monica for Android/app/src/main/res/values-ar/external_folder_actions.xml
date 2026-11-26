@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_delete_contents">هل تريد حذف المجلد \"%1$s\" ومحتوياته؟ يرجى التأكيد قبل المتابعة.</string>
+    <string name="external_folder_delete_keep_items">هل تريد حذف المجلد \"%1$s\"؟ سيتم الاحتفاظ بالعناصر الموجودة فيه بدون هذا المجلد.</string>
+</resources>

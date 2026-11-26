@@ -119,7 +119,7 @@ android {
         // Unqualified English resources and non-locale configurations remain available.
         localeFilters += ['en', 'en-rAU', 'en-rCA', 'en-rGB', 'en-rIN', 'en-rXC',
                           'de', 'es', 'es-rUS', 'b+es+419', 'fr', 'fr-rCA', 'it',
-                          'in', 'in-rID', 'id', 'id-rID', 'tr', 'tr-rTR',
+                          'in', 'in-rID', 'id', 'id-rID', 'tr', 'tr-rTR', 'ar',
                           'ja', 'ko', 'pl', 'pt', 'pt-rBR', 'pt-rPT', 'ru', 'vi',
                           'zh', 'zh-rCN', 'zh-rHK', 'zh-rTW', 'b+zh+Hant', 'b+zh+Hant+TW',
                           'zh-rNY', 'zh-rXB', 'b+lzh']

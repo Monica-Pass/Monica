@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_conflict_choice_effect">يؤدي هذا إلى حل الحقول المتعارضة باستخدام الإصدار المحدد، بما في ذلك الحذف المتعارض. سيتم مشاركة النتيجة في المزامنة التالية. راجع اختيارك قبل المتابعة.</string>
+    <string name="mdbx_conflict_confirm_choice">تأكيد الاختيار</string>
+    <string name="mdbx_conflict_values_unavailable">لا يمكن معاينة القيم التاريخية هنا. تحقق من العنصر الموجود على الأجهزة المصدر قبل الاختيار.</string>
+    <string name="mdbx_conflict_show_values">إظهار مقارنة الإصدارات</string>
+    <string name="mdbx_conflict_version_help">محلي: هذا الجهاز في وقت التعارض. \n الوارد: الإصدار المستلم، والذي قد لا يكون الأحدث.</string>
+    <string name="mdbx_copy_parameters">نسخ المعلمات</string>
+    <string name="mdbx_snapshot_retention_help">قد يتم تقليم اللقطات التلقائية. تبقى اللقطات اليدوية حتى تقوم بحذفها.</string>
+</resources>

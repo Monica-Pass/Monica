@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_uploading">جاري الرفع</string>
+    <string name="transfer_downloading">جاري التحميل</string>
+    <string name="transfer_task_busy">يتم الآن تشغيل مهمة بيانات أخرى. يرجى الانتظار حتى تنتهي.</string>
+    <string name="transfer_task_done">اكتملت مهمة البيانات</string>
+    <string name="transfer_task_failed">توقفت مهمة البيانات أو تحتاج إلى الاهتمام</string>
+    <string name="transfer_interrupted_check_result">تمت مقاطعة المهمة السابقة من قبل النظام. التحقق من البيانات المستوردة أو النسخ الاحتياطي قبل إعادة المحاولة؛ ولم يتم إعادة تشغيله تلقائيًا.</string>
+</resources>

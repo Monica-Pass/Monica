@@ -1,5 +1,6 @@
 package takagi.ru.monica.passkey.hardware
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -140,7 +141,7 @@ fun HardwareKeyScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                 TextButton(onClick = { showRegistrationHelp = true }, contentPadding = PaddingValues(0.dp)) {
                     Text(stringResource(R.string.hardware_key_registration_help))
-                    Spacer(Modifier.width(8.dp)); Icon(Icons.Default.ChevronRight, null)
+                    Spacer(Modifier.width(8.dp)); Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null)
                 }
             }
             state.credentials?.let { snapshot ->

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">حماية النسخ الاحتياطي</string>
+    <string name="zip_protection_plain">ZIP غير مشفر</string>
+    <string name="zip_protection_plain_warning">يمكن لأي شخص لديه هذا الملف قراءة محتوياته.</string>
+    <string name="zip_protection_required">تتطلب مفاتيح المرور والمرفقات وتكوين Monica التشفير. قم بإلغاء تحديدها لتصدير ملف ZIP غير المشفر.</string>
+</resources>

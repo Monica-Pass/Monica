@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_update_smart_copy_channel">نسخة تسلسلية من بيانات الاعتماد</string>
+    <string name="permission_live_updates_name">تحديثات حية</string>
+    <string name="permission_live_updates_description">إظهار العد التنازلي لـ OTP وبيانات الاعتماد التالية المطلوب نسخها</string>
+    <string name="live_update_unlock_to_view">افتح القفل للعرض والمتابعة</string>
+    <string name="live_update_copy_status">نسخ</string>
+    <string name="live_update_seconds">%1$ds</string>
+    <string name="live_update_unlock_to_copy">قم بإلغاء قفل جهازك للنسخ</string>
+</resources>

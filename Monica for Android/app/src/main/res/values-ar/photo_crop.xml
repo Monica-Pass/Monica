@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_crop_title">قص الصورة</string>
+    <string name="photo_crop_skip">تخطي الاقتصاص</string>
+    <string name="photo_crop_continue">الاقتصاص والمتابعة</string>
+    <string name="card_face_crop_apply">استخدم العمل الفني</string>
+</resources>

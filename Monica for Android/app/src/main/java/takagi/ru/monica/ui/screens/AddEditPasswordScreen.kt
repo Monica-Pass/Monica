@@ -4235,6 +4235,7 @@ private fun PasswordEntryEditor(
                                                     )
                                                 },
                                                 leadingIcon = { Icon(Icons.Default.Lock, null) },
+                    textStyle = androidx.compose.ui.text.TextStyle(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
                                                 visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                                                 trailingIcon = {
                                                     CredentialPasswordActions(isPasswordVisible,

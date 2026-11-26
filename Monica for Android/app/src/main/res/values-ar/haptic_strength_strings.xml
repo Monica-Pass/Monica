@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haptic_strength">قوة اللمس</string>
+    <string name="haptic_strength_description">0 = إيقاف · 1 = خفيف · 2 = قوي</string>
+    <string name="haptic_test">اختبار الاهتزاز</string>
+    <string name="haptic_unavailable">الاهتزاز غير متوفر على هذا الجهاز أو تم رفضه من قبل النظام.</string>
+</resources>

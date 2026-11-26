@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">نقطة اتصال مؤقتة</string>
+    <string name="nearby_hotspot_create_hint">قم بالاتصال عندما لا تحتوي الأجهزة على شبكة Wi-Fi مشتركة.</string>
+    <string name="nearby_hotspot_title">نقطة اتصال مؤقتة</string>
+    <string name="nearby_hotspot_help">تنتهي صلاحية هذا الرمز خلال 10 دقائق. يؤدي إغلاق هذه اللوحة أو قفلها أو ترك Monica إلى إيقاف نقطة الاتصال. لا يزال يتم التحقق من الاقتران.</string>
+    <string name="nearby_hotspot_active">نقطة اتصال مؤقتة نشطة</string>
+    <string name="nearby_hotspot_stop">إنهاء نقطة الاتصال المؤقتة</string>
+    <string name="nearby_hotspot_starting">إنشاء نقطة اتصال ورمز الاقتران…</string>
+    <string name="nearby_hotspot_join_title">هل تتصل بنقطة الاتصال هذه؟</string>
+    <string name="nearby_hotspot_join_hint">انضم إلى %1$s من خلال تأكيد Android. Monica بعد ذلك يتحقق من الجهاز المقترن.</string>
+    <string name="nearby_hotspot_connecting">في انتظار الاتصال بالواي فاي…</string>
+    <string name="nearby_hotspot_failure">تعذر على Android إكمال الاتصال. يمكنك الاتصال يدويًا ومسح الرمز ضوئيًا مرة أخرى.</string>
+    <string name="nearby_hotspot_permissions">قم بمنح إذن Wi-Fi الذي طلبته Android لإنشاء نقطة اتصال أو الانضمام إليها.</string>
+    <string name="nearby_hotspot_unsupported">الاتصال التلقائي بنقطة الاتصال غير متوفر. قم بالتوصيل يدويًا والمسح الضوئي مرة أخرى.</string>
+    <string name="nearby_hotspot_manual">متصل بالفعل، تابع</string>
+    <string name="nearby_hotspot_open_wifi">إعدادات الواي فاي</string>
+    <string name="nearby_hotspot_scan_hint">قم بمسح رمز اقتران Monica أو رمز نقطة الاتصال المؤقتة.</string>
+    <string name="nearby_hotspot_connect">تواصل</string>
+    <string name="nearby_hotspot_copy_password">انسخ كلمة مرور نقطة الاتصال</string>
+    <string name="nearby_hotspot_interrupted">تم إلغاء الاتصال عندما غادر Monica المقدمة. اتصل بنقطة الاتصال يدويًا، ثم امسح الرمز ضوئيًا مرة أخرى.</string>
+</resources>

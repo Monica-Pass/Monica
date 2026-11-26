@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="content_block_api_key">مفتاح API</string>
+    <string name="content_block_api_token">الرمز المميز API</string>
+    <string name="content_block_ssh">مفتاح SSH</string>
+    <string name="content_block_gpg">مفتاح GPG</string>
+    <string name="content_block_qr">كود QR</string>
+    <string name="content_block_key">المفتاح</string>
+    <string name="content_block_token">رمز</string>
+    <string name="content_block_provider">المزود</string>
+    <string name="content_block_url">نقطة النهاية API</string>
+    <string name="content_block_algorithm">الخوارزمية</string>
+    <string name="content_block_public">المفتاح العام</string>
+    <string name="content_block_private">المفتاح الخاص</string>
+    <string name="content_block_fingerprint">بصمة المفتاح</string>
+    <string name="content_block_identity">الهوية/التعليق</string>
+    <string name="content_block_content">نص أو رابط</string>
+    <string name="content_block_import">استيراد من ملف</string>
+    <string name="content_block_export">تصدير إلى ملف</string>
+    <string name="content_block_unavailable">محتوى غير مدعوم</string>
+    <string name="content_block_preserved">تم الحفاظ على المحتوى الأصلي. افتح باستخدام إصدار متوافق للتعديل.</string>
+    <string name="content_block_save_error">تعذر حفظ هذا المحتوى أو قراءته. التحقق من الملف وحجمه (بحد أقصى 256 كيلو بايت).</string>
+    <string name="content_block_more">المزيد من المحتوى</string>
+    <string name="content_block_key_size">حجم المفتاح</string>
+    <string name="content_block_format">التنسيق</string>
+    <string name="content_block_qr_error">هذا المحتوى طويل جدًا بالنسبة لرمز QR. لا يزال بإمكانك عرض أو نسخ القيمة الكاملة.</string>
+</resources>

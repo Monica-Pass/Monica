@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import android.content.Context
 import android.os.Build
 import android.widget.Toast
@@ -1883,7 +1884,7 @@ private fun PasskeyListItem(
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Icon(
-                            imageVector = Icons.Default.ArrowForward,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                             contentDescription = stringResource(R.string.passkey_view_details),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nfc_card_unlock_retap">قم بفتح Monica، ثم اضغط على البطاقة مرة أخرى.</string>
+    <string name="nfc_card_unsupported">لم تتم قراءة رقم البطاقة المصرفية القابلة للاستخدام. احتفظ بالبطاقة بالقرب من الهاتف وحاول مرة أخرى؛ بعض البطاقات لا تعرض هذه المعلومات.</string>
+    <string name="nfc_card_read_failed">تعذر قراءة البطاقة. ضعه بالقرب من الهاتف وحاول مرة أخرى.</string>
+    <string name="nfc_card_new_title">إنشاء بطاقة مصرفية؟</string>
+    <string name="nfc_card_new_message">تمت قراءة بطاقة البنك، ولكن هذه الصفحة مخصصة لنوع عنصر آخر. فتح صفحة بطاقة مصرفية جديدة؟ سيتم الاحتفاظ بالمحتوى الحالي الخاص بك.</string>
+    <string name="nfc_card_replace_title">هل تريد استبدال تفاصيل البطاقة الموجودة؟</string>
+    <string name="nfc_card_replace_message">تختلف التفاصيل الممسوحة ضوئيًا عن النموذج. سيتم فقط استبدال رقم البطاقة وانتهاء الصلاحية وتفاصيل حامل البطاقة المقدمة من البطاقة. سيتم الاحتفاظ بالمحتوى الآخر.</string>
+    <string name="nfc_card_busy">قم بإنهاء العملية الحالية قبل مسح البطاقة ضوئيًا.</string>
+    <string name="nfc_card_new_action">فتح بطاقة جديدة</string>
+    <string name="nfc_card_replace_action">استبدال</string>
+    <string name="nfc_card_type_select">حدد نوع البطاقة</string>
+</resources>

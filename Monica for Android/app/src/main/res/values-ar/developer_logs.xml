@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="developer_logs_title">سجلات التشخيص</string>
+    <string name="developer_logs_entry_description">بحث وتصفية ومشاركة تقرير تشخيصي كامل</string>
+    <string name="developer_logs_search">البحث في السجلات أو العلامات أو الاستثناءات</string>
+    <string name="developer_logs_source">المصدر: %1$s</string>
+    <string name="developer_logs_hint">قم بإعادة إنتاج المشكلة، ثم قم بالتحديث. لا تعني سجلات مستوى الخطأ دائمًا فشل الميزة.</string>
+    <string name="developer_logs_share_full">مشاركة السجلات الكاملة</string>
+    <string name="developer_logs_result_count">%1$d من أحداث %2$d · تم تحديث %3$s</string>
+    <string name="developer_logs_no_matches">لا توجد سجلات مطابقة. جرّب كلمة رئيسية أو فلترًا آخر.</string>
+    <string name="developer_logs_clear_confirmation">مسح المخازن المؤقتة لسجل التشخيص؟ يتم الاحتفاظ ببيانات وإعدادات Vault. قد تستمر تفاصيل البيئة الحالية والسجلات الجديدة في الظهور.</string>
+    <string name="developer_logs_copy_event">نسخ الحدث</string>
+    <string name="developer_logs_preview_limit">تم اختصار المعاينة. انسخ الحدث أو شارك التقرير الكامل لعرض النص بالكامل.</string>
+    <string name="developer_logs_expand">قم بتوسيع حدث السجل</string>
+    <string name="developer_logs_collapse">طي حدث السجل</string>
+    <string name="developer_logs_security">الأمان</string>
+    <string name="developer_verification_group">التحقق من التوافق مع &amp;</string>
+    <string name="developer_forensics_group">تشخيص مزامنة Bitwarden</string>
+    <string name="developer_logs_copy_failed">غير قادر على نسخ هذا الحدث. قم بمشاركة ملف السجل الكامل بدلاً من ذلك.</string>
+</resources>

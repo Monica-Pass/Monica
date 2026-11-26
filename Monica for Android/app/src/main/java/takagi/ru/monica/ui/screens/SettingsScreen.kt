@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.components.animateMonicaContentSize
+
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.switchClick
 
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
@@ -389,7 +393,7 @@ fun SettingsScreen(
                         IconButton(onClick = {
                             if (isSettingsSearchActive) closeSettingsSearch() else onNavigateBack()
                         }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = context.getString(R.string.back))
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = context.getString(R.string.back))
                         }
                         
                         Text(
@@ -722,7 +726,7 @@ fun SettingsScreen(
                                     )
                                 } else {
                                     Icon(
-                                        imageVector = Icons.Default.ChevronRight,
+                                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                                         contentDescription = null,
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -1116,6 +1120,7 @@ fun SettingsItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .animateMonicaContentSize()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -1144,7 +1149,7 @@ fun SettingsItem(
                 trailingContent()
             } else {
                 Icon(
-                    imageVector = Icons.Default.ChevronRight,
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1187,6 +1192,7 @@ fun SettingsItemWithSwitch(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .animateMonicaContentSize()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -1597,7 +1603,7 @@ fun BottomNavSettingsScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = context.getString(R.string.back)
                         )
                     }

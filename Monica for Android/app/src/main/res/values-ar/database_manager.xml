@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_open_database">فتح إعدادات قاعدة البيانات</string>
+    <string name="manager_dual">تبديل الجزء الفردي / المزدوج</string>
+    <string name="manager_databases">قواعد البيانات</string>
+    <string name="manager_choose_destination">اختر الوجهة</string>
+    <string name="manager_selection_destination">تم تحديد %1$d → %2$s</string>
+    <string name="manager_items_selected">عناصر %1$d · تم تحديد %2$d</string>
+    <string name="manager_confirm_transfer">هل تريد نقل العناصر المحددة %1$d من %2$s إلى %3$s / %4$s؟ ويتم الاحتفاظ بالمصدر حتى يتم التحقق من الوجهة.</string>
+    <string name="manager_result">نتيجة النقل</string>
+    <string name="manager_result_count">مكتمل: %1$d · يتطلب الاهتمام: %2$d</string>
+    <string name="manager_technical_details">التفاصيل الفنية</string>
+    <string name="manager_select">حدد العنصر</string>
+    <string name="manager_failure_format">لا يمكن للوجهة الاحتفاظ بجميع المعلومات الأصلية. احتفظ بالمصدر واختر قاعدة بيانات بنفس التنسيق. اطلع على تفاصيل الحقول المتأثرة.</string>
+    <string name="manager_failure_changed">تغيرت البيانات أو فشل التحقق. تم الاحتفاظ بالمصدر. قم بتحديث كلا الجزأين وراجع الوجهة قبل إعادة المحاولة.</string>
+    <string name="manager_failure_locked">يجب إلغاء قفل قاعدة البيانات وإلا فإن الملف الأصلي الخاص بها غير متوفر. افتحه في إعدادات قاعدة البيانات، ثم قم بتحديث هذا الجزء.</string>
+    <string name="manager_failure_general">تعذر إكمال هذه العملية. تحقق من كلا الجزأين والتفاصيل قبل إعادة المحاولة: قد تحتوي الوجهة على نسخة جزئية.</string>
+    <string name="manager_left_pane">الجزء الأيسر</string>
+    <string name="manager_right_pane">الجزء الأيمن</string>
+    <string name="manager_copy_left">← نسخ</string>
+    <string name="manager_copy_right">نسخ →</string>
+    <string name="manager_move_left">← تحرك</string>
+    <string name="manager_move_right">نقل →</string>
+    <string name="manager_focused_selection">نشط: %1$s · تم تحديد %2$d</string>
+    <string name="manager_focused_location">نشط: %1$s · %2$s</string>
+    <string name="manager_history_back">رجوع</string>
+    <string name="manager_history_forward">إلى الأمام</string>
+    <string name="manager_new_folder_short">مجلد جديد</string>
+    <string name="manager_switch_pane">جزء التبديل</string>
+    <string name="manager_parent">لأعلى</string>
+    <string name="manager_open_item">مفتوح</string>
+    <string name="manager_clear_selection">مسح التحديد</string>
+</resources>

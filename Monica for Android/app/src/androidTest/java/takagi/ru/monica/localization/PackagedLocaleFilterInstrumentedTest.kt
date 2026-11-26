@@ -26,6 +26,7 @@ class PackagedLocaleFilterInstrumentedTest {
             Language.ENGLISH to "Cancel",
             Language.INDONESIAN to "Batal",
             Language.TURKISH to "İptal",
+            Language.ARABIC to "إلغاء",
             Language.CHINESE to "取消",
             Language.TRADITIONAL_CHINESE to "取消",
             Language.TRADITIONAL_CHINESE_TAIWAN to "取消",
@@ -54,9 +55,8 @@ class PackagedLocaleFilterInstrumentedTest {
         val classical = LocaleHelper.setLocale(context, Language.CLASSICAL_CHINESE)
         assertEquals("罢", classical.getString(R.string.cancel))
         assertEquals("lzh,zh-CN,en", classical.resources.configuration.locales.toLanguageTags())
-        // The old APK on API 35 selects lzh at package level. An absent lzh entry
-        // uses the unqualified English value, despite the declared locale list.
-        assertEquals("Update an existing password?", classical.getString(R.string.autofill_save_review_title))
+        // The formerly absent entry is now explicitly translated in values-b+lzh.
+        assertEquals("更新旧密钥乎？", classical.getString(R.string.autofill_save_review_title))
         val hans = context.localized("zh-Hans-CN")
         assertEquals("更新已有密码？", hans.getString(R.string.autofill_save_review_title))
         assertEquals("删除未完成", hans.getString(R.string.batch_delete_incomplete_title))
@@ -101,7 +101,7 @@ class PackagedLocaleFilterInstrumentedTest {
 
     @Test fun unsupportedLanguagesUseTheDefaultEnglishAppResources() {
         val english = context.localized("en-US")
-        for (tag in listOf("ar", "sv", "th", "nl", "uk")) {
+        for (tag in listOf("he", "sv", "th", "nl", "uk")) {
             val localized = context.localized(tag)
             assertEquals(tag, "Cancel", localized.getString(R.string.cancel))
             assertEquals(tag, english.getString(R.string.local_password_protection_scope),
@@ -110,7 +110,7 @@ class PackagedLocaleFilterInstrumentedTest {
         // Also exercise a dependency-owned string, which must remain resolvable after filtering.
         val dependencyId = context.resources.getIdentifier("abc_action_bar_up_description", "string", context.packageName)
         assertTrue("AppCompat resource is present", dependencyId != 0)
-        assertEquals(english.getString(dependencyId), context.localized("ar").getString(dependencyId))
+        assertEquals(english.getString(dependencyId), context.localized("he").getString(dependencyId))
     }
 
     private fun Context.localized(tag: String): Context = createConfigurationContext(

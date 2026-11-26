@@ -575,7 +575,7 @@
     <string name="export_option_zip_desc">Exporte tout, y compris les mots de passe, les notes et les images. Fonctionne sous Windows et Android.</string>
     <string name="export_option_kdbx">Format KeePass (KDBX)</string>
     <string name="export_option_kdbx_desc">Exportez les mots de passe et les authentifiants au format compatible KeePass pour KeePass, KeePassXC, etc.</string>
-    <string name="export_option_steam_mafile">Fichier maFichier Steam</string>
+    <string name="export_option_steam_mafile">Fichier maFile Steam</string>
     <string name="export_option_steam_mafile_desc">Exportez les authentificateurs Steam locaux sélectionnés sous forme de fichiers maFile simples pour la migration vers d\'autres clients.</string>
     <string name="steam_mafile_export_loading">Chargement des comptes Steam...</string>
     <string name="steam_mafile_export_empty">Aucun compte d\'authentification Steam local ne peut être exporté</string>
@@ -905,8 +905,8 @@
     <string name="steam_client_label">Client</string>
     <string name="steam_login_fallback_title">Connexion Steam</string>
     <string name="steam_client_id_fallback">client %1$d</string>
-    <string name="steam_mafile_title">maFichier</string>
-    <string name="steam_mafile_button">maFichier</string>
+    <string name="steam_mafile_title">maFile</string>
+    <string name="steam_mafile_button">maFile</string>
     <string name="steam_manifest_button">manifeste.json</string>
     <string name="steam_no_mafile_selected">Aucun maFile sélectionné</string>
     <string name="steam_key_only_title">Importer le code Steam</string>
@@ -3149,7 +3149,7 @@
     <string name="import_type_steam_desc">Importer le jeton Steam depuis maFile</string>
     <string name="import_type_steam_file_hint">Sélectionnez le fichier .maFile</string>
     <string name="import_type_steam_mode_title">Méthode d\'importation Steam</string>
-    <string name="import_type_steam_mode_mafile">maFichier</string>
+    <string name="import_type_steam_mode_mafile">maFile</string>
     <string name="import_type_steam_mode_coexist">L\'application Steam coexiste</string>
     <string name="import_type_steam_mode_login">Connexion Steam</string>
     <string name="import_type_steam_coexist_desc">Collez l\'ID de votre appareil et SteamGuard JSON pour une importation coexistante.</string>
@@ -3176,7 +3176,7 @@
     <string name="import_type_csv_bitwarden_title">Bitwarden CSV</string>
     <string name="import_type_csv_bitwarden_desc">Importer CSV exporté par Bitwarden</string>
     <string name="import_type_csv_bitwarden_file_hint">Choisir le CSV Bitwarden</string>
-    <string name="import_type_csv_proton_pass_title">CSV Passe Proton</string>
+    <string name="import_type_csv_proton_pass_title">CSV Proton Pass</string>
     <string name="import_type_csv_proton_pass_desc">Importer CSV exporté par Proton Pass</string>
     <string name="import_type_csv_proton_pass_file_hint">Sélectionnez le fichier Proton Pass .csv</string>
     <string name="import_type_csv_chrome_title">Chrome CSV</string>

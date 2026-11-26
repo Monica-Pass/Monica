@@ -36,9 +36,10 @@ class InterfaceScaleIntegrationGuardTest {
         assertTrue(provider.contains("LocalDensity provides appDensity"))
         assertTrue(provider.contains("InterfaceScale.calculateDensity("))
         assertTrue(provider.contains("fontScale = baseDensity.fontScale"))
-        assertTrue(mainActivity.contains("ProvideMonicaInterfaceScale(settings.interfaceScalePercent)"))
+        assertTrue(mainActivity.contains("scalePercent = settings.interfaceScalePercent"))
+        assertTrue(mainActivity.contains("animationsEnabled = !settings.reduceAnimations"))
         assertTrue(
-            mainActivity.indexOf("ProvideMonicaInterfaceScale(settings.interfaceScalePercent)") <
+            mainActivity.indexOf("ProvideMonicaInterfaceScale(") <
                 mainActivity.indexOf("MonicaTheme(", startIndex = mainActivity.indexOf("fun MonicaApp("))
         )
     }

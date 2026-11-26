@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">التحقق من وجود تحديثات تلقائيًا</string>
+    <string name="update_auto_check_summary">قم بالفحص مرة واحدة يوميًا على الأكثر بعد فتح القفل. يمكنك إيقاف هذا في أي وقت.</string>
+    <string name="update_now">قم بالتحديث الآن</string>
+    <string name="update_skip_version">تخطي هذا الإصدار</string>
+    <string name="update_view_details">عرض التفاصيل</string>
+    <string name="update_later">لاحقا</string>
+    <string name="update_whats_new">ما الجديد</string>
+    <string name="update_open_fdroid">افتح F-Droid</string>
+    <string name="update_fdroid_source">يتم فحص التحديثات وتثبيتها من خلال مستودع F-Droid الرسمي.</string>
+    <string name="update_notes_unavailable">ملاحظات الإصدار غير متوفرة. عرض التفاصيل لمزيد من المعلومات.</string>
+    <string name="update_notes_truncated">هذه الملاحظات طويلة. عرض التفاصيل لقراءة ملاحظات الإصدار الكاملة.</string>
+</resources>

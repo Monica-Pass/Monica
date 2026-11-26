@@ -13,7 +13,7 @@ class VaultV2SortingTest {
         try {
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Asia/Shanghai"))
             val time = java.time.Instant.parse("2026-09-28T17:00:00Z").toEpochMilli()
-            for (locale in listOf(java.util.Locale.CHINA, java.util.Locale.US, java.util.Locale("ar"))) {
+            for (locale in listOf(java.util.Locale.CHINA, java.util.Locale.US, java.util.Locale.FRENCH, java.util.Locale("ar"), java.util.Locale.forLanguageTag("ar-EG"), java.util.Locale.forLanguageTag("ar-SA"))) {
                 java.util.Locale.setDefault(locale)
                 val items = buildVaultV2PasswordItems(listOf(PasswordEntry(id = 1, title = "Fixture",
                     username = "", password = "", website = "", createdAt = Date(time), updatedAt = Date(time))))

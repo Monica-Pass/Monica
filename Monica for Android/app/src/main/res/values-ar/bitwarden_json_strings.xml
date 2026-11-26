@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">Bitwarden JSON مشفرة بكلمة مرور</string>
+    <string name="bw_json_description">JSON قياسي أو مشفر بكلمة مرور لتسجيلات الدخول والملاحظات والبطاقات والهويات ومفاتيح SSH.</string>
+    <string name="bw_json_boundary">قم بالاستيراد إلى المخزن المحلي فقط. قم بالتصدير من المخزن المحلي أو من حساب Bitwarden الشخصي. لا يتم تضمين الملفات المرفقة وحالة الإرسال والأرشفة. المحتوى غير المدعوم يحظر عملية النقل بأكملها؛ مراجعة كل عنصر تم الإبلاغ عنه.</string>
+    <string name="bw_json_import_hint">اختر ملف Bitwarden JSON القياسي أو المشفر بكلمة مرور.</string>
+    <string name="bw_json_file_password">كلمة مرور الملف</string>
+    <string name="bw_json_check">فحص الملف</string>
+    <string name="bw_json_review">مراجعة استيراد JSON</string>
+    <string name="bw_json_counts">عناصر %1$d · مجلدات %2$d</string>
+    <string name="bw_json_blocked">تم حظر النقل بالكامل. قم بحل كل عنصر أدناه قبل المحاولة مرة أخرى.</string>
+    <string name="bw_json_ready">يمكن استيراد الملف. قم بتأكيد إضافة كافة العناصر إلى المخزن المحلي.</string>
+    <string name="bw_json_export_success">تم تصدير عناصر %1$d ومجلدات %2$d. لا يتم تضمين الملفات المرفقة وحالة الإرسال والأرشفة.</string>
+    <string name="bw_json_reason_invalid">بيانات غير صالحة أو تالفة</string>
+    <string name="bw_json_reason_unknown">حقل غير معروف؛ لا يمكن الحفاظ عليه</string>
+    <string name="bw_json_reason_type">نوع العنصر غير مدعوم</string>
+    <string name="bw_json_reason_value">لا يمكن الاحتفاظ بهذه القيمة بشكل كامل</string>
+    <string name="bw_json_reason_limit">تم تجاوز حد الملف أو المعالجة</string>
+    <string name="bw_json_reason_organization">محتوى التنظيم والمجموعة غير مدعوم</string>
+    <string name="bw_json_reason_attachments">تتطلب الملفات المرفقة نقلاً منفصلاً</string>
+    <string name="bw_json_reason_archived">لا يمكن الاحتفاظ بالحالة المؤرشفة بهذا التنسيق</string>
+    <string name="bw_json_reason_destination">هذا المصدر أو الوجهة غير مدعوم</string>
+    <string name="bw_json_reason_pending">قم بإنهاء التغييرات المعلقة قبل تصدير الحساب</string>
+    <string name="bw_json_reason_unavailable">البيانات المصدر المطلوبة أو المفتاح غير متوفر</string>
+    <string name="bw_json_item">العنصر %1$d</string>
+    <string name="bw_json_plain_warning">يحتوي JSON غير المشفر على كلمات مرور قابلة للقراءة ومفاتيح خاصة. قم بتخزين الملف بشكل آمن.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_icon_default">الرمز الافتراضي</string>
+    <string name="launcher_icon_blue_star">بوت جروك</string>
+    <string name="launcher_icon_selection_description">اختر أيقونة الشاشة الرئيسية. يمكنك التبديل مرة أخرى في أي وقت.</string>
+    <string name="launcher_icon_refresh_hint">قد يستغرق المشغل الخاص بك بضع ثوانٍ لتحديث الرمز.</string>
+</resources>

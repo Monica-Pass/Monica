@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_group_library">قوائم المكتبة &amp;</string>
+    <string name="customization_group_cards">محفظة البطاقات &amp;</string>
+    <string name="customization_group_fields_icons">حقول أيقونات &amp;</string>
+    <string name="permission_summary_title">الأذونات وفقًا لشروطك</string>
+    <string name="permission_summary_hint">قم بتمكين الأذونات المطلوبة فقط للميزات التي تستخدمها. يتم منح بعضها تلقائيًا بواسطة Android.</string>
+    <string name="permission_summary_granted">تم منح أذونات %1$d</string>
+    <string name="permission_refresh_status">تحديث الحالة</string>
+    <string name="permission_action_request">طلب الإذن</string>
+    <string name="permission_action_none">لا يلزم اتخاذ أي إجراء</string>
+    <string name="permission_action_for">%1$s: %2$s</string>
+    <string name="permission_help_actions">استخدم إذن الطلب لمطالبة Android بالوصول، أو افتح الإعدادات لإدارة الخدمات والأذونات الممنوحة. \n\nالعناصر التي تم وضع علامة \"لا يلزم اتخاذ إجراء\" أو \"غير متاحة\" لا تحتوي على زر إجراء. قم بتمكين ما تحتاجه فقط. يتم تحديث \n\nالحالات عند العودة من إعدادات النظام. يمكنك أيضًا النقر فوق تحديث الحالة للتحقق مرة أخرى.</string>
+</resources>

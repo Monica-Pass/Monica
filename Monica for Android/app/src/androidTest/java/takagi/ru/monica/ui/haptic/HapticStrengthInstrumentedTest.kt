@@ -100,25 +100,31 @@ class HapticStrengthInstrumentedTest {
         show()
         val slider = compose.onNodeWithTag("haptic_strength_slider")
         slider.performSemanticsAction(SemanticsActions.SetProgress) { it(0f) }
-        compose.onNodeWithTag("haptic_test").assertIsNotEnabled()
+        compose.onNodeWithTag("haptic_test").assertDoesNotExist()
         compose.runOnIdle { assertFalse(feedback); assertTrue(requests.isEmpty()); assertEquals(1, commits) }
         slider.performSemanticsAction(SemanticsActions.SetProgress) { it(2f) }
-        compose.onNodeWithTag("haptic_test").assertIsEnabled().performClick()
         compose.runOnIdle {
             assertTrue(feedback); assertEquals(2, strength); assertEquals(2, commits)
-            assertEquals(List(2) { HapticFeedbackConstants.LONG_PRESS }, requests)
+            assertEquals(listOf(HapticFeedbackConstants.LONG_PRESS), requests)
         }
         compose.runOnIdle { strength = 1 }
         compose.waitForIdle()
-        compose.runOnIdle { assertEquals(2, requests.size) }
-        compose.onNodeWithTag("haptic_test").performClick()
-        compose.runOnIdle { assertEquals(HapticFeedbackConstants.CONTEXT_CLICK, requests.last()) }
+        compose.runOnIdle { assertEquals(1, requests.size) }
+        slider.performSemanticsAction(SemanticsActions.SetProgress) { it(2f) }
+        slider.performSemanticsAction(SemanticsActions.SetProgress) { it(1f) }
+        compose.runOnIdle {
+            assertEquals(HapticFeedbackConstants.CONTEXT_CLICK, requests.last())
+            assertEquals(3, requests.size)
+        }
     }
 
-    @Test fun narrowDarkLargeTextKeepsSliderAndTestReachable() {
+    @Test fun narrowDarkLargeTextKeepsSliderReachableWithoutExtraControls() {
         show(large = true, recording = false)
         compose.onNodeWithTag("haptic_strength_slider").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithTag("haptic_test").performScrollTo().assertIsDisplayed().performClick()
+        compose.onNodeWithTag("haptic_test").assertDoesNotExist()
+        compose.onNodeWithText(context.getString(R.string.haptic_strength_description)).assertDoesNotExist()
+        compose.onNodeWithTag("haptic_strength_slider")
+            .assertContentDescriptionEquals(context.getString(R.string.haptic_strength_description))
         val screenshot = instrumentation.uiAutomation.takeScreenshot()
         File(context.filesDir, "haptic-strength-dark-large.png").outputStream().use {
             screenshot.compress(Bitmap.CompressFormat.PNG, 100, it)
@@ -154,6 +160,7 @@ class HapticStrengthInstrumentedTest {
 
     @Test fun extensionPageSavesStrengthAndReturnsNormally() {
         var back = 0
+        var dark by mutableStateOf(false)
         val manager = SettingsManager(context)
         val original = runBlocking { manager.exportPageAdjustmentSettings() }
         try {
@@ -161,7 +168,7 @@ class HapticStrengthInstrumentedTest {
             compose.setContent {
                 val settings by manager.settingsFlow.collectAsState(takagi.ru.monica.data.AppSettings())
                 val scope = rememberCoroutineScope()
-                MonicaTheme {
+                MonicaTheme(darkTheme = dark) {
                     takagi.ru.monica.ui.screens.ExtensionsScreen(
                         onNavigateBack = { back++ }, hapticFeedbackEnabled = settings.hapticFeedbackEnabled,
                         onHapticFeedbackChange = { scope.launch { manager.updateHapticFeedbackEnabled(it) } },
@@ -174,12 +181,17 @@ class HapticStrengthInstrumentedTest {
                 .performSemanticsAction(SemanticsActions.SetProgress) { it(2f) }
             runBlocking { withTimeout(5_000) { manager.settingsFlow.first { it.hapticFeedbackStrength == 2 } } }
             assertEquals(2, runBlocking { manager.exportPageAdjustmentSettings() }.hapticFeedbackStrength)
-            compose.onNodeWithTag("haptic_test").performScrollTo().performClick()
-            val screenshot = instrumentation.uiAutomation.takeScreenshot()
-            File(context.filesDir, "haptic-strength-extension.png").outputStream().use {
-                screenshot.compress(Bitmap.CompressFormat.PNG, 100, it)
+            for (darkTheme in listOf(false, true)) {
+                compose.runOnIdle { dark = darkTheme }
+                compose.waitForIdle()
+                compose.onNodeWithTag("haptic_strength_slider").performScrollTo().assertIsDisplayed()
+                compose.onNodeWithTag("haptic_test").assertDoesNotExist()
+                compose.onNodeWithText(context.getString(R.string.haptic_strength_description)).assertDoesNotExist()
+                val screenshot = instrumentation.uiAutomation.takeScreenshot()
+                File(context.filesDir, "haptic-strength-extension-${if (darkTheme) "dark" else "light"}.png")
+                    .outputStream().use { screenshot.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                screenshot.recycle()
             }
-            screenshot.recycle()
             compose.onNodeWithContentDescription(context.getString(R.string.go_back)).performClick()
             compose.runOnIdle { assertEquals(1, back) }
         } finally { runBlocking { manager.importPageAdjustmentSettings(original) } }
@@ -194,8 +206,9 @@ class HapticStrengthInstrumentedTest {
         try {
             shell("settings --user $user put system haptic_feedback_enabled 0")
             show()
-            compose.onNodeWithTag("haptic_test").performClick()
-            compose.runOnIdle { assertEquals(listOf(HapticFeedbackConstants.CONTEXT_CLICK), requests) }
+            compose.onNodeWithTag("haptic_strength_slider")
+                .performSemanticsAction(SemanticsActions.SetProgress) { it(2f) }
+            compose.runOnIdle { assertEquals(listOf(HapticFeedbackConstants.LONG_PRESS), requests) }
             assertEquals("0", shell("settings --user $user get system haptic_feedback_enabled"))
         } finally {
             shell(if (before == "null") "settings --user $user delete system haptic_feedback_enabled"

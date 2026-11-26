@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="external_folder_bitwarden_hint">تبقى مجلدات Bitwarden داخل نفس الحساب. نسخ المجلدات التي تحتوي على مرفقات أو مفاتيح مرور أو إدخالات مؤسسية غير مدعوم حتى الآن.</string>
+    <string name="external_folder_choose_destination">اختر قاعدة البيانات والمجلد الوجهة</string>
+    <string name="external_folder_root">جذر قاعدة البيانات</string>
+    <string name="external_folder_copy_hint">انسخ المجلد ومحتوياته؛ احتفظ بالأصل.</string>
+    <string name="external_folder_move_hint">انقل المجلد ومحتوياته. تتم إزالة الأصل فقط بعد حفظ الوجهة.</string>
+</resources>

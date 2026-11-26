@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gpg_title">مفتاح GPG</string>
+    <string name="gpg_entry_title">العنوان</string>
+    <string name="gpg_name">الاسم</string>
+    <string name="gpg_email">البريد الإلكتروني (اختياري)</string>
+    <string name="gpg_error">تعذر معالجة المفتاح. تحقق من الهوية والملف الرئيسي والوصول إلى التخزين، ثم أعد المحاولة.</string>
+    <string name="gpg_storage">مواقع التخزين (%1$d)</string>
+    <string name="gpg_generate">إنشاء المفتاح</string>
+    <string name="gpg_import">مفتاح الاستيراد</string>
+    <string name="gpg_save">حفظ في المخزن</string>
+    <string name="gpg_no_expiry">لا تنتهي صلاحيته أبدًا</string>
+    <string name="gpg_days">%1$d أيام</string>
+    <string name="gpg_passphrase">عبارة المرور (اختياري)</string>
+    <string name="gpg_copy_fingerprint">نسخ بصمة الإصبع</string>
+    <string name="gpg_copy_public">انسخ المفتاح العام</string>
+    <string name="gpg_copy_private">نسخ المفتاح الخاص</string>
+    <string name="gpg_export_public">تصدير المفتاح العام</string>
+    <string name="gpg_export_private">تصدير المفتاح الخاص</string>
+    <string name="gpg_show_private">إظهار المفتاح الخاص</string>
+    <string name="gpg_hide_private">إخفاء المفتاح الخاص</string>
+    <string name="gpg_add_title">مفتاح GPG الجديد</string>
+    <string name="gpg_edit_title">تحرير مفتاح GPG</string>
+    <string name="gpg_empty">إنشاء مفتاح أو استيراده</string>
+    <string name="gpg_ready">تمت إضافة المفتاح</string>
+    <string name="gpg_options">خيارات الإنشاء</string>
+    <string name="gpg_expiry">تنتهي صلاحيته</string>
+    <string name="gpg_actions">الإجراءات الرئيسية GPG</string>
+    <string name="gpg_export_pair">تصدير زوج المفاتيح</string>
+    <string name="gpg_create_entry">قم بإنشاء إدخال GPG جديد</string>
+    <string name="gpg_name_invalid">أدخل اسمًا (1–128 حرفًا، بدون أقواس زاوية أو فواصل أسطر).</string>
+    <string name="gpg_email_invalid">أدخل عنوان بريد إلكتروني صالحًا، أو اترك هذا الحقل فارغًا.</string>
+    <string name="gpg_generate_error">تعذر إنشاء المفتاح. يرجى إعادة المحاولة.</string>
+    <string name="gpg_import_error">تعذر استيراد المفتاح. حدد ملف مفتاح OpenPGP صالحًا (يصل إلى 1 ميجابايت).</string>
+    <string name="gpg_load_error">تعذر قراءة هذا المفتاح. أعد فتح الإدخال بعد التحقق من الخزينة.</string>
+    <string name="gpg_save_error">تعذر حفظ المفتاح. تأكد من أن المخزن المحدد قابل للكتابة.</string>
+    <string name="gpg_export_error">تعذر تصدير المفتاح. اختر موقعًا قابلاً للكتابة ثم أعد المحاولة.</string>
+</resources>

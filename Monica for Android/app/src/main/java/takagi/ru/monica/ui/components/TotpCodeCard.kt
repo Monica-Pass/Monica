@@ -569,7 +569,7 @@ fun TotpCodeCard(
                     else formatMaskedOtpCode(currentCode, totpData),
                     modifier = Modifier.fillMaxWidth()
                         .graphicsLayer { alpha = expiryAlpha },
-                    style = codeStyle.copy(
+                    style = codeStyle.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr,
                         color = if (remainingSeconds in 1..5) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.primary,
                     ),
@@ -609,7 +609,7 @@ fun TotpCodeCard(
                         text = if (showOtpCode) formatOtpCode(nextCode, totpData.otpType)
                             else formatMaskedOtpCode(nextCode, totpData),
                         modifier = Modifier.fillMaxWidth(),
-                        style = previewStyle,
+                        style = previewStyle.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
                         autoSize = TextAutoSize.StepBased(
                             minFontSize = 8.sp,
                             maxFontSize = previewStyle.fontSize,
@@ -992,7 +992,7 @@ fun TotpCodeCard(
                             // the code glyphs redraw during the final seconds.
                             alpha = expiryBlinkAlpha.value
                         },
-                        style = TextStyle(fontFamily = FontFamily.Monospace,
+                        style = TextStyle(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr, fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.ExtraBold, color = when {
                             totpData.otpType == OtpType.STEAM && hasImmersiveBackground -> immersiveTertiaryColor
                             totpData.otpType != OtpType.HOTP && remainingSeconds <= 5 && hasImmersiveBackground -> immersiveErrorColor
@@ -1033,6 +1033,7 @@ fun TotpCodeCard(
                                 autoSize = TextAutoSize.StepBased(minFontSize = 8.sp,
                                     maxFontSize = MaterialTheme.typography.labelSmall.fontSize),
                                 style = MaterialTheme.typography.labelSmall.copy(
+                                    textDirection = androidx.compose.ui.text.style.TextDirection.Ltr,
                                     fontFamily = FontFamily.Monospace,
                                     textAlign = androidx.compose.ui.text.style.TextAlign.End,
                                     color = if (hasImmersiveBackground) {

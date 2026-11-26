@@ -1,0 +1,10 @@
+{
+  "completedMethodPasses": 33,
+  "completedMethodFailures": 0,
+  "edition": "main",
+  "selector": "takagi.ru.monica.localization.ArabicLocaleInstrumentedTest,takagi.ru.monica.localization.ArabicUiInstrumentedTest,takagi.ru.monica.ui.vaultv2.LocaleDateSortInstrumentedTest,takagi.ru.monica.localization.AllLocalesInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.localization.ArabicImeInstrumentedTest,takagi.ru.monica.localization.TechnicalIdentifiersInstrumentedTest,takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest",
+  "tests": 33,
+  "failures": 0,
+  "success": true,
+  "seconds": 35.51145540000289
+}

@@ -575,7 +575,7 @@
     <string name="export_option_zip_desc">Mengekspor semuanya, termasuk kata sandi, catatan, dan gambar. Bekerja pada Windows dan Android.</string>
     <string name="export_option_kdbx">Format KeePass (KDBX)</string>
     <string name="export_option_kdbx_desc">Ekspor kata sandi dan pengautentikasi dalam format yang kompatibel dengan KeePass untuk KeePass, KeePassXC, dll.</string>
-    <string name="export_option_steam_mafile">File maSteam</string>
+    <string name="export_option_steam_mafile">Steam maFile</string>
     <string name="export_option_steam_mafile_desc">Ekspor autentikator Steam lokal yang dipilih sebagai file maFile biasa untuk migrasi ke klien lain.</string>
     <string name="steam_mafile_export_loading">Memuat akun Steam...</string>
     <string name="steam_mafile_export_empty">Tidak ada akun pengautentikasi Steam lokal yang dapat diekspor</string>
@@ -585,7 +585,7 @@
     <string name="steam_mafile_export_selected_count">%1$d dipilih</string>
     <string name="steam_mafile_export_no_selection">Pilih setidaknya satu akun Steam</string>
     <string name="steam_mafile_export_confirm_title">Ekspor maFile Steam biasa?</string>
-    <string name="steam_mafile_export_confirm_message">Anda mengekspor akun pengautentikasi %1$d Steam. MaFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor.</string>
+    <string name="steam_mafile_export_confirm_message">Anda mengekspor akun pengautentikasi %1$d Steam. maFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor.</string>
     <string name="steam_mafile_export_verify_subtitle">Verifikasi sebelum mengekspor maFile Steam</string>
     <string name="steam_mafile_export_verify_message">Konfirmasikan identitas Anda untuk mengekspor data maFile Steam biasa.</string>
     <string name="steam_mafile_export_success_single">maFile Steam diekspor</string>
@@ -920,7 +920,7 @@
     <string name="steam_mafile_code_only_button">Impor kode saja</string>
     <string name="steam_mafile_steamid_label">SteamID64 atau ID Akun</string>
     <string name="steam_mafile_steamid_supporting">Opsional. ID Akun diubah menjadi SteamID64 secara otomatis.</string>
-    <string name="steam_mafile_missing_steamid_message">MaFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi.</string>
+    <string name="steam_mafile_missing_steamid_message">maFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi.</string>
     <string name="steam_mafile_invalid_steamid_message">Masukkan ID Akun SteamID64 atau 32-bit yang valid.</string>
     <string name="steam_mafile_password_label">Kata sandi maFile terenkripsi</string>
     <string name="steam_cannot_load_mdbx_accounts">Tidak dapat memuat akun Steam dari MDBX</string>
@@ -940,8 +940,8 @@
     <string name="steam_remark_updated">Komentar diperbarui</string>
     <string name="steam_display_name_label">Nama tampilan</string>
     <string name="steam_steamid_completion_title">SteamID Lengkap</string>
-    <string name="steam_steamid_completion_desc">MaFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi.</string>
-    <string name="steam_steamid_completion_code_only_desc">MaFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia.</string>
+    <string name="steam_steamid_completion_desc">maFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi.</string>
+    <string name="steam_steamid_completion_code_only_desc">maFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia.</string>
     <string name="steam_steamid_completion_login_button">Masuk untuk menyelesaikan SteamID</string>
     <string name="steam_steamid_completion_login_title">SteamID Lengkap</string>
     <string name="steam_steamid_completion_login_message">Gunakan akun Steam milik pengautentikasi ini. Monica akan memperbarui catatan ini alih-alih menambahkan yang baru.</string>
@@ -3179,7 +3179,7 @@
     <string name="import_type_csv_bitwarden_title">Bitwarden CSV</string>
     <string name="import_type_csv_bitwarden_desc">Impor CSV diekspor oleh Bitwarden</string>
     <string name="import_type_csv_bitwarden_file_hint">Pilih file Bitwarden .csv</string>
-    <string name="import_type_csv_proton_pass_title">Proton Lulus CSV</string>
+    <string name="import_type_csv_proton_pass_title">Proton Pass CSV</string>
     <string name="import_type_csv_proton_pass_desc">Impor CSV diekspor oleh Proton Pass</string>
     <string name="import_type_csv_proton_pass_file_hint">Pilih file Proton Pass .csv</string>
     <string name="import_type_csv_chrome_title">Chrome CSV</string>

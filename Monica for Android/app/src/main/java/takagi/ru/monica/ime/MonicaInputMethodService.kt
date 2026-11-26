@@ -241,7 +241,10 @@ open class MonicaInputMethodService : InputMethodService() {
                     }
                     CompositionLocalProvider(
                         LocalContext provides localizedContext,
-                        LocalConfiguration provides localizedContext.resources.configuration
+                        LocalConfiguration provides localizedContext.resources.configuration,
+                        androidx.compose.ui.platform.LocalLayoutDirection provides
+                            if (localizedContext.resources.configuration.layoutDirection == android.view.View.LAYOUT_DIRECTION_RTL)
+                                androidx.compose.ui.unit.LayoutDirection.Rtl else androidx.compose.ui.unit.LayoutDirection.Ltr
                     ) {
                         MonicaImeContent(
                             settings = settings,

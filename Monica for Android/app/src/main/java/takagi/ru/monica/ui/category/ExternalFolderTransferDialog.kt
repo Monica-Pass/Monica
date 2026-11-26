@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.category
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -58,7 +59,7 @@ internal fun ExternalFolderTransferDialog(
             Text(name, style = MaterialTheme.typography.bodyMedium)
             val current = store
             if (current != null) TextButton(enabled = !busy, onClick = { store = null }) {
-                Icon(Icons.Default.ArrowBack, null); Spacer(Modifier.width(8.dp)); Text(current.title)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null); Spacer(Modifier.width(8.dp)); Text(current.title)
             }
             Text(stringResource(R.string.external_folder_choose_destination), style = MaterialTheme.typography.labelLarge)
             if (loading || busy) LinearProgressIndicator(Modifier.fillMaxWidth())

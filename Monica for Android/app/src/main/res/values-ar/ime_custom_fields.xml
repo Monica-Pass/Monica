@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_custom_field_unavailable">هذا الحقل غير متوفر. أعد فتح الإدخال أو افتح المخزن ثم حاول مرة أخرى.</string>
+</resources>

@@ -1,5 +1,7 @@
 package takagi.ru.monica.bitwarden.ui
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
 import androidx.compose.ui.platform.LocalContext
@@ -245,7 +247,7 @@ fun BitwardenLoginScreen(
                 title = { Text(stringResource(R.string.legacy_ui_bitwarden_login)) },
                 navigationIcon = {
                     IconButton(onClick = { discardSensitiveDraft(); currentNavigateBack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -810,7 +812,7 @@ fun TwoFactorDialog(
                                         if (!enabled) Text(stringResource(R.string.bitwarden_two_factor_unsupported_short),
                                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
-                                    if (enabled) Icon(Icons.Default.ChevronRight, null, Modifier.size(20.dp))
+                                    if (enabled) Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, Modifier.size(20.dp))
                                 }
                             }
                         }

@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.vaultv2
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.screens.managerDatabase
 
 import androidx.compose.animation.EnterTransition
@@ -288,7 +289,7 @@ internal fun VaultOverviewScreen(
                                                 ) {
                                                     onConfigChange { it.copy(collapsed = if (collapsed) it.collapsed - module.name else it.collapsed + module.name) }
                                                 }.padding(vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                                                    Icon(if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore, null, Modifier.size(18.dp))
+                                                    Icon(if (collapsed) Icons.AutoMirrored.Filled.KeyboardArrowRight else Icons.Default.ExpandMore, null, Modifier.size(18.dp))
                                                     Text(stringResource(module.titleRes()), Modifier.padding(start = 6.dp),
                                                         style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                                                     count?.let { Text(it.toString(), Modifier.padding(start = 8.dp), style = MaterialTheme.typography.labelSmall,
@@ -381,7 +382,7 @@ internal fun VaultOverviewScreen(
                                     item(key = "all_items") {
                                         FilledTonalButton(onClick = onAllItems, modifier = Modifier.fillMaxWidth().testTag("overview_all_items")) {
                                             Text(stringResource(R.string.vault_overview_all_items))
-                                            Icon(Icons.Default.ChevronRight, null, Modifier.padding(start = 8.dp).size(18.dp))
+                                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, Modifier.padding(start = 8.dp).size(18.dp))
                                         }
                                     }
                                 }

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.components
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 
 import androidx.compose.foundation.layout.*
@@ -54,7 +56,7 @@ internal fun WalletEditorAction(label: String, icon: ImageVector, index: Int, co
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
             Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
-            Icon(Icons.Default.ChevronRight, null)
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null)
         }
     }
 }
@@ -179,7 +181,7 @@ private fun WalletContentDialog(title: String, key: String, onDismiss: () -> Uni
             Scaffold(Modifier.fillMaxSize().testTag("wallet_detail_$key"), topBar = {
                 TopAppBar(title = { Text(title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
                     navigationIcon = { IconButton(onClick = onDismiss, modifier = Modifier.testTag("wallet_detail_back")) {
-                        Icon(Icons.Default.ArrowBack, stringResource(R.string.back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     } }, actions = { IconButton(onClick = onDismiss, modifier = Modifier.testTag("wallet_detail_done")) {
                         Icon(Icons.Default.Check, stringResource(R.string.confirm))
                     } })

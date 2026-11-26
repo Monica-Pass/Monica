@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_sensitive_data_unreadable">لا يمكن إكمال النسخ الاحتياطي لأنه لا يمكن قراءة البيانات الحساسة في \"%1$s\". تم الاحتفاظ بالبيانات الأصلية.</string>
+</resources>

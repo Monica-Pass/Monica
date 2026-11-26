@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cg_symbols">رموز عشوائية</string>
+    <string name="cg_random_username">اسم مستخدم عشوائي</string>
+    <string name="cg_email_alias">البريد الإلكتروني بالإضافة إلى الاسم المستعار</string>
+    <string name="cg_username_title">مولد اسم المستخدم</string>
+    <string name="cg_valid_email">أدخل عنوان بريد إلكتروني صالحًا</string>
+    <string name="cg_invalid_options">حدد الأحرف واحتفظ بالحد الأدنى لمجموعها ضمن الطول.</string>
+    <string name="cg_use">الاستخدام</string>
+    <string name="cg_saved_suggestions">الاقتراحات المحفوظة</string>
+    <string name="cg_length">الطول</string>
+    <string name="cg_words">كلمات</string>
+    <string name="cg_minimum">الحد الأدنى للعدد</string>
+    <string name="cg_decrease">النقصان</string>
+    <string name="cg_increase">الزيادة</string>
+</resources>

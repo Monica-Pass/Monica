@@ -1,0 +1,131 @@
+[
+  {
+    "name": "steam_mafile_export_title",
+    "tokens": [
+      "Steam",
+      "maFile"
+    ]
+  },
+  {
+    "name": "legacy_ui_report_count_steammafiles",
+    "tokens": [
+      "Steam",
+      "maFile"
+    ]
+  },
+  {
+    "name": "wifi_security_wep",
+    "tokens": [
+      "WEP"
+    ]
+  },
+  {
+    "name": "totp_import_uri_dialog_hint",
+    "tokens": [
+      "otpauth://"
+    ]
+  },
+  {
+    "name": "totp_import_uri_dialog_supporting",
+    "tokens": [
+      "motp://",
+      "otpauth-migration://",
+      "otpauth://"
+    ]
+  },
+  {
+    "name": "export_option_steam_mafile",
+    "tokens": [
+      "Steam",
+      "maFile"
+    ]
+  },
+  {
+    "name": "steam_mafile_title",
+    "tokens": [
+      "maFile"
+    ]
+  },
+  {
+    "name": "steam_mafile_button",
+    "tokens": [
+      "maFile"
+    ]
+  },
+  {
+    "name": "link_example",
+    "tokens": [
+      "https://"
+    ]
+  },
+  {
+    "name": "import_type_csv_data_desc",
+    "tokens": [
+      "Proton Pass"
+    ]
+  },
+  {
+    "name": "import_type_aegis_title",
+    "tokens": [
+      "Aegis"
+    ]
+  },
+  {
+    "name": "import_type_steam_mode_title",
+    "tokens": [
+      "Steam"
+    ]
+  },
+  {
+    "name": "import_type_steam_mode_mafile",
+    "tokens": [
+      "maFile"
+    ]
+  },
+  {
+    "name": "import_type_steam_mode_login",
+    "tokens": [
+      "Steam"
+    ]
+  },
+  {
+    "name": "import_type_steam_login_username_label",
+    "tokens": [
+      "Steam"
+    ]
+  },
+  {
+    "name": "import_type_steam_login_password_label",
+    "tokens": [
+      "Steam"
+    ]
+  },
+  {
+    "name": "import_type_csv_proton_pass_title",
+    "tokens": [
+      "Proton Pass"
+    ]
+  },
+  {
+    "name": "local_keepass_kdf_argon2id",
+    "tokens": [
+      "Argon2id"
+    ]
+  },
+  {
+    "name": "keepass_native_auto_type_tokens_hint",
+    "tokens": [
+      "{ENTER}",
+      "{PASSWORD}",
+      "{TAB}",
+      "{USERNAME}"
+    ]
+  },
+  {
+    "name": "api_key_invalid_url",
+    "tokens": [
+      "http://",
+      "https://"
+    ]
+  }
+]

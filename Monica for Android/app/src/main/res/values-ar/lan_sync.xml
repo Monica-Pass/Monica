@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lan_title">المزامنة القريبة</string>
+    <string name="lan_description">مزامنة المخزن بين الهواتف وأجهزة الكمبيوتر على نفس شبكة Wi-Fi. ابحث عن جهاز وأدخل رمز الاقتران الخاص به، أو قم بمسح رمز QR الخاص به.</string>
+    <string name="lan_select_vault">اختر قبو</string>
+    <string name="lan_receive_new">استلام كخزنة جديدة</string>
+    <string name="lan_new_vault_hint">بالنسبة للاتصال الأول، أدخل كلمة مرور مخزن المصدر. تتم إضافة القبو المستلم بشكل منفصل. لإجراء عمليات مزامنة لاحقة، حدد نفس المخزن على كلا الجهازين.</string>
+    <string name="lan_vault_name">اسم المخزن المستلم</string>
+    <string name="lan_vault_password">كلمة مرور مخزن المصدر</string>
+    <string name="lan_host">السماح للجهاز بالاتصال</string>
+    <string name="lan_manage">إدارة الخزائن</string>
+    <string name="lan_invitation_hint">تنتهي صلاحية الاقتران بعد 10 دقائق. قم بمشاركة هذا الرمز أو رمز QR فقط مع الجهاز الذي تريد توصيله.</string>
+    <string name="lan_pairing_code">رمز الاقتران</string>
+    <string name="lan_pairing_autofilled">يتم تعبئة رمز الاقتران والرابط تلقائيًا. انقر فوق إقران ومزامنة للمتابعة.</string>
+    <string name="lan_pairing_needs_vault_password">تتم تعبئة معلومات الاقتران تلقائيًا. أدخل كلمة مرور المخزن المصدر لعملية النقل الأولى، ثم اضغط على \"إقران ومزامنة\".</string>
+    <string name="lan_no_network">لم يتم العثور على عنوان Wi-Fi محلي.</string>
+    <string name="lan_copy_link">انسخ رابط الاقتران</string>
+    <string name="lan_discover">البحث عن الأجهزة القريبة</string>
+    <string name="lan_discovering">جارٍ البحث عن الأجهزة...</string>
+    <string name="lan_no_devices">لم يتم العثور على أي أجهزة حتى الآن. على الجهاز الآخر، اختر \"السماح لجهاز بالاتصال\". يمكنك أيضًا مسح رابط الاقتران الخاص به أو لصقه.</string>
+    <string name="lan_paste_link">رابط الاقتران</string>
+    <string name="lan_scan">مسح رمز QR للاقتران</string>
+    <string name="lan_connect">الإقران والمزامنة</string>
+    <string name="lan_preparing">جارٍ تحضير بيانات المخزن المشفرة…</string>
+    <string name="lan_waiting">في انتظار الجهاز الآخر...</string>
+    <string name="lan_connecting">التحقق من الاقتران…</string>
+    <string name="lan_transferring">جارٍ نقل البيانات المشفرة…</string>
+    <string name="lan_merging">تطبيق التغييرات على المخزن...</string>
+    <string name="lan_confirming">في انتظار انتهاء الجهاز الآخر من تطبيق التغييرات...</string>
+    <string name="lan_completed">انتهى كلا الجهازين من المزامنة</string>
+    <string name="lan_cancelled">تم إلغاء المزامنة</string>
+    <string name="lan_failed">لم تنتهي المزامنة</string>
+    <string name="lan_bytes">%1$d / %2$d كيب</string>
+    <string name="lan_conflicts">تحتاج تعارضات %1$d إلى المراجعة في إدارة المخزن. يتم الحفاظ على كلا الإصدارين.</string>
+    <string name="lan_imported">تمت إضافة المخزن المستلم إلى إدارة المخزن.</string>
+    <string name="lan_different_vault">هذه خزائن مختلفة. حدد نفس المخزن على كلا الجهازين، أو احصل على هذا المخزن كخزنة جديدة.</string>
+    <string name="lan_unavailable">المزامنة القريبة غير متوفرة في هذا الإصدار.</string>
+    <string name="lan_invalid_code">رمز الاقتران غير صالح أو لم يعد مطابقًا. احصل على رمز جديد من الجهاز الآخر.</string>
+    <string name="lan_expired">انتهت صلاحية الاقتران. السماح للجهاز بالاتصال مرة أخرى لإنشاء رمز جديد.</string>
+    <string name="lan_peer_failed">الجهاز الآخر لم يتمكن من تطبيق التغييرات. التحقق من ذلك وإعادة المحاولة.</string>
+    <string name="lan_vault_failed">لا يمكن فتح الخزنة أو دمجها. تحقق من كلمة مرور المخزن ومساحة التخزين المتوفرة، ثم أعد المحاولة.</string>
+    <string name="lan_failed_hint">تأكد من أن كلا الجهازين لا يزالان متصلين بنفس شبكة Wi-Fi، ثم قم بإقرانهما مرة أخرى. يتم الحفاظ على التغييرات الملتزم بها بالفعل.</string>
+    <string name="lan_external_blobs">يشير هذا المخزن إلى الملفات المخزنة خارجه. تتطلب المزامنة القريبة حاليًا تخزين جميع المرفقات داخل المخزن.</string>
+</resources>

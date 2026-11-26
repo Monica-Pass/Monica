@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.components
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -100,7 +101,7 @@ fun MonicaPlusCard(
                 
                 // 箭头图标
                 Icon(
-                    imageVector = Icons.Default.ChevronRight,
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(24.dp)

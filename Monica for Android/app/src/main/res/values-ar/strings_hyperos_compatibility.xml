@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">التوافق مع HyperOS</string>
+    <string name="hyperos_compatibility_subtitle">مفاتيح المرور وحفظ المطالبات والرسوم المتحركة داخل التطبيق</string>
+    <string name="hyperos_compatibility_shared_settings_note">تتشارك هذه الخيارات قيمها مع الإعدادات العامة. تؤثر الحركة المنخفضة على الرسوم المتحركة داخل Monica.</string>
+</resources>

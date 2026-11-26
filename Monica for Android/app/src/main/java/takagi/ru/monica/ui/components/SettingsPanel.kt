@@ -59,7 +59,7 @@ internal fun SettingsContentRow(icon: ImageVector, title: String, subtitle: Stri
     else if (onClick != null) Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)
     else Modifier
     Row(modifier.settingsPanelSurface().then(interaction)
-        .heightIn(min = 64.dp).padding(horizontal = 16.dp, vertical = 12.dp),
+        .animateMonicaContentSize().heightIn(min = 64.dp).padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Icon(icon, null, Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 1f else .38f))
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {

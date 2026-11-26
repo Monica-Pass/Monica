@@ -80,7 +80,7 @@ internal fun SettingsSubpageRow(
         shape = shape,
         color = MaterialTheme.colorScheme.surfaceContainer,
     ) {
-        BoxWithConstraints(interaction.padding(16.dp)) {
+        BoxWithConstraints(interaction.animateMonicaContentSize().padding(16.dp)) {
             val stackSwitch = checked != null &&
                 (LocalDensity.current.fontScale > 1.3f || maxWidth < 280.dp)
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
 
 import android.content.Intent
@@ -1522,7 +1523,7 @@ private fun SendDateTimeField(label: String, millis: Long, enabled: Boolean, onC
                 color = MaterialTheme.colorScheme.onSurfaceVariant) },
             supportingContent = { Text(formatted, style = MaterialTheme.typography.bodyLarge) },
             leadingContent = { Icon(Icons.Default.Event, null, tint = MaterialTheme.colorScheme.primary) },
-            trailingContent = { Icon(Icons.Default.ChevronRight, null) },
+            trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         )
     }

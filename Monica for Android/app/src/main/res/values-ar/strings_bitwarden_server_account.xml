@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_server_reauthenticate_hint">يتطلب تغيير إعدادات الاتصال تسجيل الدخول مرة أخرى. يظل الخادم والبريد الإلكتروني ثابتين. يؤدي الإلغاء إلى الاحتفاظ بالتكوين المحفوظ؛ يبقى الحساب مغلقا.</string>
+</resources>

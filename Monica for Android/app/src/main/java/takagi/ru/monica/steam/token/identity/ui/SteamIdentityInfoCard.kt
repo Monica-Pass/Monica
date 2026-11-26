@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.token.identity.ui
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -99,7 +100,7 @@ internal fun SteamIdentityInfoCard(
                 )
             }
             Icon(
-                imageVector = Icons.Default.ChevronRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_overview_picker_search_cards">البحث عن البطاقات أو البنوك أو الأرقام الأخيرة</string>
+    <string name="vault_overview_picker_search_items">البحث في العناوين أو الحسابات</string>
+    <string name="vault_overview_picker_selected">تم تحديد %1$d</string>
+    <string name="vault_overview_picker_results">النتائج: %1$d</string>
+    <string name="vault_overview_picker_no_account">لم يتم تحديد حساب</string>
+    <string name="vault_overview_picker_empty_hint">جرب كلمة رئيسية أو قاعدة بيانات أخرى.</string>
+    <string name="vault_overview_picker_limit">ما يصل إلى %1$d من الإدخالات المثبتة</string>
+</resources>

@@ -35,6 +35,7 @@ class LocaleResourceCoverageTest {
         Language.PORTUGUESE_BRAZIL to "values-pt-rBR",
         Language.INDONESIAN to "values-in",
         Language.TURKISH to "values-tr",
+        Language.ARABIC to "values-ar",
     )
     private val base by lazy { resources("values") }
 
@@ -77,6 +78,34 @@ class LocaleResourceCoverageTest {
                     assertFalse("$label contains translation debris", GUARD_TOKEN.containsMatchIn(text))
                 }
             }
+        }
+    }
+
+    @Test
+    fun protocolsAndTechnicalNamesMustNotBeTranslated() {
+        val selected = mapOf(
+            "wifi_security_wep" to "WEP", "local_keepass_kdf_argon2id" to "Argon2id",
+            "steam_mafile_title" to "maFile", "steam_mafile_button" to "maFile",
+            "import_type_steam_mode_mafile" to "maFile", "export_option_steam_mafile" to "maFile",
+            "steam_mafile_export_title" to "maFile", "legacy_ui_report_count_steammafiles" to "Steam maFile",
+            "import_type_csv_proton_pass_title" to "Proton Pass", "import_type_csv_data_desc" to "Proton Pass",
+            "import_type_aegis_title" to "Aegis", "import_type_steam_mode_title" to "Steam",
+            "import_type_steam_mode_login" to "Steam", "import_type_steam_login_username_label" to "Steam",
+            "import_type_steam_login_password_label" to "Steam",
+        )
+        val protocols = Regex("[A-Za-z][A-Za-z0-9+.-]*://")
+        localeDirectories.forEach { (language, directory) ->
+            val localized = resources(directory)
+            base.forEach { (name, source) ->
+                localized.getValue(name).values.forEach { (part, text) ->
+                    // Plural categories differ by language; check every localized category.
+                    val sourceText = source.values[part] ?: source.values.getValue("other")
+                    val required = protocols.findAll(sourceText).map { it.value }.toList() + listOfNotNull(selected[name])
+                    required.forEach { token -> assertTrue("$language/$name/$part must retain $token", text.contains(token)) }
+                }
+            }
+            // Android removes optional enclosing resource quotes; runtime tests check the compiled value.
+            assertEquals("$language URI example", "otpauth://totp/...", localized.getValue("totp_import_uri_dialog_hint").values.getValue("text").removeSurrounding("\""))
         }
     }
 
@@ -185,6 +214,7 @@ class LocaleResourceCoverageTest {
     private fun requiredQuantities(language: Language): Set<String> = when (language) {
         Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.TRADITIONAL_CHINESE_TAIWAN, Language.CLASSICAL_CHINESE, Language.JAPANESE,
         Language.KOREAN, Language.VIETNAMESE, Language.INDONESIAN -> setOf("other")
+        Language.ARABIC -> setOf("zero", "one", "two", "few", "many", "other")
         Language.RUSSIAN, Language.POLISH -> setOf("one", "few", "many", "other")
         else -> setOf("one", "other")
     }

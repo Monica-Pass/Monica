@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_repair_title">إصلاح القفل البيومتري</string>
+    <string name="biometric_repair_summary">أعد تشغيل هذا الجهاز إذا استمر فشل إلغاء القفل البيومتري بعد إلغاء القفل بكلمة المرور</string>
+    <string name="biometric_repair_explanation">أدخل كلمة المرور الرئيسية الأصلية لإعادة ربط هذا الجهاز. سيتم الاحتفاظ بخزنتك وحماية كلمة المرور ومواد الاسترداد السابقة. هذا لا يمكّن فتح القفل البيومتري.</string>
+    <string name="biometric_repair_confirm">تأكيد الإصلاح</string>
+    <string name="biometric_repair_working">التحقق والإصلاح…</string>
+    <string name="biometric_repair_success">تم إصلاح رابط إلغاء القفل. تم الاحتفاظ بخزنتك ومواد الاسترداد السابقة. يمكنك الآن تمكين فتح القفل البيومتري إذا كان متاحًا.</string>
+    <string name="biometric_repair_failed">لا يمكن تأكيد الإصلاح. تم الاحتفاظ بخزنتك ومواد الاسترداد السابقة. افتح القفل باستخدام كلمة المرور الرئيسية وأعد المحاولة لاحقًا.</string>
+    <string name="biometric_repair_device_auth">قم بإلغاء قفل الجهاز باستخدام قفل الشاشة الخاص به، ثم أعد المحاولة. سيتم الحفاظ على متطلبات المصادقة الحالية.</string>
+    <string name="biometric_requires_password_reentry">افتح القفل باستخدام كلمة المرور الرئيسية. إذا استمر فشل فتح القفل البيومتري، فافتح الإعدادات ← كلمة المرور الرئيسية والقفل ← إصلاح فتح القفل البيومتري.</string>
+</resources>

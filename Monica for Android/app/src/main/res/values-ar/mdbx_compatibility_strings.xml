@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_unknown_read_only">نوع العنصر هذا لا يدعم التحرير بعد. لا يزال بإمكانك عرض كافة البيانات الخاصة به.</string>
+    <string name="mdbx_unknown_unavailable">غير قادر على قراءة هذا العنصر. افتح قاعدة البيانات وأعد فتح التفاصيل.</string>
+    <string name="mdbx_unknown_show">إظهار القيمة</string>
+    <string name="mdbx_unknown_hide">إخفاء القيمة</string>
+</resources>

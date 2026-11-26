@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_sources_title">اشتراكات الصور</string>
+    <string name="image_sources_icons">أيقونات</string>
+    <string name="image_sources_cards">عمل فني للبطاقة</string>
+    <string name="image_sources_add">إضافة اشتراك</string>
+    <string name="image_sources_refresh">تحديث</string>
+    <string name="image_sources_remove">إلغاء الاشتراك</string>
+    <string name="image_sources_remove_hint">هل تريد إزالة هذا الاشتراك؟ سيتم الاحتفاظ بالصور التي استخدمتها عناصرك بالفعل.</string>
+    <string name="image_sources_name">الاسم (اختياري)</string>
+    <string name="image_sources_url">الاشتراك أو الصورة URL</string>
+    <string name="image_sources_formats">حزم صور HTTPS JSON أو روابط صور PNG وJPEG وWebP.</string>
+    <string name="image_sources_empty">قم بإضافة مصدر الصورة الأول</string>
+    <string name="image_sources_count">صور %1$d</string>
+    <string name="image_sources_error">غير قادر على التحميل أو الحفظ. تحقق من المصدر والتنسيق والاتصال، ثم أعد المحاولة. يتم الاحتفاظ بالاشتراكات الموجودة وصور العناصر.</string>
+    <string name="image_sources_search">البحث عن الصور</string>
+    <string name="image_sources_retry">أعد المحاولة</string>
+    <string name="image_sources_options">خيارات الاشتراك</string>
+    <string name="image_sources_no_results">لا توجد صور مطابقة</string>
+    <string name="image_sources_use_hint">اختر الصور من الأيقونة المخصصة أو محرر العمل الفني للبطاقة.</string>
+    <string name="image_sources_choose">اختر من الاشتراكات</string>
+    <string name="image_sources_settings_hint">إدارة حزم الأيقونات ومصادر الأعمال الفنية للبطاقات</string>
+</resources>

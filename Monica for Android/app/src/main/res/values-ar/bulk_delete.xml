@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="batch_delete_incomplete_title">الحذف غير مكتمل</string>
+    <string name="batch_delete_interrupted_count">تمت المقاطعة بعد معالجة %1$d لعناصر %2$d. تحقق من العناصر المتبقية قبل إعادة المحاولة.</string>
+</resources>

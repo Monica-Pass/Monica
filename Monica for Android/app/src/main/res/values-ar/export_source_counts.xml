@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_record_count">سجلات %1$d</string>
+    <string name="export_source_count_locked">فتح للعد</string>
+    <string name="export_source_count_loading">العد…</string>
+    <string name="export_source_count_unavailable">غير متاح</string>
+</resources>

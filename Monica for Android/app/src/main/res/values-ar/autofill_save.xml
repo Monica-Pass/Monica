@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_save_review_title">هل تريد تحديث كلمة المرور الموجودة؟</string>
+    <string name="autofill_save_review_description">حدد إدخالاً لمراجعته قبل الحفظ. يتم الاحتفاظ بالمجلدات والملاحظات والحسابات الأخرى الموجودة.</string>
+    <string name="autofill_save_as_new">احفظ كمدخل جديد</string>
+    <string name="autofill_save_local_source">محلي</string>
+</resources>

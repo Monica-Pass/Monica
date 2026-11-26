@@ -1,5 +1,6 @@
 package takagi.ru.monica.credentialexchange
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -58,7 +59,7 @@ fun TransferChoiceRow(
                 if (subtitle.isNotBlank()) Text(subtitle, style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Icon(if (selected) Icons.Default.CheckCircle else Icons.Default.ChevronRight, null,
+            Icon(if (selected) Icons.Default.CheckCircle else Icons.AutoMirrored.Filled.KeyboardArrowRight, null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }

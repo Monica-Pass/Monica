@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.hapticSwitchToggleable
 
 import android.widget.Toast
@@ -1056,7 +1057,7 @@ private fun MonicaPlusStep(
             ) {
                 Text(stringResource(R.string.qs_open_monica_plus))
                 Spacer(modifier = Modifier.width(4.dp))
-                Icon(Icons.Default.ChevronRight, contentDescription = null)
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null)
             }
         }
     }
@@ -1138,7 +1139,7 @@ private fun SetupActionCard(
                 Text(description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(badge, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
             }
-            Icon(Icons.Default.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -1272,6 +1273,7 @@ private fun languageLabelRes(language: Language): Int = when (language) {
     Language.PORTUGUESE_BRAZIL -> R.string.language_portuguese_brazil
     Language.INDONESIAN -> R.string.language_indonesian
     Language.TURKISH -> R.string.language_turkish
+        Language.ARABIC -> R.string.language_arabic
 }
 
 @StringRes

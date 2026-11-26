@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">لقد قمت بالدفع بحسن نية. تأكيد فتح Monica Plus.</string>
+    <string name="payment_unlock_confirm_button">تأكيد فتح القفل</string>
+</resources>

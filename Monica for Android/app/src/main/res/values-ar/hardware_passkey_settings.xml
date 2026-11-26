@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">الملء التلقائي لمفاتيح المرور &amp;</string>
+    <string name="hardware_key_enable">تمكين المفاتيح الفعلية</string>
+    <string name="hardware_key_enable_description">استخدم مفاتيح أمان USB أو NFC مع Monica. إيقاف بشكل افتراضي. ولا تتأثر مفاتيح مرور البرامج المحفوظة.</string>
+</resources>

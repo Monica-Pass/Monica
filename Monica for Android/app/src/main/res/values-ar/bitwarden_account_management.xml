@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">إنشاء حساب</string>
+    <string name="bitwarden_account_request_hint">طلب تلميح لكلمة المرور</string>
+    <string name="bitwarden_account_password_hint">تلميح كلمة المرور الرئيسية (اختياري)</string>
+    <string name="bitwarden_account_send_verification">إرسال بريد إلكتروني للتحقق</string>
+    <string name="bitwarden_account_verification_pending">افتح رسالة التحقق، ثم الصق الرابط أو الرمز المميز الخاص بها هنا.</string>
+    <string name="bitwarden_account_verification_input">رابط أو رمز التحقق من البريد الإلكتروني</string>
+    <string name="bitwarden_account_verification_invalid">رابط التحقق أو الرمز المميز غير صالح لهذا الحساب.</string>
+    <string name="bitwarden_account_password_requirements">استخدم كلمة مرور رئيسية قوية مكونة من 12 حرفًا على الأقل.</string>
+    <string name="bitwarden_account_password_mismatch">كلمات المرور الرئيسية غير متطابقة.</string>
+    <string name="bitwarden_account_registration_success">تم إنشاء الحساب. قم بتسجيل الدخول باستخدام كلمة المرور الرئيسية الجديدة.</string>
+    <string name="bitwarden_account_hint_sent">إذا كان هذا الحساب موجودًا، فقد تم طلب رسالة بريد إلكتروني لتلميح كلمة المرور الخاصة به.</string>
+    <string name="bitwarden_account_security">أمان الحساب</string>
+    <string name="bitwarden_account_devices">أجهزة الحساب</string>
+    <string name="bitwarden_account_device_trusted">جهاز موثوق به</string>
+    <string name="bitwarden_account_device_untrusted">الجهاز غير موثوق به</string>
+    <string name="bitwarden_account_last_activity">آخر نشاط</string>
+    <string name="bitwarden_account_web_settings">إدارة الحساب في خزينة الويب</string>
+    <string name="bitwarden_account_no_devices">لم يتم العثور على أي أجهزة.</string>
+    <string name="bitwarden_account_request_failed">فشل طلب الحساب (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">لا يمكن إكمال عملية الحساب.</string>
+    <string name="bitwarden_account_invalid_email">أدخل عنوان بريد إلكتروني صالحًا.</string>
+</resources>

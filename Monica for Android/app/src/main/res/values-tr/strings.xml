@@ -575,7 +575,7 @@
     <string name="export_option_zip_desc">Şifreler, notlar ve resimler dahil her şeyi dışa aktarır. Windows ve Android\'da çalışır.</string>
     <string name="export_option_kdbx">KeePass Biçimi (KDBX)</string>
     <string name="export_option_kdbx_desc">KeePass, KeePassXC vb. için şifreleri ve kimlik doğrulayıcıları KeePass uyumlu formatta dışa aktarın.</string>
-    <string name="export_option_steam_mafile">Steam maDosyası</string>
+    <string name="export_option_steam_mafile">Steam maFile</string>
     <string name="export_option_steam_mafile_desc">Seçilen yerel Steam kimlik doğrulayıcılarını diğer istemcilere geçiş için düz maFile dosyaları olarak dışa aktarın.</string>
     <string name="steam_mafile_export_loading">Steam hesapları yükleniyor...</string>
     <string name="steam_mafile_export_empty">Hiçbir yerel Steam kimlik doğrulama hesabı dışa aktarılamaz</string>
@@ -588,7 +588,7 @@
     <string name="steam_mafile_export_confirm_message">%1$d Steam kimlik doğrulama hesaplarını dışa aktarıyorsunuz. Düz maFile, kimlik doğrulayıcıyı taşıyabilen ve onayları onaylayabilen sırlar içerir. Dışa aktarılan dosyayı gizli tutun.</string>
     <string name="steam_mafile_export_verify_subtitle">Steam maFile\'ı dışa aktarmadan önce doğrulayın</string>
     <string name="steam_mafile_export_verify_message">Düz Steam maFile verilerini dışa aktarmak için kimliğinizi doğrulayın.</string>
-    <string name="steam_mafile_export_success_single">Steam maDosyası dışa aktarıldı</string>
+    <string name="steam_mafile_export_success_single">Steam maFile dışa aktarıldı</string>
     <string name="steam_mafile_export_success_multi">Dışa aktarılan %1$d Steam maFile dosyaları</string>
     <string name="kdbx_password_title">KDBX Şifresini Ayarla</string>
     <string name="kdbx_password_hint">Bu şifre KDBX dosyasını şifreleyecektir. İçe aktarırken buna ihtiyacınız olacak.</string>
@@ -905,10 +905,10 @@
     <string name="steam_client_label">İstemci</string>
     <string name="steam_login_fallback_title">Steam girişi</string>
     <string name="steam_client_id_fallback">istemci %1$d</string>
-    <string name="steam_mafile_title">maDosyası</string>
-    <string name="steam_mafile_button">maDosyası</string>
+    <string name="steam_mafile_title">maFile</string>
+    <string name="steam_mafile_button">maFile</string>
     <string name="steam_manifest_button">manifest.json</string>
-    <string name="steam_no_mafile_selected">MaFile seçilmedi</string>
+    <string name="steam_no_mafile_selected">maFile seçilmedi</string>
     <string name="steam_key_only_title">Yalnızca Steam kodunu içe aktar</string>
     <string name="steam_key_only_desc">Bir açıklama, hesap ve paylaşılan sır girin. Monica yalnızca Steam Guard kod belirtecini içe aktaracaktır; onaylar, QR onayı ve yetkili cihazlar devre dışı kalır.</string>
     <string name="steam_key_only_secret_label">Paylaşılan sır</string>
@@ -3152,7 +3152,7 @@
     <string name="import_type_steam_desc">Steam jetonunu maFile\'dan içe aktarın</string>
     <string name="import_type_steam_file_hint">.maFile dosyasını seçin</string>
     <string name="import_type_steam_mode_title">Steam içe aktarma yöntemi</string>
-    <string name="import_type_steam_mode_mafile">maDosyası</string>
+    <string name="import_type_steam_mode_mafile">maFile</string>
     <string name="import_type_steam_mode_coexist">Steam uygulaması bir arada mevcut</string>
     <string name="import_type_steam_mode_login">Steam girişi</string>
     <string name="import_type_steam_coexist_desc">Birlikte içe aktarma için cihaz kimliğinizi ve SteamGuard JSON\'yu yapıştırın.</string>
@@ -3179,7 +3179,7 @@
     <string name="import_type_csv_bitwarden_title">Bitwarden CSV</string>
     <string name="import_type_csv_bitwarden_desc">Bitwarden tarafından dışa aktarılan CSV\'yu içe aktar</string>
     <string name="import_type_csv_bitwarden_file_hint">Bitwarden .csv dosyasını seçin</string>
-    <string name="import_type_csv_proton_pass_title">Proton Geçişi CSV</string>
+    <string name="import_type_csv_proton_pass_title">Proton Pass CSV</string>
     <string name="import_type_csv_proton_pass_desc">Proton Pass tarafından dışa aktarılan CSV\'yu içe aktar</string>
     <string name="import_type_csv_proton_pass_file_hint">Proton Pass .csv dosyasını seçin</string>
     <string name="import_type_csv_chrome_title">Krom CSV</string>

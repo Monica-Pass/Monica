@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_title">مفتاح API</string>
+    <string name="api_key_add">أضف مفتاح API</string>
+    <string name="api_key_edit">تحرير مفتاح API</string>
+    <string name="api_key_provider">اسم المزود *</string>
+    <string name="api_key_provider_hint">على سبيل المثال. كلود، مزود الذكاء الاصطناعي المخصص</string>
+    <string name="api_key_website">الموقع الرسمي (اختياري)</string>
+    <string name="api_key_website_label">الموقع الرسمي</string>
+    <string name="api_key_secret_required">مفتاح API *</string>
+    <string name="api_key_url">طلب API URL (اختياري)</string>
+    <string name="api_key_url_label">طلب API URL</string>
+    <string name="api_key_required">مطلوب</string>
+    <string name="api_key_invalid_url">أدخل http:// أو https:// URL مع مضيف ولا توجد بيانات اعتماد مضمنة.</string>
+    <string name="api_key_show">إظهار المفتاح</string>
+    <string name="api_key_hide">مفتاح إخفاء</string>
+    <string name="api_key_open_website">فتح الموقع</string>
+    <string name="api_key_load_error">تعذر قراءة مفتاح API هذا. أعد فتح قاعدة البيانات وحاول مرة أخرى.</string>
+    <string name="api_key_save_error">تعذر الحفظ في كافة المواقع المحددة. تحقق من توفرها وحاول مرة أخرى.</string>
+    <string name="api_key_locked">خزنتك مقفلة. فتحه للمتابعة.</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">نسخ النتائج</string>
+    <string name="passkey_copy_result_summary">منسوخ %1$d؛ تم تخطيه أو فشله: %2$d</string>
+    <string name="passkey_copy_success_count">نسخ مفاتيح المرور %1$d</string>
+    <string name="passkey_transfer_key_unavailable">المفتاح الخاص غير متوفر على هذا الجهاز.</string>
+    <string name="passkey_transfer_restricted">لا يمكن نقل مفتاح المرور هذا إلى هذه الوجهة.</string>
+    <string name="passkey_transfer_same_database_copy">تتطلب قاعدة البيانات هذه معرفًا فريدًا لبيانات الاعتماد. اختر قاعدة بيانات أخرى لنسخ مفتاح المرور هذا.</string>
+    <string name="passkey_copy_blocked_title">لا يمكن نسخ بعض مفاتيح المرور</string>
+    <string name="passkey_move_blocked_title">لا يمكن نقل بعض مفاتيح المرور</string>
+    <string name="passkey_transfer_preflight_summary">لا يمكن معالجة مفاتيح المرور %1$d؛ يمكن أن يستمر %2$d. لم يتغير شيء بعد.</string>
+    <string name="passkey_cancel_copy">إلغاء النسخة</string>
+    <string name="passkey_cancel_move">إلغاء النقل</string>
+    <string name="passkey_transfer_skip">تخطي %1$d واستمر</string>
+</resources>

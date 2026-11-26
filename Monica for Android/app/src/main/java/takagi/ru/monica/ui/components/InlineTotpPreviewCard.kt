@@ -106,7 +106,7 @@ fun InlineTotpPreviewCard(
             ) {
                 Text(
                     text = formatInlinePreviewOtpCode(currentCode, totpData.otpType),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )

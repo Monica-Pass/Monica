@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_template_custom">قالب QR مخصص</string>
+    <string name="qr_template_literal">نص عادي</string>
+    <string name="qr_template_mode">قالب الحقل</string>
+    <string name="qr_template_insert">أدخل الحقل</string>
+    <string name="qr_template_wifi">إعداد مسبق لشبكة Wi-Fi</string>
+    <string name="qr_template_generate">إنشاء كود QR</string>
+    <string name="qr_template_hint">يقرأ الحقول الحالية عند إنشائها. يحفظ القالب، وليس نسخة كلمة المرور التي تم حلها. تفلت قوالب Wi-Fi من القيم المدرجة تلقائيًا.</string>
+    <string name="qr_template_error">غير قادر على قراءة الإدخال أو حفظ القالب أو إنشاء الكود. تأكد من إلغاء قفل قاعدة البيانات وأن المحتوى ضمن الحدود، ثم أعد المحاولة.</string>
+    <string name="qr_template_field_error">الحقل \"%1$s\" مفقود أو غير قابل للقراءة أو غامض. حدد الحقل المتاح قبل الإنشاء.</string>
+</resources>

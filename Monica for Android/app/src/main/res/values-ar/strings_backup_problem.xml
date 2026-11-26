@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_backup_problem_title">النسخ الاحتياطي يحتاج إلى الاهتمام</string>
+    <string name="passkey_backup_problem_detail">لا يمكن عمل نسخة احتياطية لهذه العناصر. لم تتغير البيانات المحلية والنسخ الاحتياطية الموجودة عن بعد.</string>
+    <string name="passkey_device_bound_solution">قم بتسجيل مفتاح مرور جديد قابل للتصدير على الخدمة وتأكد من أنه يعمل قبل إيقاف المفتاح القديم. يمكنك أيضًا تخطي هذا العنصر في الوقت الحالي.</string>
+    <string name="passkey_skip_explanation">يؤثر التخطي على هذه النسخة الاحتياطية فقط ولا يؤدي إلى حذف العناصر المحلية. سيتم حفظ نسخة احتياطية جزئية منفصلة؛ يتم الاحتفاظ بالنسخ الاحتياطية الموجودة عن بعد. لا يحل محل نسخة احتياطية كاملة.</string>
+    <string name="passkey_skip_and_backup">تخطي %1$d وعمل نسخة احتياطية</string>
+    <string name="passkey_retry_full_backup">أعد محاولة النسخ الاحتياطي الكامل</string>
+    <string name="passkey_problem_close">إغلاق</string>
+    <string name="passkey_partial_saved">تم حفظ النسخة الاحتياطية الجزئية</string>
+    <string name="passkey_partial_saved_detail">لم يتم تضمين مفاتيح المرور أدناه. ويتم الاحتفاظ بسجلاتهم المحلية والنسخ الاحتياطية الموجودة عن بعد. آخر وقت للنسخ الاحتياطي الكامل لم يتغير.</string>
+    <string name="passkey_partial_requires_encryption">يجب أن تظل النسخ الاحتياطية الجزئية التي تتخطى مفاتيح المرور مشفرة.</string>
+    <string name="passkey_partial_replace_blocked">تحذف هذه النسخة الاحتياطية بعض مفاتيح المرور. استخدم استعادة الدمج؛ تم حظر استبدال البيانات المحلية.</string>
+    <string name="passkey_partial_restore_warning">هذا النسخ الاحتياطي الجزئي يحذف مفاتيح المرور التي تم تخطيها. استعادة عمليات الدمج مع السجلات المحلية الموجودة.</string>
+</resources>

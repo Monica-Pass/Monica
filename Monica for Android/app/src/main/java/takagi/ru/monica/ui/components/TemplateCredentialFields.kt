@@ -98,6 +98,7 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
                 supportingText = if (missingApiKey) { { Text(stringResource(R.string.api_key_required)) } } else null,
                 shape = entryGroupShape(index, keys.size), maxLines = if (key.contains("Key")) 5 else 2,
                 modifier = Modifier.fillMaxWidth().menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable).testTag("$tagPrefix$key"),
+                textStyle = androidx.compose.ui.text.TextStyle(textDirection = if (secret) androidx.compose.ui.text.style.TextDirection.Ltr else androidx.compose.ui.text.style.TextDirection.Content),
                 visualTransformation = if (secret && !reveal) PasswordVisualTransformation() else VisualTransformation.None,
                 trailingIcon = {
                     Row {

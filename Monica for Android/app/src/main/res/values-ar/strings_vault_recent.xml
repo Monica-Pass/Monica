@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="vault_sort_recent_desc">الأحدث أولًا</string>
+    <string name="vault_overview_recent">الأخيرة</string>
+    <string name="vault_overview_recent_empty">لا توجد عناصر حديثة</string>
+</resources>

@@ -69,7 +69,9 @@ internal fun MonicaKeyboard(
             gap = with(density) { 4.dp.roundToPx().toDp().value }, pixel = 1f / density.density)
         val height = (maxHeight - 24.dp) / 4
         CompositionLocalProvider(LocalKeyHeight provides height, LocalKeyFeedback provides !hideKeyFeedback,
-            LocalKeyVibration provides haptic::performClick) {
+            LocalKeyVibration provides haptic::performClick,
+            // These are Latin QWERTY, symbol and PIN layouts, independent of UI language.
+            androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 when (mode) {
                     MonicaKeyboardMode.LETTERS -> {

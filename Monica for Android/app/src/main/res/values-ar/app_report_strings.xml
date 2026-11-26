@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_report_title">تشخيص قائمة تطبيقات Monica</string>
+    <string name="app_report_generated">تم الإنشاء: %1$s</string>
+    <string name="app_report_brand">العلامة التجارية للجهاز: %1$s</string>
+    <string name="app_report_model">طراز الجهاز: %1$s</string>
+    <string name="app_report_android">إصدار Android: %1$s (API %2$d)</string>
+    <string name="app_report_summary">الملخص</string>
+    <string name="app_report_total">إجمالي التطبيقات: %1$d</string>
+    <string name="app_report_user_count">تطبيقات المستخدم: %1$d</string>
+    <string name="app_report_system_count">تطبيقات النظام: %1$d (تم التحديث: %2$d)</string>
+    <string name="app_report_visible_percent">مرئي: %1$d (%2$s%%)</string>
+    <string name="app_report_hidden_percent">مخفي: %1$d (%2$s%%)</string>
+    <string name="app_report_filter_health">فحص عامل التصفية: %1$s</string>
+    <string name="app_report_filter_loose">قد يقوم عامل التصفية بإخفاء عدد قليل جدًا من مكونات النظام</string>
+    <string name="app_report_filter_strict">قد يقوم الفلتر بإخفاء التطبيقات المفيدة</string>
+    <string name="app_report_filter_good">يظهر الفلتر متوازنًا</string>
+    <string name="app_report_visible_apps">التطبيقات المرئية: %1$d</string>
+    <string name="app_report_user_apps">التطبيقات المثبتة بواسطة المستخدم: %1$d</string>
+    <string name="app_report_system_apps">تطبيقات النظام: %1$d</string>
+    <string name="app_report_more_apps">التطبيقات الإضافية: %1$d</string>
+    <string name="app_report_hidden_components">مكونات النظام المخفية: %1$d</string>
+    <string name="app_report_hidden_feedback">إذا تم إخفاء تطبيق مفيد، فقم بتضمين اسم الحزمة الخاصة به في ملاحظاتك.</string>
+    <string name="app_report_android_core">Android النواة</string>
+    <string name="app_report_android_system">نظام Android</string>
+    <string name="app_report_google_services">خدمات Google</string>
+    <string name="app_report_chip_vendor">مكونات بائع الشريحة</string>
+    <string name="app_report_other">مكونات أخرى</string>
+    <string name="app_report_more_components">المكونات الإضافية: %1$d</string>
+    <string name="app_report_all_apps">قائمة التطبيقات الكاملة: %1$d</string>
+    <string name="app_report_format">التنسيق: اسم التطبيق [الحالة].</string>
+    <string name="app_report_package_type">اسم الحزمة · النوع</string>
+    <string name="app_report_unknown_app">تطبيق غير معروف</string>
+    <string name="app_report_user_app">تطبيق المستخدم</string>
+    <string name="app_report_system_app">تطبيق النظام</string>
+    <string name="app_report_updated_system_app">تحديث تطبيق النظام</string>
+    <string name="app_report_filter_rules">قواعد تصفية التطبيق</string>
+    <string name="app_report_rule_count">قواعد التصفية: %1$d</string>
+    <string name="app_report_rules_feedback">لاقتراح تغييرات على الفلتر، قم بزيارة:</string>
+    <string name="app_report_complete">اكتمل التقرير</string>
+    <string name="app_report_hidden_count">التطبيقات المخفية: %1$d</string>
+    <string name="app_report_path">مسار الملف:</string>
+</resources>

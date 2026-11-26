@@ -7,11 +7,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 
-/** Keep the Portuguese, Indonesian and Turkish short labels together in narrow navigation items. */
+/** Keep the Localized short labels together in narrow navigation items. */
 @Composable
 fun DockLabel(text: String) {
     val language = LocalConfiguration.current.locales[0].language
-    if (language in setOf("pt", "id", "in", "tr")) {
+    if (language in setOf("pt", "id", "in", "tr", "ar")) {
         Text(
             text = text,
             maxLines = 1,

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_protection_title">حماية الاسترداد</string>
+    <string name="recovery_protection_summary">تحقق من الاسترداد باستخدام كلمة المرور الرئيسية الأصلية</string>
+    <string name="recovery_protection_verified">تم التحقق منه في هذه الجلسة في %1$s</string>
+    <string name="recovery_protection_not_ready">لا يمكن التحقق من حماية الاسترداد. تم الاحتفاظ بالبيانات الموجودة. أعد المحاولة أو قم بعمل نسخة احتياطية مشفرة.</string>
+    <string name="recovery_protection_needs_password">أدخل كلمة المرور الرئيسية الخاصة بك للتحضير والتحقق من الاسترداد</string>
+    <string name="recovery_protection_explanation">تأكد من أن كلمة المرور الرئيسية الأصلية يمكنها فتح مادة الاسترداد المستقلة. وهذا لا يحل محل قبوتك أو مفاتيح جهازك. قد يقوم التثبيت الأقدم السليم بإعداد مواد الاسترداد أثناء التحقق.</string>
+    <string name="recovery_protection_limits">احتفظ بنسخة احتياطية مشفرة مستقلة. ينطبق التحقق على المادة والجلسة الحالية؛ ولا يضمن سلامة الملف في المستقبل أو استرداد بيانات الاعتماد المرتبطة بالأجهزة. قفل المادة أو تغييرها يتطلب التحقق مرة أخرى.</string>
+    <string name="recovery_protection_verify">التحقق من حماية الاسترداد</string>
+    <string name="recovery_protection_checking">جارٍ التحقق من حماية الاسترداد...</string>
+    <string name="recovery_material_available">تم العثور على مادة الاسترداد. لا يزال الاسترداد يتطلب التحقق باستخدام كلمة المرور الرئيسية الأصلية.</string>
+    <string name="recovery_material_missing">لم يتم العثور على مواد استرداد مستقلة. قم باستعادة بيئة المفاتيح الأصلية أو التحقق من وجود نسخة احتياطية مشفرة في تثبيت آخر.</string>
+    <string name="recovery_material_reenroll">يجب إعداد الاسترداد مرة أخرى بعد تغيير بيانات الاعتماد. قم باستعادة الوصول العادي، ثم تحقق باستخدام كلمة المرور الرئيسية الحالية.</string>
+    <string name="recovery_material_revoked">تم إبطال مادة الاسترداد هذه بشكل صريح ولا يمكن استخدامها. احتفظ بالملفات الأصلية.</string>
+    <string name="recovery_material_unsupported">تنسيق الاسترداد هذا غير مدعوم في هذا الإصدار. احتفظ بالملفات واستخدم إصدار Monica المتوافق.</string>
+    <string name="recovery_material_invalid">مادة الاسترداد غير كاملة أو غير صالحة. الاحتفاظ بالملفات الأصلية؛ ولا تستبدلها بملف فارغ أو بمواد مخزنة أخرى.</string>
+    <string name="recovery_material_unreadable">تعذرت قراءة مادة الاسترداد. احتفظ بالملفات، وافتح قفل الجهاز وأعد المحاولة.</string>
+    <string name="recovery_material_unchecked">لم يتم فحص مادة الاسترداد. أعد المحاولة بعد إلغاء قفل الجهاز وانتهاء العملية الحالية.</string>
+    <string name="secure_startup_key_missing">لا يمكن لخدمة مفتاح النظام الحالية العثور على المفتاح الأصلي. هذا وحده لا يثبت أن المفتاح قد تم حذفه نهائيًا.</string>
+    <string name="secure_startup_wait">النظام غير جاهز أو لم تنتهي العملية الآمنة. قم بإلغاء قفل الجهاز ثم أعد المحاولة لاحقًا.</string>
+    <string name="secure_startup_inconsistent">الإعدادات المشفرة وحالة الاسترداد غير متطابقتين. الاحتفاظ بالملفات الأصلية؛ لا تقم بإزالة علامات الاسترداد لتجاوز هذا الفحص.</string>
+    <string name="secure_startup_environment_omk">إذا بدأ هذا بعد تغيير OMK أو وحدة مفاتيح أخرى، قم باستعادة بيئة المفاتيح المستخدمة لإنشاء هذا المخزن. قد تساعد إزالة Monica من النطاق المضاف حديثًا؛ فلا يصح لكل قبو. الحفاظ على تكوين الوحدة والمفاتيح. لا تقم بإعادة تثبيت الوحدات أو إعادة تعيين بذورها للتجربة.</string>
+</resources>

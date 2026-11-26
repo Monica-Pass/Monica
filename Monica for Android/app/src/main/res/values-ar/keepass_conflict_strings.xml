@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_conflict_review">المراجعة والدمج</string>
+    <string name="keepass_conflict_banner_title">تحتاج التغييرات إلى الدمج</string>
+    <string name="keepass_conflict_banner_summary">قم بمراجعة كلا الإصدارين لمواصلة المزامنة.</string>
+    <string name="keepass_conflict_merge_sync">الدمج والمزامنة</string>
+    <string name="keepass_conflict_comparing">مقارنة كلا الإصدارين...</string>
+    <string name="keepass_conflict_merging">الدمج والمزامنة…</string>
+    <string name="keepass_conflict_refresh">تحديث المقارنة</string>
+    <string name="keepass_conflict_merge_help">يتم دمج التغييرات التي يتم إجراؤها على الإدخالات أو الحقول المختلفة. اختر إصدارًا عند تغيير نفس الحقل على كلا الجانبين.</string>
+    <string name="keepass_conflict_auto_merge">جاهز للدمج</string>
+    <string name="keepass_conflict_other_options">خيارات أخرى</string>
+    <string name="keepass_conflict_recovery_hint">يتم الاحتفاظ بالإصدارات الأصلية في نسخ استرداد قاعدة البيانات.</string>
+    <string name="keepass_conflict_keep_local_confirm">هل تريد استبدال قاعدة البيانات البعيدة بالإصدار المحلي بالكامل؟ ستبقى التغييرات التي تتم عن بعد فقط في نسخة الاسترداد.</string>
+    <string name="keepass_conflict_use_remote_confirm">هل تريد استبدال قاعدة البيانات المحلية بالإصدار البعيد بأكمله؟ ستبقى التغييرات المحلية فقط في نسخة الاسترداد.</string>
+    <string name="keepass_conflict_selected_count">تم تحديد %1$d لتعارضات %2$d</string>
+    <string name="keepass_conflict_no_changes">يحتوي كلا الإصدارين على نفس البيانات.</string>
+    <string name="keepass_conflict_protected_value">القيمة المحمية</string>
+    <string name="keepass_conflict_properties_value">خصائص من هذا الإصدار</string>
+    <string name="keepass_conflict_kind_entry">الدخول</string>
+    <string name="keepass_conflict_kind_group">مجلد</string>
+    <string name="keepass_conflict_kind_metadata">إعدادات قاعدة البيانات</string>
+    <string name="keepass_conflict_kind_deleted_object">سجل الحذف</string>
+    <string name="keepass_conflict_kind_binary">مرفق</string>
+    <string name="keepass_conflict_kind_icon">أيقونة مخصصة</string>
+    <string name="keepass_conflict_change_added">تمت الإضافة</string>
+    <string name="keepass_conflict_change_modified">تم التغيير</string>
+    <string name="keepass_conflict_change_moved">منقول</string>
+    <string name="keepass_conflict_change_deleted">محذوف</string>
+    <string name="keepass_conflict_change_unchanged">لم يتغير</string>
+</resources>

@@ -747,16 +747,18 @@ fun AuthenticatorCardAdjustmentScreen(
             }
         }
         Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            val hapticItemCount = if (settings.isPlusActivated) 4 else 2
             CustomizationToggle(Setting.HAPTIC_FEEDBACK, Setting.HAPTIC_FEEDBACK.summary(),
-                settings.hapticFeedbackEnabled, viewModel::updateHapticFeedbackEnabled, 0, if (settings.isPlusActivated) 3 else 1, Icons.Default.Vibration)
+                settings.hapticFeedbackEnabled, viewModel::updateHapticFeedbackEnabled, 0, hapticItemCount, Icons.Default.Vibration)
             takagi.ru.monica.ui.components.HapticStrengthControl(settings.hapticFeedbackEnabled,
-                settings.hapticFeedbackStrength, viewModel::updateHapticFeedbackStrength)
+                settings.hapticFeedbackStrength, viewModel::updateHapticFeedbackStrength,
+                shape = settingsSectionItemShape(1, hapticItemCount))
             if (settings.isPlusActivated) {
                 CustomizationToggle(Setting.VALIDATOR_VIBRATION, Setting.VALIDATOR_VIBRATION.summary(),
-                    settings.validatorVibrationEnabled, viewModel::updateValidatorVibrationEnabled, 1, 3, Icons.Default.Vibration,
+                    settings.validatorVibrationEnabled, viewModel::updateValidatorVibrationEnabled, 2, hapticItemCount, Icons.Default.Vibration,
                     enabled = settings.hapticFeedbackEnabled)
                 CustomizationToggle(Setting.COPY_NEXT_CODE_WHEN_EXPIRING, Setting.COPY_NEXT_CODE_WHEN_EXPIRING.summary(),
-                    settings.copyNextCodeWhenExpiring, viewModel::updateCopyNextCodeWhenExpiring, 2, 3, Icons.Default.Update)
+                    settings.copyNextCodeWhenExpiring, viewModel::updateCopyNextCodeWhenExpiring, 3, hapticItemCount, Icons.Default.Update)
             }
         }
     }

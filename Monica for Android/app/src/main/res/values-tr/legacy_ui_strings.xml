@@ -208,7 +208,7 @@
     <string name="legacy_ui_report_count_billingaddresses">\u0020\u0020Fatura adresleri: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_paymentaccounts">\u0020\u0020Ödeme yöntemleri: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_passkeys">\u0020\u0020Para anahtarları: %1$d/%2$d</string>
-    <string name="legacy_ui_report_count_steammafiles">\u0020\u0020Steam maDosyası: %1$d/%2$d</string>
+    <string name="legacy_ui_report_count_steammafiles">\u0020\u0020Steam maFile: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_images">\u0020\u0020Resimler: %1$d/%2$d</string>
     <string name="legacy_ui_data_cleared">Veriler temizlendi</string>
     <string name="legacy_ui_clear_failed">Veriler temizlenemedi: %1$s</string>

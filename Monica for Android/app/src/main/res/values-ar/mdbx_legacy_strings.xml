@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">لم يعد MDBX1 مدعومًا</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · غير متاح</string>
+    <string name="mdbx_legacy_unavailable_description">قاعدة البيانات هذه غير متوفرة. قم بالترقية إلى MDBX2 لمواصلة استخدامه. الترقية تحافظ على الملف الأصلي.</string>
+    <string name="mdbx_legacy_creation_disabled">قواعد البيانات الجديدة تستخدم MDBX2. لا يمكن فتح ملفات MDBX1 إلا للترقية.</string>
+    <string name="mdbx_legacy_local_copy_required">لا يمكن قراءة نسخة MDBX1 المحلية. أعد فتح ملف MDBX1 الأصلي لترقيته. لم يتم تغيير قاعدة البيانات الأصلية.</string>
+    <string name="mdbx_legacy_remote_copy_warning">تقوم الترقية بتحويل النسخة المحفوظة على هذا الجهاز إلى قاعدة بيانات MDBX2 محلية جديدة. لا يتم تضمين التغييرات عن بعد التي لم يتم تنزيلها. يتم الاحتفاظ بالملف البعيد الأصلي والنسخة المحلية. قم بتكوين المزامنة بشكل منفصل لقاعدة البيانات الجديدة.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (ترقية)</string>
+    <string name="mdbx_legacy_upgrade_action">الترقية إلى MDBX2</string>
+</resources>

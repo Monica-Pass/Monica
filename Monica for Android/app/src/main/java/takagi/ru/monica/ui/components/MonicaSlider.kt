@@ -13,6 +13,9 @@ package takagi.ru.monica.ui.components
 
 import android.animation.ValueAnimator
 import android.os.SystemClock
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.hoverable
@@ -36,6 +39,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,6 +88,15 @@ fun MonicaSlider(
     val thumbDiameter = with(LocalDensity.current) { 26.dp.toPx() }
     val span = valueRange.endInclusive - valueRange.start
     val fraction = if (span > 0f) ((value - valueRange.start) / span).coerceIn(0f, 1f) else 0f
+    val direction = if (layoutDirection == LayoutDirection.Rtl) -1f else 1f
+    val targetRotation = direction * fraction * trackWidth / (PI.toFloat() * thumbDiameter) * 360f
+    // Integer detents can jump by almost a whole petal, making the wheel look stationary.
+    // Interpolate those angles; initialise at the measured position without a startup spin.
+    val wheelRotation by if (motion && trackWidth > 0) {
+        animateFloatAsState(targetRotation, tween(80, easing = LinearEasing), label = "sliderWheelRotation")
+    } else {
+        rememberUpdatedState(0f)
+    }
 
     Slider(
         state = state,
@@ -104,10 +117,7 @@ fun MonicaSlider(
                     .zIndex(1f)
                     .size(26.dp)
                     .graphicsLayer {
-                        val direction = if (layoutDirection == LayoutDirection.Rtl) -1f else 1f
-                        rotationZ = if (motion) {
-                            direction * fraction * trackWidth / (PI.toFloat() * thumbDiameter) * 360f
-                        } else 0f
+                        rotationZ = wheelRotation
                     }
                     .indication(interactionSource, ripple(bounded = false, radius = 24.dp))
                     .hoverable(interactionSource, enabled)

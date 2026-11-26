@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manager_delete_title">هل تريد حذف العناصر المحددة؟</string>
+    <string name="manager_delete_source">%1$s · %2$s · تم تحديد %3$d</string>
+    <string name="manager_delete_local_hint">تم تضمين المجلدات ومحتوياتها. تذهب كلمات المرور المحلية والعناصر الآمنة إلى سلة المهملات. يتم حذف المجلدات ومفاتيح المرور نهائيًا.</string>
+    <string name="manager_delete_native_hint">سيتم حذف العناصر المحددة ومحتويات المجلد نهائيًا من قاعدة البيانات هذه. لا يمكن التراجع عن هذا.</string>
+</resources>

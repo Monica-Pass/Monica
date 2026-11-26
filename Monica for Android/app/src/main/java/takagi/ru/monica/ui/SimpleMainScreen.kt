@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.text.font.FontWeight
 
 import android.app.Activity
@@ -153,7 +154,7 @@ fun UnifiedWalletAddScreen(
                     navigationIcon = {
                         IconButton(onClick = onNavigateBack) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.back)
                             )
                         }

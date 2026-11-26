@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_message_bitwarden_unavailable">Bitwarden غير متوفر</string>
+    <string name="entry_message_unsupported_type">هذه العملية لا تدعم نوع العنصر هذا</string>
+    <string name="entry_message_ownership_conflict">قم بحل روابط التخزين المتعارضة قبل نقل هذا العنصر إلى Monica</string>
+    <string name="entry_message_local_copy_failed">تعذر إنشاء نسخة محلية في Monica</string>
+    <string name="entry_message_attachments_incomplete">لم يتم نسخ كافة المرفقات</string>
+    <string name="entry_message_bitwarden_sync_id_missing">لا يحتوي العنصر Bitwarden على معرف مزامنة</string>
+    <string name="entry_message_keepass_source_delete_failed">تعذر حذف عنصر KeePass الأصلي</string>
+    <string name="entry_message_source_delete_failed">تعذر حذف العنصر الأصلي</string>
+    <string name="entry_message_storage_save_failed">تعذر الحفظ في الموقع المحدد</string>
+    <string name="entry_message_from_password">من كلمة المرور: %1$s</string>
+    <string name="entry_message_passkey_android_required">يتطلب الدعم الكامل لمفتاح المرور Android 14 أو إصدار أحدث. هذا الجهاز: %1$s</string>
+    <string name="entry_message_passkey_save_failed">تعذر حفظ مفتاح المرور: %1$s</string>
+    <string name="entry_message_passkey_missing">لم يتم العثور على مفتاح المرور</string>
+    <string name="entry_message_passkey_update_failed">تعذر تحديث مفتاح المرور: %1$s</string>
+    <string name="entry_message_passkey_ownership_failed">تعذر تحديث ربط مفتاح المرور MDBX: %1$s</string>
+    <string name="entry_message_passkey_binding_failed">تعذر تحديث الربط: %1$s</string>
+    <string name="entry_message_passkey_usage_failed">تعذر تحديث سجل الاستخدام: %1$s</string>
+    <string name="entry_message_passkey_delete_failed">تعذر حذف مفتاح المرور: %1$s</string>
+    <string name="entry_message_category_path_invalid">مسار المجلد غير صالح</string>
+    <string name="entry_message_category_move_into_self">لا يمكن نقل المجلد إلى نفسه أو إلى أحد مجلداته الفرعية</string>
+    <string name="entry_message_category_missing">لم يتم العثور على المجلد</string>
+    <string name="entry_message_category_exists">يوجد مجلد بهذا الاسم بالفعل في الوجهة</string>
+    <string name="entry_message_category_move_conflict">قد يتعارض النقل مع مجلد موجود</string>
+    <string name="entry_message_category_name_required">أدخل اسم المجلد</string>
+    <string name="entry_message_category_name_separator">لا يمكن أن يحتوي اسم المجلد على /</string>
+    <string name="entry_message_category_rename_conflict">قد تتعارض إعادة التسمية مع مجلد موجود</string>
+    <string name="entry_message_saved">تم الحفظ</string>
+</resources>

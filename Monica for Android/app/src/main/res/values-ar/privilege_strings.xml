@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privilege_method">طريقة التفويض</string>
+    <string name="privilege_root_hint">استخدم الوصول إلى الجذر لهذا الجهاز مباشرة</string>
+    <string name="privilege_shizuku_hint">التفويض من خلال خدمة Shizuku قيد التشغيل</string>
+    <string name="privilege_root_requesting">في انتظار ترخيص الجذر ...</string>
+    <string name="privilege_root_denied">تم رفض الوصول إلى الجذر. اسمح بـ Monica في مدير الجذر الخاص بك وأعد المحاولة.</string>
+    <string name="privilege_root_unavailable">لم يتم العثور على أمر su صالح للاستخدام. يحتاج هذا الجهاز إلى الجذر أولاً.</string>
+    <string name="privilege_root_timeout">انتهت مهلة ترخيص أو أمر الجذر. تحقق من مدير الجذر الخاص بك وأعد المحاولة.</string>
+    <string name="privilege_root_ready">تم تمكين الجذر لإعدادات النظام</string>
+    <string name="privilege_root_not_authorized">الجذر غير مصرح به. اضغط على \"تفويض الجذر\" للمتابعة.</string>
+    <string name="privilege_root_grant">تخويل الجذر</string>
+    <string name="privilege_root_disable">تعطيل الجذر في Monica</string>
+    <string name="privilege_root_confirm_title">هل تسمح لـ Monica باستخدام الجذر؟</string>
+    <string name="privilege_root_confirm_body">يتطلب هذا جهازًا تم الوصول إلى جذره بالفعل وموافقة من مدير الجذر الخاص به. يستخدم Monica الجذر فقط لإعدادات النظام التي يحتاجها استرداد إمكانية الوصول المحسّن ومدير كلمات المرور الافتراضي. فهو لا يفتح قفل مخزنك أو يقرأ بيانات التطبيق الأخرى. \n\n يعمل الاسترداد المحسن فقط على إعادة الاتصال بخدمة إمكانية الوصول Monica التي تم تمكينها بالفعل. بمجرد تمكينه، يمكن أن يستمر بعد إعادة تشغيل التطبيق أو الجهاز وقد يقاطع عملية التعبئة لفترة وجيزة. \n\nقم بتعطيل الجذر هنا لإيقاف الاستخدام المستقبلي. لإلغاء ترخيص النظام، قم بإزالة Monica من مدير الجذر لديك. لا يتم طلب الجذر مطلقًا كبديل لـ Shizuku.</string>
+    <string name="privilege_recovery_title">الاسترداد المحسّن · اختياري</string>
+    <string name="privilege_default_requires_android14">يتطلب إعداد مدير كلمات المرور الافتراضي Android 14 أو إصدار أحدث.</string>
+</resources>

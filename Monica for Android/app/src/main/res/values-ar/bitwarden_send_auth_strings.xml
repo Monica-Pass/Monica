@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_send_auth_title">التحكم في الوصول</string>
+    <string name="bw_send_auth_none">لا يوجد تحقق</string>
+    <string name="bw_send_auth_password">كلمة المرور</string>
+    <string name="bw_send_auth_email">التحقق من البريد الإلكتروني</string>
+    <string name="bw_send_auth_email_label">عنوان البريد الإلكتروني %1$d</string>
+    <string name="bw_send_auth_add_email">أضف عنوان البريد الإلكتروني</string>
+    <string name="bw_send_auth_remove_email">إزالة عنوان البريد الإلكتروني</string>
+    <string name="bw_send_auth_recipients_notice">يتم إرسال عناوين المستلمين إلى الخادم للتحقق منها.</string>
+    <string name="bw_send_auth_premium">يتطلب التحقق من البريد الإلكتروني وجود Premium لهذا الحساب.</string>
+    <string name="bw_send_auth_unsupported">هذا الخادم لم يقبل التحقق من البريد الإلكتروني. تحقق مما إذا كان الخادم الخاص بك يدعمه وحاول مرة أخرى.</string>
+    <string name="bw_send_auth_invalid">تحقق من طريقة الوصول وعناوين البريد الإلكتروني.</string>
+    <string name="bw_send_auth_unchanged">احتفظ بالتحقق الحالي</string>
+    <string name="bw_send_auth_password_set">تم تعيين كلمة المرور</string>
+    <string name="bw_send_drafts">إرسال المسودات</string>
+    <string name="bw_send_draft_save">حفظ المسودة</string>
+    <string name="bw_send_draft_saved">تم حفظ المسودة على هذا الجهاز.</string>
+    <string name="bw_send_draft_local">تم الحفظ على هذا الجهاز فقط. استئناف لتقديمه يدويا.</string>
+    <string name="bw_send_draft_resume">السيرة الذاتية</string>
+    <string name="bw_send_draft_discard">تجاهل المسودة</string>
+    <string name="bw_send_draft_discard_confirm">هل تريد تجاهل هذه المسودة المحلية وملفها المحفوظ؟ يتم الاحتفاظ بالإرساليات المنشورة.</string>
+    <string name="bw_send_draft_failed">تعذر حفظ هذه المسودة أو قراءتها. يتم الاحتفاظ بالنسخة الموجودة.</string>
+    <string name="bw_send_draft_unavailable">لا يمكن فتح بعض المسودات. يتم الاحتفاظ بها على هذا الجهاز.</string>
+    <string name="bw_send_draft_reconcile">التحقق من التقديم السابق</string>
+    <string name="bw_send_draft_uncertain">ربما يكون الإرسال السابق قد وصل إلى الخادم. التحقق من ذلك قبل التقديم مرة أخرى.</string>
+    <string name="bw_send_draft_not_found">لا يمكن تأكيد الإرسال السابق. تحقق من عمليات الإرسال الخاصة بك قبل تجاهل هذه المسودة.</string>
+    <string name="bw_send_cache_unavailable">لا يمكن فتح بعض عمليات الإرسال المخزنة مؤقتًا. يتم الاحتفاظ بالبيانات الموجودة.</string>
+    <string name="bw_send_draft_empty">لا توجد مسودات محفوظة</string>
+    <string name="bw_send_draft_missing_file">الملف المحفوظ مفقود. حدده مرة أخرى.</string>
+    <string name="bw_send_logout_drafts">سيتم أيضًا حذف مسودات الإرسال المحلي وملفاتها المحفوظة. لا يمكن استعادة هذه المسودات عن طريق تسجيل الدخول مرة أخرى.</string>
+</resources>

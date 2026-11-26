@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_stack_loop_title">مجموعات البطاقات الحلقية</string>
+    <string name="wallet_stack_loop_desc">قم بالتمرير عبر مجموعة البطاقات في أي اتجاه. البطاقة الأخيرة تتصل بالأولى.</string>
+    <string name="page_adjustment_preview_games">العاب</string>
+    <string name="page_adjustment_preview_folder">المجلد 1</string>
+    <string name="page_adjustment_preview_subfolder">المجلد الفرعي</string>
+</resources>

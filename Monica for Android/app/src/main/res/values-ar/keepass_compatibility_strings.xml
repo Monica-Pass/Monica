@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_otp_secret_invalid">أدخل سرًا صالحًا لـ Base32 OTP.</string>
+    <string name="keepass_entry_properties">خصائص الإدخال</string>
+    <string name="keepass_entry_tags_hint">افصل العلامات باستخدام سطر جديد أو فاصلة أو فاصلة منقوطة</string>
+    <string name="keepass_entry_expires">انتهاء الصلاحية</string>
+    <string name="keepass_entry_never_expires">لا تنتهي صلاحيته أبدًا</string>
+    <string name="keepass_entry_expires_at">انتهاء الصلاحية: %1$s</string>
+    <string name="keepass_entry_expired_at">منتهية الصلاحية: %1$s</string>
+    <string name="keepass_hotp_saving">جارٍ حفظ العداد...</string>
+    <string name="keepass_hotp_counter_exhausted">وصل العداد إلى قيمته القصوى.</string>
+</resources>

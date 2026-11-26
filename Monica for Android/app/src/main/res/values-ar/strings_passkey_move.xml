@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_move_result_title">نقل النتيجة</string>
+    <string name="passkey_move_result_summary">اكتمل %1$d؛ يحتاج إلى اهتمام %2$d</string>
+    <string name="passkey_move_success_count">تم نقل عناصر %1$d</string>
+    <string name="passkey_move_unnamed_account">حساب بدون اسم</string>
+    <string name="passkey_move_bound_reason">مفتاح المرور هذا مرتبط بإدخال كلمة المرور ولا يمكن نقله بشكل منفصل. انقل إدخال كلمة المرور المرتبطة، أو قم بإلغاء ربط مفتاح المرور أولاً.</string>
+    <string name="passkey_move_reference_reason">هذا العنصر مجرد مرجع ولا يحتوي على مفتاح خاص يمكن نقله بشكل منفصل. استخدم التطبيق الأصلي أو المخزن الذي يحتوي على مفتاح المرور الفعلي.</string>
+    <string name="passkey_move_bitwarden_reason">وضع التخزين أو المفتاح الخاص لا يلبي متطلبات الترحيل Bitwarden. افتح قفل Monica وأعد المحاولة، أو اختر قبوًا آخر. لا يمكن تصدير المفاتيح المرتبطة بالجهاز؛ احتفظ بها على الجهاز الأصلي أو قم بتسجيل مفتاح مرور جديد في الخدمة.</string>
+    <string name="passkey_move_conflict_reason">تحتوي قاعدة بيانات KeePass المستهدفة بالفعل على نفس بيانات اعتماد مفتاح المرور. لم تتم الكتابة فوق أي شيء. تحقق من الإدخال الموجود أو اختر قاعدة بيانات أخرى.</string>
+    <string name="passkey_move_update_reason">لم تكتمل عملية النقل، ولا يمكن تحديد السبب الدقيق. تأكد من أن خزائن المصدر والوجهة غير مقفلة وقابلة للكتابة، مع وجود مساحة خالية كافية. افحص كلا الخزائن قبل إعادة المحاولة؛ لا تحذف المصدر.</string>
+    <string name="passkey_move_cleanup_reason">تم حفظ الوجهة، لكن لم تنته عملية تنظيف المصدر. قد تبقى نسخ في كلا الخزائن. تحقق من الوجهة وخزينة المصدر أو حالة المزامنة قبل المتابعة؛ لا تكرر هذه الخطوة بشكل أعمى.</string>
+</resources>

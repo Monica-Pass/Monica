@@ -1,0 +1,111 @@
+{
+  "version": "1.0.331",
+  "scope": "Haptic strength card presentation",
+  "editions": {
+    "main": {
+      "buildSeconds": 230.41646720000426,
+      "unit": [
+        {
+          "name": "takagi.ru.monica.ui.components.SliderTickGateTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.haptic.InteractionHapticsTest",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "device": {
+        "completedMethodPasses": 21,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest,takagi.ru.monica.ui.haptic.HapticMotorUiInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+        "tests": 21,
+        "failures": 0,
+        "success": true,
+        "seconds": 20.103991700016195
+      },
+      "runnerSeconds": 16.982,
+      "apkSha256": {
+        "app.apk": "8610346c9ef7a3aca96e5568706eb0c7bf25886cb4c164305af0c566af55d963",
+        "test.apk": "b22d44a2c4388d0790deb04ce9f225314d4659871e2e222d07da02e87e4ebe24"
+      },
+      "frozenInputsVerified": 6668
+    },
+    "fd": {
+      "buildSeconds": 224.23175200002152,
+      "unit": [
+        {
+          "name": "takagi.ru.monica.ui.components.SliderTickGateTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.haptic.InteractionHapticsTest",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "device": {
+        "completedMethodPasses": 21,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.ui.haptic.HapticStrengthInstrumentedTest,takagi.ru.monica.ui.haptic.HapticMotorUiInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+        "tests": 21,
+        "failures": 0,
+        "success": true,
+        "seconds": 18.038181699987035
+      },
+      "runnerSeconds": 15.147,
+      "apkSha256": {
+        "app.apk": "c2c8413c06263166c40cfab70b9efa335bdb2a232fe29a4e9eb6763f0f83cf26",
+        "test.apk": "e66a505f58eb47e52e670078ada98a97b6319eb562533ff9abc4d2e6e4f01660"
+      },
+      "frozenInputsVerified": 6669
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/java/takagi/ru/monica/ui/components/HapticStrengthControl.kt": "06bb6f2b09d3dab286ea605627f6251722c5e0793f445eb02862d1082297884d",
+    "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt": "b837f9f6b1f658e338705bf7d787b3897dc2127452b3a50e5d7006465c9290a1",
+    "app/src/androidTest/java/takagi/ru/monica/ui/haptic/HapticMotorUiInstrumentedTest.kt": "ba8671c78ce9b8486c10765bf53d375fc0bc333a731d1966fdc9b72000b16daa",
+    "app/src/androidTest/java/takagi/ru/monica/ui/haptic/HapticStrengthInstrumentedTest.kt": "9dd890f18dbd821418c8098d8a99f49d42caded42e90c24423762f07d6b46a9d"
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 20,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug",
+      "takagi.ru.monica.hapticstrengthcardmain33120261126.localedebug.test",
+      "takagi.ru.monica.hapticstrengthcardfd33120261126.localedebug",
+      "takagi.ru.monica.hapticstrengthcardfd33120261126.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15096
+  },
+  "fdroidMetadataAndSixScriptTestsPassed": true,
+  "visualInspection": {
+    "screens": "Actual ExtensionsScreen light/dark and 280dp strength component at 1.5 font scale",
+    "environment": "MuMu instance0, API35, x86_64, isolated user20, landscape test Activity",
+    "limits": "No physical motor feel, OEM device, full MainActivity navigation, R8 or release upgrade verification. Screenshots retain the viewport; the ExtensionsScreen capture ends at the slider."
+  }
+}

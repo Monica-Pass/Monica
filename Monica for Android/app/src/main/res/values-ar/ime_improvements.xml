@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_scramble_pin_title">تبديل مفاتيح الأرقام</string>
+    <string name="ime_scramble_pin_description">قم بالتبديل عند فتح لوحة الأرقام. تبقى المفاتيح في مكانها أثناء الكتابة.</string>
+    <string name="ime_hide_pin_preview_title">إخفاء معاينات مفتاح الأرقام</string>
+    <string name="ime_hide_pin_preview_description">إخفاء الأرقام المنبثقة وإبرازات المفاتيح المضغوطة.</string>
+    <string name="ime_hide_keyboard">إخفاء لوحة المفاتيح</string>
+    <string name="ime_switch_keyboard">تبديل طريقة الإدخال</string>
+    <string name="ime_fill_current_otp">قم بملء الكود الحالي</string>
+    <string name="ime_otp_unavailable">رمز التحقق الحالي غير متوفر.</string>
+</resources>

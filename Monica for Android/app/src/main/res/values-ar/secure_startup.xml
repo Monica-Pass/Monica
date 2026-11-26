@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="secure_startup_title">التخزين الآمن غير متوفر</string>
+    <string name="secure_startup_preserved">تم الحفاظ على البيانات الموجودة</string>
+    <string name="secure_startup_description">لا يمكن لـ Android حاليًا التحقق من الإعدادات المشفرة لهذا التثبيت. تم إيقاف بدء التشغيل العادي. لم يقم Monica بمسح الإعدادات أو استبدال المفاتيح.</string>
+    <string name="secure_startup_restart">أعد تشغيل الهاتف، وقم بفتحه باستخدام بيانات اعتماد قفل شاشة النظام، ثم أعد المحاولة.</string>
+    <string name="secure_startup_environment">إذا بدأ ذلك بعد استعادة بيانات التطبيق، أو تحديث ROM أو تعديل النظام، فتحقق مما إذا كان من الممكن استعادة النظام الأصلي والبيئة الرئيسية. هذا الخطأ وحده لا يحدد السبب.</string>
+    <string name="secure_startup_no_reset">لا تقم بمسح بيانات التطبيق أو إلغاء تثبيت Monica. احتفظ بالملفات الأصلية. إذا كان لديك نسخة احتياطية تم تصديرها من Monica، فتحقق منها في تثبيت آخر. لا يمكن إعادة إنشاء مفتاح النظام المفقود نهائيًا عن طريق إعادة المحاولة.</string>
+    <string name="secure_startup_retry">أعد المحاولة</string>
+    <string name="secure_startup_diagnostic">نسخ المعلومات التشخيصية</string>
+</resources>

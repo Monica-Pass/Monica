@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_detail_copy_current">انسخ الكود الحالي</string>
+    <string name="auth_detail_copy_next">انسخ التالي</string>
+    <string name="auth_detail_qr_migrate">إنشاء كود QR (الترحيل)</string>
+    <string name="auth_detail_qr_current">إنشاء كود QR (الكود الحالي)</string>
+</resources>

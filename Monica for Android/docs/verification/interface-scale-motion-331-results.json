@@ -1,0 +1,108 @@
+{
+  "version": "1.0.331",
+  "scope": "Interface-scale density and shared settings card motion",
+  "device": "MuMu instance0, Android35, x86_64, isolated user19",
+  "referenceRevision": "ab763ce76effd13ae3b8c7cfea37835eb9e0f8b9",
+  "shared": {
+    "app/src/main/java/takagi/ru/monica/ui/scale/InterfaceScaleProvider.kt": "9fb19c39e469104f42afaedaafef8773707cebe85b9147cca0dfb79db132cc79",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": "a1ee04f4007025cd551985a2476d5c3646451b278e9706c59e6c125892a2dc89",
+    "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "05581c47d96cbb979cfe729ea4e7d7ed9420436b5e11c03636743c888a281495",
+    "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt": "9816c01ac64f867d77b6e8c2d0046ad7258002566272cbb18e61f19164d3d339",
+    "app/src/test/java/takagi/ru/monica/ui/InterfaceScaleIntegrationGuardTest.kt": "4f6f1382b4c5956c836bab541d4bfe33167696289f941a149399eed09a34c66a",
+    "app/src/androidTest/java/takagi/ru/monica/ui/InterfaceScaleMotionTest.kt": "f0325d0ba47e96ee2b9104596dca1f1604c54ecaa25610cae1dfc8546efe0e08",
+    "app/src/main/assets/licenses/ImageToolbox.txt": "a374ea98c756e37341592e957e8dfc0d6030c4506beb201d4e1efab55ae87e1e"
+  },
+  "editions": {
+    "main": {
+      "mainBuildSeconds": 74.27316380001139,
+      "finalTestBuildSeconds": 41.96578990001581,
+      "jvmMethods": 10,
+      "deviceMethods": 29,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 12,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.InterfaceScaleMotionTest",
+          "tests": 12,
+          "failures": 0,
+          "success": true,
+          "seconds": 15.155098999995971
+        },
+        {
+          "completedMethodPasses": 17,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.GeneratorResultMotionTest",
+          "tests": 17,
+          "failures": 0,
+          "success": true,
+          "seconds": 17.68229720002273
+        }
+      ],
+      "apks": {
+        "app.apk": "3e436f5591633c4a099af30d8518df785b38d511f37e216a4f4c888fc9785979",
+        "test.apk": "3ec7734b54c2f84962e206d9ef19b2669aeb2c97ac8859cbbed605fd374dbba8"
+      },
+      "allFrozenInputsMatch": 6668,
+      "mainActivitySha256": "0b8b5129a11c30014f5cc3c633412752f86fa06c1e9a6b232bde8ee6bc83949e",
+      "measurements": {
+        "scale-motion-density.txt": "175.0 -> 210.0: [175.0, 176.0, 181.0, 190.0, 198.0, 204.0, 207.0, 209.0, 210.0, 210.0]",
+        "scale-motion-wrap.txt": "313.0 -> 874.0: [313.0, 313.0, 314.0, 322.0, 348.0, 399.0, 482.0, 572.0, 648.0, 707.0, 760.0, 800.0]",
+        "scale-motion-reversal.txt": "reference: [140.0, 140.0, 140.0, 140.0, 142.0, 145.0, 151.0, 159.0, 170.0, 179.0, 187.0, 192.0, 197.0, 201.0, 203.0, 205.0, 207.0, 208.0, 209.0, 210.0, 210.0, 210.0, 210.0, 210.0, 210.0], outward: [140.0, 140.0, 140.0, 140.0, 142.0, 145.0, 151.0], reverse: [159.0, 159.0, 159.0, 158.0, 156.0, 154.0]"
+      }
+    },
+    "fd": {
+      "mainBuildSeconds": 164.9895837000222,
+      "finalTestBuildSeconds": 39.804012500011595,
+      "jvmMethods": 10,
+      "deviceMethods": 29,
+      "deviceRuns": [
+        {
+          "completedMethodPasses": 29,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.InterfaceScaleMotionTest,takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.GeneratorResultMotionTest",
+          "tests": 29,
+          "failures": 0,
+          "success": true,
+          "seconds": 25.66100640001241
+        }
+      ],
+      "apks": {
+        "app.apk": "91eafd65debb07136ed1d7aafd8f59690b6584bfbede3dcae8bf875fa4348922",
+        "test.apk": "d5183a01156acf87439db9a0be4fe75b4a4c7db4fd3d1cc4a1c64dbc58c1b3c0"
+      },
+      "allFrozenInputsMatch": 6669,
+      "mainActivitySha256": "0b03d1e16a120e94cdd1e95c1b6072790fdb2fa9fc7fb17477f6333ecc323079",
+      "measurements": {
+        "scale-motion-density.txt": "175.0 -> 210.0: [175.0, 176.0, 181.0, 190.0, 198.0, 204.0, 207.0, 209.0, 210.0, 210.0]",
+        "scale-motion-wrap.txt": "313.0 -> 874.0: [313.0, 313.0, 314.0, 322.0, 348.0, 399.0, 482.0, 572.0, 648.0, 707.0, 760.0, 800.0]",
+        "scale-motion-reversal.txt": "reference: [140.0, 140.0, 140.0, 140.0, 142.0, 145.0, 151.0, 159.0, 170.0, 179.0, 187.0, 192.0, 197.0, 201.0, 203.0, 205.0, 207.0, 208.0, 209.0, 210.0, 210.0, 210.0, 210.0, 210.0, 210.0], outward: [140.0, 140.0, 140.0, 140.0, 142.0, 145.0, 151.0], reverse: [159.0, 159.0, 159.0, 158.0, 156.0, 154.0]"
+      }
+    }
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 19,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.scalemotionmain33120261126.localedebug",
+      "takagi.ru.monica.scalemotionmain33120261126.localedebug.test",
+      "takagi.ru.monica.scalemotionfd33120261126.localedebug",
+      "takagi.ru.monica.scalemotionfd33120261126.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15095
+  }
+}

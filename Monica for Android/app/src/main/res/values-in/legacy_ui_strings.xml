@@ -208,7 +208,7 @@
     <string name="legacy_ui_report_count_billingaddresses">\u0020\u0020Alamat penagihan: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_paymentaccounts">\u0020\u0020Metode pembayaran: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_passkeys">\u0020\u0020Kunci Sandi: %1$d/%2$d</string>
-    <string name="legacy_ui_report_count_steammafiles">\u0020\u0020MaFile uap: %1$d/%2$d</string>
+    <string name="legacy_ui_report_count_steammafiles">\u0020\u0020Steam maFile: %1$d/%2$d</string>
     <string name="legacy_ui_report_count_images">\u0020\u0020Gambar: %1$d/%2$d</string>
     <string name="legacy_ui_data_cleared">Data dihapus</string>
     <string name="legacy_ui_clear_failed">Tidak dapat menghapus data: %1$s</string>

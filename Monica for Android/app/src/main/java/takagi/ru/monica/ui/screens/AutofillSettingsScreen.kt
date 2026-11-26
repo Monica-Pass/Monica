@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.switchClick
 
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
@@ -170,7 +172,7 @@ fun AutofillSettingsScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.autofill_settings_back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.autofill_settings_back))
                     }
                 },
                 actions = {
@@ -285,7 +287,7 @@ fun AutofillSettingsScreen(
                     icon = Icons.Outlined.AccountTree,
                     setting = Setting.AUTOFILL_DOMAIN_STRATEGY_TITLE,
                     subtitle = DomainMatchStrategy.getDisplayName(context, domainMatchStrategy),
-                    trailingIcon = Icons.Default.ChevronRight,
+                    trailingIcon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     onClick = { showStrategyDialog = true }
                 )
             }
@@ -500,7 +502,7 @@ fun AutofillSettingsScreen(
                         icon = Icons.Outlined.Apps,
                         setting = Setting.AUTOFILL_BLACKLIST_MANAGE,
                         subtitle = stringResource(R.string.autofill_blacklist_manage_desc, blacklistPackages.size),
-                        trailingIcon = Icons.Default.ChevronRight,
+                        trailingIcon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         onClick = { showBlacklistDialog = true }
                     )
                 }

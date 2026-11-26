@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_auto_sync_title">المزامنة التلقائية</string>
+    <string name="mdbx_auto_sync_manual_hint">إيقاف · المزامنة يدويًا عند الحاجة</string>
+    <string name="mdbx_auto_sync_enabled_hint">الرفع عند الحفظ؛ تحقق من التحديثات أثناء فتح القفل في المقدمة</string>
+</resources>

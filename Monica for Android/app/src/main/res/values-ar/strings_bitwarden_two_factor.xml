@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_two_factor_unsupported_short">غير مدعوم في هذا العميل</string>
+    <string name="bitwarden_two_factor_unsupported">تتطلب هذه الطريقة تدفق تسجيل دخول تفاعلي ولا يمكن إكمالها باستخدام رمز هنا. اختر أداة المصادقة المتاحة أو البريد الإلكتروني أو طريقة YubiKey OTP. إذا كانت مؤسستك تحتاج إلى SSO أو مفتاح أمان فقط، فاستخدم عميلاً يدعم هذا التدفق.</string>
+    <string name="bitwarden_choose_method">اختر طريقة التحقق</string>
+    <string name="bitwarden_change_method">تغيير الطريقة</string>
+    <string name="bitwarden_email_action_hint">أرسل الرمز ثم قم بإدخال الرمز الذي وصلك عبر البريد الإلكتروني.</string>
+    <string name="bitwarden_totp_action_hint">اختر مصدقًا موجودًا في Monica، أو أدخل الرمز الحالي الخاص به.</string>
+    <string name="bitwarden_authenticator_search">البحث بالاسم أو الحساب</string>
+    <string name="bitwarden_totp_picker_hint">يؤدي تحديد عنصر إلى ملء الكود الحالي الخاص به دون إرساله.</string>
+    <string name="bitwarden_totp_generation_failed">تعذر إنشاء رمز. تحقق من هذا الموثق أو اختر عنصرًا آخر.</string>
+</resources>

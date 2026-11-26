@@ -292,6 +292,6 @@ On multi-user devices, Shizuku may also require Monica to be installed for the o
 
 滑块的圆润填充轨道与旋转花形滑钮改编自 [T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox)（Apache-2.0），使用 `FancySlider.kt` 和 `MaterialStarShape.kt`，原作者为 T8RIN（Malik Mukhametzyanov）。Monica 适配了 Material3 交互、按移动距离正反滚动、拖动轻触觉反馈与应用／系统设置。参考版本、文件及修改范围见[来源说明](Monica%20for%20Android/app/src/main/assets/licenses/ImageToolbox.txt)，完整 [Apache-2.0 许可证](Monica%20for%20Android/app/src/main/assets/licenses/ImageToolbox-Apache-2.0.txt)随应用保留。
 
-交互强度另参考 ImageToolbox 的 1 轻（CONTEXT_CLICK）／2 强（LONG_PRESS）档位。Monica 增加测试按钮与请求被拒时的一次触摸用途短震兼容处理，继续遵循系统触觉设置。
+交互强度另参考 ImageToolbox 的 1 轻（CONTEXT_CLICK）／2 强（LONG_PRESS）档位。Monica 在调节强度时直接反馈，提供请求被拒时的一次触摸用途短震兼容处理；由应用内开关和强度控制，不要求预先开启系统触觉。
 
-多选菜单的圆形实色图标按钮也参考 ImageToolbox 的视觉处理；主题对比度与窄屏布局由 Monica 独立实现。
+多选菜单采用紧凑的无背景图标按钮；主题对比度与窄屏布局由 Monica 独立实现。

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">جاري التحميل...</string>
+    <string name="kp_list_preview">القائمة السابقة: %1$s</string>
+    <string name="kp_list_locked">مغلق</string>
+    <string name="kp_list_failed">تعذر التحميل</string>
+    <string name="kp_list_unlock">فتح</string>
+    <string name="kp_list_unlock_help">تحقق من كلمة المرور الرئيسية Monica لفتح قاعدة البيانات هذه ببيانات الاعتماد المحفوظة الخاصة بها.</string>
+    <string name="kp_list_auth_failed">فشل التحقق أو انتهت مهلته. يرجى المحاولة مرة أخرى.</string>
+    <string name="kp_list_loading_databases">جاري التحميل... · خزائن %1$d</string>
+</resources>

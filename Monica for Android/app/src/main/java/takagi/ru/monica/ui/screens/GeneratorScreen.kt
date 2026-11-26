@@ -1541,7 +1541,7 @@ fun ColorCodedText(
     
     Text(
         text = annotatedString,
-        style = style,
+        style = style.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
         modifier = modifier
     )
 }
@@ -1982,7 +1982,7 @@ internal fun ResultCard(
                         androidx.compose.runtime.key(result) {
                             Text(
                                 text = colorizePassword(result),
-                                style = resultTextStyle,
+                                style = resultTextStyle.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
                                 fontWeight = FontWeight.Medium,
                                 maxLines = if (isCompact) 1 else Int.MAX_VALUE,
                                 overflow = if (isCompact) TextOverflow.Ellipsis else TextOverflow.Clip

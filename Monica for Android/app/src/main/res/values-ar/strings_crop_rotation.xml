@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="card_face_rotate_left">تدوير لليسار 90 درجة</string>
+    <string name="card_face_rotate_right">تدوير لليمين 90 درجة</string>
+    <string name="card_face_crop_rotation_hint">اسحب إلى الموضع، أو قم بضم إصبعيك للتكبير/التصغير، أو قم بالتدوير والقلب باستخدام عناصر التحكم.</string>
+    <string name="card_face_flip_horizontal">اقلب أفقيًا</string>
+    <string name="card_face_flip_vertical">الوجه عموديا</string>
+</resources>

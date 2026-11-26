@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_selection_stack_title">المكدس · %1$s</string>
+    <string name="wallet_selection_unstacked">البطاقات الفردية</string>
+    <string name="wallet_selection_group_count">تم تحديد %1$d لـ %2$d</string>
+    <string name="wallet_selection_visible_group_count">تم تحديد %1$d من البطاقات المرئية %2$d</string>
+    <string name="wallet_selection_collapse_stack">طي المكدس</string>
+    <string name="wallet_selection_expand_stack">قم بتوسيع المكدس</string>
+</resources>

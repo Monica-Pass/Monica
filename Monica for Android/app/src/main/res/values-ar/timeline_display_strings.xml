@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timeline_display_content_summary">ملخص المحتوى</string>
+    <string name="timeline_display_deleted_state">حالة الحذف</string>
+    <string name="timeline_display_metadata">بيانات التعريف</string>
+    <string name="mdbx_message_no_objects">لم يتم تغيير أي كائن</string>
+    <string name="mdbx_message_no_fields">لا توجد تغييرات في الحقل</string>
+    <string name="mdbx_message_object_preview">%1$s … (كائنات %2$d)</string>
+    <string name="mdbx_message_field_preview">%1$s … (حقول %2$d)</string>
+    <string name="mdbx_message_folder_exists">يوجد مجلد MDBX باسم %1$s بالفعل</string>
+</resources>

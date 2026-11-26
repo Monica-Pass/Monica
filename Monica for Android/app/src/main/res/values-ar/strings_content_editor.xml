@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entry_content_remove_title">حذف %1$s؟</string>
+    <string name="entry_content_remove_message">يؤدي هذا إلى إزالة المحتوى من هذه المسودة. تسري التغييرات عند الحفظ.</string>
+    <string name="entry_content_drag">اضغط باستمرار واسحب لإعادة الترتيب</string>
+</resources>

@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.cardwallet
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -199,7 +200,7 @@ fun CardFaceEditorEntry(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            Icon(Icons.Default.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

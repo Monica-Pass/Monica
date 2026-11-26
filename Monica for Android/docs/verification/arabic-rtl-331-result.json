@@ -1,0 +1,126 @@
+{
+  "version": "1.0.331 (unreleased)",
+  "device": "MuMu API35 x86_64",
+  "technicalAudit": {
+    "localeDirectoriesPerEdition": 21,
+    "protocolFindingsAfter": 0,
+    "technicalCorrectionsPerEdition": {
+      "main": 35,
+      "fd": 35
+    },
+    "correctionLocales": {
+      "values-ar": 1,
+      "values-fr": 5,
+      "values-in": 9,
+      "values-ja": 3,
+      "values-ko": 2,
+      "values-ru": 1,
+      "values-tr": 9,
+      "values-vi": 5
+    },
+    "remainingScanCandidates": 268,
+    "candidateReview": "Remaining matches are Unicode word-boundary false positives and natural prose/context abbreviations, not corrupted protocol prefixes or file format names. CSV-Datei / fichier CSV are valid; no unnecessary dot added.",
+    "runtimeContractKeys": 20,
+    "runtimeLocaleTags": 22
+  },
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 18,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.arabicrtlmain33120261126.localedebug",
+      "takagi.ru.monica.arabicrtlmain33120261126.localedebug.test",
+      "takagi.ru.monica.arabicrtlfd33120261126.localedebug",
+      "takagi.ru.monica.arabicrtlfd33120261126.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15094
+  },
+  "editions": {
+    "main": {
+      "buildSeconds": 81.69158670000616,
+      "jvmTests": 19,
+      "jvmSkipped": 0,
+      "device": {
+        "completedMethodPasses": 33,
+        "completedMethodFailures": 0,
+        "edition": "main",
+        "selector": "takagi.ru.monica.localization.ArabicLocaleInstrumentedTest,takagi.ru.monica.localization.ArabicUiInstrumentedTest,takagi.ru.monica.ui.vaultv2.LocaleDateSortInstrumentedTest,takagi.ru.monica.localization.AllLocalesInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.localization.ArabicImeInstrumentedTest,takagi.ru.monica.localization.TechnicalIdentifiersInstrumentedTest,takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest",
+        "tests": 33,
+        "failures": 0,
+        "success": true,
+        "seconds": 35.51145540000289
+      },
+      "runnerSeconds": 32.835,
+      "frozenInputCount": 6667,
+      "apks": [
+        {
+          "name": "app.apk",
+          "sha256": "0c8a44e58edd97ff11f714bd47cba3c92fd3946a5c34890278072edc1f45ff33"
+        },
+        {
+          "name": "test.apk",
+          "sha256": "082b0a146ddd87bad5391b68b13d827b2b18e967820860ece521e72ae0ca8601"
+        }
+      ]
+    },
+    "fd": {
+      "buildSeconds": 78.15822520002257,
+      "jvmTests": 19,
+      "jvmSkipped": 0,
+      "device": {
+        "completedMethodPasses": 33,
+        "completedMethodFailures": 0,
+        "edition": "fd",
+        "selector": "takagi.ru.monica.localization.ArabicLocaleInstrumentedTest,takagi.ru.monica.localization.ArabicUiInstrumentedTest,takagi.ru.monica.ui.vaultv2.LocaleDateSortInstrumentedTest,takagi.ru.monica.localization.AllLocalesInstrumentedTest,takagi.ru.monica.localization.PackagedLocaleFilterInstrumentedTest,takagi.ru.monica.localization.ArabicImeInstrumentedTest,takagi.ru.monica.localization.TechnicalIdentifiersInstrumentedTest,takagi.ru.monica.localization.IndonesianTurkishLocaleInstrumentedTest",
+        "tests": 33,
+        "failures": 0,
+        "success": true,
+        "seconds": 34.36556939998991
+      },
+      "runnerSeconds": 31.795,
+      "frozenInputCount": 6668,
+      "apks": [
+        {
+          "name": "app.apk",
+          "sha256": "f952bbd6c4fad5e0a96da0cfd2ae5c0980e16b7a82a11d6ea20bdb95b72b5975"
+        },
+        {
+          "name": "test.apk",
+          "sha256": "426e10bddad0464b23fd6e707c4a77aee0fc890b2268bdbbeea1b1e4aa8101bc"
+        }
+      ]
+    }
+  },
+  "shared": {
+    "byteEqualCount": 225,
+    "editionDifferences": [
+      "app/build.gradle",
+      "app/src/androidTest/assets/idtr-INDONESIAN-resource-contract.json",
+      "app/src/androidTest/assets/idtr-TURKISH-resource-contract.json",
+      "app/src/main/java/takagi/ru/monica/ui/screens/ImportDataScreen.kt",
+      "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassScreen.kt",
+      "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+      "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt",
+      "app/src/main/res/values-fr/strings.xml",
+      "app/src/main/res/values-ja/strings.xml",
+      "app/src/main/res/values-ko/strings.xml",
+      "app/src/main/res/values-ru/strings.xml",
+      "app/src/main/res/values-vi/strings.xml",
+      "app/src/androidTest/assets/arabic-ARABIC-resource-contract.json",
+      "app/src/main/res/values-ar/credential_exchange.xml",
+      "app/src/main/res/values-ar/mdbx_manager_strings.xml",
+      "app/src/main/res/values-ar/quick_setup_strings.xml"
+    ]
+  }
+}

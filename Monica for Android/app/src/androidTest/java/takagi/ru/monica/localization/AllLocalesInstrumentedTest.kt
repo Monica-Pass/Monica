@@ -40,6 +40,7 @@ class AllLocalesInstrumentedTest {
             Language.ENGLISH to "Cancel",
             Language.INDONESIAN to "Batal",
             Language.TURKISH to "İptal",
+            Language.ARABIC to "إلغاء",
             Language.CHINESE to "取消",
             Language.TRADITIONAL_CHINESE to "取消",
             Language.TRADITIONAL_CHINESE_TAIWAN to "取消",
@@ -103,7 +104,7 @@ class AllLocalesInstrumentedTest {
             }
             listOf(0, 1, 2, 5, 11, 21, 22, 101).forEach { count ->
                 val text = localized.resources.getQuantityString(R.plurals.vault_v2_hierarchy_item_count, count, count)
-                assertTrue("$language plural $count: $text", text.contains(count.toString()))
+                assertTrue("$language plural $count: $text", text.contains(String.format(localized.resources.configuration.locales[0], "%d", count)))
             }
         }
     }

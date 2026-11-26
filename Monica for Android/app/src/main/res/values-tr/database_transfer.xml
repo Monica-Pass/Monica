@@ -28,7 +28,7 @@
     <string name="transfer_password_mismatch">Şifreler eşleşmiyor.</string>
     <string name="transfer_kdbx_password_description">Dışa aktarılan KDBX veritabanını korumak için bir parola ayarlayın.</string>
     <string name="transfer_unsupported_token">Bu simge biçimi dönüştürülemez. Bir ZIP yedeği kullanın.</string>
-    <string name="steam_mafile_export_title">Steam maDosyası</string>
+    <string name="steam_mafile_export_title">Steam maFile</string>
     <string name="steam_mafile_export_desc">Seçilen Steam hesaplarını bu veritabanından dışa aktarın.</string>
     <string name="transfer_kdbx_description">KeePass formatında şifreler, kimlik doğrulayıcılar, Şifreler ve ekler.</string>
     <string name="transfer_unsupported_records">Bu veritabanı desteklenmeyen öğe türleri içeriyor. Bunun yerine yerel bir veritabanı kopyasını kaydedin.</string>

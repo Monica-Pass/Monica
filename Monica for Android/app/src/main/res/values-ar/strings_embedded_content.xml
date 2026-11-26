@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_copy_working">جارٍ نسخ المحتوى بالكامل...</string>
+    <string name="embedded_copy_failed">نسخة المحتوى غير كاملة</string>
+    <string name="embedded_copy_failed_message">لا يمكن نسخ %1$s بالكامل. يتم الاحتفاظ بالمصدر والمسودة الخاصة بك. تأكد من إلغاء قفل قاعدة البيانات المصدر ومن توفر المرفقات، ثم أعد المحاولة.</string>
+    <string name="embedded_copy_note">انسخ الملاحظة</string>
+    <string name="embedded_copy_card">نسخة البطاقة</string>
+    <string name="embedded_copy_independent">نسخة مستقلة · مرفقات %1$d</string>
+    <string name="embedded_copy_document">نسخ الوثيقة</string>
+    <string name="password_content_document">وثيقة الهوية</string>
+    <string name="password_content_document_description">حقول الهوية ووجه البطاقة والصور والمرفقات</string>
+</resources>

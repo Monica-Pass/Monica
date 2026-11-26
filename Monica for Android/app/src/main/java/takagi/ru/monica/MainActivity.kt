@@ -837,7 +837,10 @@ fun MonicaApp(
         ThemeMode.DARK -> true
     }
 
-    ProvideMonicaInterfaceScale(settings.interfaceScalePercent) {
+    ProvideMonicaInterfaceScale(
+        scalePercent = settings.interfaceScalePercent,
+        animationsEnabled = !settings.reduceAnimations
+    ) {
         MonicaTheme(
             darkTheme = darkTheme,
             oledPureBlackEnabled = settings.oledPureBlackEnabled,

@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 
 import android.content.ClipData
@@ -467,7 +468,7 @@ private fun SystemSettingsCard(onClick: () -> Unit) {
             }
             
             Icon(
-                imageVector = Icons.Filled.ChevronRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )

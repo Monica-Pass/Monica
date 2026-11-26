@@ -1698,7 +1698,7 @@
     <string name="import_type_keepass_format_desc">Nhap co so du lieu .kdbx tuong thich KeePass</string>
     <string name="import_type_keepass_format_file_hint">Chon tep .kdbx</string>
     <string name="import_type_csv_data_title">Du lieu CSV</string>
-    <string name="import_type_csv_data_desc">Nhap CSV xuat tu Monica / KeePass / Bitwarden / Password Keyboard</string>
+    <string name="import_type_csv_data_desc">Nhập CSV xuất từ Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard</string>
     <string name="import_type_csv_data_file_hint">Chon tep .csv</string>
     <string name="import_type_aegis_title">Trinh xac thuc Aegis</string>
     <string name="import_type_aegis_desc">Nhap ban sao luu JSON tu Aegis Authenticator</string>
@@ -3006,14 +3006,14 @@
     <string name="import_data_keepass_tip_kdf_memory">Bộ nhớ KDF quá cao đối với thiết bị này. Giảm bộ nhớ/song song Argon2 và thử lại.</string>
     <string name="import_data_keepass_tip_format_unsupported">Định dạng/mật mã không được hỗ trợ hoặc tệp bị hỏng. Kiểm tra nó trong KeePassDX/KeePassXC.</string>
     <string name="import_data_keepass_tip_io_failed">I/O không thành công khi đọc tệp. Hãy kiểm tra tính toàn vẹn của tệp và tính khả dụng của bộ nhớ, sau đó thử lại.</string>
-    <string name="import_type_steam_mode_title">Phương pháp nhập khẩu hơi nước</string>
+    <string name="import_type_steam_mode_title">Phương thức nhập Steam</string>
     <string name="import_type_steam_mode_mafile">maFile</string>
     <string name="import_type_steam_mode_coexist">Ứng dụng Steam cùng tồn tại</string>
-    <string name="import_type_steam_mode_login">Đăng nhập hơi nước</string>
+    <string name="import_type_steam_mode_login">Đăng nhập Steam</string>
     <string name="import_type_steam_coexist_desc">Dán ID thiết bị của bạn và SteamGuard JSON để nhập cùng tồn tại.</string>
     <string name="import_type_steam_login_desc">Đăng nhập bằng tài khoản Steam của bạn, sau đó hoàn tất mã xác minh khi được nhắc.</string>
-    <string name="import_type_steam_login_username_label">Tài khoản hơi nước</string>
-    <string name="import_type_steam_login_password_label">Mật khẩu hơi nước</string>
+    <string name="import_type_steam_login_username_label">Tài khoản Steam</string>
+    <string name="import_type_steam_login_password_label">Mật khẩu Steam</string>
     <string name="import_type_steam_login_code_label">Mã xác minh</string>
     <string name="import_type_steam_login_code_hint">Nhập email/mã ứng dụng</string>
     <string name="import_type_steam_login_challenge_required">Cần xác minh, vui lòng nhập mã.</string>

@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -244,7 +245,7 @@ internal fun LocalKeePassManagementScreen(
                 title = { Text(selectedSource?.title() ?: stringResource(R.string.local_keepass_section_title)) },
                 navigationIcon = {
                     IconButton(onClick = { if (selectedSource != null) selectedSource = null else onNavigateBack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.go_back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.go_back))
                     }
                 }
             )

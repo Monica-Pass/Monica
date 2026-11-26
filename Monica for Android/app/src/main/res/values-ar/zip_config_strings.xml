@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">يتضمن إعدادات التطبيق والحسابات العامة وقواعد الملء التلقائي وأسئلة الأمان وتكوين WebDAV/Bitwarden. التشفير مطلوب.</string>
+    <string name="zip_config_encryption_required">قم بتشفير النسخة الاحتياطية ZIP لتشمل تكوين Monica.</string>
+    <string name="zip_config_backup_failed">تعذر عمل نسخة احتياطية لجميع تكوينات Monica المحددة. لم يتم تصدير أي نسخة احتياطية.</string>
+    <string name="zip_restore_config">استعادة تكوين Monica</string>
+    <string name="zip_restore_config_hint">إذا كان موجودًا في النسخة الاحتياطية، قم باستعادة التكوين أيضًا. اتركه بدون تحديد للحفاظ على الإعدادات المحلية. يتم الاحتفاظ باتصالات WebDAV الموجودة؛ تتطلب خزائن Bitwarden التحقق مرة أخرى.</string>
+</resources>

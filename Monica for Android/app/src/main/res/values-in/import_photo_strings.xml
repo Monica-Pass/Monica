@@ -18,7 +18,7 @@
     <string name="import_message_steam_device_id">ID perangkat tidak valid. Format yang diharapkan: android:xxxx</string>
     <string name="import_message_steam_secret">Format rahasia_berbagi Steam tidak valid</string>
     <string name="import_message_steam_exists">Pengautentikasi Steam Guard ini sudah ada</string>
-    <string name="export_message_empty_mafile">MaFile yang diekspor kosong</string>
+    <string name="export_message_empty_mafile">maFile yang diekspor kosong</string>
     <string name="crypto_message_encrypt_failed">Enkripsi gagal: %1$s</string>
     <string name="crypto_message_decrypt_failed">Dekripsi gagal: %1$s</string>
     <string name="crypto_message_file_too_small">File terenkripsi terlalu kecil dan mungkin rusak</string>

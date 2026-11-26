@@ -30,6 +30,7 @@ object LocaleHelper {
             Language.PORTUGUESE_BRAZIL -> Locale.forLanguageTag("pt-BR")
             Language.INDONESIAN -> Locale.forLanguageTag("id-ID")
             Language.TURKISH -> Locale.forLanguageTag("tr-TR")
+            Language.ARABIC -> Locale.forLanguageTag("ar")
         }
 
         return updateResources(context, locale)
@@ -126,6 +127,7 @@ object LocaleHelper {
             "it" -> Language.ITALIAN
             "id", "in" -> Language.INDONESIAN
             "tr" -> Language.TURKISH
+            "ar" -> Language.ARABIC
             "pt" -> if (currentLocale.country == "BR") Language.PORTUGUESE_BRAZIL else Language.PORTUGUESE_PORTUGAL
             else -> Language.SYSTEM
         }

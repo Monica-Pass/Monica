@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_native_title">إدارة المعلومات الأصلية</string>
+    <string name="mdbx_native_summary">تصفح المجلدات والإدخالات والحقول الأصلية</string>
+    <string name="mdbx_native_search">البحث بالأسماء أو الأنواع</string>
+    <string name="mdbx_native_readonly">الحقول الأصلية للقراءة فقط. إعادة تسمية الإدخالات من القائمة دون تغيير محتوياتها.</string>
+    <string name="mdbx_native_schema">إصدار تنسيق البيانات: %1$d</string>
+    <string name="mdbx_native_failed">لا يمكن إكمال العملية. قم بالتحديث للتحقق من الحالة المحفوظة قبل المحاولة مرة أخرى.</string>
+    <string name="mdbx_native_snapshot_readonly">بنية اللقطة للقراءة فقط. الاستعادة متاحة من قائمة اللقطة.</string>
+</resources>

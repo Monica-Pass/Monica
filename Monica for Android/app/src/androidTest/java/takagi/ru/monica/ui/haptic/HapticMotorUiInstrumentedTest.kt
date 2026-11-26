@@ -26,9 +26,9 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 class HapticMotorUiInstrumentedTest {
     @get:Rule val compose = createComposeRule()
 
-    @Test fun systemTouchOnPreviewSwitchAndSliderOutputOnce() = verifyControls(1)
+    @Test fun systemTouchOnStrengthSwitchAndSliderOutputOnce() = verifyControls(1)
 
-    @Test fun systemTouchOffPreviewSwitchAndSliderOutputOnce() = verifyControls(0)
+    @Test fun systemTouchOffStrengthSwitchAndSliderOutputOnce() = verifyControls(0)
 
     private fun verifyControls(systemSetting: Int) {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -87,14 +87,13 @@ class HapticMotorUiInstrumentedTest {
                 }
             }
             compose.waitForIdle()
-            verify("preview-light") { compose.onNodeWithTag("haptic_test").performTouchInput { click() } }
+            compose.onNodeWithTag("haptic_test").assertDoesNotExist()
             verify("switch-light") { compose.onNodeWithTag("real_switch").performTouchInput { click() } }
             verify("slider-light") { compose.onNodeWithTag("real_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(20f) } }
             verify("select-strong") { compose.onNodeWithTag("haptic_strength_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(2f) } }
-            verify("preview-strong") { compose.onNodeWithTag("haptic_test").performClick() }
             verify("slider-strong") { compose.onNodeWithTag("real_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(30f) } }
             verify("disable", 0) { compose.onNodeWithTag("haptic_strength_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(0f) } }
-            compose.onNodeWithTag("haptic_test").assertIsNotEnabled()
+            compose.onNodeWithTag("haptic_test").assertDoesNotExist()
             verify("disabled-switch", 0) { compose.onNodeWithTag("real_switch").performClick() }
             verify("disabled-slider", 0) { compose.onNodeWithTag("real_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(40f) } }
             verify("reenable-light") { compose.onNodeWithTag("haptic_strength_slider").performSemanticsAction(SemanticsActions.SetProgress) { it(1f) } }

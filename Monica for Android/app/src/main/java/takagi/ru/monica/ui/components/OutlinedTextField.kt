@@ -100,7 +100,7 @@ fun OutlinedTextField(
         modifier = modifier.then(rememberBringIntoViewOnFocusModifier()),
         enabled = enabled,
         readOnly = readOnly,
-        textStyle = textStyle,
+        textStyle = credentialTextStyle(textStyle, keyboardOptions, visualTransformation),
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
@@ -142,7 +142,7 @@ fun OutlinedTextField(
         modifier = modifier.then(rememberBringIntoViewOnFocusModifier()),
         enabled = enabled,
         readOnly = readOnly,
-        textStyle = textStyle,
+        textStyle = credentialTextStyle(textStyle, keyboardOptions, visualTransformation),
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
@@ -198,7 +198,7 @@ fun OutlinedTextField(
         modifier = modifier.then(rememberBringIntoViewOnFocusModifier()),
         enabled = enabled,
         readOnly = readOnly,
-        textStyle = textStyle,
+        textStyle = credentialTextStyle(textStyle, keyboardOptions, visualTransformation),
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
@@ -232,7 +232,7 @@ fun OutlinedTextField(
         modifier = modifier.then(rememberBringIntoViewOnFocusModifier()),
         enabled = enabled,
         readOnly = readOnly,
-        textStyle = textStyle,
+        textStyle = credentialTextStyle(textStyle, keyboardOptions, visualTransformation),
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
@@ -266,4 +266,14 @@ private fun rememberEntryFieldShape(base: Shape, source: MutableInteractionSourc
         label = "entryFieldFocusShape",
     )
     return RoundedCornerShape(radius)
+}
+
+/** Protocol fields retain LTR order while their labels and icons follow the UI locale. */
+private fun credentialTextStyle(style: TextStyle, options: KeyboardOptions, transformation: VisualTransformation): TextStyle {
+    val protocolField = transformation is androidx.compose.ui.text.input.PasswordVisualTransformation ||
+        options.keyboardType in setOf(androidx.compose.ui.text.input.KeyboardType.Password,
+            androidx.compose.ui.text.input.KeyboardType.NumberPassword,
+            androidx.compose.ui.text.input.KeyboardType.Email, androidx.compose.ui.text.input.KeyboardType.Uri)
+    return if (protocolField && style.textDirection == androidx.compose.ui.text.style.TextDirection.Unspecified)
+        style.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr) else style
 }

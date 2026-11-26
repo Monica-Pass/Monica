@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_message_empty">ملف النسخ الاحتياطي الذي تم تصديره فارغ</string>
+    <string name="export_message_empty_zip">لا تحتوي النسخة الاحتياطية ZIP على أي محتوى</string>
+    <string name="export_message_open_failed">لا يمكن فتح وجهة التصدير</string>
+    <string name="export_message_incomplete">التصدير غير مكتمل: %1$d/%2$d بايت</string>
+    <string name="export_message_invalid_encrypted">تحتوي النسخة الاحتياطية المكتوبة على تنسيق مشفر غير صالح</string>
+    <string name="export_message_verify_failed">تعذر التحقق من الملف الذي تم تصديره</string>
+    <string name="export_message_backup_summary">تم تصدير النسخة الاحتياطية: كلمات مرور %1$d وصور %2$d</string>
+    <string name="import_message_aegis_unencrypted">يحتاج هذا الاستيراد إلى تصدير Aegis JSON غير مشفر</string>
+    <string name="import_message_aegis_missing">ملف Aegis غير صالح: %1$s مفقود</string>
+    <string name="import_message_aegis_empty_slots">ملف Aegis غير صالح: الفتحات فارغة</string>
+    <string name="import_message_aegis_slot_type">نوع فتحة Aegis غير مدعوم: %1$s</string>
+    <string name="import_message_aegis_no_totp">لم يتم العثور على إدخالات TOTP صالحة في ملف Aegis</string>
+    <string name="import_message_aegis_failed">تعذر استيراد ملف Aegis: %1$s</string>
+    <string name="import_message_key_length">طول المفتاح الذي تم فك تشفيره غير صالح</string>
+    <string name="import_message_steam_missing">بيانات Steam Guard غير صالحة: %1$s مفقود</string>
+    <string name="import_message_steam_device_id">معرف الجهاز غير صالح. التنسيق المتوقع: android:xxxx</string>
+    <string name="import_message_steam_secret">تنسيق Steam Shared_secret غير صالح</string>
+    <string name="import_message_steam_exists">مصدق Steam Guard موجود بالفعل</string>
+    <string name="export_message_empty_mafile">ملف maFile الذي تم تصديره فارغ</string>
+    <string name="crypto_message_encrypt_failed">فشل التشفير: %1$s</string>
+    <string name="crypto_message_decrypt_failed">فشل فك التشفير: %1$s</string>
+    <string name="crypto_message_file_too_small">الملف المشفر صغير جدًا وقد يكون تالفًا</string>
+    <string name="crypto_message_invalid_file">تنسيق الملف المشفر غير صالح</string>
+    <string name="crypto_message_password_or_corrupt">كلمة مرور غير صحيحة أو بيانات مشفرة تالفة</string>
+    <string name="crypto_message_invalid_text">تنسيق النص المشفر غير صالح</string>
+    <string name="photo_message_camera_failed">تعذر فتح الكاميرا: %1$s</string>
+    <string name="photo_message_gallery_missing">لا يتوفر تطبيق معرض</string>
+    <string name="photo_message_gallery_failed">تعذر فتح المعرض: %1$s</string>
+    <string name="photo_message_data_failed">تعذر قراءة الصورة التي تم إرجاعها: %1$s</string>
+    <string name="photo_message_file_missing">ملف الصورة فارغ أو مفقود</string>
+    <string name="photo_message_not_selected">لم يتم تحديد صورة</string>
+</resources>

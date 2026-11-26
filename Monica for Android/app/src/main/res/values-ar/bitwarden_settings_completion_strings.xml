@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">الأمان</string>
+    <string name="bitwarden_settings_queue_hint">عرض التغييرات المعلقة ومشكلات المزامنة</string>
+    <string name="bitwarden_account_web_settings_hint">إدارة كلمة المرور الرئيسية وتسجيل الدخول بخطوتين والاشتراك على الويب</string>
+    <string name="bitwarden_settings_select_account">تعيين كحساب جاري</string>
+    <string name="bitwarden_settings_account_management">إدارة الحساب</string>
+    <string name="bitwarden_queue_help">يظهر التغييرات المحلية التي تنتظر المزامنة ونتائج آخر محاولة. القائمة الفارغة لا تؤكد أن الخادم محدث.</string>
+    <string name="bitwarden_queue_empty_local">لا توجد تغييرات محلية في انتظار المزامنة.</string>
+    <string name="bitwarden_queue_locked">قم بإلغاء قفل هذا الحساب لعرض العناصر المعلقة.</string>
+    <string name="bitwarden_queue_loading_error">تعذر قراءة العناصر المعلقة. أعد فتح هذه الصفحة للمحاولة مرة أخرى.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">في انتظار تأكيد الخادم</string>
+    <string name="bitwarden_queue_idle">لا توجد مهمة مزامنة قيد التشغيل</string>
+</resources>

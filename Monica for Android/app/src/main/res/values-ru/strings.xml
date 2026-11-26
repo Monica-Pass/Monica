@@ -2810,7 +2810,7 @@
     <string name="import_data_keepass_tip_format_unsupported">Неподдерживаемый формат/шифр или файл повреждён. Проверьте в KeePassDX/KeePassXC.</string>
     <string name="import_data_keepass_tip_io_failed">Ошибка ввода-вывода. Проверьте целостность файла и доступность хранилища.</string>
     <string name="import_type_csv_data_title">Данные CSV</string>
-    <string name="import_type_csv_data_desc">Импорт CSV из Monica / KeePass / Bitwarden / Password Keyboard</string>
+    <string name="import_type_csv_data_desc">Импорт CSV из Monica / KeePass / Bitwarden / Proton Pass / Password Keyboard</string>
     <string name="import_type_csv_data_file_hint">Выберите .csv файл</string>
     <string name="import_type_aegis_title">Aegis Authenticator</string>
     <string name="import_type_aegis_desc">Импорт JSON из Aegis Authenticator</string>

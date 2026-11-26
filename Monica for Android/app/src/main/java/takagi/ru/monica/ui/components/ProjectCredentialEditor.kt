@@ -76,6 +76,7 @@ fun ProjectCredentialEditor(group: ProjectCredentialGroup.Group,
                             }) else null, tag = "credential_actions_${password.id}")
                     },
                     interactionSource = interaction,
+                    textStyle = androidx.compose.ui.text.TextStyle(textDirection = androidx.compose.ui.text.style.TextDirection.Ltr),
                     visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth().testTag("credential_password_${password.id}"),
                     shape = RoundedCornerShape(4.dp), singleLine = true)

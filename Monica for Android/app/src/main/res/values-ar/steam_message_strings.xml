@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_message_credentials_required">أدخل اسم حسابك وكلمة المرور</string>
+    <string name="steam_message_rsa_failed">تعذر الحصول على مفتاح Steam RSA</string>
+    <string name="steam_message_rsa_incomplete">قام Steam بإرجاع بيانات RSA غير كاملة</string>
+    <string name="steam_message_password_encrypt">تعذر تشفير كلمة المرور Steam</string>
+    <string name="steam_message_login_request">تعذر إرسال طلب تسجيل الدخول Steam</string>
+    <string name="steam_message_login_failed">فشل تسجيل الدخول إلى Steam</string>
+    <string name="steam_message_login_rejected">رفض Steam تسجيل الدخول (EResult=%1$s، الفاصل الزمني=%2$s)</string>
+    <string name="steam_message_login_incomplete">قام Steam بإرجاع استجابة تسجيل دخول غير كاملة. قد تكون هناك حاجة إلى التحقق الإضافي.</string>
+    <string name="steam_message_session_invalid">جلسة تسجيل دخول غير صالحة</string>
+    <string name="steam_message_code_required">أدخل رمز التحقق</string>
+    <string name="steam_message_session_expired">انتهت صلاحية جلسة تسجيل الدخول. ابدأ مرة أخرى.</string>
+    <string name="steam_message_verification_failed">فشل التحقق من Steam</string>
+    <string name="steam_message_qr_create">تعذر بدء تسجيل الدخول إلى Steam QR</string>
+    <string name="steam_message_qr_failed">فشل تسجيل الدخول Steam QR</string>
+    <string name="steam_message_code_submit">تعذر إرسال رمز التحقق Steam</string>
+    <string name="steam_message_session_needs_code">تتطلب جلسة تسجيل الدخول هذه رمز التحقق</string>
+    <string name="steam_message_qr_expired">انتهت صلاحية جلسة تسجيل الدخول QR. ابدأ مرة أخرى.</string>
+    <string name="steam_message_not_qr">هذه الجلسة لا تستخدم تسجيل الدخول QR</string>
+    <string name="steam_message_poll_failed">تعذر التحقق من حالة تسجيل الدخول إلى Steam</string>
+    <string name="steam_message_steamid_missing">تم تسجيل الدخول إلى Steam، لكن SteamID مفقود. لا يمكن الاستمرار.</string>
+    <string name="steam_message_token_missing">تم تسجيل الدخول إلى Steam، ولكن لم يتم الحصول على رمز الوصول. لا يمكن متابعة الاستيراد.</string>
+    <string name="steam_message_login_timeout">انتهت مهلة انتظار تسجيل الدخول إلى Steam. حاول مرة أخرى لاحقًا.</string>
+    <string name="steam_message_qr_parameters">بيانات جلسة تسجيل الدخول QR غير صالحة. ابدأ مرة أخرى.</string>
+    <string name="steam_message_replacement_code">يحتوي هذا الحساب بالفعل على مصدق. أدخل الرمز لاستبداله.</string>
+    <string name="steam_message_steamid_invalid">معرف Steam غير صالح. لا يمكن إعداد Steam Guard.</string>
+    <string name="steam_message_account_restricted">حساب Steam هذا مقيد ولا يمكنه إضافة Steam Guard</string>
+    <string name="steam_message_rate_limited">طلبات Steam كثيرة جدًا. حاول مرة أخرى لاحقًا.</string>
+    <string name="steam_message_add_failed">تعذر إضافة Steam Guard</string>
+    <string name="steam_message_phone_required">ربط رقم هاتف بحساب Steam هذا قبل إضافة Steam Guard</string>
+    <string name="steam_message_response_missing">قام Steam بإرجاع بيانات مصادق غير كاملة: %1$s مفقود</string>
+    <string name="steam_message_activation_expired">انتهت صلاحية تفعيل Steam Guard. قم بتسجيل الدخول مرة أخرى.</string>
+    <string name="steam_message_activation_data">بيانات Steam Guard غير كاملة. لا يمكن توليد رمز التفعيل.</string>
+    <string name="steam_message_activation_failed">فشل تنشيط Steam Guard</string>
+    <string name="steam_message_activation_code_invalid">رمز التفعيل Steam غير صالح أو منتهي الصلاحية</string>
+    <string name="steam_message_activation_status">فشل تنشيط Steam Guard (الحالة=%1$d)</string>
+    <string name="steam_message_sequential_codes">فشل تنشيط Steam Guard: تعذر إنشاء الرموز المتتابعة التي يتطلبها Steam</string>
+    <string name="steam_message_replace_start">تعذر بدء استبدال المصدق</string>
+    <string name="steam_message_replace_sms">أدخل رمز الرسائل القصيرة ليحل محل الموثق الحالي</string>
+    <string name="steam_message_replace_denied">نجح تسجيل الدخول إلى Steam، ولكن تم رفض نقل المصدق (EResult=2). قد لا يحتوي الحساب على رقم هاتف قابل للاستخدام أو قد يتم تقييد النقل. قم باستيراد ملف maFile، أو ربط رقم هاتف في Steam وحاول مرة أخرى.</string>
+    <string name="steam_message_replace_forbidden">نجح تسجيل الدخول إلى Steam، ولكن تم رفض الوصول إلى نقل المصدق (EResult=15). قم باستيراد ملف maFile، أو قم بتسجيل الدخول مرة أخرى لاحقًا ثم أعد المحاولة.</string>
+    <string name="steam_message_replace_limited">نجح تسجيل الدخول إلى Steam، لكن نقل المصدق محدود مؤقتًا (EResult=84). حاول مرة أخرى لاحقًا.</string>
+    <string name="steam_message_replace_result">نجح تسجيل الدخول إلى Steam، ولكن فشل نقل المصدق (EResult=%1$d)</string>
+    <string name="steam_message_replace_session">جلسة استبدال غير صالحة. قم بتسجيل الدخول مرة أخرى للاستيراد.</string>
+    <string name="steam_message_replace_failed">فشل استبدال المصادق</string>
+    <string name="steam_message_session_state">حالة جلسة تسجيل الدخول غير صالحة. ابدأ مرة أخرى.</string>
+    <string name="steam_message_oauth_missing">نجح تسجيل الدخول إلى Steam، ولكن لم يتم إرجاع أي رمز OAuth. لا يمكن متابعة الاستيراد.</string>
+    <string name="steam_message_captcha_unsupported">يتطلب Steam اختبار CAPTCHA الذي لا يمكن لهذا الإصدار إكماله. قم بتسجيل الدخول مرة واحدة باستخدام عميل Steam، ثم أعد المحاولة.</string>
+    <string name="steam_message_enter_token_code">أدخل رمز Steam Guard الخاص بك</string>
+    <string name="steam_message_enter_email_code">أدخل الرمز المرسل عبر البريد الإلكتروني</string>
+    <string name="steam_message_invalid_parameters">رفض Steam الطلب: معلمات غير صالحة</string>
+    <string name="steam_message_access_denied">تم رفض الوصول إلى Steam</string>
+    <string name="steam_message_already_bound">يحتوي هذا الحساب بالفعل على مصدق Steam. استخدم تدفق الاستبدال.</string>
+    <string name="steam_message_operation_disallowed">Steam لا يسمح بهذا الإجراء في الحالة الحالية</string>
+    <string name="steam_message_confirmation_required">يتطلب Steam تأكيدًا إضافيًا</string>
+    <string name="steam_message_code_invalid">رمز التحقق Steam غير صالح أو منتهي الصلاحية</string>
+    <string name="steam_message_request_status">فشل طلب Steam (الحالة=%1$d)</string>
+    <string name="steam_message_bad_credentials">اسم حساب Steam أو كلمة المرور غير صحيحة</string>
+    <string name="steam_message_duplicate_request">أبلغ Steam عن طلب مكرر (EResult=29). قد يكون لدى الحساب بالفعل أداة مصادقة.</string>
+    <string name="steam_message_session_conflict">تعارض جلسة تسجيل الدخول Steam. حاول مرة أخرى لاحقًا.</string>
+    <string name="steam_message_extra_verification">يتطلب Steam التحقق الإضافي من تسجيل الدخول (EResult=63)</string>
+    <string name="steam_message_login_result">فشل تسجيل الدخول إلى Steam (EResult=%1$d)</string>
+    <string name="steam_message_token_code_invalid">رمز Steam Guard غير صالح أو منتهي الصلاحية</string>
+    <string name="steam_message_sms_email_code_invalid">رمز التحقق عبر الرسائل القصيرة أو البريد الإلكتروني غير صالح أو منتهي الصلاحية</string>
+</resources>

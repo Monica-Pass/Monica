@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="vault_sort">الترتيب حسب</string>
+    <string name="vault_sort_scope">ينطبق على كافة العناصر والمجلدات ونتائج البحث</string>
+    <string name="vault_sort_title_asc">الاسم: أ → ي</string>
+    <string name="vault_sort_title_desc">الاسم: Z → A</string>
+    <string name="vault_sort_created_desc">تاريخ الإنشاء: الأحدث أولًا</string>
+    <string name="vault_sort_created_asc">تاريخ الإنشاء: الأقدم أولًا</string>
+    <string name="vault_sort_updated_desc">تاريخ التعديل: الأحدث أولًا</string>
+    <string name="vault_sort_updated_asc">تاريخ التعديل: الأقدم أولًا</string>
+    <string name="vault_sort_unknown_date">تاريخ غير معروف</string>
+</resources>

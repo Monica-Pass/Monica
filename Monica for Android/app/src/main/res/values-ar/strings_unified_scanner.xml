@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">مسح رمز المصادقة أو مفتاح المرور QR</string>
+    <string name="qr_credentials_invalid">هذا ليس مصدقًا معتمدًا أو رمز مرور QR</string>
+    <string name="qr_multiple_codes">تم اكتشاف رموز QR المتعددة. أشر إلى رمز واحد فقط.</string>
+</resources>

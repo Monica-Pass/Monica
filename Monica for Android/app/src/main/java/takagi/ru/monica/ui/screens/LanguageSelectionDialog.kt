@@ -81,6 +81,7 @@ fun LanguageSelectionDialog(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
+    val direction = androidx.compose.ui.platform.LocalLayoutDirection.current
     val maxHeight = minOf(560.dp, configuration.screenHeightDp.dp * 0.82f)
     val currentRow = if (currentLanguage in chineseLanguageVariants) Language.CHINESE else currentLanguage
     val listState = rememberLazyListState(
@@ -97,6 +98,7 @@ fun LanguageSelectionDialog(
             LocalContext provides context,
             LocalConfiguration provides configuration,
             LocalDensity provides density,
+            androidx.compose.ui.platform.LocalLayoutDirection provides direction,
         ) {
             Surface(
                 modifier = Modifier
@@ -352,5 +354,6 @@ internal fun getLanguageDisplayName(language: Language, context: Context): Strin
         Language.PORTUGUESE_BRAZIL -> R.string.language_portuguese_brazil
         Language.INDONESIAN -> R.string.language_indonesian
         Language.TURKISH -> R.string.language_turkish
+        Language.ARABIC -> R.string.language_arabic
     }
 )

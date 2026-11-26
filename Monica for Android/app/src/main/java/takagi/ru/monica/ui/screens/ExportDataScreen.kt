@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 
 import takagi.ru.monica.bitwarden.export.*
@@ -357,7 +358,7 @@ fun ExportDataScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.export_data_title)) },
             navigationIcon = { IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, stringResource(R.string.go_back))
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.go_back))
             } }) },
         snackbarHost = { SnackbarHost(snackbar) },
         bottomBar = {
@@ -367,7 +368,7 @@ fun ExportDataScreen(
                         (option != ExportOption.STEAM_MAFILE || (!loadingSteam && selectedSteamIds.isNotEmpty()))),
                     modifier = Modifier.testTag("database_export_start").fillMaxWidth().navigationBarsPadding().padding(12.dp).heightIn(min = 56.dp),
                     shape = RoundedCornerShape(28.dp)) {
-                    Icon(if (exporting) Icons.Default.ArrowBack else Icons.Default.Upload, null)
+                    Icon(if (exporting) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Upload, null)
                     Spacer(Modifier.width(10.dp))
                     Text(stringResource(if (exporting) R.string.transfer_background_continue else R.string.transfer_choose_location))
                 }

@@ -5309,7 +5309,7 @@
     "name": "steam_mafile_export_title",
     "type": "string",
     "values": {
-      "text": "File maSteam"
+      "text": "Steam maFile"
     },
     "arguments": []
   },
@@ -7913,7 +7913,7 @@
     "name": "export_message_empty_mafile",
     "type": "string",
     "values": {
-      "text": "MaFile yang diekspor kosong"
+      "text": "maFile yang diekspor kosong"
     },
     "arguments": []
   },
@@ -11256,7 +11256,7 @@
     "name": "legacy_ui_report_count_steammafiles",
     "type": "string",
     "values": {
-      "text": "  MaFile uap: %1$d/%2$d"
+      "text": "  Steam maFile: %1$d/%2$d"
     },
     "arguments": [
       "integer",
@@ -24624,7 +24624,7 @@
     "name": "export_option_steam_mafile",
     "type": "string",
     "values": {
-      "text": "File maSteam"
+      "text": "Steam maFile"
     },
     "arguments": []
   },
@@ -24706,7 +24706,7 @@
     "name": "steam_mafile_export_confirm_message",
     "type": "string",
     "values": {
-      "text": "Anda mengekspor akun pengautentikasi %1$d Steam. MaFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor."
+      "text": "Anda mengekspor akun pengautentikasi %1$d Steam. maFile biasa berisi rahasia yang dapat memigrasikan pengautentikasi dan menyetujui konfirmasi. Jaga privasi file yang diekspor."
     },
     "arguments": [
       "integer"
@@ -27440,7 +27440,7 @@
     "name": "steam_mafile_missing_steamid_message",
     "type": "string",
     "values": {
-      "text": "MaFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi."
+      "text": "maFile ini tidak memiliki SteamID. Masukkan SteamID64 atau ID Akun, lalu impor lagi."
     },
     "arguments": []
   },
@@ -27602,7 +27602,7 @@
     "name": "steam_steamid_completion_desc",
     "type": "string",
     "values": {
-      "text": "MaFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi."
+      "text": "maFile ini tidak memiliki SteamID, jadi hanya kode yang tersedia. Masuk ke Steam untuk menyelesaikan SteamID dan sesi. Ini tidak mentransfer atau mengikat ulang pengautentikasi."
     },
     "arguments": []
   },
@@ -27610,7 +27610,7 @@
     "name": "steam_steamid_completion_code_only_desc",
     "type": "string",
     "values": {
-      "text": "MaFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia."
+      "text": "maFile ini tidak memiliki SteamID dan tidak memiliki rahasia konfirmasi, jadi hanya kode yang tersedia. Masuk untuk menyelesaikan SteamID dan sesi; konfirmasi akan tetap tidak tersedia."
     },
     "arguments": []
   },
@@ -46049,7 +46049,7 @@
     "name": "import_type_csv_proton_pass_title",
     "type": "string",
     "values": {
-      "text": "Proton Lulus CSV"
+      "text": "Proton Pass CSV"
     },
     "arguments": []
   },

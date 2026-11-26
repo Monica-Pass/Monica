@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import takagi.ru.monica.ui.haptic.MonicaSwitch as Switch
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -185,7 +186,7 @@ fun ExtensionsScreen(
                 title = { Text(stringResource(R.string.extensions_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.go_back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.go_back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

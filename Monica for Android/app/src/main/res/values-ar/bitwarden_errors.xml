@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_error_certificate_expired">انتهت صلاحية الشهادة. تحقق من تاريخ ووقت جهازك، واطلب من مسؤول الخادم تجديد الشهادة.</string>
+    <string name="bitwarden_error_certificate_not_yet_valid">الشهادة غير صالحة بعد. تحقق من تاريخ ووقت جهازك وفترة صلاحية الشهادة.</string>
+    <string name="bitwarden_error_certificate_hostname">شهادة الخادم لا تتطابق مع المجال الذي أدخلته. تحقق من العنوان المستضاف ذاتيًا والشهادة التي تم إرجاعها بواسطة الوكيل العكسي.</string>
+    <string name="bitwarden_error_certificate_untrusted">لم نتمكن من التحقق من شهادة الخادم. تحقق من سلسلة شهادات الخادم الكاملة، ومراجع التصديق الموثوق بها للجهاز، وما إذا كان الوكيل يحل محل شهادات HTTPS. بالنسبة للخادم الموقع ذاتيًا، قم بتكوين المرجع المصدق (CA) الخاص به في إعدادات الشهادة.</string>
+    <string name="bitwarden_error_tls_handshake">لم نتمكن من إنشاء اتصال TLS آمن. تحقق من تكوين TLS للخادم أو الوكيل العكسي وإصدارات البروتوكول، وشهادة العميل إذا تم تمكين mTLS.</string>
+    <string name="bitwarden_error_dns">لم نتمكن من حل مجال الخادم. تحقق من إعدادات العنوان المستضاف ذاتيًا وDNS وVPN والوكيل.</string>
+    <string name="bitwarden_error_timeout">انتهت مهلة الاتصال بالخادم. تأكد من أن الخادم متصل بالإنترنت وراجع إعدادات المنفذ والشبكة والشبكة الافتراضية الخاصة والوكيل.</string>
+    <string name="bitwarden_error_connection">لم نتمكن من الاتصال بالخادم. تحقق من العنوان والمنفذ، وتأكد من تشغيل الخدمة، وراجع إعدادات جدار الحماية والوكيل.</string>
+    <string name="bitwarden_error_proxy">رفض الوكيل الاتصال أو طلب المصادقة. تحقق من عنوان الوكيل والمنفذ وإعدادات الحساب.</string>
+    <string name="bitwarden_error_cleartext">يستخدم عنوان الخادم HTTP، وهو ما لا تسمح به سياسة الأمان الحالية. استخدم عنوان HTTPS وتحقق من تكوين HTTPS للوكيل العكسي.</string>
+    <string name="bitwarden_error_network_io">خطأ في الشبكة أدى إلى انقطاع الاتصال بالخادم. تحقق من إعدادات الشبكة والشبكة الظاهرية الخاصة (VPN) والخادم الوكيل، ثم حاول مرة أخرى.</string>
+    <string name="bitwarden_organization_sync_incomplete">لا يمكن فك تشفير بعض عناصر الفريق (%1$d). تمت مزامنة العناصر القابلة للقراءة؛ تم الاحتفاظ بالعناصر المتأثرة الموجودة. تحقق من عضوية المنظمة وقم بتسجيل الدخول مرة أخرى.</string>
+    <string name="bitwarden_sync_incomplete_items">لا يمكن مزامنة بعض العناصر (%1$d). تمت مزامنة العناصر القابلة للقراءة؛ تم الاحتفاظ بالبيانات المحلية الموجودة.</string>
+</resources>

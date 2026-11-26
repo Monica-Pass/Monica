@@ -1,0 +1,313 @@
+{
+  "version": "1.0.331 unreleased",
+  "editions": {
+    "main": {
+      "buildSeconds": 44.4088652000064,
+      "unitPassed": 8,
+      "distinctDeviceMethodsPassed": 25,
+      "runs": [
+        {
+          "completedMethodPasses": 7,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest",
+          "tests": 7,
+          "failures": 0,
+          "success": true,
+          "seconds": 11.024046099977568
+        },
+        {
+          "completedMethodPasses": 1,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.components.MonicaSliderInstrumentedTest#dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease",
+          "tests": 1,
+          "failures": 0,
+          "success": true,
+          "seconds": 5.812651400017785
+        },
+        {
+          "completedMethodPasses": 17,
+          "completedMethodFailures": 0,
+          "edition": "main",
+          "selector": "takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.InterfaceScaleMotionTest#sheetCommitsOnlyOnReleaseKeepsSliderBoundsAndResets",
+          "tests": 17,
+          "failures": 0,
+          "success": true,
+          "seconds": 18.700113700004295
+        }
+      ],
+      "frozenInputCount": 6668,
+      "frameEvidence": {
+        "true": {
+          "uniqueFrameCounts": [
+            6,
+            6
+          ],
+          "samples": [
+            [
+              -624654411,
+              -624654411,
+              1440033875,
+              792177781,
+              510459825,
+              101631034,
+              -906241227,
+              -906241227,
+              -906241227,
+              -906241227
+            ],
+            [
+              842043882,
+              842043882,
+              709484726,
+              471892517,
+              -782458070,
+              1118788161,
+              -153371030,
+              -153371030,
+              -153371030,
+              -153371030
+            ]
+          ]
+        },
+        "false": {
+          "uniqueFrameCounts": [
+            1,
+            1
+          ],
+          "samples": [
+            [
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580
+            ],
+            [
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872
+            ]
+          ]
+        },
+        "finger": {
+          "uniqueFrameCounts": [
+            7,
+            6
+          ],
+          "samples": [
+            [
+              -182153612,
+              690001627,
+              -1581363054,
+              -1143929003,
+              1703220936,
+              138286606,
+              188724613,
+              188724613,
+              188724613,
+              188724613
+            ],
+            [
+              -1397947400,
+              -1397947400,
+              1493872059,
+              370709150,
+              -1409797509,
+              1949908001,
+              1091917624,
+              1091917624,
+              1091917624,
+              1091917624
+            ]
+          ]
+        }
+      },
+      "apks": {
+        "app.apk": "d1761ae03a987ae5de9c04c5055db1ca947d432e1fca043d7f2bbc7fa12b735b",
+        "test.apk": "7b49d8153b915ff6851189f3f5fb3950a2351f23e2b65c93d69777f98d06f531"
+      }
+    },
+    "fd": {
+      "buildSeconds": 46.04162560001714,
+      "unitPassed": 8,
+      "distinctDeviceMethodsPassed": 25,
+      "runs": [
+        {
+          "completedMethodPasses": 17,
+          "completedMethodFailures": 0,
+          "edition": "fd",
+          "selector": "takagi.ru.monica.ui.CredentialGeneratorSheetTest,takagi.ru.monica.ui.haptic.SwitchHapticsInstrumentedTest,takagi.ru.monica.ui.InterfaceScaleMotionTest#sheetCommitsOnlyOnReleaseKeepsSliderBoundsAndResets",
+          "tests": 17,
+          "failures": 0,
+          "success": true,
+          "seconds": 18.03041489998577
+        }
+      ],
+      "frozenInputCount": 6669,
+      "frameEvidence": {
+        "true": {
+          "uniqueFrameCounts": [
+            6,
+            6
+          ],
+          "samples": [
+            [
+              -624654411,
+              -624654411,
+              1440033875,
+              792177781,
+              510459825,
+              101631034,
+              -906241227,
+              -906241227,
+              -906241227,
+              -906241227
+            ],
+            [
+              842043882,
+              842043882,
+              709484726,
+              471892517,
+              -782458070,
+              1118788161,
+              -153371030,
+              -153371030,
+              -153371030,
+              -153371030
+            ]
+          ]
+        },
+        "false": {
+          "uniqueFrameCounts": [
+            1,
+            1
+          ],
+          "samples": [
+            [
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580,
+              -1779911580
+            ],
+            [
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872,
+              1988142872
+            ]
+          ]
+        },
+        "finger": {
+          "uniqueFrameCounts": [
+            7,
+            6
+          ],
+          "samples": [
+            [
+              -1428566409,
+              -1650064773,
+              -148964278,
+              1306902720,
+              1703220936,
+              138286606,
+              188724613,
+              188724613,
+              188724613,
+              188724613
+            ],
+            [
+              -1397947400,
+              -1397947400,
+              1493872059,
+              370709150,
+              -1409797509,
+              1949908001,
+              1091917624,
+              1091917624,
+              1091917624,
+              1091917624
+            ]
+          ]
+        }
+      },
+      "apks": {
+        "app.apk": "394f12ee1482a48b93abb67ffec0db5a9af3de1c42a37626492ad734e26afb39",
+        "test.apk": "20ed6d94a1e457811fd9979b2661e98fde92d1d69dd46ed9e17a42b9add11fee"
+      }
+    }
+  },
+  "shared": {
+    "app/src/main/java/takagi/ru/monica/ui/components/MonicaSlider.kt": "7b949101cdfc1416d05840f88f66d96afa71e812073286685161a57519581a0b",
+    "app/src/androidTest/java/takagi/ru/monica/ui/components/MonicaSliderInstrumentedTest.kt": "bb21cdbe9efb8bdac67f9755b01cd7c101f09bc809f8351d47ee8a3cf7e02993",
+    "app/src/main/assets/licenses/ImageToolbox.txt": "9a048a0f580acdf6e4f8d310c0f2637082b0df257b07d67168a2669dc95d6e88"
+  },
+  "failures": {
+    "redSemanticsRuns": [
+      "main-red-wheel",
+      "main-red-repeat"
+    ],
+    "redFingerRun": "main-red-finger",
+    "redFrameCount": 10,
+    "redUniqueFrameCount": 1,
+    "fdInterruptedRun": {
+      "completedPasses": 9,
+      "nextMethod": "usernameAndEmailAliasUseExplicitInput",
+      "causeEvidence": "system_server SIGSEGV in com.android.server.wm.TaskUtils.shouldIgnoreDesktopHomeOcclusion; MuMu process PID51792 retained",
+      "remainingRegression": "17 methods subsequently passed, no APK/source/assertion changes"
+    },
+    "fdGreenBuildInputChanged": "Added finger test during initial build; final stable build rerun and hashes verified",
+    "setup": "Missing historical FD Canvas copy; reused normal edition saved design"
+  },
+  "metadataAndSixScriptTestsPassed": true,
+  "scaleCommitImplementationUnchanged": true,
+  "cleanup": {
+    "success": true,
+    "restoredUser": 0,
+    "removedOwnUser": 22,
+    "retainedUsers": [
+      "0",
+      "10",
+      "11",
+      "12",
+      "16"
+    ],
+    "onlyTaskPackagesUninstalled": [
+      "takagi.ru.monica.scalesliderwheelmain33120261126.localedebug",
+      "takagi.ru.monica.scalesliderwheelmain33120261126.localedebug.test",
+      "takagi.ru.monica.scalesliderwheelfd33120261126.localedebug",
+      "takagi.ru.monica.scalesliderwheelfd33120261126.localedebug.test"
+    ],
+    "officialMonicaPackageMetadataUnchanged": true,
+    "densityUnchanged": true,
+    "ownUserRotationRestoredBeforeRemoval": true,
+    "retainedRunningMuMuInstance": 0,
+    "stoppedOwnAdbPort": 15097
+  },
+  "limits": "MuMu API35/x86_64 Debug, isolated user22. Component/sheet frames and regressions; no physical device/OEM/R8/upgrade. FD recovery tests ran with secondary user visible while current user reported 0; not claimed as full foreground MainActivity navigation."
+}

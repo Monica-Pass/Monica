@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">إظهار رمز الصعود</string>
+    <string name="boarding_code_add">تحرير ومسح بطاقة الصعود إلى الطائرة</string>
+    <string name="boarding_code_missing">لم يتم حفظ رمز الصعود إلى الطائرة لهذا التصريح</string>
+    <string name="boarding_code_saved">تم حفظ رمز الصعود الأصلي</string>
+    <string name="wallet_code_hint">كود QR أو الباركود · اضغط للإظهار</string>
+    <string name="boarding_code_original_hint">هذه هي النسخة الأصلية الممسوحة ضوئيًا. تحرير تفاصيل المرور لا يغير هذا الرمز.</string>
+    <string name="boarding_code_expand">تكبير الكود</string>
+    <string name="boarding_code_collapse">إظهار تفاصيل المرور</string>
+    <string name="boarding_code_unavailable">لا يمكن عرض هذا الرمز هنا. حاول استخدام الوضع الأفقي أو قم بمسح بطاقة الصعود الأصلية مرة أخرى.</string>
+    <string name="boarding_code_rescan">قم بالمسح مرة أخرى</string>
+    <string name="boarding_code_remove">قم بإزالة الكود المحفوظ</string>
+    <string name="wallet_pass_scan_boarding_pass">مسح بطاقة الصعود إلى الطائرة</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">قم بمحاذاة الرمز الشريطي الموجود على بطاقة الصعود إلى الطائرة مع الإطار</string>
+    <string name="wallet_pass_boarding_pass_invalid">ليس رمزًا شريطيًا لبطاقة صعود الطائرة الخاصة بالاتحاد الدولي للنقل الجوي (IATA).</string>
+    <string name="wallet_pass_boarding_pass_filled">تم ملء تفاصيل بطاقة الصعود؛ حفظ للحفاظ على الرمز</string>
+    <string name="boarding_code_draft_hint">احفظ كلمة المرور للاحتفاظ بتغييرات الكود</string>
+    <string name="wallet_pass_show_code">عرض رمز العضوية</string>
+</resources>

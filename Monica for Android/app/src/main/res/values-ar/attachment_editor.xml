@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attachment_editor_empty">لا يوجد مرفقات بعد</string>
+    <string name="attachment_editor_hint">اختر الملفات أو الصور أو المستندات</string>
+    <string name="attachment_editor_working">العمل…</string>
+</resources>

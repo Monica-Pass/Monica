@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">العناصر التي لا يمكن مزامنتها</string>
+    <string name="bitwarden_sync_issues_button">عرض مشكلات المزامنة (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">آخر محاولة لهذا الحساب. يتم عرض العناوين عندما تكون متاحة؛ استخدم معرف العنصر لتحديد موقع العنصر الذي لا يمكن قراءة عنوانه. يتم مسح التفاصيل عند قفل هذا الحساب.</string>
+    <string name="bitwarden_sync_issues_empty">لم يفشل أي عنصر في هذه المحاولة.</string>
+    <string name="bitwarden_sync_issues_running">لا تزال المزامنة قيد التشغيل.</string>
+    <string name="bitwarden_sync_issues_no_title">العنوان غير متوفر</string>
+    <string name="bitwarden_sync_issues_id">معرف العنصر: %1$s</string>
+    <string name="bitwarden_sync_issues_search">عنوان البحث أو معرف العنصر</string>
+    <string name="bitwarden_sync_issues_no_matches">لا توجد عناصر مطابقة</string>
+    <string name="bitwarden_sync_issue_kind_cipher">عنصر الخزنة</string>
+    <string name="bitwarden_sync_issue_kind_folder">مجلد</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">مرفق</string>
+    <string name="bitwarden_sync_issue_kind_passkey">مفتاح مرور</string>
+    <string name="bitwarden_sync_issue_phase_download">تحميل</string>
+    <string name="bitwarden_sync_issue_phase_create">تحميل عنصر جديد</string>
+    <string name="bitwarden_sync_issue_phase_update">تحميل التغييرات</string>
+    <string name="bitwarden_sync_issue_phase_delete">حذف</string>
+    <string name="bitwarden_sync_issue_phase_restore">استعادة</string>
+    <string name="bitwarden_sync_issue_reason_authentication">قم بفتح القفل أو تسجيل الدخول مرة أخرى، ثم أعد المحاولة.</string>
+    <string name="bitwarden_sync_issue_reason_network">تعذر الوصول إلى الخادم. تحقق من الاتصال وأعد المحاولة.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">تم تغيير هذا العنصر. قم بمراجعة التعارض قبل إعادة المحاولة.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">يستخدم هذا العنصر تنسيقًا غير مدعوم أو غير كامل.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">لا يمكن فك تشفير هذا العنصر أو التحقق منه.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">لا يمكن إكمال العملية. يتم الاحتفاظ بالتغييرات المحلية.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">لا يمكن نقل المرفق أو التحقق منه.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">قم بتحميل العنصر الأصلي وتحقق من توفر المرفقات قبل إعادة المحاولة.</string>
+</resources>

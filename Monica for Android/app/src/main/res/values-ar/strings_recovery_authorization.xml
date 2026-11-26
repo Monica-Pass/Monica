@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">قم بالإجابة على أسئلة الأمان، ثم قم بتأكيد رقم التعريف الشخصي أو النمط أو كلمة المرور الخاصة بجهازك. لا يمكن للإجابات وحدها إعادة تعيين كلمة المرور الرئيسية.</string>
+    <string name="recovery_device_title">تأكيد بيانات اعتماد الجهاز</string>
+    <string name="recovery_device_unavailable">لا يمكن لهذا الجهاز تأكيد بيانات اعتماد شاشة القفل لاستردادها. استخدم كلمة المرور الرئيسية الأصلية أو نسخة احتياطية مشفرة.</string>
+    <string name="recovery_authorization_expired">تم إلغاء تأكيد الاسترداد أو انتهت صلاحيته. ابدأ مرة أخرى.</string>
+    <string name="recovery_attempts_limited">محاولات كثيرة جدًا. يبقى الحد بعد مغادرة هذه الصفحة أو إعادة التشغيل. حاول مرة أخرى لاحقًا.</string>
+</resources>

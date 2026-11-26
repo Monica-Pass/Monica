@@ -1,5 +1,6 @@
 package takagi.ru.monica.bitwarden.ui
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
 import android.widget.Toast
@@ -118,7 +119,7 @@ fun BitwardenSettingsScreen(
                 } else 64.dp,
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 actions = {

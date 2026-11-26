@@ -5309,7 +5309,7 @@
     "name": "steam_mafile_export_title",
     "type": "string",
     "values": {
-      "text": "Steam maDosyası"
+      "text": "Steam maFile"
     },
     "arguments": []
   },
@@ -11256,7 +11256,7 @@
     "name": "legacy_ui_report_count_steammafiles",
     "type": "string",
     "values": {
-      "text": "  Steam maDosyası: %1$d/%2$d"
+      "text": "  Steam maFile: %1$d/%2$d"
     },
     "arguments": [
       "integer",
@@ -24624,7 +24624,7 @@
     "name": "export_option_steam_mafile",
     "type": "string",
     "values": {
-      "text": "Steam maDosyası"
+      "text": "Steam maFile"
     },
     "arguments": []
   },
@@ -24732,7 +24732,7 @@
     "name": "steam_mafile_export_success_single",
     "type": "string",
     "values": {
-      "text": "Steam maDosyası dışa aktarıldı"
+      "text": "Steam maFile dışa aktarıldı"
     },
     "arguments": []
   },
@@ -27320,7 +27320,7 @@
     "name": "steam_mafile_title",
     "type": "string",
     "values": {
-      "text": "maDosyası"
+      "text": "maFile"
     },
     "arguments": []
   },
@@ -27328,7 +27328,7 @@
     "name": "steam_mafile_button",
     "type": "string",
     "values": {
-      "text": "maDosyası"
+      "text": "maFile"
     },
     "arguments": []
   },
@@ -27344,7 +27344,7 @@
     "name": "steam_no_mafile_selected",
     "type": "string",
     "values": {
-      "text": "MaFile seçilmedi"
+      "text": "maFile seçilmedi"
     },
     "arguments": []
   },
@@ -45833,7 +45833,7 @@
     "name": "import_type_steam_mode_mafile",
     "type": "string",
     "values": {
-      "text": "maDosyası"
+      "text": "maFile"
     },
     "arguments": []
   },
@@ -46049,7 +46049,7 @@
     "name": "import_type_csv_proton_pass_title",
     "type": "string",
     "values": {
-      "text": "Proton Geçişi CSV"
+      "text": "Proton Pass CSV"
     },
     "arguments": []
   },

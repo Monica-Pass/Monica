@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="customization_live_preview">معاينة مباشرة</string>
+    <string name="customization_filters_navigation">عوامل التصفية والتنقل</string>
+    <string name="customization_drag_handle">إعادة ترتيب %1$s</string>
+    <string name="customization_clear_presets_message">هل تريد إزالة كافة الحقول المعدة مسبقًا؟ ستحتفظ الإدخالات المحفوظة الموجودة بحقولها.</string>
+</resources>

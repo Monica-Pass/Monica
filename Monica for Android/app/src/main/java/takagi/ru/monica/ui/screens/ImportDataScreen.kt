@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import takagi.ru.monica.credentialexchange.*
@@ -312,7 +313,7 @@ fun ImportDataScreen(
                 title = { Text(stringResource(R.string.import_data_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.go_back))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.go_back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -877,7 +878,7 @@ fun ImportDataScreen(
             Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 12.dp).padding(bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(3.dp)) {
                 if (choosingCsvFormat) TextButton(onClick = { choosingCsvFormat = false }) {
-                    Icon(Icons.Default.ArrowBack, null)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.import_data_select_type))
                 }

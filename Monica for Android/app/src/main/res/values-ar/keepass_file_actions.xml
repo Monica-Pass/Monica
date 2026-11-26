@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">حفظ البيانات</string>
+    <string name="kp_file_merge">دمج البيانات</string>
+    <string name="kp_file_reload">إعادة تحميل البيانات</string>
+    <string name="kp_file_ready">تم الحفظ · KDBX</string>
+    <string name="kp_file_busy">العمل على قاعدة البيانات...</string>
+    <string name="kp_file_saved">تم حفظ البيانات</string>
+    <string name="kp_file_external_reloaded">تم تحميل التغييرات الخارجية</string>
+    <string name="kp_file_reloaded">تم إعادة تحميل البيانات</string>
+    <string name="kp_file_merged">تم دمج البيانات</string>
+    <string name="kp_file_merged_conflicts">تم الدمج؛ الطوابع الزمنية المطابقة لها إصدارات بديلة في سجل الإدخال</string>
+    <string name="kp_file_reload_failed">تعذر إعادة التحميل؛ إظهار البيانات المحملة مسبقًا</string>
+    <string name="kp_file_failed">لا يمكن إكمال العملية</string>
+    <string name="kp_file_failure_help">تحقق من الوصول إلى الملف وكلمة المرور المصدر والتغييرات الخارجية، ثم حاول مرة أخرى.</string>
+    <string name="kp_file_merge_summary">مطابقة الإدخالات الموجودة ودمج التحديثات والمحفوظات وسجلات الحذف.</string>
+    <string name="kp_file_select_source">حدد ملف KDBX</string>
+    <string name="kp_file_source_selected">تم تحديد المصدر · تغيير الملف</string>
+    <string name="kp_file_source_password">كلمة مرور قاعدة البيانات المصدر</string>
+    <string name="kp_file_select_key">ملف المفتاح (اختياري)</string>
+    <string name="kp_file_key_selected">تم تحديد ملف المفتاح · التغيير</string>
+    <string name="kp_file_merge_notice">يتم إنشاء نسخة الاسترداد أولاً. الإدخالات الأحدث لها الأسبقية. عندما تتطابق الطوابع الزمنية، يتم الاحتفاظ بالإصدار الحالي وينتقل الإصدار الآخر إلى السجل.</string>
+    <string name="kp_file_merge_confirm">دمج وحفظ</string>
+</resources>

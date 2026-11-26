@@ -13,7 +13,8 @@ core/resources/src/main/java/com/t8rin/imagetoolbox/core/resources/shapes/Materi
 Monica modifications, 2026-11-25:
 MonicaSlider.kt adapts FancySlider's filled rounded track, tick rendering and
 rotating thumb, using the existing Material3 input engine and 48dp touch target.
-Rotation follows physical travel and reverses for RTL. Existing value ranges,
+Rotation follows physical travel and reverses for RTL. On 2026-11-26, Monica added
+short angle interpolation between discrete detents so repeated petals remain visibly rolling. Existing value ranges,
 commit callbacks, keyboard and accessibility actions remain with Material3.
 SliderWheelShape.kt retains the upstream shape path; package/symbol renamed.
 Haptics run only on user value changes and are throttled. Monica controls them
@@ -27,3 +28,8 @@ The upstream checkout has no top-level NOTICE file. Original copyright/license
 headers are retained for the adapted source and copied shape. This notice and
 the complete Apache-2.0 license are distributed in the app assets. The combined
 Monica application continues under GPL-3.0; these parts retain Apache-2.0 notices.
+
+Interface/card size motion also references ImageToolbox ScreenPreferenceSelection
+and PreferenceItem transitions at the revision above. Monica independently animates
+its existing density provider and shared setting content sizes; no additional
+ImageToolbox source was copied for this behavior.

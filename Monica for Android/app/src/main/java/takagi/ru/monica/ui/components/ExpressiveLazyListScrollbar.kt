@@ -108,6 +108,7 @@ fun ExpressiveLazyListScrollbar(
     if (!canScroll) return
 
     val density = LocalDensity.current
+    val rtl = androidx.compose.ui.platform.LocalLayoutDirection.current == androidx.compose.ui.unit.LayoutDirection.Rtl
     val collapsedWidth = 7.dp
     val expandedWidth = 28.dp
     val handleHeight = 52.dp
@@ -290,7 +291,7 @@ fun ExpressiveLazyListScrollbar(
             val indicatorPath = remember { Path() }
             val trackColor = MaterialTheme.colorScheme.secondaryContainer
             val indicatorColor = MaterialTheme.colorScheme.primary
-            Canvas(modifier = Modifier.fillMaxSize()) {
+            Canvas(modifier = Modifier.fillMaxSize().graphicsLayer { scaleX = if (rtl) -1f else 1f }) {
                 val endPaddingPx = endPadding.toPx()
                 val collapsedWidthPx = collapsedWidth.toPx()
                 val indicatorWidthPx = displayedWidth.toPx()

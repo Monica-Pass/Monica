@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_compat_android_old">يتطلب الملء التلقائي Android 8.0 أو أحدث</string>
+    <string name="autofill_compat_huawei">قد تقوم أجهزة Huawei بتقييد الملء التلقائي على Android 10 أو الأحدث</string>
+    <string name="autofill_compat_xiaomi">قد تتطلب أجهزة Xiaomi إذن الملء التلقائي في MIUI Security</string>
+    <string name="autofill_compat_oppo">قد تتطلب أجهزة OPPO/Realme إذن الملء التلقائي في إعدادات الأذونات</string>
+    <string name="autofill_compat_vivo">قد تتطلب أجهزة Vivo إذن الملء التلقائي في iManager</string>
+    <string name="autofill_compat_android12_rom">قد لا يمكن الاعتماد على الملء التلقائي في بعض ROM Android 12 بسبب مشاكل توافق النظام</string>
+    <string name="autofill_compat_inline">هذا الجهاز لا يدعم اقتراحات لوحة المفاتيح. سوف يستخدم الملء التلقائي القائمة المنسدلة.</string>
+    <string name="autofill_compat_emulator">قد لا يمكن الاعتماد على الملء التلقائي في هذا المحاكي</string>
+    <string name="autofill_compat_unsupported">هذا الجهاز لا يدعم إطار عمل الملء التلقائي</string>
+    <string name="autofill_compat_check_failed">تعذر إكمال فحص التوافق</string>
+    <string name="autofill_check_manifest">تأكد من إعلان MonicaAutofillServiceNg في AndroidManifest.xml</string>
+    <string name="autofill_check_permission_manifest">يجب أن تعلن الخدمة عن BIND_AUTOFILL_SERVICE ومرشح غرض الملء التلقائي</string>
+    <string name="autofill_check_enable_system">حدد Monica كخدمة الملء التلقائي في إعدادات النظام</string>
+    <string name="autofill_check_path_system">الإعدادات ← النظام ← اللغات والإدخال ← خدمة الملء التلقائي</string>
+    <string name="autofill_check_path_xiaomi">Xiaomi: الإعدادات ← الإعدادات الإضافية ← اللغات والإدخال ← خدمة الملء التلقائي</string>
+    <string name="autofill_check_miui_permission">السماح أيضًا بالأذونات المطلوبة في MIUI Security</string>
+    <string name="autofill_check_path_huawei">Huawei: الإعدادات ← النظام والتحديثات ← اللغات والإدخال ← خدمة الملء التلقائي</string>
+    <string name="autofill_check_path_oppo">OPPO/Realme: الإعدادات ← الإعدادات الإضافية ← لوحة المفاتيح وطريقة الإدخال ← خدمة الملء التلقائي</string>
+    <string name="autofill_check_path_vivo">Vivo: الإعدادات → المزيد من الإعدادات → طريقة الإدخال → خدمة الملء التلقائي</string>
+    <string name="autofill_check_path_samsung">Samsung: الإعدادات ← الإدارة العامة ← اللغة والإدخال ← خدمة الملء التلقائي</string>
+    <string name="autofill_check_enable_app">تمكين الملء التلقائي في إعدادات Monica</string>
+    <string name="autofill_check_app_permissions">تأكد من أن Monica لديه أذونات التطبيق المطلوبة</string>
+    <string name="autofill_check_issue_count">مشكلات التوافق: %1$d. انظر التفاصيل أدناه.</string>
+    <string name="autofill_check_xiaomi_permission">Xiaomi: الأمان ← إدارة التطبيقات ← Monica ← الأذونات ← السماح بالملء التلقائي</string>
+    <string name="autofill_check_huawei_autostart">Huawei: قد تحتاج إلى السماح بتشغيل Monica تلقائيًا في مدير الهاتف</string>
+    <string name="autofill_check_oppo_permission">OPPO/Realme: الإعدادات ← إدارة التطبيقات ← Monica ← الأذونات ← السماح بالملء التلقائي</string>
+    <string name="autofill_check_vivo_permission">Vivo: iManager → إدارة التطبيقات → إدارة الأذونات → Monica → السماح بالملء التلقائي</string>
+    <string name="autofill_check_background">تعطيل قيود البطارية لـ Monica والسماح بالتشغيل التلقائي والنشاط في الخلفية</string>
+    <string name="autofill_check_trigger_manually">إذا ظل الملء التلقائي غير موثوق به، فقم بتشغيله يدويًا من حقل تسجيل الدخول لبدء الجلسة</string>
+    <string name="autofill_check_configured">تم تكوين الخدمة بشكل صحيح. إذا استمرت المشاكل، أعد تشغيل Monica.</string>
+    <string name="autofill_check_view_logs">استخدم أدوات استكشاف الأخطاء وإصلاحها لعرض السجلات التفصيلية</string>
+    <string name="autofill_check_restart">أعد تشغيل Monica بعد تطبيق هذه التغييرات</string>
+    <string name="autofill_check_recommendations_failed">لا يمكن إنشاء اقتراحات. اتصل بالدعم.</string>
+    <string name="autofill_report_parsing">التعرف على المجال</string>
+    <string name="autofill_report_matching">مطابقة كلمة المرور</string>
+    <string name="autofill_report_building">بناء الاستجابة</string>
+    <string name="autofill_report_performance">الأداء</string>
+    <string name="autofill_report_parsing_failures">فشل التعرف على الحقل: %1$d</string>
+    <string name="autofill_report_matching_failures">الطلبات التي ليس لها كلمة مرور مطابقة: %1$d</string>
+    <string name="autofill_report_building_failures">فشل بناء الاستجابة: %1$d</string>
+    <string name="autofill_report_slow">متوسط وقت الاستجابة مرتفع جدًا: %1$d مللي ثانية</string>
+    <string name="autofill_report_improve_recognition">تحسين التعرف على المجال</string>
+    <string name="autofill_report_recognition_hint">لا يمكن التعرف على بعض حقول التطبيق. تحقق من إعدادات المحلل اللغوي.</string>
+    <string name="autofill_report_add_passwords">إضافة إدخالات كلمة المرور</string>
+    <string name="autofill_report_add_passwords_hint">لم يتم العثور على كلمات مرور مطابقة. أضف إدخالات كلمة المرور لهذه التطبيقات.</string>
+    <string name="autofill_report_integrity">التحقق من اكتمال البيانات</string>
+    <string name="autofill_report_integrity_hint">قد تفشل الاستجابات عندما تكون البيانات غير كاملة. التحقق من إدخالات كلمة المرور.</string>
+    <string name="autofill_report_optimize">تحسين الأداء</string>
+    <string name="autofill_report_optimize_hint">الاستجابات بطيئة. حاول مسح ذاكرة التخزين المؤقت أو تقليل عدد إدخالات كلمة المرور.</string>
+    <string name="autofill_report_title">=== تشخيصات الملء التلقائي Monica ===</string>
+    <string name="autofill_report_exported_at">تم التصدير في: %1$s</string>
+    <string name="autofill_report_device">معلومات الجهاز</string>
+    <string name="autofill_report_manufacturer">الشركة المصنعة: %1$s</string>
+    <string name="autofill_report_model">الموديل: %1$s</string>
+    <string name="autofill_report_android">Android: %1$s (API %2$d)</string>
+    <string name="autofill_report_rom">ذاكرة القراءة فقط: %1$s</string>
+    <string name="autofill_report_inline">اقتراحات لوحة المفاتيح المدعومة: %1$s</string>
+    <string name="autofill_report_statistics">الإحصائيات</string>
+    <string name="autofill_report_log_details">تفاصيل السجل</string>
+    <string name="autofill_report_end">=== نهاية السجل ===</string>
+</resources>

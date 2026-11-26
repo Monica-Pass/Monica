@@ -133,6 +133,97 @@ class MonicaSliderInstrumentedTest {
         compose.runOnIdle { assertTrue(dismissed) }
     }
 
+    @Test fun dpiSheetWheelHasIntermediateFramesInBothDirections() = verifyDpiWheelFrames(true)
+
+    @Test fun dpiSheetReducedMotionDoesNotRotateBetweenFrames() = verifyDpiWheelFrames(false)
+
+    @Test fun dpiSheetFingerDragRollsAcrossDetentsBeforeSingleRelease() {
+        var persisted by mutableIntStateOf(100)
+        var commits = 0
+        show(recordHaptics = false) {
+            InterfaceScaleSelectionSheet(persisted, { persisted = it; commits++ }, {})
+        }
+        val slider = compose.onNode(SemanticsMatcher.keyIsDefined(SemanticsProperties.ProgressBarRangeInfo))
+        slider.performTouchInput { down(center); moveTo(Offset(width * .55f, centerY), 96) }
+        // Begin a drag and let the initial press ripple finish before comparing wheel pixels.
+        compose.waitForIdle()
+        compose.mainClock.autoAdvance = false
+        compose.mainClock.advanceTimeBy(1_000)
+        compose.waitForIdle()
+        val samples = StringBuilder()
+        try {
+            for ((pass, fraction) in listOf(.575f, .55f).withIndex()) {
+                val before = slider.fetchSemanticsNode().config[SemanticsProperties.ProgressBarRangeInfo].current
+                slider.performTouchInput { moveTo(Offset(width * fraction, centerY), 96) }
+                val hashes = mutableListOf<Int>()
+                repeat(10) { frame ->
+                    compose.mainClock.advanceTimeBy(16)
+                    compose.waitForIdle()
+                    val bitmap = slider.captureToImage().asAndroidBitmap()
+                    val pixels = IntArray(bitmap.width * bitmap.height)
+                    bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+                    hashes += pixels.contentHashCode()
+                    File(context.filesDir, "scale-wheel-finger-$pass-$frame.png").outputStream().use {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                    }
+                    bitmap.recycle()
+                }
+                val after = slider.fetchSemanticsNode().config[SemanticsProperties.ProgressBarRangeInfo].current
+                assertTrue(if (pass == 0) after > before else after < before)
+                samples.appendLine("$before -> $after: $hashes")
+                File(context.filesDir, "scale-wheel-finger.txt").writeText(samples.toString())
+                assertEquals(100, persisted)
+                assertEquals(0, commits)
+                assertTrue("Finger drag must show intermediate wheel frames: $hashes", hashes.distinct().size >= 3)
+                compose.mainClock.advanceTimeBy(1_000)
+            }
+            slider.performTouchInput { up() }
+        } finally {
+            compose.mainClock.autoAdvance = true
+        }
+        compose.runOnIdle { assertEquals(1, commits); assertTrue(persisted > 100) }
+    }
+
+    private fun verifyDpiWheelFrames(animate: Boolean) {
+        motion = animate
+        var persisted by mutableIntStateOf(100)
+        show(recordHaptics = false) {
+            InterfaceScaleSelectionSheet(persisted, { persisted = it }, {})
+        }
+        val slider = compose.onNode(SemanticsMatcher.keyIsDefined(SemanticsProperties.ProgressBarRangeInfo))
+        compose.waitForIdle()
+        compose.mainClock.autoAdvance = false
+        val samples = StringBuilder()
+        try {
+            // Actual DPI sheet, one detent at a time. Accessibility input creates no press ripple,
+            // so changes inside the slider after its value settles must be wheel frames.
+            for (target in listOf(101f, 100f)) {
+                slider.performSemanticsAction(SemanticsActions.SetProgress) { it(target) }
+                val hashes = mutableListOf<Int>()
+                repeat(10) { frame ->
+                    compose.mainClock.advanceTimeBy(16)
+                    compose.waitForIdle()
+                    val bitmap = slider.captureToImage().asAndroidBitmap()
+                    val pixels = IntArray(bitmap.width * bitmap.height)
+                    bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+                    hashes += pixels.contentHashCode()
+                    File(context.filesDir, "scale-wheel-$animate-${target.toInt()}-$frame.png").outputStream().use {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                    }
+                    bitmap.recycle()
+                }
+                samples.appendLine("$animate,$target: $hashes")
+                File(context.filesDir, "scale-wheel-$animate.txt").writeText(samples.toString())
+                assertEquals(target.toInt(), persisted)
+                if (animate) assertTrue("DPI wheel must roll through intermediate frames: $hashes", hashes.distinct().size >= 3)
+                else assertEquals("Reduced motion must remain static", 1, hashes.distinct().size)
+                compose.mainClock.advanceTimeBy(1_000)
+            }
+        } finally {
+            compose.mainClock.autoAdvance = true
+        }
+    }
+
     @Test fun wheelFramesFollowDragAndReducedMotionKeepsFixedThumb() {
         show(recordHaptics = false)
         val slider = compose.onNodeWithTag("wheel")

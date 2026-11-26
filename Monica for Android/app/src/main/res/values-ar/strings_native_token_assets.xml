@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_token_assets_limit">ما يصل إلى 64 ميجا بايت من الملفات الجديدة أو المنقولة لكل عملية حفظ، و128 مرفقًا لكل رمز مميز.</string>
+    <string name="native_token_assets_error">لا يمكن قراءة أو حفظ كل ملف. تم الاحتفاظ بالمحتوى الأصلي الخاص بك. تحقق من الوصول إلى الملف وحجمه، ثم أعد المحاولة.</string>
+    <string name="native_token_backup_needs_files">تحتوي قاعدة البيانات هذه على رموز API مع الملفات. قم بتضمين الصور والمرفقات لتصدير نسخة احتياطية كاملة.</string>
+    <string name="native_token_backup_limit">يجب أن يبلغ إجمالي ملفات الرمز المميز API الأصلية في النسخة الاحتياطية ZIP إجمالي 64 ميجابايت أو أقل. استخدم النسخة الاحتياطية لقاعدة البيانات الأصلية للخزائن الأكبر حجمًا.</string>
+    <string name="native_token_kdbx_files_unsupported">تتطلب الرموز المميزة API مع الملفات نسخة Monica ZIP المشفرة أو نسخة احتياطية لقاعدة البيانات الأصلية. يدعم تصدير KDBX الرموز المميزة API بدون ملفات.</string>
+</resources>

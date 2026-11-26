@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">إعادة إرسال البريد الإلكتروني للتحقق</string>
+    <string name="bitwarden_new_device_resend_sent">تم طلب البريد الإلكتروني للتحقق. تحقق من البريد الوارد الخاص بك.</string>
+    <string name="bitwarden_new_device_resend_failed">لا يمكن طلب رسالة التحقق بالبريد الإلكتروني. حاول ثانية.</string>
+    <string name="bitwarden_new_device_resend_unavailable">لا يدعم هذا الخادم إعادة إرسال رسائل البريد الإلكتروني للتحقق من الجهاز الجديد.</string>
+    <string name="bitwarden_new_device_resend_wait">حاول مرة أخرى خلال %1$d ثواني.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">الطلبات كثيرة جدًا. انتظر قبل المحاولة مرة أخرى.</string>
+    <string name="bitwarden_account_fingerprint">عبارة بصمة الحساب</string>
+    <string name="bitwarden_account_fingerprint_hint">قارن هذه العبارة من خلال قناة أخرى موثوقة للمساعدة في التحقق من هوية حسابك.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">قم بمزامنة هذا الحساب لتحميل مفتاح الهوية الخاص به، ثم حاول مرة أخرى.</string>
+    <string name="bitwarden_account_fingerprint_copy">نسخ العبارة</string>
+</resources>
