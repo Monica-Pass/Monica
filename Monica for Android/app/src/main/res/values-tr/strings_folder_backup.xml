@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Klasöre yedekleme</string>
+    <string name="folder_backup_folder">Yedek klasörü</string>
+    <string name="folder_backup_folder_hint">Cihaz depolaması, SD kart veya belge sağlayıcısı seçin.</string>
+    <string name="folder_backup_password">Yedek parolası</string>
+    <string name="folder_backup_password_hint">Yedekleri ana paroladan bağımsız şifreler. Güvenli saklayın. Mevcut parolayı korumak için boş bırakın.</string>
+    <string name="folder_backup_confirm_password">Yedek parolasını doğrula</string>
+    <string name="folder_backup_automatic">Otomatik yedekleme</string>
+    <string name="folder_backup_automatic_hint">12 saatte bir kontrol eder. Monica kilidi açılana ve görünür olana kadar bekler.</string>
+    <string name="folder_backup_changes">Değişikliklerden sonra yedekle</string>
+    <string name="folder_backup_changes_hint">Düzenlemeden sonra 2 dakika bekler; yedekler arasında en az 15 dakika vardır.</string>
+    <string name="folder_backup_keep">Saklanacak yedek sayısı</string>
+    <string name="folder_backup_keep_hint">1–1000 otomatik yedek. Elle alınanlar kalıcıdır. Bulut sağlayıcıları son 48 saatin dosyalarını ve en az iki eski nesli saklar; sayı sınırı aşabilir.</string>
+    <string name="folder_backup_provider_note">Buluta yüklemeyi belge sağlayıcısı yönetir. Yeniden okuma, uzak yüklemenin tamamlandığını doğrulamaz.</string>
+    <string name="folder_backup_scope">Mevcut ZIP biçiminde şifrelenmiş yerel Monica verileri. Harici kasalar ve bağlantı ayarları hariçtir. Verileri içe aktar bölümünden geri yükleyin.</string>
+    <string name="folder_backup_selected">Klasör seçildi</string>
+    <string name="folder_backup_written">Dosya sağlayıcısına yazıldı ve doğrulandı</string>
+    <string name="folder_backup_cleanup_deferred">Yedek doğrulandı; eski yedeklerin temizliği ertelendi.</string>
+    <string name="folder_backup_deferred">Monica kilidinin açılması ve görünür olması bekleniyor. Mevcut yedekler korunur.</string>
+    <string name="folder_backup_permission_error">Klasöre erişilemiyor. Yeniden seçin; mevcut yedekler korunur.</string>
+    <string name="folder_backup_incomplete">Bazı veriler tamamen yedeklenemedi. Yeni yedek yayımlanmadı veya eskiler silinmedi. Okunamayan kayıtları ve donanıma bağlı Passkey kayıtlarını kontrol edin.</string>
+    <string name="folder_backup_failed">Yedekleme başarısız. Mevcut yedekler korunur; klasör iznini ve depolama alanını kontrol edin.</string>
+    <string name="folder_backup_unverified">Eksik veya doğrulanmamış — başarılı yedek sayılmaz</string>
+    <string name="folder_backup_permanent">Elle alınan yedek · kalıcı saklanır</string>
+    <string name="folder_backup_restore">Yedeği geri yükle</string>
+</resources>

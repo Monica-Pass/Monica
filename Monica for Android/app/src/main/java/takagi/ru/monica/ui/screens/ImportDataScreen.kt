@@ -140,6 +140,7 @@ fun ImportDataScreen(
     onPreviewBitwardenJson: suspend (Uri, String?) -> Result<takagi.ru.monica.bitwarden.export.BitwardenJsonPreview> = { _, _ -> Result.failure(IllegalStateException("JSON preview unavailable")) },
     onImportBitwardenJson: suspend (Uri, String?) -> Result<Int> = { _, _ -> Result.failure(IllegalStateException("JSON import unavailable")) },
     initialApplicationSource: Boolean = true,
+    initialBackupUri: Uri? = null,
 ) {
     val context = LocalContext.current
     val activity = context.findImportActivity()
@@ -195,6 +196,14 @@ fun ImportDataScreen(
             } finally { localImporting = false }
             // A Snackbar suspends until dismissed; release the busy state before waiting for it.
             errorMessage?.let { snackbarHostState.showSnackbar(context.getString(it)) }
+        }
+    }
+    LaunchedEffect(initialBackupUri) {
+        initialBackupUri?.let { uri ->
+            selectedFileUri = uri
+            selectedFileName = withContext(Dispatchers.IO) {
+                resolveImportFileDisplayName(context, uri, context.getString(R.string.import_data_file_selected))
+            }
         }
     }
     var importType by remember { mutableStateOf("monica_zip") } // 默认选择 ZIP 备份

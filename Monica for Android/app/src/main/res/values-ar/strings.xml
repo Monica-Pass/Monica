@@ -2087,7 +2087,7 @@
     <string name="password_strength">قوة كلمة المرور:</string>
     <string name="strength_very_weak">ضعيف جداً</string>
     <string name="strength_weak">ضعيف</string>
-    <string name="strength_fair">عادل</string>
+    <string name="strength_fair">متوسط</string>
     <string name="strength_strong">قوي</string>
     <string name="strength_very_strong">قوي جدًا</string>
     <string name="improvement_suggestions">اقتراحات التحسين:</string>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Ordnersicherung</string>
+    <string name="folder_backup_folder">Sicherungsordner</string>
+    <string name="folder_backup_folder_hint">Gerätespeicher, SD-Karte oder Dokumentanbieter auswählen.</string>
+    <string name="folder_backup_password">Sicherungspasswort</string>
+    <string name="folder_backup_password_hint">Verschlüsselt Sicherungen unabhängig vom Hauptpasswort. Sicher aufbewahren. Leer lassen, um das bisherige Passwort zu behalten.</string>
+    <string name="folder_backup_confirm_password">Sicherungspasswort bestätigen</string>
+    <string name="folder_backup_automatic">Automatische Sicherung</string>
+    <string name="folder_backup_automatic_hint">Prüft alle 12 Stunden. Wartet auf eine entsperrte, sichtbare Monica-Sitzung.</string>
+    <string name="folder_backup_changes">Nach Änderungen sichern</string>
+    <string name="folder_backup_changes_hint">Wartet nach Änderungen 2 Minuten; mindestens 15 Minuten zwischen Sicherungen.</string>
+    <string name="folder_backup_keep">Anzahl der Sicherungen</string>
+    <string name="folder_backup_keep_hint">1–1000 automatische Sicherungen. Manuelle bleiben dauerhaft. Cloudanbieter behalten zusätzlich Dateien der letzten 48 Stunden und mindestens zwei ältere Generationen; die Anzahl kann das Limit überschreiten.</string>
+    <string name="folder_backup_provider_note">Der Dokumentanbieter übernimmt den Cloud-Upload. Erneutes Lesen bestätigt keinen abgeschlossenen Upload.</string>
+    <string name="folder_backup_scope">Verschlüsselte lokale Monica-Daten im bestehenden ZIP-Format. Externe Tresore und Verbindungseinstellungen sind ausgeschlossen. Wiederherstellung über Datenimport.</string>
+    <string name="folder_backup_selected">Ordner ausgewählt</string>
+    <string name="folder_backup_written">Vom Dateianbieter geschrieben und geprüft</string>
+    <string name="folder_backup_cleanup_deferred">Sicherung geprüft; Bereinigung alter Sicherungen verschoben.</string>
+    <string name="folder_backup_deferred">Wartet auf entsperrtes, sichtbares Monica. Bestehende Sicherungen bleiben erhalten.</string>
+    <string name="folder_backup_permission_error">Ordnerzugriff fehlt. Ordner erneut auswählen; bestehende Sicherungen bleiben erhalten.</string>
+    <string name="folder_backup_incomplete">Einige Daten konnten nicht vollständig gesichert werden. Keine Veröffentlichung oder Bereinigung. Unlesbare Einträge und hardwaregebundene Passkeys prüfen.</string>
+    <string name="folder_backup_failed">Sicherung fehlgeschlagen. Bestehende Sicherungen bleiben erhalten; Ordnerzugriff und Speicherplatz prüfen.</string>
+    <string name="folder_backup_unverified">Unvollständig oder ungeprüft — keine erfolgreiche Sicherung</string>
+    <string name="folder_backup_permanent">Manuelle Sicherung · dauerhaft aufbewahrt</string>
+    <string name="folder_backup_restore">Sicherung wiederherstellen</string>
+</resources>

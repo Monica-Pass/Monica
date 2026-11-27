@@ -1,0 +1,413 @@
+{
+  "version": "1.0.332",
+  "codename": "Hanekawa Tsubasa（羽川翼）",
+  "editions": {
+    "main": {
+      "debugBuildSeconds": 84.26,
+      "debugApkSha256": [
+        "009521f0dd46236fb24b05e3f56f301a07a779c7629215a581c9d6387fa0dfce",
+        "7f0943e0e8d0ac84764ca20a4815953ac9a741d3e7184e44b6fe13c61aa61c99"
+      ],
+      "jvm": {
+        "FolderBackupPolicyTest": 6,
+        "BackupRetentionPolicyTest": 14,
+        "ChangeTriggeredBackupTimingTest": 5
+      },
+      "deviceMethods": 21,
+      "deviceSeconds": 30.02,
+      "deviceSelector": "takagi.ru.monica.backup.FolderBackupInstrumentedTest,takagi.ru.monica.ui.screens.FolderBackupUiTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#folderBackupSearchOpensUnconfiguredPageWithoutChangingSettings,takagi.ru.monica.ui.GeneratorStrengthLocaleTest,takagi.ru.monica.repository.Mdbx2ExternalPublicationInstrumentedTest#externalPublicationLeaseSerializesConcurrentWriters,takagi.ru.monica.repository.Mdbx2IdleSyncStatusInstrumentedTest#connectionFailureWithoutEditsDoesNotInventAnUnsyncedItem",
+      "releaseBuildSeconds": 401.36,
+      "releaseCertificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "old": {
+        "uid": "1310135",
+        "firstInstallTime": "2026-11-26 17:36:03",
+        "versionName": "1.0.331-26112612-99",
+        "abi": "x86_64",
+        "sha256": "5b68a6fdb92f42541cc1b916e71368eaa6fe36c40f47d0d4d7c7702a9735b546"
+      },
+      "directUpgrade": {
+        "uid": "1310135",
+        "firstInstallTime": "2026-11-26 17:36:03",
+        "versionName": "1.0.332-26112712-99",
+        "abi": "x86_64",
+        "sha256": "f483a2170047ccde690d364e09c223afd42526a98733cbed6efb6b0cac45d83c"
+      },
+      "finalApkInstalled": {
+        "uid": "1310135",
+        "firstInstallTime": "2026-11-26 17:36:03",
+        "versionName": "1.0.332-26112712-99",
+        "abi": "x86_64",
+        "sha256": "b5f1e700a2a7ea73699770b322e92460eadb268a3d55bb7df7f5d9003cc11bf5"
+      },
+      "apkEntryComparison": {
+        "debug": {
+          "apkSha256": "009521f0dd46236fb24b05e3f56f301a07a779c7629215a581c9d6387fa0dfce",
+          "checkedManifestDexNativeEntries": 44,
+          "changedEntries": [],
+          "actualMiddleLabels": {
+            "ar": "متوسط",
+            "fr": "Moyen",
+            "in": "Sedang",
+            "it": "Media",
+            "tr": "Orta"
+          },
+          "sourceInputVerification": true
+        },
+        "release": {
+          "apkSha256": "b5f1e700a2a7ea73699770b322e92460eadb268a3d55bb7df7f5d9003cc11bf5",
+          "checkedManifestDexNativeEntries": 14,
+          "changedEntries": [
+            "classes.dex",
+            "classes2.dex",
+            "classes3.dex"
+          ],
+          "actualMiddleLabels": {
+            "ar": "متوسط",
+            "fr": "Moyen",
+            "in": "Sedang",
+            "it": "Media",
+            "tr": "Orta"
+          },
+          "sourceInputVerification": 5423
+        }
+      },
+      "realReleaseMilestones": {
+        "upgrade": [
+          {
+            "event": "old-secret-after-upgrade",
+            "pid": "63427"
+          },
+          {
+            "event": "new-write",
+            "pid": "63427"
+          },
+          {
+            "event": "cold-old-secret",
+            "pid": "64046"
+          },
+          {
+            "event": "cold-new-secret",
+            "pid": "64046"
+          }
+        ],
+        "archive": [
+          {
+            "event": "folder-page",
+            "pid": "64532"
+          },
+          {
+            "event": "automatic-archive-via-real-scheduler",
+            "pid": "64532"
+          },
+          {
+            "event": "verified-manual-archive",
+            "pid": "64532"
+          },
+          {
+            "event": "archive-preselected",
+            "pid": "64532"
+          }
+        ],
+        "removeFixture": [
+          {
+            "event": "synthetic-record-removed",
+            "pid": "5092"
+          }
+        ],
+        "restore": [
+          {
+            "event": "folder-page",
+            "pid": "5472"
+          },
+          {
+            "event": "import-completed",
+            "pid": "5472"
+          },
+          {
+            "event": "restored-secret-after-cold-start",
+            "pid": "5995"
+          },
+          {
+            "event": "old-secret-after-restore",
+            "pid": "5995"
+          }
+        ],
+        "finalMutationBackup": [
+          {
+            "event": "real-edit-saved",
+            "pid": "3392"
+          },
+          {
+            "event": "folder-page",
+            "pid": "3392"
+          },
+          {
+            "event": "real-edit-created-new-automatic-file",
+            "pid": "4377"
+          },
+          {
+            "event": "new-manual-file-after-real-edit",
+            "pid": "4377"
+          }
+        ],
+        "finalCold": [
+          {
+            "event": "restored-secret-on-final-apk",
+            "pid": "2366"
+          },
+          {
+            "event": "legacy-secret-on-final-apk",
+            "pid": "2366"
+          }
+        ]
+      },
+      "restoreSummary": [
+        "Successfully imported 1 data entries",
+        "Backup restored successfully with 1 items"
+      ]
+    },
+    "fd": {
+      "debugBuildSeconds": 65.97,
+      "debugApkSha256": [
+        "9dcbe58555e45c5ef18bbf4a228f18fc003d69b015266f0026bb5a25b1f63e66",
+        "a98fcbfdfff982d158c2f39c2323fdabe04a3f0bbbd64baef769f5588a6a64de"
+      ],
+      "jvm": {
+        "FolderBackupPolicyTest": 6,
+        "BackupRetentionPolicyTest": 14,
+        "ChangeTriggeredBackupTimingTest": 5
+      },
+      "deviceMethods": 21,
+      "deviceSeconds": 23.19,
+      "deviceSelector": "takagi.ru.monica.backup.FolderBackupInstrumentedTest,takagi.ru.monica.ui.screens.FolderBackupUiTest,takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#folderBackupSearchOpensUnconfiguredPageWithoutChangingSettings,takagi.ru.monica.ui.GeneratorStrengthLocaleTest,takagi.ru.monica.repository.Mdbx2ExternalPublicationInstrumentedTest#externalPublicationLeaseSerializesConcurrentWriters,takagi.ru.monica.repository.Mdbx2IdleSyncStatusInstrumentedTest#connectionFailureWithoutEditsDoesNotInventAnUnsyncedItem",
+      "releaseBuildSeconds": 278.67,
+      "releaseCertificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "old": {
+        "uid": "1310139",
+        "firstInstallTime": "2026-11-27 09:44:42",
+        "versionName": "1.0.331",
+        "abi": "x86_64",
+        "sha256": "77f28c1a6f2bc735a1dc5cd8fd3daffbc51e27e8c7656956537c3204bcf7f09c"
+      },
+      "directUpgrade": {
+        "uid": "1310139",
+        "firstInstallTime": "2026-11-27 09:44:42",
+        "versionName": "1.0.332",
+        "abi": "x86_64",
+        "sha256": "003ff0e1737d772f1169365d74de51d42a57623cb2f5245d07123bf53eef0493"
+      },
+      "finalApkInstalled": {
+        "uid": "1310139",
+        "firstInstallTime": "2026-11-27 09:44:42",
+        "versionName": "1.0.332",
+        "abi": "x86_64",
+        "sha256": "003ff0e1737d772f1169365d74de51d42a57623cb2f5245d07123bf53eef0493"
+      },
+      "apkEntryComparison": {
+        "debug": {
+          "apkSha256": "9dcbe58555e45c5ef18bbf4a228f18fc003d69b015266f0026bb5a25b1f63e66",
+          "checkedManifestDexNativeEntries": 43,
+          "changedEntries": [],
+          "actualMiddleLabels": {
+            "ar": "متوسط",
+            "fr": "Moyen",
+            "in": "Sedang",
+            "it": "Media",
+            "tr": "Orta"
+          },
+          "sourceInputVerification": true
+        },
+        "release": {
+          "apkSha256": "003ff0e1737d772f1169365d74de51d42a57623cb2f5245d07123bf53eef0493",
+          "checkedManifestDexNativeEntries": 13,
+          "changedEntries": [],
+          "actualMiddleLabels": {
+            "ar": "متوسط",
+            "fr": "Moyen",
+            "in": "Sedang",
+            "it": "Media",
+            "tr": "Orta"
+          },
+          "sourceInputVerification": 5432
+        }
+      },
+      "realReleaseMilestones": {
+        "upgrade": [
+          {
+            "event": "old-secret-after-upgrade",
+            "pid": "6535"
+          },
+          {
+            "event": "new-write",
+            "pid": "6535"
+          },
+          {
+            "event": "cold-old-secret",
+            "pid": "7199"
+          },
+          {
+            "event": "cold-new-secret",
+            "pid": "7199"
+          }
+        ],
+        "archive": [
+          {
+            "event": "folder-page",
+            "pid": "7687"
+          },
+          {
+            "event": "automatic-archive-via-real-scheduler",
+            "pid": "7687"
+          },
+          {
+            "event": "verified-manual-archive",
+            "pid": "7687"
+          },
+          {
+            "event": "archive-preselected",
+            "pid": "7687"
+          }
+        ],
+        "removeFixture": [
+          {
+            "event": "synthetic-record-removed",
+            "pid": "8934"
+          }
+        ],
+        "restore": [
+          {
+            "event": "folder-page",
+            "pid": "9317"
+          },
+          {
+            "event": "automatic-archive-selected-for-restore",
+            "pid": "9317"
+          },
+          {
+            "event": "import-completed",
+            "pid": "9317"
+          },
+          {
+            "event": "restored-secret-after-cold-start",
+            "pid": "9867"
+          },
+          {
+            "event": "old-secret-after-restore",
+            "pid": "9867"
+          }
+        ]
+      },
+      "restoreSummary": [
+        "Successfully imported 1 data entries",
+        "1 imported · 1 skipped · 0 failed",
+        "Backup restored successfully with 1 items"
+      ]
+    }
+  },
+  "release331Source": {
+    "main": {
+      "tag": "V1.0.331",
+      "commit": "e99e6ad74233cf08da8f6bb4fdfcb3b313aeb616",
+      "archiveSha256": "a9d2459a4c23e3550175b4ca2bf8daa230fa6374f98522d7aefb8919598df812"
+    },
+    "fd": {
+      "tag": "v1.0.331",
+      "commit": "19a281657c141bc6775352c30ca843b9d7ce9001",
+      "archiveSha256": "eb02cf05ba35fabb56428bfa34b029742e6adc84a4c29460146d238a041108aa"
+    }
+  },
+  "sharedSources": {
+    "sourcePaths": 56,
+    "matchingNormalizedFiles": 46,
+    "editionSpecificBase": [
+      {
+        "path": "app/src/androidTest/AndroidManifest.xml",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/MainActivity.kt",
+        "sameEditedLines": false
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/MonicaApplication.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/navigation/Screens.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/ui/screens/ImportDataScreen.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt",
+        "sameEditedLines": true
+      },
+      {
+        "path": "app/src/main/res/values-fr/strings.xml",
+        "sameEditedLines": true
+      }
+    ],
+    "resources": {
+      "main": {
+        "locales": 22,
+        "folderStrings": 528
+      },
+      "fd": {
+        "locales": 22,
+        "folderStrings": 528
+      }
+    },
+    "archives": {
+      "main": "tracked release archives unchanged",
+      "fd": "tracked release archives unchanged"
+    }
+  },
+  "localization": "19 direct locale dictionaries (95 strength labels), three Chinese regional variants inherit the five common Chinese labels; device resource enumeration checks all 22 configurations. Confirmed mid-tier translations in both final APK types using compiled AAPT2 tables.",
+  "tested": "MuMu 0, Android 35, x86_64, isolated secondary Android user, synthetic credentials, Android DocumentsUI and fault-injecting test provider. Release builds use a task-specific application ID and test certificate with normal production R8.",
+  "unverified": [
+    "real user data or signing keys",
+    "physical devices and OEMs",
+    "real RSAF, remote cloud delivery, or power loss",
+    "waiting for an entire 12-hour WorkManager period"
+  ],
+  "earlierDeviceBatches": {
+    "main-device01": {
+      "completedMethodPasses": 1,
+      "completedMethodFailures": 3,
+      "tests": 4,
+      "success": false
+    },
+    "main-device02": {
+      "completedMethodPasses": 14,
+      "completedMethodFailures": 1,
+      "tests": 15,
+      "success": false
+    },
+    "fd-device01": {
+      "completedMethodPasses": 13,
+      "completedMethodFailures": 2,
+      "tests": 15,
+      "success": false
+    }
+  },
+  "historicalFailures": [
+    "main02 and main04 test/code compilation, initial incompatible test host/cleanup and later timing fixture failures; preserved in task logs",
+    "main06 and old-fd01 ran out of disk space",
+    "old ordinary Release AndroidJUnitRunner linkage failed before executing tests; accepted Release UI testing used ADB only",
+    "transient private ADB server connection error ended an initial final-main edit attempt before a row was created; verified the preexisting two-row state before retrying"
+  ]
+}

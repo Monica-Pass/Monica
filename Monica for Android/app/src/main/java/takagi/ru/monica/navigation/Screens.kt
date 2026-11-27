@@ -172,6 +172,7 @@ sealed class Screen(val route: String) {
     object SecurityQuestionsSetup : Screen("security_questions_setup")
     object SecurityQuestionsVerification : Screen("security_questions_verification")
     object SupportAuthor : Screen("support_author")
+    object FolderBackup : Screen("folder_backup")
     object WebDavBackup : Screen("webdav_backup")
     object OneDriveBackup : Screen("onedrive_backup")
     object MdbxManager : Screen("mdbx_manager") {

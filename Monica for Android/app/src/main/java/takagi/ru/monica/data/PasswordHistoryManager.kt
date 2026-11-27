@@ -73,8 +73,12 @@ class PasswordHistoryManager(context: Context) {
     }
 
     suspend fun exportHistoryJson(): String {
-        val current = historyFlow.first()
-        return json.encodeToString(current)
+        // An unreadable history must not be exported as a successful empty history.
+        // UI decoding remains tolerant; backups need an explicit failure to preserve old copies.
+        val raw = appContext.passwordHistoryDataStore.data.first()[HISTORY_KEY]
+        if (raw.isNullOrBlank()) return "[]"
+        val plain = if (securityManager.looksLikeMonicaCiphertext(raw)) securityManager.decryptData(raw) else raw
+        return json.encodeToString(json.decodeFromString<List<PasswordGenerationHistory>>(plain))
     }
 
     suspend fun importHistory(history: List<PasswordGenerationHistory>) {

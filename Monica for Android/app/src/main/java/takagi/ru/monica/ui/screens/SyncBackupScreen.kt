@@ -32,6 +32,7 @@ fun SyncBackupScreen(
     onNavigateToExportData: () -> Unit = {},
     onNavigateToImportData: () -> Unit = {},
     onNavigateToWebDav: () -> Unit = {},
+    onNavigateToFolderBackup: () -> Unit = {},
     onNavigateToOneDrive: () -> Unit = {},
     onNavigateToLocalKeePass: () -> Unit = {},  // 本地 KeePass 数据库管理
     onNavigateToMdbx: () -> Unit = {},
@@ -87,6 +88,8 @@ fun SyncBackupScreen(
             SyncBackupSection(title = stringResource(R.string.sync_backup_common_sync)) {
                 SyncBackupItem(Icons.Default.Wifi, Setting.LAN_TITLE,
                     Setting.LAN_TITLE.summary(), onNavigateToLanSync)
+                SyncBackupItem(Icons.Default.Folder, Setting.FOLDER_BACKUP,
+                    Setting.FOLDER_BACKUP.summary(), onNavigateToFolderBackup)
                 SyncBackupItem(Icons.Default.Cloud, Setting.WEBDAV_BACKUP,
                     Setting.WEBDAV_BACKUP.summary(), onNavigateToWebDav)
                 SyncBackupItem(Icons.Default.CloudSync, Setting.ONEDRIVE_BACKUP_TITLE,

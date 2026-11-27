@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Sao lưu vào thư mục</string>
+    <string name="folder_backup_folder">Thư mục sao lưu</string>
+    <string name="folder_backup_folder_hint">Chọn bộ nhớ thiết bị, thẻ SD hoặc nhà cung cấp tài liệu.</string>
+    <string name="folder_backup_password">Mật khẩu bản sao lưu</string>
+    <string name="folder_backup_password_hint">Mã hóa bản sao lưu độc lập với mật khẩu chính. Hãy giữ an toàn. Để trống để giữ mật khẩu hiện tại.</string>
+    <string name="folder_backup_confirm_password">Xác nhận mật khẩu sao lưu</string>
+    <string name="folder_backup_automatic">Sao lưu tự động</string>
+    <string name="folder_backup_automatic_hint">Kiểm tra mỗi 12 giờ. Chờ Monica được mở khóa và hiển thị ở phía trước.</string>
+    <string name="folder_backup_changes">Sao lưu sau thay đổi</string>
+    <string name="folder_backup_changes_hint">Chờ 2 phút sau khi chỉnh sửa; ít nhất 15 phút giữa các lần sao lưu.</string>
+    <string name="folder_backup_keep">Số bản sao lưu giữ lại</string>
+    <string name="folder_backup_keep_hint">1–1000 bản tự động. Bản thủ công được giữ vĩnh viễn. Nhà cung cấp đám mây giữ các tệp trong 48 giờ gần nhất và ít nhất hai thế hệ cũ hơn; tổng số có thể vượt giới hạn.</string>
+    <string name="folder_backup_provider_note">Nhà cung cấp tài liệu quản lý tải lên đám mây. Đọc lại không xác nhận đã tải lên từ xa.</string>
+    <string name="folder_backup_scope">Sao lưu mã hóa dữ liệu cục bộ Monica theo định dạng ZIP hiện có. Không gồm kho ngoài và cấu hình kết nối. Khôi phục qua Nhập dữ liệu.</string>
+    <string name="folder_backup_selected">Đã chọn thư mục</string>
+    <string name="folder_backup_written">Nhà cung cấp tệp đã ghi và xác minh</string>
+    <string name="folder_backup_cleanup_deferred">Đã xác minh bản sao lưu; hoãn dọn các bản cũ.</string>
+    <string name="folder_backup_deferred">Đang chờ Monica mở khóa và hiển thị. Giữ nguyên các bản sao lưu hiện có.</string>
+    <string name="folder_backup_permission_error">Không thể truy cập thư mục. Chọn lại; giữ nguyên các bản sao lưu hiện có.</string>
+    <string name="folder_backup_incomplete">Không thể sao lưu đầy đủ một số dữ liệu. Không xuất bản bản mới hoặc xóa bản cũ. Kiểm tra mục không đọc được và Passkey gắn với phần cứng.</string>
+    <string name="folder_backup_failed">Sao lưu thất bại. Giữ nguyên các bản hiện có; kiểm tra quyền thư mục và dung lượng.</string>
+    <string name="folder_backup_unverified">Chưa hoàn tất hoặc chưa xác minh — không tính là sao lưu thành công</string>
+    <string name="folder_backup_permanent">Bản thủ công · giữ vĩnh viễn</string>
+    <string name="folder_backup_restore">Khôi phục bản sao lưu</string>
+</resources>

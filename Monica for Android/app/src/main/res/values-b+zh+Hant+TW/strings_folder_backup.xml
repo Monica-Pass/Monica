@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">資料夾備份</string>
+    <string name="folder_backup_folder">備份資料夾</string>
+    <string name="folder_backup_folder_hint">選擇裝置儲存空間、SD 卡或系統檔案提供者。</string>
+    <string name="folder_backup_password">備份密碼</string>
+    <string name="folder_backup_password_hint">獨立於主密碼加密備份，請妥善保存。留空則保留原備份密碼。</string>
+    <string name="folder_backup_confirm_password">確認備份密碼</string>
+    <string name="folder_backup_automatic">自動備份</string>
+    <string name="folder_backup_automatic_hint">每 12 小時檢查；等待 Monica 解鎖並位於前景時執行。</string>
+    <string name="folder_backup_changes">變更後備份</string>
+    <string name="folder_backup_changes_hint">停止編輯 2 分鐘後備份，兩次備份至少間隔 15 分鐘。</string>
+    <string name="folder_backup_keep">保留份數</string>
+    <string name="folder_backup_keep_hint">保留 1–1000 份自動備份，手動備份永久保留。雲端提供者額外保留最近 48 小時及至少兩份更早備份，實際數量可能超過限制。</string>
+    <string name="folder_backup_provider_note">雲端上傳由檔案提供者負責，讀回驗證不代表已上傳雲端。</string>
+    <string name="folder_backup_scope">使用現有 ZIP 格式加密備份 Monica 本機資料，不包含外部資料庫與連線設定。透過「匯入資料」還原。</string>
+    <string name="folder_backup_selected">已選擇資料夾</string>
+    <string name="folder_backup_written">檔案提供者已寫入並驗證</string>
+    <string name="folder_backup_cleanup_deferred">備份驗證成功，舊備份清理已延後。</string>
+    <string name="folder_backup_deferred">等待 Monica 解鎖並回到前景，原有備份保留。</string>
+    <string name="folder_backup_permission_error">無法存取備份目錄，請重新選擇資料夾；原有備份保留。</string>
+    <string name="folder_backup_incomplete">部分資料無法完整備份，未發布新備份或清理舊備份。請檢查無法讀取的紀錄與硬體綁定 Passkey。</string>
+    <string name="folder_backup_failed">備份失敗，原有備份保留。請檢查目錄授權與儲存空間。</string>
+    <string name="folder_backup_unverified">未完成或未經驗證，不計為成功備份</string>
+    <string name="folder_backup_permanent">手動備份 · 永久保留</string>
+    <string name="folder_backup_restore">還原備份</string>
+</resources>

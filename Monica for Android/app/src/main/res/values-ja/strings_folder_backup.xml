@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">フォルダーへのバックアップ</string>
+    <string name="folder_backup_folder">バックアップ先フォルダー</string>
+    <string name="folder_backup_folder_hint">端末のストレージ、SD カード、ドキュメントプロバイダーを選択します。</string>
+    <string name="folder_backup_password">バックアップ用パスワード</string>
+    <string name="folder_backup_password_hint">マスターパスワードとは別にバックアップを暗号化します。大切に保管してください。空欄なら現在のパスワードを維持します。</string>
+    <string name="folder_backup_confirm_password">バックアップ用パスワードの確認</string>
+    <string name="folder_backup_automatic">自動バックアップ</string>
+    <string name="folder_backup_automatic_hint">12 時間ごとに確認します。Monica のロックが解除され、画面に表示されるまで待機します。</string>
+    <string name="folder_backup_changes">変更後にバックアップ</string>
+    <string name="folder_backup_changes_hint">編集終了から 2 分待機し、バックアップ間隔を最低 15 分にします。</string>
+    <string name="folder_backup_keep">保存する世代数</string>
+    <string name="folder_backup_keep_hint">自動バックアップを 1～1000 世代保存します。手動バックアップは無期限です。クラウドでは直近 48 時間分とそれ以前の最低 2 世代を残すため、上限を超えることがあります。</string>
+    <string name="folder_backup_provider_note">クラウドへのアップロードはプロバイダーが管理します。読み取り検証はアップロード完了を意味しません。</string>
+    <string name="folder_backup_scope">既存の ZIP 形式で Monica のローカルデータを暗号化して保存します。外部保管庫と接続設定は含みません。「データのインポート」から復元できます。</string>
+    <string name="folder_backup_selected">フォルダーを選択しました</string>
+    <string name="folder_backup_written">プロバイダーで書き込み・検証済み</string>
+    <string name="folder_backup_cleanup_deferred">バックアップを検証しました。古いバックアップの削除は延期しました。</string>
+    <string name="folder_backup_deferred">Monica のロック解除と表示を待っています。既存のバックアップは保持されます。</string>
+    <string name="folder_backup_permission_error">フォルダーにアクセスできません。再選択してください。既存のバックアップは保持されます。</string>
+    <string name="folder_backup_incomplete">一部のデータを完全に保存できませんでした。新しいバックアップの公開や古いものの削除は行っていません。読み取れない項目とハードウェアに紐付く Passkey を確認してください。</string>
+    <string name="folder_backup_failed">バックアップに失敗しました。既存のものは保持されます。フォルダーの権限と空き容量を確認してください。</string>
+    <string name="folder_backup_unverified">未完了または未検証 — 成功したバックアップではありません</string>
+    <string name="folder_backup_permanent">手動バックアップ · 無期限保存</string>
+    <string name="folder_backup_restore">バックアップを復元</string>
+</resources>

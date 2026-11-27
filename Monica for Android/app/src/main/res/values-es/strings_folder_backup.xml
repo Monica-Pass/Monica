@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Copia en carpeta</string>
+    <string name="folder_backup_folder">Carpeta de copias</string>
+    <string name="folder_backup_folder_hint">Elige el almacenamiento del dispositivo, una tarjeta SD o un proveedor de documentos.</string>
+    <string name="folder_backup_password">Contraseña de la copia</string>
+    <string name="folder_backup_password_hint">Cifra las copias independientemente de la contraseña maestra. Guárdala bien. Déjala vacía para conservar la actual.</string>
+    <string name="folder_backup_confirm_password">Confirmar contraseña de la copia</string>
+    <string name="folder_backup_automatic">Copia automática</string>
+    <string name="folder_backup_automatic_hint">Comprueba cada 12 horas. Espera a que Monica esté desbloqueada y visible.</string>
+    <string name="folder_backup_changes">Copiar tras cambios</string>
+    <string name="folder_backup_changes_hint">Espera 2 minutos tras editar; al menos 15 minutos entre copias.</string>
+    <string name="folder_backup_keep">Copias que conservar</string>
+    <string name="folder_backup_keep_hint">De 1 a 1000 copias automáticas. Las manuales son permanentes. Los proveedores en la nube conservan los archivos de las últimas 48 horas y al menos dos generaciones anteriores; el total puede superar el límite.</string>
+    <string name="folder_backup_provider_note">El proveedor gestiona la subida a la nube. Verificar la lectura no confirma la subida remota.</string>
+    <string name="folder_backup_scope">Copias cifradas de datos locales de Monica en el formato ZIP existente. Excluye bóvedas externas y ajustes de conexión. Restaura desde Importar datos.</string>
+    <string name="folder_backup_selected">Carpeta seleccionada</string>
+    <string name="folder_backup_written">Escrita y verificada por el proveedor</string>
+    <string name="folder_backup_cleanup_deferred">Copia verificada; limpieza de copias antiguas aplazada.</string>
+    <string name="folder_backup_deferred">Esperando a que Monica esté desbloqueada y visible. Se conservan las copias existentes.</string>
+    <string name="folder_backup_permission_error">No se puede acceder a la carpeta. Selecciónala de nuevo; se conservan las copias existentes.</string>
+    <string name="folder_backup_incomplete">No se pudieron copiar todos los datos. No se publicó ninguna copia ni se borraron las anteriores. Revisa los registros ilegibles y Passkeys vinculadas al hardware.</string>
+    <string name="folder_backup_failed">Error de copia. Se conservan las existentes; revisa el acceso a la carpeta y el espacio.</string>
+    <string name="folder_backup_unverified">Incompleta o sin verificar — no cuenta como copia correcta</string>
+    <string name="folder_backup_permanent">Copia manual · conservación permanente</string>
+    <string name="folder_backup_restore">Restaurar copia</string>
+</resources>

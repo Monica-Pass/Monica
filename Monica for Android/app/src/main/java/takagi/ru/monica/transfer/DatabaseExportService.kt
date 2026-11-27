@@ -21,7 +21,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import java.util.UUID
 
-enum class DataTaskKind { EXPORT, IMPORT, WEBDAV_BACKUP }
+enum class DataTaskKind { EXPORT, IMPORT, WEBDAV_BACKUP, FOLDER_BACKUP }
 
 enum class ExportJobStatus { RUNNING, SUCCEEDED, FAILED, CANCELLED }
 
@@ -247,7 +247,7 @@ class DatabaseExportService : Service() {
         val title = if (running) when (kind) {
             DataTaskKind.EXPORT -> R.string.exporting
             DataTaskKind.IMPORT -> R.string.importing
-            DataTaskKind.WEBDAV_BACKUP -> R.string.webdav_backup_in_progress
+            DataTaskKind.WEBDAV_BACKUP, DataTaskKind.FOLDER_BACKUP -> R.string.webdav_backup_in_progress
         } else if (succeeded) R.string.transfer_task_done else R.string.transfer_task_failed
         return NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(R.drawable.ic_key)

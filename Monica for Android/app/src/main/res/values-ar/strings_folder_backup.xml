@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">نسخ احتياطي إلى مجلد</string>
+    <string name="folder_backup_folder">مجلد النسخ الاحتياطي</string>
+    <string name="folder_backup_folder_hint">اختر تخزين الجهاز أو بطاقة SD أو موفّر مستندات.</string>
+    <string name="folder_backup_password">كلمة مرور النسخة الاحتياطية</string>
+    <string name="folder_backup_password_hint">تشفّر النسخ بشكل مستقل عن كلمة المرور الرئيسية. احتفظ بها بأمان. اتركها فارغة للاحتفاظ بالكلمة الحالية.</string>
+    <string name="folder_backup_confirm_password">تأكيد كلمة مرور النسخة</string>
+    <string name="folder_backup_automatic">نسخ احتياطي تلقائي</string>
+    <string name="folder_backup_automatic_hint">يتحقق كل 12 ساعة. ينتظر فتح قفل Monica وظهوره في المقدمة.</string>
+    <string name="folder_backup_changes">النسخ بعد التغييرات</string>
+    <string name="folder_backup_changes_hint">ينتظر دقيقتين بعد التحرير، مع 15 دقيقة على الأقل بين النسخ.</string>
+    <string name="folder_backup_keep">عدد النسخ المحفوظة</string>
+    <string name="folder_backup_keep_hint">من 1 إلى 1000 نسخة تلقائية. النسخ اليدوية دائمة. يحتفظ الموفّر السحابي بملفات آخر 48 ساعة ونسختين أقدم على الأقل؛ قد يتجاوز العدد الحد.</string>
+    <string name="folder_backup_provider_note">يتولى موفّر المستندات الرفع السحابي. التحقق بالقراءة لا يؤكد اكتمال الرفع.</string>
+    <string name="folder_backup_scope">نسخ مشفّرة لبيانات Monica المحلية بتنسيق ZIP الحالي. تستثني الخزائن الخارجية وإعدادات الاتصال. الاستعادة عبر استيراد البيانات.</string>
+    <string name="folder_backup_selected">تم اختيار المجلد</string>
+    <string name="folder_backup_written">كتب موفّر الملفات النسخة وتحقق منها</string>
+    <string name="folder_backup_cleanup_deferred">تم التحقق من النسخة؛ أُجّل تنظيف النسخ القديمة.</string>
+    <string name="folder_backup_deferred">بانتظار فتح قفل Monica وظهوره. النسخ الحالية محفوظة.</string>
+    <string name="folder_backup_permission_error">تعذّر الوصول إلى المجلد. اختره مجددًا؛ النسخ الحالية محفوظة.</string>
+    <string name="folder_backup_incomplete">تعذّر نسخ بعض البيانات بالكامل. لم تُنشر نسخة ولم تُحذف النسخ القديمة. تحقق من السجلات غير المقروءة ومفاتيح Passkey المرتبطة بالجهاز.</string>
+    <string name="folder_backup_failed">فشل النسخ. النسخ الحالية محفوظة؛ تحقق من إذن المجلد والمساحة.</string>
+    <string name="folder_backup_unverified">نسخة غير مكتملة أو غير متحقّق منها — لا تُعد ناجحة</string>
+    <string name="folder_backup_permanent">نسخة يدوية · محفوظة دائمًا</string>
+    <string name="folder_backup_restore">استعادة نسخة احتياطية</string>
+</resources>

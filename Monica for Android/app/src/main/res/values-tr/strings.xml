@@ -2087,7 +2087,7 @@
     <string name="password_strength">Şifre Gücü:</string>
     <string name="strength_very_weak">Çok Zayıf</string>
     <string name="strength_weak">Zayıf</string>
-    <string name="strength_fair">Fuar</string>
+    <string name="strength_fair">Orta</string>
     <string name="strength_strong">Güçlü</string>
     <string name="strength_very_strong">Çok Güçlü</string>
     <string name="improvement_suggestions">İyileştirme Önerileri:</string>

@@ -101,6 +101,7 @@ class MonicaApplication : Application() {
             startMdbxAutoSyncRecovery()
             syncLauncherEntryPointsWithSettings()
             startChangeTriggeredBackupObserver()
+            takagi.ru.monica.backup.FolderBackupScheduler.start(this@MonicaApplication)
         }
 
         startupScope.launch(Dispatchers.IO) {

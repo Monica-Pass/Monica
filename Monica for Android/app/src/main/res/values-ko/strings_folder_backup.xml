@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">폴더 백업</string>
+    <string name="folder_backup_folder">백업 폴더</string>
+    <string name="folder_backup_folder_hint">기기 저장소, SD 카드 또는 문서 제공자를 선택하세요.</string>
+    <string name="folder_backup_password">백업 비밀번호</string>
+    <string name="folder_backup_password_hint">마스터 비밀번호와 별도로 백업을 암호화합니다. 안전하게 보관하세요. 비워 두면 현재 비밀번호를 유지합니다.</string>
+    <string name="folder_backup_confirm_password">백업 비밀번호 확인</string>
+    <string name="folder_backup_automatic">자동 백업</string>
+    <string name="folder_backup_automatic_hint">12시간마다 확인합니다. Monica 잠금이 해제되고 화면에 표시될 때까지 기다립니다.</string>
+    <string name="folder_backup_changes">변경 후 백업</string>
+    <string name="folder_backup_changes_hint">편집 후 2분을 기다리며 백업 간격은 최소 15분입니다.</string>
+    <string name="folder_backup_keep">보관할 백업 수</string>
+    <string name="folder_backup_keep_hint">자동 백업 1~1000개. 수동 백업은 영구 보관합니다. 클라우드 제공자는 최근 48시간 파일과 그 이전 최소 2개를 보관하므로 제한을 초과할 수 있습니다.</string>
+    <string name="folder_backup_provider_note">클라우드 업로드는 문서 제공자가 관리합니다. 다시 읽어 확인해도 원격 업로드 완료를 뜻하지 않습니다.</string>
+    <string name="folder_backup_scope">기존 ZIP 형식으로 Monica 로컬 데이터를 암호화해 백업합니다. 외부 보관함과 연결 설정은 제외됩니다. 데이터 가져오기에서 복원하세요.</string>
+    <string name="folder_backup_selected">폴더 선택됨</string>
+    <string name="folder_backup_written">파일 제공자에 기록하고 검증함</string>
+    <string name="folder_backup_cleanup_deferred">백업 검증 완료. 이전 백업 정리는 연기되었습니다.</string>
+    <string name="folder_backup_deferred">Monica 잠금 해제와 화면 표시를 기다립니다. 기존 백업은 유지됩니다.</string>
+    <string name="folder_backup_permission_error">폴더에 접근할 수 없습니다. 다시 선택하세요. 기존 백업은 유지됩니다.</string>
+    <string name="folder_backup_incomplete">일부 데이터를 완전히 백업하지 못했습니다. 새 백업 게시나 이전 백업 삭제는 하지 않았습니다. 읽을 수 없는 항목과 하드웨어 연결 Passkey를 확인하세요.</string>
+    <string name="folder_backup_failed">백업 실패. 기존 백업은 유지됩니다. 폴더 권한과 저장 공간을 확인하세요.</string>
+    <string name="folder_backup_unverified">미완료 또는 미검증 — 성공한 백업이 아닙니다</string>
+    <string name="folder_backup_permanent">수동 백업 · 영구 보관</string>
+    <string name="folder_backup_restore">백업 복원</string>
+</resources>

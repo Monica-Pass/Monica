@@ -817,12 +817,12 @@ class PasswordGenerator {
     /**
      * 密码强度等级
      */
-    enum class StrengthLevel(val displayName: String, val color: String) {
-        VERY_WEAK("非常弱", "#F44336"),      // 红色
-        WEAK("弱", "#FF9800"),              // 橙色
-        FAIR("中等", "#FFC107"),            // 黄色
-        STRONG("强", "#4CAF50"),            // 绿色
-        VERY_STRONG("非常强", "#2196F3")    // 蓝色
+    enum class StrengthLevel(@get:androidx.annotation.StringRes val labelRes: Int, val color: String) {
+        VERY_WEAK(takagi.ru.monica.R.string.strength_very_weak, "#F44336"),      // 红色
+        WEAK(takagi.ru.monica.R.string.strength_weak, "#FF9800"),              // 橙色
+        FAIR(takagi.ru.monica.R.string.strength_fair, "#FFC107"),            // 黄色
+        STRONG(takagi.ru.monica.R.string.strength_strong, "#4CAF50"),            // 绿色
+        VERY_STRONG(takagi.ru.monica.R.string.strength_very_strong, "#2196F3")    // 蓝色
     }
     
     /**

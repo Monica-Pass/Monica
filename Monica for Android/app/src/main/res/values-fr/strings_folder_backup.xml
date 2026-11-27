@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Sauvegarde dans un dossier</string>
+    <string name="folder_backup_folder">Dossier de sauvegarde</string>
+    <string name="folder_backup_folder_hint">Choisissez le stockage de l’appareil, une carte SD ou un fournisseur de documents.</string>
+    <string name="folder_backup_password">Mot de passe de sauvegarde</string>
+    <string name="folder_backup_password_hint">Chiffre les sauvegardes indépendamment du mot de passe principal. Conservez-le. Laissez vide pour garder le mot de passe actuel.</string>
+    <string name="folder_backup_confirm_password">Confirmer le mot de passe</string>
+    <string name="folder_backup_automatic">Sauvegarde automatique</string>
+    <string name="folder_backup_automatic_hint">Vérifie toutes les 12 heures. Attend que Monica soit déverrouillée et visible.</string>
+    <string name="folder_backup_changes">Sauvegarder après modification</string>
+    <string name="folder_backup_changes_hint">Attend 2 minutes après une modification ; au moins 15 minutes entre les sauvegardes.</string>
+    <string name="folder_backup_keep">Sauvegardes à conserver</string>
+    <string name="folder_backup_keep_hint">De 1 à 1000 sauvegardes automatiques. Les sauvegardes manuelles sont permanentes. Les fournisseurs cloud gardent aussi les fichiers des dernières 48 heures et au moins deux générations antérieures ; le total peut dépasser cette limite.</string>
+    <string name="folder_backup_provider_note">Le fournisseur gère l’envoi vers le cloud. La relecture ne confirme pas la fin de cet envoi.</string>
+    <string name="folder_backup_scope">Sauvegardes chiffrées des données locales de Monica au format ZIP existant. Coffres externes et paramètres de connexion exclus. Restaurez via Importer des données.</string>
+    <string name="folder_backup_selected">Dossier sélectionné</string>
+    <string name="folder_backup_written">Écrit et vérifié par le fournisseur</string>
+    <string name="folder_backup_cleanup_deferred">Sauvegarde vérifiée ; nettoyage des anciennes sauvegardes reporté.</string>
+    <string name="folder_backup_deferred">En attente de Monica déverrouillée et visible. Sauvegardes existantes conservées.</string>
+    <string name="folder_backup_permission_error">Dossier inaccessible. Sélectionnez-le à nouveau ; sauvegardes existantes conservées.</string>
+    <string name="folder_backup_incomplete">Certaines données n’ont pas pu être sauvegardées intégralement. Aucune publication ni rotation. Vérifiez les entrées illisibles et les Passkeys liées au matériel.</string>
+    <string name="folder_backup_failed">Échec de la sauvegarde. Sauvegardes existantes conservées ; vérifiez les autorisations et l’espace disponible.</string>
+    <string name="folder_backup_unverified">Incomplète ou non vérifiée — sauvegarde non validée</string>
+    <string name="folder_backup_permanent">Sauvegarde manuelle · conservation permanente</string>
+    <string name="folder_backup_restore">Restaurer une sauvegarde</string>
+</resources>

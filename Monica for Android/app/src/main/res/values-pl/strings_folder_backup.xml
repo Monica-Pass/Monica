@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Kopia w folderze</string>
+    <string name="folder_backup_folder">Folder kopii zapasowych</string>
+    <string name="folder_backup_folder_hint">Wybierz pamięć urządzenia, kartę SD lub dostawcę dokumentów.</string>
+    <string name="folder_backup_password">Hasło kopii zapasowej</string>
+    <string name="folder_backup_password_hint">Szyfruje kopie niezależnie od hasła głównego. Zachowaj je bezpiecznie. Pozostaw puste, aby zachować obecne hasło.</string>
+    <string name="folder_backup_confirm_password">Potwierdź hasło kopii</string>
+    <string name="folder_backup_automatic">Automatyczna kopia</string>
+    <string name="folder_backup_automatic_hint">Sprawdza co 12 godzin. Czeka na odblokowaną i widoczną aplikację Monica.</string>
+    <string name="folder_backup_changes">Kopia po zmianach</string>
+    <string name="folder_backup_changes_hint">Czeka 2 minuty po edycji; co najmniej 15 minut między kopiami.</string>
+    <string name="folder_backup_keep">Liczba zachowanych kopii</string>
+    <string name="folder_backup_keep_hint">1–1000 kopii automatycznych. Ręczne są trwałe. Dostawcy chmurowi zachowują pliki z ostatnich 48 godzin i co najmniej dwie starsze generacje; liczba może przekroczyć limit.</string>
+    <string name="folder_backup_provider_note">Wysyłaniem do chmury zarządza dostawca dokumentów. Ponowny odczyt nie potwierdza zakończenia wysyłania.</string>
+    <string name="folder_backup_scope">Zaszyfrowane kopie lokalnych danych Monica w istniejącym formacie ZIP. Bez zewnętrznych sejfów i ustawień połączeń. Przywracanie przez Import danych.</string>
+    <string name="folder_backup_selected">Wybrano folder</string>
+    <string name="folder_backup_written">Zapisano i zweryfikowano u dostawcy plików</string>
+    <string name="folder_backup_cleanup_deferred">Kopia zweryfikowana; czyszczenie starych kopii odroczone.</string>
+    <string name="folder_backup_deferred">Oczekiwanie na odblokowaną i widoczną aplikację Monica. Obecne kopie są zachowane.</string>
+    <string name="folder_backup_permission_error">Brak dostępu do folderu. Wybierz go ponownie; obecne kopie są zachowane.</string>
+    <string name="folder_backup_incomplete">Nie udało się skopiować wszystkich danych. Nie opublikowano ani nie usunięto kopii. Sprawdź nieczytelne wpisy i sprzętowe Passkey.</string>
+    <string name="folder_backup_failed">Kopia nieudana. Obecne kopie zachowano; sprawdź uprawnienia i wolne miejsce.</string>
+    <string name="folder_backup_unverified">Niekompletna lub niezweryfikowana — nie jest udaną kopią</string>
+    <string name="folder_backup_permanent">Kopia ręczna · przechowywana trwale</string>
+    <string name="folder_backup_restore">Przywróć kopię</string>
+</resources>

@@ -1460,7 +1460,7 @@ private fun MdbxSyncOverview(
     val context = LocalContext.current
     val preferences = remember(context) { MdbxAutoSyncPreferences(context) }
     var automatic by remember(database.id) { mutableStateOf(preferences.isEnabled(database.id)) }
-    val status = diagnostics?.lastSyncStatus ?: database.lastSyncStatus
+    val status = database.lastSyncStatus
     val syncing = status == MdbxSyncStatus.SYNCING.name
     val syncProblem = status == MdbxSyncStatus.FAILED.name || status == MdbxSyncStatus.CONFLICT.name
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -1518,7 +1518,7 @@ private fun MdbxSyncOverview(
                 }
             }
             if (syncing) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            val error = diagnostics?.lastSyncError ?: database.lastSyncError
+            val error = database.lastSyncError
             if (!error.isNullOrBlank()) {
                 Text(error, modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
@@ -2294,7 +2294,7 @@ private fun MdbxDiagnosticOverviewCard(database: LocalMdbxDatabase, diagnostics:
         healthIssueCount > 0 -> strings.get(R.string.mdbx_ui_health_needs_action_count, healthIssueCount)
         else -> strings.get(R.string.mdbx_health_ok_short)
     }
-    val status = diagnostics?.lastSyncStatus ?: database.lastSyncStatus
+    val status = database.lastSyncStatus
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -2313,7 +2313,7 @@ private fun MdbxDiagnosticOverviewCard(database: LocalMdbxDatabase, diagnostics:
             }
             Text(strings.get(R.string.mdbx_ui_maintenance_description), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
-            diagnostics?.lastSyncError?.takeIf { it.isNotBlank() }?.let { error ->
+            database.lastSyncError?.takeIf { it.isNotBlank() }?.let { error ->
                 Text(error, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
             }
             if (diagnostics?.isReadable == false) {
@@ -2457,7 +2457,7 @@ private fun MdbxVaultTile(
     modifier: Modifier = Modifier,
 ) {
     val strings = rememberScreenStrings()
-    val status = diagnostics?.lastSyncStatus ?: database.lastSyncStatus
+    val status = database.lastSyncStatus
     val healthIssueCount = diagnostics?.healthIssueCount ?: 0
     val warning = conflictCount > 0 || healthIssueCount > 0 || diagnostics?.isReadable == false ||
         status == MdbxSyncStatus.FAILED.name || status == MdbxSyncStatus.CONFLICT.name || !database.isUsable

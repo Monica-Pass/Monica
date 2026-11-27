@@ -128,6 +128,7 @@ class SettingsSearchInstrumentedTest {
                             }
                             composable(Screen.BottomNavSettings.route) { BottomNavSettingsScreen(model, { nav.popBackStack() }) }
                             composable(Screen.Extensions.route) { ExtensionsScreen(onNavigateBack = { nav.popBackStack() }, isPlusActivated = plus) }
+                            composable(Screen.FolderBackup.route) { FolderBackupScreen({ nav.popBackStack() }, {}) }
                             composable(Screen.SyncBackup.route) { SyncBackupScreen(onNavigateBack = { nav.popBackStack() }) }
                             composable(Screen.PageAdjustmentCustomization.route) {
                                 PageAdjustmentCustomizationScreen(model, { nav.popBackStack() }, {}, {}, {}, {}, {})
@@ -186,6 +187,26 @@ class SettingsSearchInstrumentedTest {
                 }
             }
         }
+    }
+
+    @Test fun folderBackupSearchOpensUnconfiguredPageWithoutChangingSettings() {
+        check(context.packageName.contains("folderbackup"))
+        runBlocking(kotlinx.coroutines.Dispatchers.IO) {
+            val security = takagi.ru.monica.security.SecurityManager(context)
+            if (!security.isMasterPasswordSet()) check(security.setMasterPassword("Synthetic local master 332!"))
+            check(security.unlockVaultWithPassword("Synthetic local master 332!"))
+            takagi.ru.monica.security.SessionManager.markUnlocked()
+            takagi.ru.monica.backup.FolderBackupRunner.foreground = true
+            security.removeProtectedString("folder_backup_v1")
+        }
+        show(large = true)
+        query("文件夹")
+        compose.onNodeWithTag("settings_search_result_folder_backup_title").performClick()
+        compose.onNodeWithTag("folder_backup_password").performScrollTo().assertIsDisplayed()
+        assertEquals(Screen.FolderBackup.route, nav.currentDestination?.route)
+        compose.onNodeWithTag("cloud_backup_back").performClick()
+        compose.onNodeWithTag("settings_search_input").assertTextContains("文件夹")
+        assertEquals(0, destructiveCalls)
     }
 
     @Test fun previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults() {

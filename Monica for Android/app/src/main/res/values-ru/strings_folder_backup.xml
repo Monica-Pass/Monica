@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Копии в папке</string>
+    <string name="folder_backup_folder">Папка резервных копий</string>
+    <string name="folder_backup_folder_hint">Выберите память устройства, SD-карту или поставщика документов.</string>
+    <string name="folder_backup_password">Пароль резервной копии</string>
+    <string name="folder_backup_password_hint">Шифрует копии независимо от мастер-пароля. Сохраните его. Оставьте поле пустым, чтобы сохранить текущий пароль.</string>
+    <string name="folder_backup_confirm_password">Подтвердите пароль копии</string>
+    <string name="folder_backup_automatic">Автоматические копии</string>
+    <string name="folder_backup_automatic_hint">Проверка каждые 12 часов. Ожидает разблокированную Monica на переднем плане.</string>
+    <string name="folder_backup_changes">Копировать после изменений</string>
+    <string name="folder_backup_changes_hint">Ожидание 2 минут после редактирования; не менее 15 минут между копиями.</string>
+    <string name="folder_backup_keep">Количество копий</string>
+    <string name="folder_backup_keep_hint">1–1000 автоматических копий. Ручные хранятся постоянно. Облачные поставщики сохраняют файлы за последние 48 часов и не менее двух более ранних поколений; число может превышать лимит.</string>
+    <string name="folder_backup_provider_note">Загрузкой в облако управляет поставщик документов. Повторное чтение не подтверждает завершение загрузки.</string>
+    <string name="folder_backup_scope">Зашифрованные копии локальных данных Monica в существующем формате ZIP. Внешние хранилища и настройки подключений исключены. Восстановление через импорт данных.</string>
+    <string name="folder_backup_selected">Папка выбрана</string>
+    <string name="folder_backup_written">Записано и проверено у поставщика файлов</string>
+    <string name="folder_backup_cleanup_deferred">Копия проверена; очистка старых копий отложена.</string>
+    <string name="folder_backup_deferred">Ожидание разблокированной и видимой Monica. Существующие копии сохранены.</string>
+    <string name="folder_backup_permission_error">Нет доступа к папке. Выберите её снова; существующие копии сохранены.</string>
+    <string name="folder_backup_incomplete">Не удалось полностью скопировать часть данных. Новая копия не опубликована, старые не удалены. Проверьте нечитаемые записи и аппаратные Passkey.</string>
+    <string name="folder_backup_failed">Ошибка копирования. Старые копии сохранены; проверьте доступ и свободное место.</string>
+    <string name="folder_backup_unverified">Неполная или непроверенная — не считается успешной копией</string>
+    <string name="folder_backup_permanent">Ручная копия · хранится постоянно</string>
+    <string name="folder_backup_restore">Восстановить копию</string>
+</resources>

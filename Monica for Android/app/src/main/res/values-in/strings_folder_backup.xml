@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Cadangan folder</string>
+    <string name="folder_backup_folder">Folder cadangan</string>
+    <string name="folder_backup_folder_hint">Pilih penyimpanan perangkat, kartu SD, atau penyedia dokumen.</string>
+    <string name="folder_backup_password">Kata sandi cadangan</string>
+    <string name="folder_backup_password_hint">Mengenkripsi cadangan secara terpisah dari kata sandi utama. Simpan dengan aman. Kosongkan untuk mempertahankan kata sandi saat ini.</string>
+    <string name="folder_backup_confirm_password">Konfirmasi kata sandi cadangan</string>
+    <string name="folder_backup_automatic">Cadangan otomatis</string>
+    <string name="folder_backup_automatic_hint">Memeriksa setiap 12 jam. Menunggu Monica terbuka dan tampil di depan.</string>
+    <string name="folder_backup_changes">Cadangkan setelah perubahan</string>
+    <string name="folder_backup_changes_hint">Menunggu 2 menit setelah pengeditan; jarak antar cadangan minimal 15 menit.</string>
+    <string name="folder_backup_keep">Jumlah cadangan</string>
+    <string name="folder_backup_keep_hint">1–1000 cadangan otomatis. Cadangan manual disimpan permanen. Penyedia cloud menyimpan berkas 48 jam terakhir dan minimal dua generasi lebih lama; jumlah dapat melebihi batas.</string>
+    <string name="folder_backup_provider_note">Unggahan cloud dikelola penyedia dokumen. Pembacaan ulang tidak memastikan unggahan selesai.</string>
+    <string name="folder_backup_scope">Cadangan terenkripsi data lokal Monica dalam format ZIP yang ada. Brankas eksternal dan pengaturan koneksi tidak disertakan. Pulihkan melalui Impor data.</string>
+    <string name="folder_backup_selected">Folder dipilih</string>
+    <string name="folder_backup_written">Ditulis dan diverifikasi oleh penyedia berkas</string>
+    <string name="folder_backup_cleanup_deferred">Cadangan terverifikasi; pembersihan cadangan lama ditunda.</string>
+    <string name="folder_backup_deferred">Menunggu Monica terbuka dan terlihat. Cadangan yang ada dipertahankan.</string>
+    <string name="folder_backup_permission_error">Folder tidak dapat diakses. Pilih kembali; cadangan yang ada dipertahankan.</string>
+    <string name="folder_backup_incomplete">Sebagian data tidak dapat dicadangkan sepenuhnya. Tidak ada cadangan diterbitkan atau dihapus. Periksa entri yang tidak terbaca dan Passkey terikat perangkat keras.</string>
+    <string name="folder_backup_failed">Pencadangan gagal. Cadangan lama dipertahankan; periksa izin folder dan ruang penyimpanan.</string>
+    <string name="folder_backup_unverified">Belum lengkap atau belum diverifikasi — bukan cadangan berhasil</string>
+    <string name="folder_backup_permanent">Cadangan manual · disimpan permanen</string>
+    <string name="folder_backup_restore">Pulihkan cadangan</string>
+</resources>

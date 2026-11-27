@@ -1206,6 +1206,7 @@ fun MonicaContent(
             takagi.ru.monica.transfer.DataTaskKind.IMPORT -> Screen.ImportData.createRoute(fromApps = false)
             takagi.ru.monica.transfer.DataTaskKind.EXPORT -> Screen.ExportData.route
             takagi.ru.monica.transfer.DataTaskKind.WEBDAV_BACKUP -> Screen.WebDavBackup.route
+            takagi.ru.monica.transfer.DataTaskKind.FOLDER_BACKUP -> Screen.FolderBackup.route
         }
         takagi.ru.monica.transfer.DataTaskNavigation.consumed()
         navController.navigate(route) { launchSingleTop = true }
@@ -2907,7 +2908,12 @@ fun MonicaContent(
             val importDestination = takagi.ru.monica.credentialexchange.ImportDestination.fromKey(importDestinationKey)
             val importSummary by dataExportImportViewModel.lastImportSummary.collectAsState()
             val importProgress by dataExportImportViewModel.importProgress.collectAsState()
+            val folderRestoreUri = remember(backStackEntry) {
+                navController.previousBackStackEntry?.takeIf { it.destination.route == Screen.FolderBackup.route }
+                    ?.savedStateHandle?.remove<String>("folder_backup_restore_uri")?.let(android.net.Uri::parse)
+            }
             takagi.ru.monica.ui.screens.ImportDataScreen(
+                initialBackupUri = folderRestoreUri,
                 initialApplicationSource = backStackEntry.arguments?.getBoolean("fromApps") ?: true,
                 destination = importDestination,
                 onDestinationChange = { importDestinationKey = it.key; dataExportImportViewModel.clearImportSummary() },
@@ -3281,6 +3287,22 @@ fun MonicaContent(
                     navController.popBackStack()
                 },
                 onRequestPermission = onPermissionRequested
+            )
+        }
+
+        composable(
+            route = Screen.FolderBackup.route,
+            enterTransition = { easyNotesScreenEnter() },
+            exitTransition = { easyNotesScreenExit() },
+            popEnterTransition = { easyNotesScreenEnter() },
+            popExitTransition = { easyNotesScreenExit() }
+        ) {
+            takagi.ru.monica.ui.screens.FolderBackupScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onRestore = { uri ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("folder_backup_restore_uri", uri.toString())
+                    navController.navigate(Screen.ImportData.createRoute(fromApps = false))
+                }
             )
         }
 
@@ -4017,6 +4039,7 @@ fun MonicaContent(
                 onNavigateToImportData = {
                     navController.navigate(Screen.ImportData.route)
                 },
+                onNavigateToFolderBackup = { navController.navigate(Screen.FolderBackup.route) },
                 onNavigateToWebDav = {
                     navController.navigate(Screen.WebDavBackup.route)
                 },

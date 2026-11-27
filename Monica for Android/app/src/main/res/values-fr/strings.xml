@@ -2086,7 +2086,7 @@
     <string name="password_strength">Force du mot de passe :</string>
     <string name="strength_very_weak">Très faible</string>
     <string name="strength_weak">Faible</string>
-    <string name="strength_fair">Équitable</string>
+    <string name="strength_fair">Moyen</string>
     <string name="strength_strong">Fort</string>
     <string name="strength_very_strong">Très fort</string>
     <string name="improvement_suggestions">Suggestions d\'amélioration :</string>

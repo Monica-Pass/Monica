@@ -2087,7 +2087,7 @@
     <string name="password_strength">Kekuatan Kata Sandi:</string>
     <string name="strength_very_weak">Sangat Lemah</string>
     <string name="strength_weak">Lemah</string>
-    <string name="strength_fair">Adil</string>
+    <string name="strength_fair">Sedang</string>
     <string name="strength_strong">Kuat</string>
     <string name="strength_very_strong">Sangat Kuat</string>
     <string name="improvement_suggestions">Saran Peningkatan:</string>

@@ -2017,7 +2017,7 @@ internal fun ResultCard(
                             contentColor = strengthColor
                         ) {
                             Text(
-                                text = strengthResult.level.displayName,
+                                text = stringResource(strengthResult.level.labelRes),
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
                                 style = if (isCompact) MaterialTheme.typography.labelSmall else MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.SemiBold

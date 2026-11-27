@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Backup in cartella</string>
+    <string name="folder_backup_folder">Cartella dei backup</string>
+    <string name="folder_backup_folder_hint">Scegli la memoria del dispositivo, una scheda SD o un provider di documenti.</string>
+    <string name="folder_backup_password">Password del backup</string>
+    <string name="folder_backup_password_hint">Cifra i backup indipendentemente dalla password principale. Conservala al sicuro. Lascia vuoto per mantenere quella attuale.</string>
+    <string name="folder_backup_confirm_password">Conferma password del backup</string>
+    <string name="folder_backup_automatic">Backup automatico</string>
+    <string name="folder_backup_automatic_hint">Controlla ogni 12 ore. Attende che Monica sia sbloccata e visibile.</string>
+    <string name="folder_backup_changes">Backup dopo le modifiche</string>
+    <string name="folder_backup_changes_hint">Attende 2 minuti dopo le modifiche; almeno 15 minuti tra i backup.</string>
+    <string name="folder_backup_keep">Backup da conservare</string>
+    <string name="folder_backup_keep_hint">Da 1 a 1000 backup automatici. I backup manuali sono permanenti. I provider cloud conservano anche i file delle ultime 48 ore e almeno due generazioni precedenti; il totale può superare il limite.</string>
+    <string name="folder_backup_provider_note">Il provider gestisce il caricamento cloud. La rilettura non conferma il caricamento remoto.</string>
+    <string name="folder_backup_scope">Backup cifrati dei dati locali di Monica nel formato ZIP esistente. Esclusi archivi esterni e impostazioni di connessione. Ripristina da Importa dati.</string>
+    <string name="folder_backup_selected">Cartella selezionata</string>
+    <string name="folder_backup_written">Scritto e verificato dal provider</string>
+    <string name="folder_backup_cleanup_deferred">Backup verificato; pulizia dei vecchi backup rimandata.</string>
+    <string name="folder_backup_deferred">In attesa che Monica sia sbloccata e visibile. I backup esistenti sono conservati.</string>
+    <string name="folder_backup_permission_error">Cartella non accessibile. Selezionala di nuovo; i backup esistenti sono conservati.</string>
+    <string name="folder_backup_incomplete">Impossibile copiare completamente alcuni dati. Nessun backup pubblicato o eliminato. Controlla le voci illeggibili e le Passkey legate all’hardware.</string>
+    <string name="folder_backup_failed">Backup non riuscito. I backup esistenti sono conservati; controlla permessi e spazio disponibile.</string>
+    <string name="folder_backup_unverified">Incompleto o non verificato — non è un backup riuscito</string>
+    <string name="folder_backup_permanent">Backup manuale · conservato permanentemente</string>
+    <string name="folder_backup_restore">Ripristina backup</string>
+</resources>

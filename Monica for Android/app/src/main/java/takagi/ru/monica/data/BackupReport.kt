@@ -13,7 +13,9 @@ data class BackupReport(
     val warnings: List<String>,
     /** Records the warning independently of the language used while exporting. */
     val connectionCredentialsSkipped: Boolean = false,
-    val skippedItems: List<FailedItem> = emptyList()
+    val skippedItems: List<FailedItem> = emptyList(),
+    /** False when secondary data (history, images, attachments, Steam) could not be exported. */
+    val dataComplete: Boolean = true,
 ) {
     /**
      * 是否有警告或失败

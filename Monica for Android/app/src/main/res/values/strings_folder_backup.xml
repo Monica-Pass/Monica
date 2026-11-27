@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Folder backup</string>
+    <string name="folder_backup_folder">Backup folder</string>
+    <string name="folder_backup_folder_hint">Choose device storage, an SD card or a document provider.</string>
+    <string name="folder_backup_password">Backup password</string>
+    <string name="folder_backup_password_hint">Encrypts backups independently of the master password. Keep it safe. Leave blank to keep the current password.</string>
+    <string name="folder_backup_confirm_password">Confirm backup password</string>
+    <string name="folder_backup_automatic">Automatic backup</string>
+    <string name="folder_backup_automatic_hint">Checks every 12 hours. Backups wait for an unlocked, visible Monica session.</string>
+    <string name="folder_backup_changes">Back up after changes</string>
+    <string name="folder_backup_changes_hint">Waits 2 minutes after editing; at least 15 minutes between backups.</string>
+    <string name="folder_backup_keep">Backups to keep</string>
+    <string name="folder_backup_keep_hint">1–1000 automatic backups. Manual backups are permanent. Cloud providers keep recent files for 48 hours and at least two older generations; the total may exceed this limit.</string>
+    <string name="folder_backup_provider_note">Cloud upload is managed by the document provider. Readback does not confirm remote upload.</string>
+    <string name="folder_backup_scope">Encrypted Monica local-data backups in the existing ZIP format. External vaults and connection settings are excluded. Restore through Import data.</string>
+    <string name="folder_backup_selected">Folder selected</string>
+    <string name="folder_backup_written">Written and verified by the file provider</string>
+    <string name="folder_backup_cleanup_deferred">Backup verified; old backup cleanup deferred.</string>
+    <string name="folder_backup_deferred">Waiting for Monica to be unlocked and visible. Existing backups are preserved.</string>
+    <string name="folder_backup_permission_error">Folder access is unavailable. Select the folder again; existing backups are preserved.</string>
+    <string name="folder_backup_incomplete">Some data could not be backed up completely. No backup was published or rotated. Check unreadable records and hardware-bound Passkeys.</string>
+    <string name="folder_backup_failed">Backup failed. Existing backups are preserved; check folder access and storage space.</string>
+    <string name="folder_backup_unverified">Incomplete or unverified — not a successful backup</string>
+    <string name="folder_backup_permanent">Manual backup · kept permanently</string>
+    <string name="folder_backup_restore">Restore backup</string>
+</resources>

@@ -248,7 +248,7 @@ internal fun MdbxHealthDetailPage(
                 MdbxDetailInformationCard(
                     title = strings.get(R.string.mdbx_ui_database_information),
                     rows = listOf(
-                        MdbxDetailInformationRow(strings.get(R.string.keepass_remote_sync_status), strings.get(mdbxSyncStatusLabel(diagnostics.lastSyncStatus))),
+                        MdbxDetailInformationRow(strings.get(R.string.keepass_remote_sync_status), strings.get(mdbxSyncStatusLabel(database.lastSyncStatus))),
                         MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_format_version), diagnostics.formatVersion ?: strings.get(R.string.mdbx_ui_not_provided)),
                         MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_file_size), formatBytes(diagnostics.fileSizeBytes)),
                         MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_current_client), diagnostics.currentDeviceId ?: strings.get(R.string.mdbx_ui_not_provided)),

@@ -1842,6 +1842,11 @@ class WebDavHelper(
             // P0修复：错误跟踪
             val failedItems = mutableListOf<FailedItem>()
             val warnings = mutableListOf<String>()
+            var dataComplete = true
+            fun incompleteWarning(message: String) {
+                dataComplete = false
+                warnings.add(message)
+            }
             var connectionCredentialsSkipped = false
             var successPasswordCount = 0
             var successNoteCount = 0
@@ -1855,7 +1860,7 @@ class WebDavHelper(
                 runCatching { createSteamMaFileBackups(securityManager) }
                     .onFailure { error ->
                         android.util.Log.w("WebDavHelper", "Failed to prepare Steam maFile backups: ${error.message}")
-                        warnings.add(strings.get(R.string.backup_report_backup_failed, "Steam maFile", error.message ?: strings.get(R.string.import_data_unknown_error)))
+                        incompleteWarning(strings.get(R.string.backup_report_backup_failed, "Steam maFile", error.message ?: strings.get(R.string.import_data_unknown_error)))
                     }
                     .getOrDefault(emptyList())
             } else {
@@ -1989,7 +1994,10 @@ class WebDavHelper(
                         )
                     )
                 }
-                val allCategories = try { categoryDao.getAllCategories().first() } catch (e: Exception) { emptyList() }
+                val allCategories = try { categoryDao.getAllCategories().first() } catch (e: Exception) {
+                        incompleteWarning(strings.get(R.string.backup_report_backup_failed, "Categories", e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        emptyList()
+                    }
                 val categoryMap = allCategories.associateBy { it.id }
                 val passwordCategoryById = filteredPasswords.associate { it.id to it.categoryId }
                 val pendingZipEntries = mutableListOf<String>()
@@ -2019,6 +2027,7 @@ class WebDavHelper(
                                     )
                                 }
                             } catch (e: Exception) {
+                                incompleteWarning(strings.get(R.string.backup_report_serialize_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
                                 emptyList()
                             }
                             
@@ -2119,7 +2128,7 @@ class WebDavHelper(
                         }
                     } catch (e: Exception) {
                         android.util.Log.w("WebDavHelper", "Password history backup failed: ${e.message}")
-                        warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.password_history_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.password_history_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
                     }
 
                     if (uploadedPasswordIconFiles.isNotEmpty()) {
@@ -2129,7 +2138,7 @@ class WebDavHelper(
                             if (iconFile.exists()) {
                                 addFileToZipPending("password_icons/$fileName")
                             } else {
-                                warnings.add(strings.get(R.string.backup_report_file_missing, fileName))
+                                incompleteWarning(strings.get(R.string.backup_report_file_missing, fileName))
                             }
                         }
                     }
@@ -2147,6 +2156,7 @@ class WebDavHelper(
                         }
                     } catch (e: Exception) {
                         android.util.Log.w("WebDavHelper", "Category backup failed: ${e.message}")
+                            incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_component_settings), e.message ?: strings.get(R.string.import_data_unknown_error)))
                     }
                 }
 
@@ -2471,6 +2481,7 @@ class WebDavHelper(
                             addFileToZip(zipOut, historyJsonFile, historyJsonFile.name)
                         } catch (e: Exception) {
                             android.util.Log.w("WebDavHelper", "Failed to export history: ${e.message}")
+                            incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.password_history_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
                         }
                     }
                     if (preferences.includeImages) {
@@ -2483,11 +2494,11 @@ class WebDavHelper(
                                     addFileToZip(zipOut, imageFile, "images/$fileName")
                                     successImageCount++
                                 } else {
-                                    warnings.add(strings.get(R.string.backup_report_file_missing, fileName))
+                                    incompleteWarning(strings.get(R.string.backup_report_file_missing, fileName))
                                 }
                             }
                         } catch (e: Exception) {
-                            warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_images), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                            incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_images), e.message ?: strings.get(R.string.import_data_unknown_error)))
                         }
                     }
 
@@ -2499,7 +2510,7 @@ class WebDavHelper(
                             if (iconFile.exists()) {
                                 addFileToZip(zipOut, iconFile, entryName)
                             } else {
-                                warnings.add(strings.get(R.string.backup_report_file_missing, fileName))
+                                incompleteWarning(strings.get(R.string.backup_report_file_missing, fileName))
                             }
                         }
                     }
@@ -2523,7 +2534,10 @@ class WebDavHelper(
                             // 备份已删除的密码
                             if (deletedPasswords.isNotEmpty()) {
                                 val categoryDao = database.categoryDao()
-                                val allCategories = try { categoryDao.getAllCategories().first() } catch (e: Exception) { emptyList() }
+                                val allCategories = try { categoryDao.getAllCategories().first() } catch (e: Exception) {
+                        incompleteWarning(strings.get(R.string.backup_report_backup_failed, "Categories", e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        emptyList()
+                    }
                                 val categoryMap = allCategories.associateBy { it.id }
                                 
                                 val trashPasswordBackups = deletedPasswords.map { deletedPassword ->
@@ -2617,11 +2631,12 @@ class WebDavHelper(
                             android.util.Log.d("WebDavHelper", "Backup $totalTrashCount trash items (${deletedPasswords.size} passwords, ${deletedSecureItems.size} secure items)")
                         } catch (e: Exception) {
                             android.util.Log.w("WebDavHelper", "Failed to backup trash: ${e.message}")
-                            warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_trash), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                            incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_trash), e.message ?: strings.get(R.string.import_data_unknown_error)))
                         }
                     }
                     
                     // Shared with optional configuration in file ZIP exports.
+                    val configWarningCount = warnings.size
                     writeCommonAccountBackup(zipOut, cacheBackupDir, warnings)
 
                     // 7.8 ✅ 便携应用设置始终随正常备份保存；连接凭据仍需用户明确选择。
@@ -2631,6 +2646,7 @@ class WebDavHelper(
                         backupEncryptPassword = backupEncryptPassword,
                         warnings = warnings,
                     )
+                    if (warnings.size != configWarningCount) dataComplete = false
                     if (preferences.includeWebDavConfig && isConfigured()) {
                         connectionCredentialsSkipped = writeConnectionConfigBackup(
                             zipOut = zipOut,
@@ -2732,7 +2748,7 @@ class WebDavHelper(
                                             
                                             backupCount++
                                         } else {
-                                            warnings.add(strings.get(R.string.backup_report_file_missing, kpDb.name))
+                                            incompleteWarning(strings.get(R.string.backup_report_file_missing, kpDb.name))
                                         }
                                     } catch (e: KeePassKeyFileBackupEncryptionRequiredException) {
                                         throw e
@@ -2740,7 +2756,7 @@ class WebDavHelper(
                                         throw e
                                     } catch (e: Exception) {
                                         android.util.Log.w("WebDavHelper", "Failed to backup KeePass database ${kpDb.id}: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_keepass_failed, kpDb.name))
+                                        incompleteWarning(strings.get(R.string.backup_keepass_failed, kpDb.name))
                                     }
                                 }
                                 
@@ -2753,7 +2769,7 @@ class WebDavHelper(
                             throw e
                         } catch (e: Exception) {
                             android.util.Log.w("WebDavHelper", "Failed to backup KeePass databases: ${e.message}")
-                            warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_local_keepass), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                            incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_local_keepass), e.message ?: strings.get(R.string.import_data_unknown_error)))
                         }
                     }
 
@@ -2779,7 +2795,7 @@ class WebDavHelper(
                                     addFileToZip(zipOut, blobFile, "attachments/$blobName")
                                     writtenBlobs += blobName
                                 } else {
-                                    warnings.add(strings.get(R.string.backup_report_file_missing, blobName))
+                                    incompleteWarning(strings.get(R.string.backup_report_file_missing, blobName))
                                 }
                             }
 
@@ -2809,7 +2825,7 @@ class WebDavHelper(
                                     if (written) {
                                         portableEntries += payload.entry
                                     } else {
-                                        warnings.add(strings.get(R.string.backup_attachment_failed, payload.attachment.fileName))
+                                        incompleteWarning(strings.get(R.string.backup_attachment_failed, payload.attachment.fileName))
                                     }
                                 }
                                 val portableMetaFile = File(cacheBackupDir, "attachments_portable.json")
@@ -2829,15 +2845,15 @@ class WebDavHelper(
                                     "Backup portable attachments: ${portableEntries.size}/${localAttachments.size}"
                                 )
                                 if (portableEntries.size < localAttachments.size) {
-                                    warnings.add(strings.get(R.string.backup_attachment_decrypt_failed, localAttachments.size - portableEntries.size))
+                                    incompleteWarning(strings.get(R.string.backup_attachment_decrypt_failed, localAttachments.size - portableEntries.size))
                                 }
                             } else {
-                                warnings.add(strings.get(R.string.backup_attachment_encryption_required))
+                                incompleteWarning(strings.get(R.string.backup_attachment_encryption_required))
                             }
                         }
                     } catch (e: Exception) {
                         android.util.Log.w("WebDavHelper", "Failed to backup attachments: ${e.message}")
-                        warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.attachment_section_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        incompleteWarning(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.attachment_section_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
                     }
                 }
 
@@ -2882,6 +2898,7 @@ class WebDavHelper(
                     images = successImageCount
                 )
                 val report = BackupReport(
+                    dataComplete = dataComplete,
                     success = failedItems.isEmpty(),
                     totalItems = totalCounts,
                     successItems = successCounts,

@@ -1,0 +1,26 @@
+<resources>
+    <string name="folder_backup_title">Backup em pasta</string>
+    <string name="folder_backup_folder">Pasta de backups</string>
+    <string name="folder_backup_folder_hint">Escolha o armazenamento do dispositivo, um cartão SD ou um provedor de documentos.</string>
+    <string name="folder_backup_password">Senha do backup</string>
+    <string name="folder_backup_password_hint">Criptografa os backups independentemente da senha mestra. Guarde-a em segurança. Deixe em branco para manter a atual.</string>
+    <string name="folder_backup_confirm_password">Confirmar senha do backup</string>
+    <string name="folder_backup_automatic">Backup automático</string>
+    <string name="folder_backup_automatic_hint">Verifica a cada 12 horas. Aguarda a Monica desbloqueada e visível.</string>
+    <string name="folder_backup_changes">Backup após alterações</string>
+    <string name="folder_backup_changes_hint">Aguarda 2 minutos após editar; pelo menos 15 minutos entre backups.</string>
+    <string name="folder_backup_keep">Backups a manter</string>
+    <string name="folder_backup_keep_hint">1–1000 backups automáticos. Os manuais são permanentes. Provedores na nuvem guardam os arquivos das últimas 48 horas e pelo menos duas gerações anteriores; o total pode exceder o limite.</string>
+    <string name="folder_backup_provider_note">O provedor gerencia o envio para a nuvem. A releitura não confirma o envio remoto.</string>
+    <string name="folder_backup_scope">Backups criptografados dos dados locais da Monica no formato ZIP existente. Exclui cofres externos e configurações de conexão. Restaure em Importar dados.</string>
+    <string name="folder_backup_selected">Pasta selecionada</string>
+    <string name="folder_backup_written">Gravado e verificado pelo provedor</string>
+    <string name="folder_backup_cleanup_deferred">Backup verificado; limpeza dos backups antigos adiada.</string>
+    <string name="folder_backup_deferred">Aguardando a Monica desbloqueada e visível. Os backups existentes são preservados.</string>
+    <string name="folder_backup_permission_error">Pasta inacessível. Selecione novamente; os backups existentes são preservados.</string>
+    <string name="folder_backup_incomplete">Alguns dados não puderam ser copiados integralmente. Nenhum backup publicado ou removido. Verifique os registros ilegíveis e as Passkeys vinculadas ao hardware.</string>
+    <string name="folder_backup_failed">Falha no backup. Os existentes são preservados; verifique as permissões e o espaço.</string>
+    <string name="folder_backup_unverified">Incompleto ou não verificado — não é um backup bem-sucedido</string>
+    <string name="folder_backup_permanent">Backup manual · mantido permanentemente</string>
+    <string name="folder_backup_restore">Restaurar backup</string>
+</resources>
